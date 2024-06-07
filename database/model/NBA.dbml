@@ -1,27 +1,30 @@
-Table Games {
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table Game {
   Id integer [primary key]
-  HomeTeam varchar
-  VisitorsTeam varchar
+  VisitorsTeamId varchar
+  HomeTeamId varchar
   MatchDate date
 }
 
-Table Teams {
+Table Team {
   Id varchar [primary key]
   TeamName varchar
   TeamState varchar
 }
 
 Table Scalation {
-   Season integer [primary key]
-   Team varchar [primary key]
+   SeasonId char [primary key]
+   TeamId varchar [primary key]
    Ranking integer
 }
 
-Table Seasons {
-  Id integer [primary key]
+Table Season {
+  Id char [primary key]
 }
 
-Table Players {
+Table Player {
   Id integer [primary key]
   PlayerName varchar
   DateOfBirth date
@@ -31,42 +34,32 @@ Table Players {
 Table Selection {
   Id integer [primary key]
   PlayerId integer [unique]
-  Season integer [unique]
-  Team varchar [unique]
+  SeasonId char [unique]
+  TeamId varchar [unique]
   Jersey integer
 }
 
-Table Quarters {
-  Game integer [primary key]
-  Quarter integer [primary key]
-}
-
 Table Participation {
-  Selection integer [primary key]
-  Game integer [primary key]
-  Quarter integer [primary key]
+  Id integer [primary key]
+  GameId integer 
+  SelectionId integer
+  Quarter integer
 }
 
-Table Plays {
+Table Play {
   Id integer [primary key]
-  Selected integer [unique]
-  Game integer [unique]
-  Quarter integer [unique]
+  ParticipationId integer
   PlayType integer
   Amount integer
 }
 
-Ref: Games.HomeTeam < Teams.Id
-Ref: Games.VisitorsTeam < Teams.Id
-Ref: Games.Id > Quarters.Game
-Ref: Scalation.Season > Seasons.Id
-Ref: Scalation.Team > Teams.Id
-Ref: Scalation.Season > Selection.Season
-Ref: Scalation.Team > Selection.Team
-Ref: Players.Id > Selection.Id
-Ref: Selection.Id > Participation.Selection
-Ref: Quarters.Quarter > Participation.Quarter
-Ref: Quarters.Game > Participation.Game
-Ref: Participation.Selection > Plays.Selected
-Ref: Participation.Quarter > Plays.Quarter
-Ref: Participation.Game > Plays.Game
+Ref: Game.Id > Participation.GameId
+Ref: Game.HomeTeamId > Scalation.TeamId
+Ref: Game.VisitorsTeamId > Scalation.TeamId
+Ref: Participation.Id > Play.ParticipationId
+Ref: Scalation.SeasonId > Season.Id
+Ref: Scalation.TeamId > Team.Id
+Ref: Scalation.SeasonId > Selection.SeasonId
+Ref: Scalation.TeamId > Selection.TeamId
+Ref: Selection.Id > Participation.SelectionId
+Ref: Player.Id > Selection.PlayerId
