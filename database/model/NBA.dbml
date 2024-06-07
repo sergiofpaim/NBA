@@ -1,0 +1,72 @@
+Table Games {
+  Id integer [primary key]
+  HomeTeam varchar
+  VisitorsTeam varchar
+  MatchDate date
+}
+
+Table Teams {
+  Id varchar [primary key]
+  TeamName varchar
+  TeamState varchar
+}
+
+Table Scalation {
+   Season integer [primary key]
+   Team varchar [primary key]
+   Ranking integer
+}
+
+Table Seasons {
+  Id integer [primary key]
+}
+
+Table Players {
+  Id integer [primary key]
+  PlayerName varchar
+  DateOfBirth date
+  Position varchar
+}
+
+Table Selection {
+  Id integer [primary key]
+  PlayerId integer [unique]
+  Season integer [unique]
+  Team varchar [unique]
+  Jersey integer
+}
+
+Table Quarters {
+  Game integer [primary key]
+  Quarter integer [primary key]
+}
+
+Table Participation {
+  Selection integer [primary key]
+  Game integer [primary key]
+  Quarter integer [primary key]
+}
+
+Table Plays {
+  Id integer [primary key]
+  Selected integer [unique]
+  Game integer [unique]
+  Quarter integer [unique]
+  PlayType integer
+  Amount integer
+}
+
+Ref: Games.HomeTeam < Teams.Id
+Ref: Games.VisitorsTeam < Teams.Id
+Ref: Games.Id > Quarters.Game
+Ref: Scalation.Season > Seasons.Id
+Ref: Scalation.Team > Teams.Id
+Ref: Scalation.Season > Selection.Season
+Ref: Scalation.Team > Selection.Team
+Ref: Players.Id > Selection.Id
+Ref: Selection.Id > Participation.Selection
+Ref: Quarters.Quarter > Participation.Quarter
+Ref: Quarters.Game > Participation.Game
+Ref: Participation.Selection > Plays.Selected
+Ref: Participation.Quarter > Plays.Quarter
+Ref: Participation.Game > Plays.Game

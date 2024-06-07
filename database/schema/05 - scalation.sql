@@ -2,17 +2,17 @@ USE Basketball;
 GO
 
 CREATE TABLE Scalation (
-Season int NOT NULL,
-Team varchar(3) NOT NULL,
+SeasonId char(5) NOT NULL,
+TeamId varchar(3) NOT NULL,
 Ranking integer,
 );
 
 ALTER TABLE Scalation
-ADD  CONSTRAINT PK_Scalation PRIMARY KEY (Season, Team);
+ADD CONSTRAINT PK_Scalation PRIMARY KEY (SeasonId, TeamId);
 
 ALTER TABLE Scalation
-ADD FOREIGN KEY (Season) REFERENCES Seasons(Id);
+ADD CONSTRAINT FK_Scalation_Season FOREIGN KEY (SeasonId) REFERENCES Season(Id);
 
 ALTER TABLE Scalation
-ADD FOREIGN KEY (Team) REFERENCES Teams(Id);
+ADD CONSTRAINT FK_Scalation_Team FOREIGN KEY (TeamId) REFERENCES Team(Id);
 
