@@ -6,7 +6,7 @@ Id int IDENTITY(1,1) PRIMARY KEY,
 PlayerId int,
 SeasonId char(5),
 TeamId varchar(3),
-Jersey int,
+Jersey int
 );
 
 ALTER TABLE Selection

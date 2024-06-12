@@ -4,8 +4,7 @@ GO
 CREATE TABLE Play (
 Id int IDENTITY(1,1) PRIMARY KEY,
 ParticipationId int,
-PlayType int,
-Amount int,
+PlayType varchar(20),
 );
 
 ALTER TABLE Play
