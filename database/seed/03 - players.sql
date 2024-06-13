@@ -1,7 +1,7 @@
 USE Basketball;
 GO
 
-INSERT INTO Player (PlayerName, DateOfBirth, Position) VALUES
+INSERT INTO Player (Name, BornOn, Position) VALUES
 -- Atlanta Hawks
 ('Trae Young', '1998-09-19', 'Point Guard'),
 ('John Collins', '1997-09-23', 'Power Forward'),

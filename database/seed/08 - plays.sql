@@ -1,3601 +1,3614 @@
-USE Basketball;
+USE Basketball
 GO
 
+INSERT INTO Play (ParticipationId, Type, Points, At) VALUES
 -- Participation 1
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(1,'FreeThrow'),
-(1,'TwoPointerShot'),
-(1,'ThreePointerShot');
+
+(1,'FreeThrow', 1, '00:02:45'),
+(1,'TwoPointerShot', 2, '00:12:22'),
+(1,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 2
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(2,'Assist'),
-(2,'Rebound'),
-(2,'Block');
+
+(2,'Assist', NULL, '00:04:01'),
+(2,'Rebound', NULL, '00:00:58'),
+(2,'Block', NULL, '00:10:23'),
 
 -- Participation 3
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(3,'Foul'),
-(3,'Turnover'),
-(3,'FreeThrow');
+
+(3,'Foul', NULL, '00:02:23'),
+(3,'Turnover', NULL, '00:08:09'),
+(3,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 4
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(4,'TwoPointerShot'),
-(4,'ThreePointerShot'),
-(4,'Assist');
+
+(4,'TwoPointerShot', 2, '00:12:22'),
+(4,'ThreePointerShot', 3, '00:07:59'),
+(4,'Assist', NULL, '00:04:01'),
 
 -- Participation 5
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(5,'Rebound'),
-(5,'Block'),
-(5,'Foul');
+
+(5,'Rebound', NULL, '00:00:58'),
+(5,'Block', NULL, '00:10:23'),
+(5,'Foul', NULL, '00:02:23'),
 
 -- Participation 6
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(6,'Turnover'),
-(6,'FreeThrow'),
-(6,'TwoPointerShot');
+
+(6,'Turnover', NULL, '00:08:09'),
+(6,'FreeThrow', 1, '00:02:45'),
+(6,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 7
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(7,'ThreePointerShot'),
-(7,'Assist'),
-(7,'Rebound');
+
+(7,'ThreePointerShot', 3, '00:07:59'),
+(7,'Assist', NULL, '00:04:01'),
+(7,'Rebound', NULL, '00:00:58'),
 
 -- Participation 8
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(8,'Block'),
-(8,'Foul'),
-(8,'Turnover');
+
+(8,'Block', NULL, '00:10:23'),
+(8,'Foul', NULL, '00:02:23'),
+(8,'Turnover', NULL, '00:08:09'),
 
 -- Participation 9
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(9,'FreeThrow'),
-(9,'TwoPointerShot'),
-(9,'ThreePointerShot');
+
+(9,'FreeThrow', 1, '00:02:45'),
+(9,'TwoPointerShot', 2, '00:12:22'),
+(9,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 10
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(10,'Assist'),
-(10,'Rebound'),
-(10,'Block');
+
+(10,'Assist', NULL, '00:04:01'),
+(10,'Rebound', NULL, '00:00:58'),
+(10,'Block', NULL, '00:10:23'),
 
 -- Participation 11
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(11,'Foul'),
-(11,'Turnover'),
-(11,'FreeThrow');
+
+(11,'Foul', NULL, '00:02:23'),
+(11,'Turnover', NULL, '00:08:09'),
+(11,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 12
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(12,'TwoPointerShot'),
-(12,'ThreePointerShot'),
-(12,'Assist');
+
+(12,'TwoPointerShot', 2, '00:12:22'),
+(12,'ThreePointerShot', 3, '00:07:59'),
+(12,'Assist', NULL, '00:04:01'),
 
 -- Participation 13
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(13,'Rebound'),
-(13,'Block'),
-(13,'Foul');
+
+(13,'Rebound', NULL, '00:00:58'),
+(13,'Block', NULL, '00:10:23'),
+(13,'Foul', NULL, '00:02:23'),
 
 -- Participation 14
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(14,'Turnover'),
-(14,'FreeThrow'),
-(14,'TwoPointerShot');
+
+(14,'Turnover', NULL, '00:08:09'),
+(14,'FreeThrow', 1, '00:02:45'),
+(14,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 15
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(15,'ThreePointerShot'),
-(15,'Assist'),
-(15,'Rebound');
+
+(15,'ThreePointerShot', 3, '00:07:59'),
+(15,'Assist', NULL, '00:04:01'),
+(15,'Rebound', NULL, '00:00:58'),
 
 -- Participation 16
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(16,'Block'),
-(16,'Foul'),
-(16,'Turnover');
+
+(16,'Block', NULL, '00:10:23'),
+(16,'Foul', NULL, '00:02:23'),
+(16,'Turnover', NULL, '00:08:09'),
 
 -- Participation 17
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(17,'FreeThrow'),
-(17,'TwoPointerShot'),
-(17,'ThreePointerShot');
+
+(17,'FreeThrow', 1, '00:02:45'),
+(17,'TwoPointerShot', 2, '00:12:22'),
+(17,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 18
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(18,'Assist'),
-(18,'Rebound'),
-(18,'Block');
+
+(18,'Assist', NULL, '00:04:01'),
+(18,'Rebound', NULL, '00:00:58'),
+(18,'Block', NULL, '00:10:23'),
 
 -- Participation 19
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(19,'Foul'),
-(19,'Turnover'),
-(19,'FreeThrow');
+
+(19,'Foul', NULL, '00:02:23'),
+(19,'Turnover', NULL, '00:08:09'),
+(19,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 20
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(20,'TwoPointerShot'),
-(20,'ThreePointerShot'),
-(20,'Assist');
+
+(20,'TwoPointerShot', 2, '00:12:22'),
+(20,'ThreePointerShot', 3, '00:07:59'),
+(20,'Assist', NULL, '00:04:01'),
 -- Participation 21
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(21,'Rebound'),
-(21,'Block'),
-(21,'Foul');
+
+(21,'Rebound', NULL, '00:00:58'),
+(21,'Block', NULL, '00:10:23'),
+(21,'Foul', NULL, '00:02:23'),
 
 -- Participation 22
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(22,'Turnover'),
-(22,'FreeThrow'),
-(22,'TwoPointerShot');
+
+(22,'Turnover', NULL, '00:08:09'),
+(22,'FreeThrow', 1, '00:02:45'),
+(22,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 23
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(23,'ThreePointerShot'),
-(23,'Assist'),
-(23,'Rebound');
+
+(23,'ThreePointerShot', 3, '00:07:59'),
+(23,'Assist', NULL, '00:04:01'),
+(23,'Rebound', NULL, '00:00:58'),
 
 -- Participation 24
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(24,'Block'),
-(24,'Foul'),
-(24,'Turnover');
+
+(24,'Block', NULL, '00:10:23'),
+(24,'Foul', NULL, '00:02:23'),
+(24,'Turnover', NULL, '00:08:09'),
 
 -- Participation 25
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(25,'FreeThrow'),
-(25,'TwoPointerShot'),
-(25,'ThreePointerShot');
+
+(25,'FreeThrow', 1, '00:02:45'),
+(25,'TwoPointerShot', 2, '00:12:22'),
+(25,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 26
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(26,'Assist'),
-(26,'Rebound'),
-(26,'Block');
+
+(26,'Assist', NULL, '00:04:01'),
+(26,'Rebound', NULL, '00:00:58'),
+(26,'Block', NULL, '00:10:23'),
 
 -- Participation 27
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(27,'Foul'),
-(27,'Turnover'),
-(27,'FreeThrow');
+
+(27,'Foul', NULL, '00:02:23'),
+(27,'Turnover', NULL, '00:08:09'),
+(27,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 28
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(28,'TwoPointerShot'),
-(28,'ThreePointerShot'),
-(28,'Assist');
+
+(28,'TwoPointerShot', 2, '00:12:22'),
+(28,'ThreePointerShot', 3, '00:07:59'),
+(28,'Assist', NULL, '00:04:01'),
 
 -- Participation 29
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(29,'Rebound'),
-(29,'Block'),
-(29,'Foul');
+
+(29,'Rebound', NULL, '00:00:58'),
+(29,'Block', NULL, '00:10:23'),
+(29,'Foul', NULL, '00:02:23'),
 
 -- Participation 30
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(30,'Turnover'),
-(30,'FreeThrow'),
-(30,'TwoPointerShot');
+
+(30,'Turnover', NULL, '00:08:09'),
+(30,'FreeThrow', 1, '00:02:45'),
+(30,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 31
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(31,'ThreePointerShot'),
-(31,'Assist'),
-(31,'Rebound');
+
+(31,'ThreePointerShot', 3, '00:07:59'),
+(31,'Assist', NULL, '00:04:01'),
+(31,'Rebound', NULL, '00:00:58'),
 
 -- Participation 32
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(32,'Block'),
-(32,'Foul'),
-(32,'Turnover');
+
+(32,'Block', NULL, '00:10:23'),
+(32,'Foul', NULL, '00:02:23'),
+(32,'Turnover', NULL, '00:08:09'),
 
 -- Participation 33
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(33,'FreeThrow'),
-(33,'TwoPointerShot'),
-(33,'ThreePointerShot');
+
+(33,'FreeThrow', 1, '00:02:45'),
+(33,'TwoPointerShot', 2, '00:12:22'),
+(33,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 34
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(34,'Assist'),
-(34,'Rebound'),
-(34,'Block');
+
+(34,'Assist', NULL, '00:04:01'),
+(34,'Rebound', NULL, '00:00:58'),
+(34,'Block', NULL, '00:10:23'),
 
 -- Participation 35
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(35,'Foul'),
-(35,'Turnover'),
-(35,'FreeThrow');
+
+(35,'Foul', NULL, '00:02:23'),
+(35,'Turnover', NULL, '00:08:09'),
+(35,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 36
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(36,'TwoPointerShot'),
-(36,'ThreePointerShot'),
-(36,'Assist');
+
+(36,'TwoPointerShot', 2, '00:12:22'),
+(36,'ThreePointerShot', 3, '00:07:59'),
+(36,'Assist', NULL, '00:04:01'),
 
 -- Participation 37
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(37,'Rebound'),
-(37,'Block'),
-(37,'Foul');
+
+(37,'Rebound', NULL, '00:00:58'),
+(37,'Block', NULL, '00:10:23'),
+(37,'Foul', NULL, '00:02:23'),
 
 -- Participation 38
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(38,'Turnover'),
-(38,'FreeThrow'),
-(38,'TwoPointerShot');
+
+(38,'Turnover', NULL, '00:08:09'),
+(38,'FreeThrow', 1, '00:02:45'),
+(38,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 39
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(39,'ThreePointerShot'),
-(39,'Assist'),
-(39,'Rebound');
+
+(39,'ThreePointerShot', 3, '00:07:59'),
+(39,'Assist', NULL, '00:04:01'),
+(39,'Rebound', NULL, '00:00:58'),
 
 -- Participation 40
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(40,'Block'),
-(40,'Foul'),
-(40,'Turnover');
+
+(40,'Block', NULL, '00:10:23'),
+(40,'Foul', NULL, '00:02:23'),
+(40,'Turnover', NULL, '00:08:09'),
 
 -- Participation 41
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(41,'FreeThrow'),
-(41,'TwoPointerShot'),
-(41,'ThreePointerShot');
+
+(41,'FreeThrow', 1, '00:02:45'),
+(41,'TwoPointerShot', 2, '00:12:22'),
+(41,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 42
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(42,'Assist'),
-(42,'Rebound'),
-(42,'Block');
+
+(42,'Assist', NULL, '00:04:01'),
+(42,'Rebound', NULL, '00:00:58'),
+(42,'Block', NULL, '00:10:23'),
 
 -- Participation 43
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(43,'Foul'),
-(43,'Turnover'),
-(43,'FreeThrow');
+
+(43,'Foul', NULL, '00:02:23'),
+(43,'Turnover', NULL, '00:08:09'),
+(43,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 44
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(44,'TwoPointerShot'),
-(44,'ThreePointerShot'),
-(44,'Assist');
+
+(44,'TwoPointerShot', 2, '00:12:22'),
+(44,'ThreePointerShot', 3, '00:07:59'),
+(44,'Assist', NULL, '00:04:01'),
 
 -- Participation 45
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(45,'Rebound'),
-(45,'Block'),
-(45,'Foul');
+
+(45,'Rebound', NULL, '00:00:58'),
+(45,'Block', NULL, '00:10:23'),
+(45,'Foul', NULL, '00:02:23'),
 
 -- Participation 46
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(46,'Turnover'),
-(46,'FreeThrow'),
-(46,'TwoPointerShot');
+
+(46,'Turnover', NULL, '00:08:09'),
+(46,'FreeThrow', 1, '00:02:45'),
+(46,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 47
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(47,'ThreePointerShot'),
-(47,'Assist'),
-(47,'Rebound');
+
+(47,'ThreePointerShot', 3, '00:07:59'),
+(47,'Assist', NULL, '00:04:01'),
+(47,'Rebound', NULL, '00:00:58'),
 
 -- Participation 48
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(48,'Block'),
-(48,'Foul'),
-(48,'Turnover');
+
+(48,'Block', NULL, '00:10:23'),
+(48,'Foul', NULL, '00:02:23'),
+(48,'Turnover', NULL, '00:08:09'),
 
 -- Participation 49
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(49,'FreeThrow'),
-(49,'TwoPointerShot'),
-(49,'ThreePointerShot');
+
+(49,'FreeThrow', 1, '00:02:45'),
+(49,'TwoPointerShot', 2, '00:12:22'),
+(49,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 50
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(50,'Assist'),
-(50,'Rebound'),
-(50,'Block');
+
+(50,'Assist', NULL, '00:04:01'),
+(50,'Rebound', NULL, '00:00:58'),
+(50,'Block', NULL, '00:10:23'),
 
 -- Participation 51
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(51,'Foul'),
-(51,'Turnover'),
-(51,'FreeThrow');
+
+(51,'Foul', NULL, '00:02:23'),
+(51,'Turnover', NULL, '00:08:09'),
+(51,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 52
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(52,'TwoPointerShot'),
-(52,'ThreePointerShot'),
-(52,'Assist');
+
+(52,'TwoPointerShot', 2, '00:12:22'),
+(52,'ThreePointerShot', 3, '00:07:59'),
+(52,'Assist', NULL, '00:04:01'),
 
 -- Participation 53
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(53,'Rebound'),
-(53,'Block'),
-(53,'Foul');
+
+(53,'Rebound', NULL, '00:00:58'),
+(53,'Block', NULL, '00:10:23'),
+(53,'Foul', NULL, '00:02:23'),
 
 -- Participation 54
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(54,'Turnover'),
-(54,'FreeThrow'),
-(54,'TwoPointerShot');
+
+(54,'Turnover', NULL, '00:08:09'),
+(54,'FreeThrow', 1, '00:02:45'),
+(54,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 55
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(55,'ThreePointerShot'),
-(55,'Assist'),
-(55,'Rebound');
+
+(55,'ThreePointerShot', 3, '00:07:59'),
+(55,'Assist', NULL, '00:04:01'),
+(55,'Rebound', NULL, '00:00:58'),
 
 -- Participation 56
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(56,'Block'),
-(56,'Foul'),
-(56,'Turnover');
+
+(56,'Block', NULL, '00:10:23'),
+(56,'Foul', NULL, '00:02:23'),
+(56,'Turnover', NULL, '00:08:09'),
 
 -- Participation 57
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(57,'FreeThrow'),
-(57,'TwoPointerShot'),
-(57,'ThreePointerShot');
+
+(57,'FreeThrow', 1, '00:02:45'),
+(57,'TwoPointerShot', 2, '00:12:22'),
+(57,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 58
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(58,'Assist'),
-(58,'Rebound'),
-(58,'Block');
+
+(58,'Assist', NULL, '00:04:01'),
+(58,'Rebound', NULL, '00:00:58'),
+(58,'Block', NULL, '00:10:23'),
 
 -- Participation 59
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(59,'Foul'),
-(59,'Turnover'),
-(59,'FreeThrow');
+
+(59,'Foul', NULL, '00:02:23'),
+(59,'Turnover', NULL, '00:08:09'),
+(59,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 60
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(60,'TwoPointerShot'),
-(60,'ThreePointerShot'),
-(60,'Assist');
+
+(60,'TwoPointerShot', 2, '00:12:22'),
+(60,'ThreePointerShot', 3, '00:07:59'),
+(60,'Assist', NULL, '00:04:01'),
 
 -- Participation 61
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(61,'Rebound'),
-(61,'Block'),
-(61,'Foul');
+
+(61,'Rebound', NULL, '00:00:58'),
+(61,'Block', NULL, '00:10:23'),
+(61,'Foul', NULL, '00:02:23'),
 
 -- Participation 62
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(62,'Turnover'),
-(62,'FreeThrow'),
-(62,'TwoPointerShot');
+
+(62,'Turnover', NULL, '00:08:09'),
+(62,'FreeThrow', 1, '00:02:45'),
+(62,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 63
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(63,'ThreePointerShot'),
-(63,'Assist'),
-(63,'Rebound');
+
+(63,'ThreePointerShot', 3, '00:07:59'),
+(63,'Assist', NULL, '00:04:01'),
+(63,'Rebound', NULL, '00:00:58'),
 
 -- Participation 64
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(64,'Block'),
-(64,'Foul'),
-(64,'Turnover');
+
+(64,'Block', NULL, '00:10:23'),
+(64,'Foul', NULL, '00:02:23'),
+(64,'Turnover', NULL, '00:08:09'),
 
 -- Participation 65
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(65,'FreeThrow'),
-(65,'TwoPointerShot'),
-(65,'ThreePointerShot');
+
+(65,'FreeThrow', 1, '00:02:45'),
+(65,'TwoPointerShot', 2, '00:12:22'),
+(65,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 66
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(66,'Assist'),
-(66,'Rebound'),
-(66,'Block');
+
+(66,'Assist', NULL, '00:04:01'),
+(66,'Rebound', NULL, '00:00:58'),
+(66,'Block', NULL, '00:10:23'),
 
 -- Participation 67
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(67,'Foul'),
-(67,'Turnover'),
-(67,'FreeThrow');
+
+(67,'Foul', NULL, '00:02:23'),
+(67,'Turnover', NULL, '00:08:09'),
+(67,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 68
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(68,'TwoPointerShot'),
-(68,'ThreePointerShot'),
-(68,'Assist');
+
+(68,'TwoPointerShot', 2, '00:12:22'),
+(68,'ThreePointerShot', 3, '00:07:59'),
+(68,'Assist', NULL, '00:04:01'),
 
 -- Participation 69
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(69,'Rebound'),
-(69,'Block'),
-(69,'Foul');
+
+(69,'Rebound', NULL, '00:00:58'),
+(69,'Block', NULL, '00:10:23'),
+(69,'Foul', NULL, '00:02:23'),
 
 -- Participation 70
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(70,'Turnover'),
-(70,'FreeThrow'),
-(70,'TwoPointerShot');
+
+(70,'Turnover', NULL, '00:08:09'),
+(70,'FreeThrow', 1, '00:02:45'),
+(70,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 71
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(71,'ThreePointerShot'),
-(71,'Assist'),
-(71,'Rebound');
+
+(71,'ThreePointerShot', 3, '00:07:59'),
+(71,'Assist', NULL, '00:04:01'),
+(71,'Rebound', NULL, '00:00:58'),
 
 -- Participation 72
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(72,'Block'),
-(72,'Foul'),
-(72,'Turnover');
+
+(72,'Block', NULL, '00:10:23'),
+(72,'Foul', NULL, '00:02:23'),
+(72,'Turnover', NULL, '00:08:09'),
 
 -- Participation 73
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(73,'FreeThrow'),
-(73,'TwoPointerShot'),
-(73,'ThreePointerShot');
+
+(73,'FreeThrow', 1, '00:02:45'),
+(73,'TwoPointerShot', 2, '00:12:22'),
+(73,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 74
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(74,'Assist'),
-(74,'Rebound'),
-(74,'Block');
+
+(74,'Assist', NULL, '00:04:01'),
+(74,'Rebound', NULL, '00:00:58'),
+(74,'Block', NULL, '00:10:23'),
 
 -- Participation 75
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(75,'Foul'),
-(75,'Turnover'),
-(75,'FreeThrow');
+
+(75,'Foul', NULL, '00:02:23'),
+(75,'Turnover', NULL, '00:08:09'),
+(75,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 76
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(76,'TwoPointerShot'),
-(76,'ThreePointerShot'),
-(76,'Assist');
+
+(76,'TwoPointerShot', 2, '00:12:22'),
+(76,'ThreePointerShot', 3, '00:07:59'),
+(76,'Assist', NULL, '00:04:01'),
 
 -- Participation 77
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(77,'Rebound'),
-(77,'Block'),
-(77,'Foul');
+
+(77,'Rebound', NULL, '00:00:58'),
+(77,'Block', NULL, '00:10:23'),
+(77,'Foul', NULL, '00:02:23'),
 
 -- Participation 78
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(78,'Turnover'),
-(78,'FreeThrow'),
-(78,'TwoPointerShot');
+
+(78,'Turnover', NULL, '00:08:09'),
+(78,'FreeThrow', 1, '00:02:45'),
+(78,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 79
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(79,'ThreePointerShot'),
-(79,'Assist'),
-(79,'Rebound');
+
+(79,'ThreePointerShot', 3, '00:07:59'),
+(79,'Assist', NULL, '00:04:01'),
+(79,'Rebound', NULL, '00:00:58'),
 
 -- Participation 80
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(80,'Block'),
-(80,'Foul'),
-(80,'Turnover');
+
+(80,'Block', NULL, '00:10:23'),
+(80,'Foul', NULL, '00:02:23'),
+(80,'Turnover', NULL, '00:08:09'),
 
 -- Participation 81
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(81,'FreeThrow'),
-(81,'TwoPointerShot'),
-(81,'ThreePointerShot');
+
+(81,'FreeThrow', 1, '00:02:45'),
+(81,'TwoPointerShot', 2, '00:12:22'),
+(81,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 82
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(82,'Assist'),
-(82,'Rebound'),
-(82,'Block');
+
+(82,'Assist', NULL, '00:04:01'),
+(82,'Rebound', NULL, '00:00:58'),
+(82,'Block', NULL, '00:10:23'),
 
 -- Participation 83
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(83,'Foul'),
-(83,'Turnover'),
-(83,'FreeThrow');
+
+(83,'Foul', NULL, '00:02:23'),
+(83,'Turnover', NULL, '00:08:09'),
+(83,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 84
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(84,'TwoPointerShot'),
-(84,'ThreePointerShot'),
-(84,'Assist');
+
+(84,'TwoPointerShot', 2, '00:12:22'),
+(84,'ThreePointerShot', 3, '00:07:59'),
+(84,'Assist', NULL, '00:04:01'),
 
 -- Participation 85
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(85,'Rebound'),
-(85,'Block'),
-(85,'Foul');
+
+(85,'Rebound', NULL, '00:00:58'),
+(85,'Block', NULL, '00:10:23'),
+(85,'Foul', NULL, '00:02:23'),
 
 -- Participation 86
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(86,'Turnover'),
-(86,'FreeThrow'),
-(86,'TwoPointerShot');
+
+(86,'Turnover', NULL, '00:08:09'),
+(86,'FreeThrow', 1, '00:02:45'),
+(86,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 87
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(87,'ThreePointerShot'),
-(87,'Assist'),
-(87,'Rebound');
+
+(87,'ThreePointerShot', 3, '00:07:59'),
+(87,'Assist', NULL, '00:04:01'),
+(87,'Rebound', NULL, '00:00:58'),
 
 -- Participation 88
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(88,'Block'),
-(88,'Foul'),
-(88,'Turnover');
+
+(88,'Block', NULL, '00:10:23'),
+(88,'Foul', NULL, '00:02:23'),
+(88,'Turnover', NULL, '00:08:09'),
 
 -- Participation 89
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(89,'FreeThrow'),
-(89,'TwoPointerShot'),
-(89,'ThreePointerShot');
+
+(89,'FreeThrow', 1, '00:02:45'),
+(89,'TwoPointerShot', 2, '00:12:22'),
+(89,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 90
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(90,'Assist'),
-(90,'Rebound'),
-(90,'Block');
+
+(90,'Assist', NULL, '00:04:01'),
+(90,'Rebound', NULL, '00:00:58'),
+(90,'Block', NULL, '00:10:23'),
 
 -- Participation 91
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(91,'Foul'),
-(91,'Turnover'),
-(91,'FreeThrow');
+
+(91,'Foul', NULL, '00:02:23'),
+(91,'Turnover', NULL, '00:08:09'),
+(91,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 92
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(92,'TwoPointerShot'),
-(92,'ThreePointerShot'),
-(92,'Assist');
+
+(92,'TwoPointerShot', 2, '00:12:22'),
+(92,'ThreePointerShot', 3, '00:07:59'),
+(92,'Assist', NULL, '00:04:01'),
 
 -- Participation 93
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(93,'Rebound'),
-(93,'Block'),
-(93,'Foul');
+
+(93,'Rebound', NULL, '00:00:58'),
+(93,'Block', NULL, '00:10:23'),
+(93,'Foul', NULL, '00:02:23'),
 
 -- Participation 94
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(94,'Turnover'),
-(94,'FreeThrow'),
-(94,'TwoPointerShot');
+
+(94,'Turnover', NULL, '00:08:09'),
+(94,'FreeThrow', 1, '00:02:45'),
+(94,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 95
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(95,'ThreePointerShot'),
-(95,'Assist'),
-(95,'Rebound');
+
+(95,'ThreePointerShot', 3, '00:07:59'),
+(95,'Assist', NULL, '00:04:01'),
+(95,'Rebound', NULL, '00:00:58'),
 
 -- Participation 96
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(96,'Block'),
-(96,'Foul'),
-(96,'Turnover');
+
+(96,'Block', NULL, '00:10:23'),
+(96,'Foul', NULL, '00:02:23'),
+(96,'Turnover', NULL, '00:08:09'),
 
 -- Participation 97
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(97,'FreeThrow'),
-(97,'TwoPointerShot'),
-(97,'ThreePointerShot');
+
+(97,'FreeThrow', 1, '00:02:45'),
+(97,'TwoPointerShot', 2, '00:12:22'),
+(97,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 98
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(98,'Assist'),
-(98,'Rebound'),
-(98,'Block');
+
+(98,'Assist', NULL, '00:04:01'),
+(98,'Rebound', NULL, '00:00:58'),
+(98,'Block', NULL, '00:10:23'),
 
 -- Participation 99
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(99,'Foul'),
-(99,'Turnover'),
-(99,'FreeThrow');
+
+(99,'Foul', NULL, '00:02:23'),
+(99,'Turnover', NULL, '00:08:09'),
+(99,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 100
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(100,'TwoPointerShot'),
-(100,'ThreePointerShot'),
-(100,'Assist');
+
+(100,'TwoPointerShot', 2, '00:12:22'),
+(100,'ThreePointerShot', 3, '00:07:59'),
+(100,'Assist', NULL, '00:04:01'),
 
 -- Participation 101
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(101,'Rebound'),
-(101,'Block'),
-(101,'Foul');
+
+(101,'Rebound', NULL, '00:00:58'),
+(101,'Block', NULL, '00:10:23'),
+(101,'Foul', NULL, '00:02:23'),
 
 -- Participation 102
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(102,'Turnover'),
-(102,'FreeThrow'),
-(102,'TwoPointerShot');
+
+(102,'Turnover', NULL, '00:08:09'),
+(102,'FreeThrow', 1, '00:02:45'),
+(102,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 103
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(103,'ThreePointerShot'),
-(103,'Assist'),
-(103,'Rebound');
+
+(103,'ThreePointerShot', 3, '00:07:59'),
+(103,'Assist', NULL, '00:04:01'),
+(103,'Rebound', NULL, '00:00:58'),
 
 -- Participation 104
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(104,'Block'),
-(104,'Foul'),
-(104,'Turnover');
+
+(104,'Block', NULL, '00:10:23'),
+(104,'Foul', NULL, '00:02:23'),
+(104,'Turnover', NULL, '00:08:09'),
 
 -- Participation 105
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(105,'FreeThrow'),
-(105,'TwoPointerShot'),
-(105,'ThreePointerShot');
+
+(105,'FreeThrow', 1, '00:02:45'),
+(105,'TwoPointerShot', 2, '00:12:22'),
+(105,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 106
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(106,'Assist'),
-(106,'Rebound'),
-(106,'Block');
+
+(106,'Assist', NULL, '00:04:01'),
+(106,'Rebound', NULL, '00:00:58'),
+(106,'Block', NULL, '00:10:23'),
 
 -- Participation 107
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(107,'Foul'),
-(107,'Turnover'),
-(107,'FreeThrow');
+
+(107,'Foul', NULL, '00:02:23'),
+(107,'Turnover', NULL, '00:08:09'),
+(107,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 108
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(108,'TwoPointerShot'),
-(108,'ThreePointerShot'),
-(108,'Assist');
+
+(108,'TwoPointerShot', 2, '00:12:22'),
+(108,'ThreePointerShot', 3, '00:07:59'),
+(108,'Assist', NULL, '00:04:01'),
 
 -- Participation 109
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(109,'Rebound'),
-(109,'Block'),
-(109,'Foul');
+
+(109,'Rebound', NULL, '00:00:58'),
+(109,'Block', NULL, '00:10:23'),
+(109,'Foul', NULL, '00:02:23'),
 
 -- Participation 110
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(110,'Turnover'),
-(110,'FreeThrow'),
-(110,'TwoPointerShot');
+
+(110,'Turnover', NULL, '00:08:09'),
+(110,'FreeThrow', 1, '00:02:45'),
+(110,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 111
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(111,'ThreePointerShot'),
-(111,'Assist'),
-(111,'Rebound');
+
+(111,'ThreePointerShot', 3, '00:07:59'),
+(111,'Assist', NULL, '00:04:01'),
+(111,'Rebound', NULL, '00:00:58'),
 
 -- Participation 112
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(112,'Block'),
-(112,'Foul'),
-(112,'Turnover');
+
+(112,'Block', NULL, '00:10:23'),
+(112,'Foul', NULL, '00:02:23'),
+(112,'Turnover', NULL, '00:08:09'),
 
 -- Participation 113
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(113,'FreeThrow'),
-(113,'TwoPointerShot'),
-(113,'ThreePointerShot');
+
+(113,'FreeThrow', 1, '00:02:45'),
+(113,'TwoPointerShot', 2, '00:12:22'),
+(113,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 114
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(114,'Assist'),
-(114,'Rebound'),
-(114,'Block');
+
+(114,'Assist', NULL, '00:04:01'),
+(114,'Rebound', NULL, '00:00:58'),
+(114,'Block', NULL, '00:10:23'),
 
 -- Participation 115
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(115,'Foul'),
-(115,'Turnover'),
-(115,'FreeThrow');
+
+(115,'Foul', NULL, '00:02:23'),
+(115,'Turnover', NULL, '00:08:09'),
+(115,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 116
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(116,'TwoPointerShot'),
-(116,'ThreePointerShot'),
-(116,'Assist');
+
+(116,'TwoPointerShot', 2, '00:12:22'),
+(116,'ThreePointerShot', 3, '00:07:59'),
+(116,'Assist', NULL, '00:04:01'),
 
 -- Participation 117
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(117,'Rebound'),
-(117,'Block'),
-(117,'Foul');
+
+(117,'Rebound', NULL, '00:00:58'),
+(117,'Block', NULL, '00:10:23'),
+(117,'Foul', NULL, '00:02:23'),
 
 -- Participation 118
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(118,'Turnover'),
-(118,'FreeThrow'),
-(118,'TwoPointerShot');
+
+(118,'Turnover', NULL, '00:08:09'),
+(118,'FreeThrow', 1, '00:02:45'),
+(118,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 119
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(119,'ThreePointerShot'),
-(119,'Assist'),
-(119,'Rebound');
+
+(119,'ThreePointerShot', 3, '00:07:59'),
+(119,'Assist', NULL, '00:04:01'),
+(119,'Rebound', NULL, '00:00:58'),
 
 -- Participation 120
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(120,'Block'),
-(120,'Foul'),
-(120,'Turnover');
+
+(120,'Block', NULL, '00:10:23'),
+(120,'Foul', NULL, '00:02:23'),
+(120,'Turnover', NULL, '00:08:09'),
 
 -- Participation 121
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(121,'FreeThrow'),
-(121,'TwoPointerShot'),
-(121,'ThreePointerShot');
+
+(121,'FreeThrow', 1, '00:02:45'),
+(121,'TwoPointerShot', 2, '00:12:22'),
+(121,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 122
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(122,'Assist'),
-(122,'Rebound'),
-(122,'Block');
+
+(122,'Assist', NULL, '00:04:01'),
+(122,'Rebound', NULL, '00:00:58'),
+(122,'Block', NULL, '00:10:23'),
 
 -- Participation 123
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(123,'Foul'),
-(123,'Turnover'),
-(123,'FreeThrow');
+
+(123,'Foul', NULL, '00:02:23'),
+(123,'Turnover', NULL, '00:08:09'),
+(123,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 124
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(124,'TwoPointerShot'),
-(124,'ThreePointerShot'),
-(124,'Assist');
+
+(124,'TwoPointerShot', 2, '00:12:22'),
+(124,'ThreePointerShot', 3, '00:07:59'),
+(124,'Assist', NULL, '00:04:01'),
 
 -- Participation 125
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(125,'Rebound'),
-(125,'Block'),
-(125,'Foul');
+
+(125,'Rebound', NULL, '00:00:58'),
+(125,'Block', NULL, '00:10:23'),
+(125,'Foul', NULL, '00:02:23'),
 
 -- Participation 126
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(126,'Turnover'),
-(126,'FreeThrow'),
-(126,'TwoPointerShot');
+
+(126,'Turnover', NULL, '00:08:09'),
+(126,'FreeThrow', 1, '00:02:45'),
+(126,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 127
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(127,'ThreePointerShot'),
-(127,'Assist'),
-(127,'Rebound');
+
+(127,'ThreePointerShot', 3, '00:07:59'),
+(127,'Assist', NULL, '00:04:01'),
+(127,'Rebound', NULL, '00:00:58'),
 
 -- Participation 128
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(128,'Block'),
-(128,'Foul'),
-(128,'Turnover');
+
+(128,'Block', NULL, '00:10:23'),
+(128,'Foul', NULL, '00:02:23'),
+(128,'Turnover', NULL, '00:08:09'),
 
 -- Participation 129
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(129,'FreeThrow'),
-(129,'TwoPointerShot'),
-(129,'ThreePointerShot');
+
+(129,'FreeThrow', 1, '00:02:45'),
+(129,'TwoPointerShot', 2, '00:12:22'),
+(129,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 130
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(130,'Assist'),
-(130,'Rebound'),
-(130,'Block');
+
+(130,'Assist', NULL, '00:04:01'),
+(130,'Rebound', NULL, '00:00:58'),
+(130,'Block', NULL, '00:10:23'),
 
 -- Participation 131
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(131,'Foul'),
-(131,'Turnover'),
-(131,'FreeThrow');
+
+(131,'Foul', NULL, '00:02:23'),
+(131,'Turnover', NULL, '00:08:09'),
+(131,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 132
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(132,'TwoPointerShot'),
-(132,'ThreePointerShot'),
-(132,'Assist');
+
+(132,'TwoPointerShot', 2, '00:12:22'),
+(132,'ThreePointerShot', 3, '00:07:59'),
+(132,'Assist', NULL, '00:04:01'),
 
 -- Participation 133
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(133,'Rebound'),
-(133,'Block'),
-(133,'Foul');
+
+(133,'Rebound', NULL, '00:00:58'),
+(133,'Block', NULL, '00:10:23'),
+(133,'Foul', NULL, '00:02:23'),
 
 -- Participation 134
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(134,'Turnover'),
-(134,'FreeThrow'),
-(134,'TwoPointerShot');
+
+(134,'Turnover', NULL, '00:08:09'),
+(134,'FreeThrow', 1, '00:02:45'),
+(134,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 135
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(135,'ThreePointerShot'),
-(135,'Assist'),
-(135,'Rebound');
+
+(135,'ThreePointerShot', 3, '00:07:59'),
+(135,'Assist', NULL, '00:04:01'),
+(135,'Rebound', NULL, '00:00:58'),
 
 -- Participation 136
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(136,'Block'),
-(136,'Foul'),
-(136,'Turnover');
+
+(136,'Block', NULL, '00:10:23'),
+(136,'Foul', NULL, '00:02:23'),
+(136,'Turnover', NULL, '00:08:09'),
 
 -- Participation 137
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(137,'FreeThrow'),
-(137,'TwoPointerShot'),
-(137,'ThreePointerShot');
+
+(137,'FreeThrow', 1, '00:02:45'),
+(137,'TwoPointerShot', 2, '00:12:22'),
+(137,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 138
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(138,'Assist'),
-(138,'Rebound'),
-(138,'Block');
+
+(138,'Assist', NULL, '00:04:01'),
+(138,'Rebound', NULL, '00:00:58'),
+(138,'Block', NULL, '00:10:23'),
 
 -- Participation 139
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(139,'Foul'),
-(139,'Turnover'),
-(139,'FreeThrow');
+
+(139,'Foul', NULL, '00:02:23'),
+(139,'Turnover', NULL, '00:08:09'),
+(139,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 140
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(140,'TwoPointerShot'),
-(140,'ThreePointerShot'),
-(140,'Assist');
+
+(140,'TwoPointerShot', 2, '00:12:22'),
+(140,'ThreePointerShot', 3, '00:07:59'),
+(140,'Assist', NULL, '00:04:01'),
 
 -- Participation 141
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(141,'Rebound'),
-(141,'Block'),
-(141,'Foul');
+
+(141,'Rebound', NULL, '00:00:58'),
+(141,'Block', NULL, '00:10:23'),
+(141,'Foul', NULL, '00:02:23'),
 
 -- Participation 142
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(142,'Turnover'),
-(142,'FreeThrow'),
-(142,'TwoPointerShot');
+
+(142,'Turnover', NULL, '00:08:09'),
+(142,'FreeThrow', 1, '00:02:45'),
+(142,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 143
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(143,'ThreePointerShot'),
-(143,'Assist'),
-(143,'Rebound');
+
+(143,'ThreePointerShot', 3, '00:07:59'),
+(143,'Assist', NULL, '00:04:01'),
+(143,'Rebound', NULL, '00:00:58'),
 
 -- Participation 144
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(144,'Block'),
-(144,'Foul'),
-(144,'Turnover');
+
+(144,'Block', NULL, '00:10:23'),
+(144,'Foul', NULL, '00:02:23'),
+(144,'Turnover', NULL, '00:08:09'),
 
 -- Participation 145
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(145,'FreeThrow'),
-(145,'TwoPointerShot'),
-(145,'ThreePointerShot');
+
+(145,'FreeThrow', 1, '00:02:45'),
+(145,'TwoPointerShot', 2, '00:12:22'),
+(145,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 146
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(146,'Assist'),
-(146,'Rebound'),
-(146,'Block');
+
+(146,'Assist', NULL, '00:04:01'),
+(146,'Rebound', NULL, '00:00:58'),
+(146,'Block', NULL, '00:10:23'),
 
 -- Participation 147
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(147,'Foul'),
-(147,'Turnover'),
-(147,'FreeThrow');
+
+(147,'Foul', NULL, '00:02:23'),
+(147,'Turnover', NULL, '00:08:09'),
+(147,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 148
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(148,'TwoPointerShot'),
-(148,'ThreePointerShot'),
-(148,'Assist');
+
+(148,'TwoPointerShot', 2, '00:12:22'),
+(148,'ThreePointerShot', 3, '00:07:59'),
+(148,'Assist', NULL, '00:04:01'),
 
 -- Participation 149
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(149,'Rebound'),
-(149,'Block'),
-(149,'Foul');
+
+(149,'Rebound', NULL, '00:00:58'),
+(149,'Block', NULL, '00:10:23'),
+(149,'Foul', NULL, '00:02:23'),
 
 -- Participation 150
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(150,'Turnover'),
-(150,'FreeThrow'),
-(150,'TwoPointerShot');
+
+(150,'Turnover', NULL, '00:08:09'),
+(150,'FreeThrow', 1, '00:02:45'),
+(150,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 151
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(151,'ThreePointerShot'),
-(151,'Assist'),
-(151,'Rebound');
+
+(151,'ThreePointerShot', 3, '00:07:59'),
+(151,'Assist', NULL, '00:04:01'),
+(151,'Rebound', NULL, '00:00:58'),
 
 -- Participation 152
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(152,'Block'),
-(152,'Foul'),
-(152,'Turnover');
+
+(152,'Block', NULL, '00:10:23'),
+(152,'Foul', NULL, '00:02:23'),
+(152,'Turnover', NULL, '00:08:09'),
 
 -- Participation 153
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(153,'FreeThrow'),
-(153,'TwoPointerShot'),
-(153,'ThreePointerShot');
+
+(153,'FreeThrow', 1, '00:02:45'),
+(153,'TwoPointerShot', 2, '00:12:22'),
+(153,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 154
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(154,'Assist'),
-(154,'Rebound'),
-(154,'Block');
+
+(154,'Assist', NULL, '00:04:01'),
+(154,'Rebound', NULL, '00:00:58'),
+(154,'Block', NULL, '00:10:23'),
 
 -- Participation 155
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(155,'Foul'),
-(155,'Turnover'),
-(155,'FreeThrow');
+
+(155,'Foul', NULL, '00:02:23'),
+(155,'Turnover', NULL, '00:08:09'),
+(155,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 156
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(156,'TwoPointerShot'),
-(156,'ThreePointerShot'),
-(156,'Assist');
+
+(156,'TwoPointerShot', 2, '00:12:22'),
+(156,'ThreePointerShot', 3, '00:07:59'),
+(156,'Assist', NULL, '00:04:01'),
 
 -- Participation 157
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(157,'Rebound'),
-(157,'Block'),
-(157,'Foul');
+
+(157,'Rebound', NULL, '00:00:58'),
+(157,'Block', NULL, '00:10:23'),
+(157,'Foul', NULL, '00:02:23'),
 
 -- Participation 158
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(158,'Turnover'),
-(158,'FreeThrow'),
-(158,'TwoPointerShot');
+
+(158,'Turnover', NULL, '00:08:09'),
+(158,'FreeThrow', 1, '00:02:45'),
+(158,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 159
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(159,'ThreePointerShot'),
-(159,'Assist'),
-(159,'Rebound');
+
+(159,'ThreePointerShot', 3, '00:07:59'),
+(159,'Assist', NULL, '00:04:01'),
+(159,'Rebound', NULL, '00:00:58'),
 
 -- Participation 160
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(160,'Block'),
-(160,'Foul'),
-(160,'Turnover');
+
+(160,'Block', NULL, '00:10:23'),
+(160,'Foul', NULL, '00:02:23'),
+(160,'Turnover', NULL, '00:08:09'),
 
 -- Participation 161
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(161,'FreeThrow'),
-(161,'TwoPointerShot'),
-(161,'ThreePointerShot');
+
+(161,'FreeThrow', 1, '00:02:45'),
+(161,'TwoPointerShot', 2, '00:12:22'),
+(161,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 162
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(162,'Assist'),
-(162,'Rebound'),
-(162,'Block');
+
+(162,'Assist', NULL, '00:04:01'),
+(162,'Rebound', NULL, '00:00:58'),
+(162,'Block', NULL, '00:10:23'),
 
 -- Participation 163
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(163,'Foul'),
-(163,'Turnover'),
-(163,'FreeThrow');
+
+(163,'Foul', NULL, '00:02:23'),
+(163,'Turnover', NULL, '00:08:09'),
+(163,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 164
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(164,'TwoPointerShot'),
-(164,'ThreePointerShot'),
-(164,'Assist');
+
+(164,'TwoPointerShot', 2, '00:12:22'),
+(164,'ThreePointerShot', 3, '00:07:59'),
+(164,'Assist', NULL, '00:04:01'),
 
 -- Participation 165
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(165,'Rebound'),
-(165,'Block'),
-(165,'Foul');
+
+(165,'Rebound', NULL, '00:00:58'),
+(165,'Block', NULL, '00:10:23'),
+(165,'Foul', NULL, '00:02:23'),
 
 -- Participation 166
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(166,'Turnover'),
-(166,'FreeThrow'),
-(166,'TwoPointerShot');
+
+(166,'Turnover', NULL, '00:08:09'),
+(166,'FreeThrow', 1, '00:02:45'),
+(166,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 167
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(167,'ThreePointerShot'),
-(167,'Assist'),
-(167,'Rebound');
+
+(167,'ThreePointerShot', 3, '00:07:59'),
+(167,'Assist', NULL, '00:04:01'),
+(167,'Rebound', NULL, '00:00:58'),
 
 -- Participation 168
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(168,'Block'),
-(168,'Foul'),
-(168,'Turnover');
+
+(168,'Block', NULL, '00:10:23'),
+(168,'Foul', NULL, '00:02:23'),
+(168,'Turnover', NULL, '00:08:09'),
 
 -- Participation 169
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(169,'FreeThrow'),
-(169,'TwoPointerShot'),
-(169,'ThreePointerShot');
+
+(169,'FreeThrow', 1, '00:02:45'),
+(169,'TwoPointerShot', 2, '00:12:22'),
+(169,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 170
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(170,'Assist'),
-(170,'Rebound'),
-(170,'Block');
+
+(170,'Assist', NULL, '00:04:01'),
+(170,'Rebound', NULL, '00:00:58'),
+(170,'Block', NULL, '00:10:23'),
 
 -- Participation 171
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(171,'Foul'),
-(171,'Turnover'),
-(171,'FreeThrow');
+
+(171,'Foul', NULL, '00:02:23'),
+(171,'Turnover', NULL, '00:08:09'),
+(171,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 172
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(172,'TwoPointerShot'),
-(172,'ThreePointerShot'),
-(172,'Assist');
+
+(172,'TwoPointerShot', 2, '00:12:22'),
+(172,'ThreePointerShot', 3, '00:07:59'),
+(172,'Assist', NULL, '00:04:01'),
 
 -- Participation 173
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(173,'Rebound'),
-(173,'Block'),
-(173,'Foul');
+
+(173,'Rebound', NULL, '00:00:58'),
+(173,'Block', NULL, '00:10:23'),
+(173,'Foul', NULL, '00:02:23'),
 
 -- Participation 174
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(174,'Turnover'),
-(174,'FreeThrow'),
-(174,'TwoPointerShot');
+
+(174,'Turnover', NULL, '00:08:09'),
+(174,'FreeThrow', 1, '00:02:45'),
+(174,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 175
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(175,'ThreePointerShot'),
-(175,'Assist'),
-(175,'Rebound');
+
+(175,'ThreePointerShot', 3, '00:07:59'),
+(175,'Assist', NULL, '00:04:01'),
+(175,'Rebound', NULL, '00:00:58'),
 
 -- Participation 176
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(176,'Block'),
-(176,'Foul'),
-(176,'Turnover');
+
+(176,'Block', NULL, '00:10:23'),
+(176,'Foul', NULL, '00:02:23'),
+(176,'Turnover', NULL, '00:08:09'),
 
 -- Participation 177
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(177,'FreeThrow'),
-(177,'TwoPointerShot'),
-(177,'ThreePointerShot');
+
+(177,'FreeThrow', 1, '00:02:45'),
+(177,'TwoPointerShot', 2, '00:12:22'),
+(177,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 178
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(178,'Assist'),
-(178,'Rebound'),
-(178,'Block');
+
+(178,'Assist', NULL, '00:04:01'),
+(178,'Rebound', NULL, '00:00:58'),
+(178,'Block', NULL, '00:10:23'),
 
 -- Participation 179
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(179,'Foul'),
-(179,'Turnover'),
-(179,'FreeThrow');
+
+(179,'Foul', NULL, '00:02:23'),
+(179,'Turnover', NULL, '00:08:09'),
+(179,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 180
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(180,'TwoPointerShot'),
-(180,'ThreePointerShot'),
-(180,'Assist');
+
+(180,'TwoPointerShot', 2, '00:12:22'),
+(180,'ThreePointerShot', 3, '00:07:59'),
+(180,'Assist', NULL, '00:04:01'),
 
 -- Participation 181
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(181,'Rebound'),
-(181,'Block'),
-(181,'Foul');
+
+(181,'Rebound', NULL, '00:00:58'),
+(181,'Block', NULL, '00:10:23'),
+(181,'Foul', NULL, '00:02:23'),
 
 -- Participation 182
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(182,'Turnover'),
-(182,'FreeThrow'),
-(182,'TwoPointerShot');
+
+(182,'Turnover', NULL, '00:08:09'),
+(182,'FreeThrow', 1, '00:02:45'),
+(182,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 183
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(183,'ThreePointerShot'),
-(183,'Assist'),
-(183,'Rebound');
+
+(183,'ThreePointerShot', 3, '00:07:59'),
+(183,'Assist', NULL, '00:04:01'),
+(183,'Rebound', NULL, '00:00:58'),
 
 -- Participation 184
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(184,'Block'),
-(184,'Foul'),
-(184,'Turnover');
+
+(184,'Block', NULL, '00:10:23'),
+(184,'Foul', NULL, '00:02:23'),
+(184,'Turnover', NULL, '00:08:09'),
 
 -- Participation 185
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(185,'FreeThrow'),
-(185,'TwoPointerShot'),
-(185,'ThreePointerShot');
+
+(185,'FreeThrow', 1, '00:02:45'),
+(185,'TwoPointerShot', 2, '00:12:22'),
+(185,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 186
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(186,'Assist'),
-(186,'Rebound'),
-(186,'Block');
+
+(186,'Assist', NULL, '00:04:01'),
+(186,'Rebound', NULL, '00:00:58'),
+(186,'Block', NULL, '00:10:23'),
 
 -- Participation 187
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(187,'Foul'),
-(187,'Turnover'),
-(187,'FreeThrow');
+
+(187,'Foul', NULL, '00:02:23'),
+(187,'Turnover', NULL, '00:08:09'),
+(187,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 188
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(188,'TwoPointerShot'),
-(188,'ThreePointerShot'),
-(188,'Assist');
+
+(188,'TwoPointerShot', 2, '00:12:22'),
+(188,'ThreePointerShot', 3, '00:07:59'),
+(188,'Assist', NULL, '00:04:01'),
 
 -- Participation 189
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(189,'Rebound'),
-(189,'Block'),
-(189,'Foul');
+
+(189,'Rebound', NULL, '00:00:58'),
+(189,'Block', NULL, '00:10:23'),
+(189,'Foul', NULL, '00:02:23'),
 
 -- Participation 190
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(190,'Turnover'),
-(190,'FreeThrow'),
-(190,'TwoPointerShot');
+
+(190,'Turnover', NULL, '00:08:09'),
+(190,'FreeThrow', 1, '00:02:45'),
+(190,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 191
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(191,'ThreePointerShot'),
-(191,'Assist'),
-(191,'Rebound');
+
+(191,'ThreePointerShot', 3, '00:07:59'),
+(191,'Assist', NULL, '00:04:01'),
+(191,'Rebound', NULL, '00:00:58'),
 
 -- Participation 192
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(192,'Block'),
-(192,'Foul'),
-(192,'Turnover');
+
+(192,'Block', NULL, '00:10:23'),
+(192,'Foul', NULL, '00:02:23'),
+(192,'Turnover', NULL, '00:08:09'),
 
 -- Participation 193
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(193,'FreeThrow'),
-(193,'TwoPointerShot'),
-(193,'ThreePointerShot');
+
+(193,'FreeThrow', 1, '00:02:45'),
+(193,'TwoPointerShot', 2, '00:12:22'),
+(193,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 194
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(194,'Assist'),
-(194,'Rebound'),
-(194,'Block');
+
+(194,'Assist', NULL, '00:04:01'),
+(194,'Rebound', NULL, '00:00:58'),
+(194,'Block', NULL, '00:10:23'),
 
 -- Participation 195
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(195,'Foul'),
-(195,'Turnover'),
-(195,'FreeThrow');
+
+(195,'Foul', NULL, '00:02:23'),
+(195,'Turnover', NULL, '00:08:09'),
+(195,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 196
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(196,'TwoPointerShot'),
-(196,'ThreePointerShot'),
-(196,'Assist');
+
+(196,'TwoPointerShot', 2, '00:12:22'),
+(196,'ThreePointerShot', 3, '00:07:59'),
+(196,'Assist', NULL, '00:04:01'),
 
 -- Participation 197
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(197,'Rebound'),
-(197,'Block'),
-(197,'Foul');
+
+(197,'Rebound', NULL, '00:00:58'),
+(197,'Block', NULL, '00:10:23'),
+(197,'Foul', NULL, '00:02:23'),
 
 -- Participation 198
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(198,'Turnover'),
-(198,'FreeThrow'),
-(198,'TwoPointerShot');
+
+(198,'Turnover', NULL, '00:08:09'),
+(198,'FreeThrow', 1, '00:02:45'),
+(198,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 199
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(199,'ThreePointerShot'),
-(199,'Assist'),
-(199,'Rebound');
+
+(199,'ThreePointerShot', 3, '00:07:59'),
+(199,'Assist', NULL, '00:04:01'),
+(199,'Rebound', NULL, '00:00:58'),
 
 -- Participation 200
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(200,'Block'),
-(200,'Foul'),
-(200,'Turnover');
+
+(200,'Block', NULL, '00:10:23'),
+(200,'Foul', NULL, '00:02:23'),
+(200,'Turnover', NULL, '00:08:09'),
 
 -- Participation 201
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(201,'FreeThrow'),
-(201,'TwoPointerShot'),
-(201,'ThreePointerShot');
+
+(201,'FreeThrow', 1, '00:02:45'),
+(201,'TwoPointerShot', 2, '00:12:22'),
+(201,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 202
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(202,'Assist'),
-(202,'Rebound'),
-(202,'Block');
+
+(202,'Assist', NULL, '00:04:01'),
+(202,'Rebound', NULL, '00:00:58'),
+(202,'Block', NULL, '00:10:23'),
 
 -- Participation 203
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(203,'Foul'),
-(203,'Turnover'),
-(203,'FreeThrow');
+
+(203,'Foul', NULL, '00:02:23'),
+(203,'Turnover', NULL, '00:08:09'),
+(203,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 204
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(204,'TwoPointerShot'),
-(204,'ThreePointerShot'),
-(204,'Assist');
+
+(204,'TwoPointerShot', 2, '00:12:22'),
+(204,'ThreePointerShot', 3, '00:07:59'),
+(204,'Assist', NULL, '00:04:01'),
 
 -- Participation 205
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(205,'Rebound'),
-(205,'Block'),
-(205,'Foul');
+
+(205,'Rebound', NULL, '00:00:58'),
+(205,'Block', NULL, '00:10:23'),
+(205,'Foul', NULL, '00:02:23'),
 
 -- Participation 206
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(206,'Turnover'),
-(206,'FreeThrow'),
-(206,'TwoPointerShot');
+
+(206,'Turnover', NULL, '00:08:09'),
+(206,'FreeThrow', 1, '00:02:45'),
+(206,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 207
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(207,'ThreePointerShot'),
-(207,'Assist'),
-(207,'Rebound');
+
+(207,'ThreePointerShot', 3, '00:07:59'),
+(207,'Assist', NULL, '00:04:01'),
+(207,'Rebound', NULL, '00:00:58'),
 
 -- Participation 208
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(208,'Block'),
-(208,'Foul'),
-(208,'Turnover');
+
+(208,'Block', NULL, '00:10:23'),
+(208,'Foul', NULL, '00:02:23'),
+(208,'Turnover', NULL, '00:08:09'),
 
 -- Participation 209
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(209,'FreeThrow'),
-(209,'TwoPointerShot'),
-(209,'ThreePointerShot');
+
+(209,'FreeThrow', 1, '00:02:45'),
+(209,'TwoPointerShot', 2, '00:12:22'),
+(209,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 210
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(210,'Assist'),
-(210,'Rebound'),
-(210,'Block');
+
+(210,'Assist', NULL, '00:04:01'),
+(210,'Rebound', NULL, '00:00:58'),
+(210,'Block', NULL, '00:10:23'),
 
 -- Participation 211
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(211,'Foul'),
-(211,'Turnover'),
-(211,'FreeThrow');
+
+(211,'Foul', NULL, '00:02:23'),
+(211,'Turnover', NULL, '00:08:09'),
+(211,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 212
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(212,'TwoPointerShot'),
-(212,'ThreePointerShot'),
-(212,'Assist');
+
+(212,'TwoPointerShot', 2, '00:12:22'),
+(212,'ThreePointerShot', 3, '00:07:59'),
+(212,'Assist', NULL, '00:04:01'),
 
 -- Participation 213
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(213,'Rebound'),
-(213,'Block'),
-(213,'Foul');
+
+(213,'Rebound', NULL, '00:00:58'),
+(213,'Block', NULL, '00:10:23'),
+(213,'Foul', NULL, '00:02:23'),
 
 -- Participation 214
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(214,'Turnover'),
-(214,'FreeThrow'),
-(214,'TwoPointerShot');
+
+(214,'Turnover', NULL, '00:08:09'),
+(214,'FreeThrow', 1, '00:02:45'),
+(214,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 215
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(215,'ThreePointerShot'),
-(215,'Assist'),
-(215,'Rebound');
+
+(215,'ThreePointerShot', 3, '00:07:59'),
+(215,'Assist', NULL, '00:04:01'),
+(215,'Rebound', NULL, '00:00:58'),
 
 -- Participation 216
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(216,'Block'),
-(216,'Foul'),
-(216,'Turnover');
+
+(216,'Block', NULL, '00:10:23'),
+(216,'Foul', NULL, '00:02:23'),
+(216,'Turnover', NULL, '00:08:09'),
 
 -- Participation 217
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(217,'FreeThrow'),
-(217,'TwoPointerShot'),
-(217,'ThreePointerShot');
+
+(217,'FreeThrow', 1, '00:02:45'),
+(217,'TwoPointerShot', 2, '00:12:22'),
+(217,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 218
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(218,'Assist'),
-(218,'Rebound'),
-(218,'Block');
+
+(218,'Assist', NULL, '00:04:01'),
+(218,'Rebound', NULL, '00:00:58'),
+(218,'Block', NULL, '00:10:23'),
 
 -- Participation 219
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(219,'Foul'),
-(219,'Turnover'),
-(219,'FreeThrow');
+
+(219,'Foul', NULL, '00:02:23'),
+(219,'Turnover', NULL, '00:08:09'),
+(219,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 220
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(220,'TwoPointerShot'),
-(220,'ThreePointerShot'),
-(220,'Assist');
+
+(220,'TwoPointerShot', 2, '00:12:22'),
+(220,'ThreePointerShot', 3, '00:07:59'),
+(220,'Assist', NULL, '00:04:01'),
 
 -- Participation 221
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(221,'Rebound'),
-(221,'Block'),
-(221,'Foul');
+
+(221,'Rebound', NULL, '00:00:58'),
+(221,'Block', NULL, '00:10:23'),
+(221,'Foul', NULL, '00:02:23'),
 
 -- Participation 222
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(222,'Turnover'),
-(222,'FreeThrow'),
-(222,'TwoPointerShot');
+
+(222,'Turnover', NULL, '00:08:09'),
+(222,'FreeThrow', 1, '00:02:45'),
+(222,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 223
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(223,'ThreePointerShot'),
-(223,'Assist'),
-(223,'Rebound');
+
+(223,'ThreePointerShot', 3, '00:07:59'),
+(223,'Assist', NULL, '00:04:01'),
+(223,'Rebound', NULL, '00:00:58'),
 
 -- Participation 224
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(224,'Block'),
-(224,'Foul'),
-(224,'Turnover');
+
+(224,'Block', NULL, '00:10:23'),
+(224,'Foul', NULL, '00:02:23'),
+(224,'Turnover', NULL, '00:08:09'),
 
 -- Participation 225
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(225,'FreeThrow'),
-(225,'TwoPointerShot'),
-(225,'ThreePointerShot');
+
+(225,'FreeThrow', 1, '00:02:45'),
+(225,'TwoPointerShot', 2, '00:12:22'),
+(225,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 226
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(226,'Assist'),
-(226,'Rebound'),
-(226,'Block');
+
+(226,'Assist', NULL, '00:04:01'),
+(226,'Rebound', NULL, '00:00:58'),
+(226,'Block', NULL, '00:10:23'),
 
 -- Participation 227
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(227,'Foul'),
-(227,'Turnover'),
-(227,'FreeThrow');
+
+(227,'Foul', NULL, '00:02:23'),
+(227,'Turnover', NULL, '00:08:09'),
+(227,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 228
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(228,'TwoPointerShot'),
-(228,'ThreePointerShot'),
-(228,'Assist');
+
+(228,'TwoPointerShot', 2, '00:12:22'),
+(228,'ThreePointerShot', 3, '00:07:59'),
+(228,'Assist', NULL, '00:04:01'),
 
 -- Participation 229
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(229,'Rebound'),
-(229,'Block'),
-(229,'Foul');
+
+(229,'Rebound', NULL, '00:00:58'),
+(229,'Block', NULL, '00:10:23'),
+(229,'Foul', NULL, '00:02:23'),
 
 -- Participation 230
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(230,'Turnover'),
-(230,'FreeThrow'),
-(230,'TwoPointerShot');
+
+(230,'Turnover', NULL, '00:08:09'),
+(230,'FreeThrow', 1, '00:02:45'),
+(230,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 231
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(231,'ThreePointerShot'),
-(231,'Assist'),
-(231,'Rebound');
+
+(231,'ThreePointerShot', 3, '00:07:59'),
+(231,'Assist', NULL, '00:04:01'),
+(231,'Rebound', NULL, '00:00:58'),
 
 -- Participation 232
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(232,'Block'),
-(232,'Foul'),
-(232,'Turnover');
+
+(232,'Block', NULL, '00:10:23'),
+(232,'Foul', NULL, '00:02:23'),
+(232,'Turnover', NULL, '00:08:09'),
 
 -- Participation 233
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(233,'FreeThrow'),
-(233,'TwoPointerShot'),
-(233,'ThreePointerShot');
+
+(233,'FreeThrow', 1, '00:02:45'),
+(233,'TwoPointerShot', 2, '00:12:22'),
+(233,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 234
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(234,'Assist'),
-(234,'Rebound'),
-(234,'Block');
+
+(234,'Assist', NULL, '00:04:01'),
+(234,'Rebound', NULL, '00:00:58'),
+(234,'Block', NULL, '00:10:23'),
 
 -- Participation 235
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(235,'Foul'),
-(235,'Turnover'),
-(235,'FreeThrow');
+
+(235,'Foul', NULL, '00:02:23'),
+(235,'Turnover', NULL, '00:08:09'),
+(235,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 236
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(236,'TwoPointerShot'),
-(236,'ThreePointerShot'),
-(236,'Assist');
+
+(236,'TwoPointerShot', 2, '00:12:22'),
+(236,'ThreePointerShot', 3, '00:07:59'),
+(236,'Assist', NULL, '00:04:01'),
 
 -- Participation 237
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(237,'Rebound'),
-(237,'Block'),
-(237,'Foul');
+
+(237,'Rebound', NULL, '00:00:58'),
+(237,'Block', NULL, '00:10:23'),
+(237,'Foul', NULL, '00:02:23'),
 
 -- Participation 238
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(238,'Turnover'),
-(238,'FreeThrow'),
-(238,'TwoPointerShot');
+
+(238,'Turnover', NULL, '00:08:09'),
+(238,'FreeThrow', 1, '00:02:45'),
+(238,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 239
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(239,'ThreePointerShot'),
-(239,'Assist'),
-(239,'Rebound');
+
+(239,'ThreePointerShot', 3, '00:07:59'),
+(239,'Assist', NULL, '00:04:01'),
+(239,'Rebound', NULL, '00:00:58'),
 
 -- Participation 240
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(240,'Block'),
-(240,'Foul'),
-(240,'Turnover');
+
+(240,'Block', NULL, '00:10:23'),
+(240,'Foul', NULL, '00:02:23'),
+(240,'Turnover', NULL, '00:08:09'),
 
 -- Participation 241
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(241,'FreeThrow'),
-(241,'TwoPointerShot'),
-(241,'ThreePointerShot');
+
+(241,'FreeThrow', 1, '00:02:45'),
+(241,'TwoPointerShot', 2, '00:12:22'),
+(241,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 242
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(242,'Assist'),
-(242,'Rebound'),
-(242,'Block');
+
+(242,'Assist', NULL, '00:04:01'),
+(242,'Rebound', NULL, '00:00:58'),
+(242,'Block', NULL, '00:10:23'),
 
 -- Participation 243
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(243,'Foul'),
-(243,'Turnover'),
-(243,'FreeThrow');
+
+(243,'Foul', NULL, '00:02:23'),
+(243,'Turnover', NULL, '00:08:09'),
+(243,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 244
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(244,'TwoPointerShot'),
-(244,'ThreePointerShot'),
-(244,'Assist');
+
+(244,'TwoPointerShot', 2, '00:12:22'),
+(244,'ThreePointerShot', 3, '00:07:59'),
+(244,'Assist', NULL, '00:04:01'),
 
 -- Participation 245
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(245,'Rebound'),
-(245,'Block'),
-(245,'Foul');
+
+(245,'Rebound', NULL, '00:00:58'),
+(245,'Block', NULL, '00:10:23'),
+(245,'Foul', NULL, '00:02:23'),
 
 -- Participation 246
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(246,'Turnover'),
-(246,'FreeThrow'),
-(246,'TwoPointerShot');
+
+(246,'Turnover', NULL, '00:08:09'),
+(246,'FreeThrow', 1, '00:02:45'),
+(246,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 247
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(247,'ThreePointerShot'),
-(247,'Assist'),
-(247,'Rebound');
+
+(247,'ThreePointerShot', 3, '00:07:59'),
+(247,'Assist', NULL, '00:04:01'),
+(247,'Rebound', NULL, '00:00:58'),
 
 -- Participation 248
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(248,'Block'),
-(248,'Foul'),
-(248,'Turnover');
+
+(248,'Block', NULL, '00:10:23'),
+(248,'Foul', NULL, '00:02:23'),
+(248,'Turnover', NULL, '00:08:09'),
 
 -- Participation 249
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(249,'FreeThrow'),
-(249,'TwoPointerShot'),
-(249,'ThreePointerShot');
+
+(249,'FreeThrow', 1, '00:02:45'),
+(249,'TwoPointerShot', 2, '00:12:22'),
+(249,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 250
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(250,'Assist'),
-(250,'Rebound'),
-(250,'Block');
+
+(250,'Assist', NULL, '00:04:01'),
+(250,'Rebound', NULL, '00:00:58'),
+(250,'Block', NULL, '00:10:23'),
 
 -- Participation 251
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(251,'Foul'),
-(251,'Turnover'),
-(251,'FreeThrow');
+
+(251,'Foul', NULL, '00:02:23'),
+(251,'Turnover', NULL, '00:08:09'),
+(251,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 252
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(252,'TwoPointerShot'),
-(252,'ThreePointerShot'),
-(252,'Assist');
+
+(252,'TwoPointerShot', 2, '00:12:22'),
+(252,'ThreePointerShot', 3, '00:07:59'),
+(252,'Assist', NULL, '00:04:01'),
 
 -- Participation 253
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(253,'Rebound'),
-(253,'Block'),
-(253,'Foul');
+
+(253,'Rebound', NULL, '00:00:58'),
+(253,'Block', NULL, '00:10:23'),
+(253,'Foul', NULL, '00:02:23'),
 
 -- Participation 254
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(254,'Turnover'),
-(254,'FreeThrow'),
-(254,'TwoPointerShot');
+
+(254,'Turnover', NULL, '00:08:09'),
+(254,'FreeThrow', 1, '00:02:45'),
+(254,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 255
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(255,'ThreePointerShot'),
-(255,'Assist'),
-(255,'Rebound');
+
+(255,'ThreePointerShot', 3, '00:07:59'),
+(255,'Assist', NULL, '00:04:01'),
+(255,'Rebound', NULL, '00:00:58'),
 
 -- Participation 256
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(256,'Block'),
-(256,'Foul'),
-(256,'Turnover');
+
+(256,'Block', NULL, '00:10:23'),
+(256,'Foul', NULL, '00:02:23'),
+(256,'Turnover', NULL, '00:08:09'),
 
 -- Participation 257
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(257,'FreeThrow'),
-(257,'TwoPointerShot'),
-(257,'ThreePointerShot');
+
+(257,'FreeThrow', 1, '00:02:45'),
+(257,'TwoPointerShot', 2, '00:12:22'),
+(257,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 258
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(258,'Assist'),
-(258,'Rebound'),
-(258,'Block');
+
+(258,'Assist', NULL, '00:04:01'),
+(258,'Rebound', NULL, '00:00:58'),
+(258,'Block', NULL, '00:10:23'),
 
 -- Participation 259
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(259,'Foul'),
-(259,'Turnover'),
-(259,'FreeThrow');
+
+(259,'Foul', NULL, '00:02:23'),
+(259,'Turnover', NULL, '00:08:09'),
+(259,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 260
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(260,'TwoPointerShot'),
-(260,'ThreePointerShot'),
-(260,'Assist');
+
+(260,'TwoPointerShot', 2, '00:12:22'),
+(260,'ThreePointerShot', 3, '00:07:59'),
+(260,'Assist', NULL, '00:04:01'),
 
 -- Participation 261
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(261,'Rebound'),
-(261,'Block'),
-(261,'Foul');
+
+(261,'Rebound', NULL, '00:00:58'),
+(261,'Block', NULL, '00:10:23'),
+(261,'Foul', NULL, '00:02:23'),
 
 -- Participation 262
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(262,'Turnover'),
-(262,'FreeThrow'),
-(262,'TwoPointerShot');
+
+(262,'Turnover', NULL, '00:08:09'),
+(262,'FreeThrow', 1, '00:02:45'),
+(262,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 263
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(263,'ThreePointerShot'),
-(263,'Assist'),
-(263,'Rebound');
+
+(263,'ThreePointerShot', 3, '00:07:59'),
+(263,'Assist', NULL, '00:04:01'),
+(263,'Rebound', NULL, '00:00:58'),
 
 -- Participation 264
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(264,'Block'),
-(264,'Foul'),
-(264,'Turnover');
+
+(264,'Block', NULL, '00:10:23'),
+(264,'Foul', NULL, '00:02:23'),
+(264,'Turnover', NULL, '00:08:09'),
 
 -- Participation 265
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(265,'FreeThrow'),
-(265,'TwoPointerShot'),
-(265,'ThreePointerShot');
+
+(265,'FreeThrow', 1, '00:02:45'),
+(265,'TwoPointerShot', 2, '00:12:22'),
+(265,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 266
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(266,'Assist'),
-(266,'Rebound'),
-(266,'Block');
+
+(266,'Assist', NULL, '00:04:01'),
+(266,'Rebound', NULL, '00:00:58'),
+(266,'Block', NULL, '00:10:23'),
 
 -- Participation 267
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(267,'Foul'),
-(267,'Turnover'),
-(267,'FreeThrow');
+
+(267,'Foul', NULL, '00:02:23'),
+(267,'Turnover', NULL, '00:08:09'),
+(267,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 268
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(268,'TwoPointerShot'),
-(268,'ThreePointerShot'),
-(268,'Assist');
+
+(268,'TwoPointerShot', 2, '00:12:22'),
+(268,'ThreePointerShot', 3, '00:07:59'),
+(268,'Assist', NULL, '00:04:01'),
 
 -- Participation 269
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(269,'Rebound'),
-(269,'Block'),
-(269,'Foul');
+
+(269,'Rebound', NULL, '00:00:58'),
+(269,'Block', NULL, '00:10:23'),
+(269,'Foul', NULL, '00:02:23'),
 
 -- Participation 270
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(270,'Turnover'),
-(270,'FreeThrow'),
-(270,'TwoPointerShot');
+
+(270,'Turnover', NULL, '00:08:09'),
+(270,'FreeThrow', 1, '00:02:45'),
+(270,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 271
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(271,'ThreePointerShot'),
-(271,'Assist'),
-(271,'Rebound');
+
+(271,'ThreePointerShot', 3, '00:07:59'),
+(271,'Assist', NULL, '00:04:01'),
+(271,'Rebound', NULL, '00:00:58'),
 
 -- Participation 272
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(272,'Block'),
-(272,'Foul'),
-(272,'Turnover');
+
+(272,'Block', NULL, '00:10:23'),
+(272,'Foul', NULL, '00:02:23'),
+(272,'Turnover', NULL, '00:08:09'),
 
 -- Participation 273
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(273,'FreeThrow'),
-(273,'TwoPointerShot'),
-(273,'ThreePointerShot');
+
+(273,'FreeThrow', 1, '00:02:45'),
+(273,'TwoPointerShot', 2, '00:12:22'),
+(273,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 274
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(274,'Assist'),
-(274,'Rebound'),
-(274,'Block');
+
+(274,'Assist', NULL, '00:04:01'),
+(274,'Rebound', NULL, '00:00:58'),
+(274,'Block', NULL, '00:10:23'),
 
 -- Participation 275
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(275,'Foul'),
-(275,'Turnover'),
-(275,'FreeThrow');
+
+(275,'Foul', NULL, '00:02:23'),
+(275,'Turnover', NULL, '00:08:09'),
+(275,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 276
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(276,'TwoPointerShot'),
-(276,'ThreePointerShot'),
-(276,'Assist');
+
+(276,'TwoPointerShot', 2, '00:12:22'),
+(276,'ThreePointerShot', 3, '00:07:59'),
+(276,'Assist', NULL, '00:04:01'),
 
 -- Participation 277
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(277,'Rebound'),
-(277,'Block'),
-(277,'Foul');
+
+(277,'Rebound', NULL, '00:00:58'),
+(277,'Block', NULL, '00:10:23'),
+(277,'Foul', NULL, '00:02:23'),
 
 -- Participation 278
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(278,'Turnover'),
-(278,'FreeThrow'),
-(278,'TwoPointerShot');
+
+(278,'Turnover', NULL, '00:08:09'),
+(278,'FreeThrow', 1, '00:02:45'),
+(278,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 279
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(279,'ThreePointerShot'),
-(279,'Assist'),
-(279,'Rebound');
+
+(279,'ThreePointerShot', 3, '00:07:59'),
+(279,'Assist', NULL, '00:04:01'),
+(279,'Rebound', NULL, '00:00:58'),
 
 -- Participation 280
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(280,'Block'),
-(280,'Foul'),
-(280,'Turnover');
+
+(280,'Block', NULL, '00:10:23'),
+(280,'Foul', NULL, '00:02:23'),
+(280,'Turnover', NULL, '00:08:09'),
 
 -- Participation 281
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(281,'FreeThrow'),
-(281,'TwoPointerShot'),
-(281,'ThreePointerShot');
+
+(281,'FreeThrow', 1, '00:02:45'),
+(281,'TwoPointerShot', 2, '00:12:22'),
+(281,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 282
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(282,'Assist'),
-(282,'Rebound'),
-(282,'Block');
+
+(282,'Assist', NULL, '00:04:01'),
+(282,'Rebound', NULL, '00:00:58'),
+(282,'Block', NULL, '00:10:23'),
 
 -- Participation 283
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(283,'Foul'),
-(283,'Turnover'),
-(283,'FreeThrow');
+
+(283,'Foul', NULL, '00:02:23'),
+(283,'Turnover', NULL, '00:08:09'),
+(283,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 284
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(284,'TwoPointerShot'),
-(284,'ThreePointerShot'),
-(284,'Assist');
+
+(284,'TwoPointerShot', 2, '00:12:22'),
+(284,'ThreePointerShot', 3, '00:07:59'),
+(284,'Assist', NULL, '00:04:01'),
 
 -- Participation 285
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(285,'Rebound'),
-(285,'Block'),
-(285,'Foul');
+
+(285,'Rebound', NULL, '00:00:58'),
+(285,'Block', NULL, '00:10:23'),
+(285,'Foul', NULL, '00:02:23'),
 
 -- Participation 286
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(286,'Turnover'),
-(286,'FreeThrow'),
-(286,'TwoPointerShot');
+
+(286,'Turnover', NULL, '00:08:09'),
+(286,'FreeThrow', 1, '00:02:45'),
+(286,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 287
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(287,'ThreePointerShot'),
-(287,'Assist'),
-(287,'Rebound');
+
+(287,'ThreePointerShot', 3, '00:07:59'),
+(287,'Assist', NULL, '00:04:01'),
+(287,'Rebound', NULL, '00:00:58'),
 
 -- Participation 288
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(288,'Block'),
-(288,'Foul'),
-(288,'Turnover');
+
+(288,'Block', NULL, '00:10:23'),
+(288,'Foul', NULL, '00:02:23'),
+(288,'Turnover', NULL, '00:08:09'),
 
 -- Participation 289
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(289,'FreeThrow'),
-(289,'TwoPointerShot'),
-(289,'ThreePointerShot');
+
+(289,'FreeThrow', 1, '00:02:45'),
+(289,'TwoPointerShot', 2, '00:12:22'),
+(289,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 290
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(290,'Assist'),
-(290,'Rebound'),
-(290,'Block');
+
+(290,'Assist', NULL, '00:04:01'),
+(290,'Rebound', NULL, '00:00:58'),
+(290,'Block', NULL, '00:10:23'),
 
 -- Participation 291
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(291,'Foul'),
-(291,'Turnover'),
-(291,'FreeThrow');
+
+(291,'Foul', NULL, '00:02:23'),
+(291,'Turnover', NULL, '00:08:09'),
+(291,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 292
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(292,'TwoPointerShot'),
-(292,'ThreePointerShot'),
-(292,'Assist');
+
+(292,'TwoPointerShot', 2, '00:12:22'),
+(292,'ThreePointerShot', 3, '00:07:59'),
+(292,'Assist', NULL, '00:04:01'),
 
 -- Participation 293
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(293,'Rebound'),
-(293,'Block'),
-(293,'Foul');
+
+(293,'Rebound', NULL, '00:00:58'),
+(293,'Block', NULL, '00:10:23'),
+(293,'Foul', NULL, '00:02:23'),
 
 -- Participation 294
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(294,'Turnover'),
-(294,'FreeThrow'),
-(294,'TwoPointerShot');
+
+(294,'Turnover', NULL, '00:08:09'),
+(294,'FreeThrow', 1, '00:02:45'),
+(294,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 295
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(295,'ThreePointerShot'),
-(295,'Assist'),
-(295,'Rebound');
+
+(295,'ThreePointerShot', 3, '00:07:59'),
+(295,'Assist', NULL, '00:04:01'),
+(295,'Rebound', NULL, '00:00:58'),
 
 -- Participation 296
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(296,'Block'),
-(296,'Foul'),
-(296,'Turnover');
+
+(296,'Block', NULL, '00:10:23'),
+(296,'Foul', NULL, '00:02:23'),
+(296,'Turnover', NULL, '00:08:09'),
 
 -- Participation 297
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(297,'FreeThrow'),
-(297,'TwoPointerShot'),
-(297,'ThreePointerShot');
+
+(297,'FreeThrow', 1, '00:02:45'),
+(297,'TwoPointerShot', 2, '00:12:22'),
+(297,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 298
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(298,'Assist'),
-(298,'Rebound'),
-(298,'Block');
+
+(298,'Assist', NULL, '00:04:01'),
+(298,'Rebound', NULL, '00:00:58'),
+(298,'Block', NULL, '00:10:23'),
 
 -- Participation 299
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(299,'Foul'),
-(299,'Turnover'),
-(299,'FreeThrow');
+
+(299,'Foul', NULL, '00:02:23'),
+(299,'Turnover', NULL, '00:08:09'),
+(299,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 300
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(300,'TwoPointerShot'),
-(300,'ThreePointerShot'),
-(300,'Assist');
+
+(300,'TwoPointerShot', 2, '00:12:22'),
+(300,'ThreePointerShot', 3, '00:07:59'),
+(300,'Assist', NULL, '00:04:01'),
 
 -- Participation 301
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(301,'Rebound'),
-(301,'Block'),
-(301,'Foul');
+
+(301,'Rebound', NULL, '00:00:58'),
+(301,'Block', NULL, '00:10:23'),
+(301,'Foul', NULL, '00:02:23'),
 
 -- Participation 302
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(302,'Turnover'),
-(302,'FreeThrow'),
-(302,'TwoPointerShot');
+
+(302,'Turnover', NULL, '00:08:09'),
+(302,'FreeThrow', 1, '00:02:45'),
+(302,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 303
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(303,'ThreePointerShot'),
-(303,'Assist'),
-(303,'Rebound');
+
+(303,'ThreePointerShot', 3, '00:07:59'),
+(303,'Assist', NULL, '00:04:01'),
+(303,'Rebound', NULL, '00:00:58'),
 
 -- Participation 304
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(304,'Block'),
-(304,'Foul'),
-(304,'Turnover');
+
+(304,'Block', NULL, '00:10:23'),
+(304,'Foul', NULL, '00:02:23'),
+(304,'Turnover', NULL, '00:08:09'),
 
 -- Participation 305
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(305,'FreeThrow'),
-(305,'TwoPointerShot'),
-(305,'ThreePointerShot');
+
+(305,'FreeThrow', 1, '00:02:45'),
+(305,'TwoPointerShot', 2, '00:12:22'),
+(305,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 306
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(306,'Assist'),
-(306,'Rebound'),
-(306,'Block');
+
+(306,'Assist', NULL, '00:04:01'),
+(306,'Rebound', NULL, '00:00:58'),
+(306,'Block', NULL, '00:10:23'),
 
 -- Participation 307
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(307,'Foul'),
-(307,'Turnover'),
-(307,'FreeThrow');
+
+(307,'Foul', NULL, '00:02:23'),
+(307,'Turnover', NULL, '00:08:09'),
+(307,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 308
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(308,'TwoPointerShot'),
-(308,'ThreePointerShot'),
-(308,'Assist');
+
+(308,'TwoPointerShot', 2, '00:12:22'),
+(308,'ThreePointerShot', 3, '00:07:59'),
+(308,'Assist', NULL, '00:04:01'),
 
 -- Participation 309
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(309,'Rebound'),
-(309,'Block'),
-(309,'Foul');
+
+(309,'Rebound', NULL, '00:00:58'),
+(309,'Block', NULL, '00:10:23'),
+(309,'Foul', NULL, '00:02:23'),
 
 -- Participation 310
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(310,'Turnover'),
-(310,'FreeThrow'),
-(310,'TwoPointerShot');
+
+(310,'Turnover', NULL, '00:08:09'),
+(310,'FreeThrow', 1, '00:02:45'),
+(310,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 311
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(311,'ThreePointerShot'),
-(311,'Assist'),
-(311,'Rebound');
+
+(311,'ThreePointerShot', 3, '00:07:59'),
+(311,'Assist', NULL, '00:04:01'),
+(311,'Rebound', NULL, '00:00:58'),
 
 -- Participation 312
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(312,'Block'),
-(312,'Foul'),
-(312,'Turnover');
+
+(312,'Block', NULL, '00:10:23'),
+(312,'Foul', NULL, '00:02:23'),
+(312,'Turnover', NULL, '00:08:09'),
 
 -- Participation 313
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(313,'FreeThrow'),
-(313,'TwoPointerShot'),
-(313,'ThreePointerShot');
+
+(313,'FreeThrow', 1, '00:02:45'),
+(313,'TwoPointerShot', 2, '00:12:22'),
+(313,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 314
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(314,'Assist'),
-(314,'Rebound'),
-(314,'Block');
+
+(314,'Assist', NULL, '00:04:01'),
+(314,'Rebound', NULL, '00:00:58'),
+(314,'Block', NULL, '00:10:23'),
 
 -- Participation 315
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(315,'Foul'),
-(315,'Turnover'),
-(315,'FreeThrow');
+
+(315,'Foul', NULL, '00:02:23'),
+(315,'Turnover', NULL, '00:08:09'),
+(315,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 316
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(316,'TwoPointerShot'),
-(316,'ThreePointerShot'),
-(316,'Assist');
+
+(316,'TwoPointerShot', 2, '00:12:22'),
+(316,'ThreePointerShot', 3, '00:07:59'),
+(316,'Assist', NULL, '00:04:01'),
 
 -- Participation 317
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(317,'Rebound'),
-(317,'Block'),
-(317,'Foul');
+
+(317,'Rebound', NULL, '00:00:58'),
+(317,'Block', NULL, '00:10:23'),
+(317,'Foul', NULL, '00:02:23'),
 
 -- Participation 318
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(318,'Turnover'),
-(318,'FreeThrow'),
-(318,'TwoPointerShot');
+
+(318,'Turnover', NULL, '00:08:09'),
+(318,'FreeThrow', 1, '00:02:45'),
+(318,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 319
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(319,'ThreePointerShot'),
-(319,'Assist'),
-(319,'Rebound');
+
+(319,'ThreePointerShot', 3, '00:07:59'),
+(319,'Assist', NULL, '00:04:01'),
+(319,'Rebound', NULL, '00:00:58'),
 
 -- Participation 320
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(320,'Block'),
-(320,'Foul'),
-(320,'Turnover');
+
+(320,'Block', NULL, '00:10:23'),
+(320,'Foul', NULL, '00:02:23'),
+(320,'Turnover', NULL, '00:08:09'),
 
 -- Participation 321
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(321,'FreeThrow'),
-(321,'TwoPointerShot'),
-(321,'ThreePointerShot');
+
+(321,'FreeThrow', 1, '00:02:45'),
+(321,'TwoPointerShot', 2, '00:12:22'),
+(321,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 322
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(322,'Assist'),
-(322,'Rebound'),
-(322,'Block');
+
+(322,'Assist', NULL, '00:04:01'),
+(322,'Rebound', NULL, '00:00:58'),
+(322,'Block', NULL, '00:10:23'),
 
 -- Participation 323
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(323,'Foul'),
-(323,'Turnover'),
-(323,'FreeThrow');
+
+(323,'Foul', NULL, '00:02:23'),
+(323,'Turnover', NULL, '00:08:09'),
+(323,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 324
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(324,'TwoPointerShot'),
-(324,'ThreePointerShot'),
-(324,'Assist');
+
+(324,'TwoPointerShot', 2, '00:12:22'),
+(324,'ThreePointerShot', 3, '00:07:59'),
+(324,'Assist', NULL, '00:04:01'),
 
 -- Participation 325
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(325,'Rebound'),
-(325,'Block'),
-(325,'Foul');
+
+(325,'Rebound', NULL, '00:00:58'),
+(325,'Block', NULL, '00:10:23'),
+(325,'Foul', NULL, '00:02:23'),
 
 -- Participation 326
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(326,'Turnover'),
-(326,'FreeThrow'),
-(326,'TwoPointerShot');
+
+(326,'Turnover', NULL, '00:08:09'),
+(326,'FreeThrow', 1, '00:02:45'),
+(326,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 327
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(327,'ThreePointerShot'),
-(327,'Assist'),
-(327,'Rebound');
+
+(327,'ThreePointerShot', 3, '00:07:59'),
+(327,'Assist', NULL, '00:04:01'),
+(327,'Rebound', NULL, '00:00:58'),
 
 -- Participation 328
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(328,'Block'),
-(328,'Foul'),
-(328,'Turnover');
+
+(328,'Block', NULL, '00:10:23'),
+(328,'Foul', NULL, '00:02:23'),
+(328,'Turnover', NULL, '00:08:09'),
 
 -- Participation 329
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(329,'FreeThrow'),
-(329,'TwoPointerShot'),
-(329,'ThreePointerShot');
+
+(329,'FreeThrow', 1, '00:02:45'),
+(329,'TwoPointerShot', 2, '00:12:22'),
+(329,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 330
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(330,'Assist'),
-(330,'Rebound'),
-(330,'Block');
+
+(330,'Assist', NULL, '00:04:01'),
+(330,'Rebound', NULL, '00:00:58'),
+(330,'Block', NULL, '00:10:23'),
 
 -- Participation 331
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(331,'Foul'),
-(331,'Turnover'),
-(331,'FreeThrow');
+
+(331,'Foul', NULL, '00:02:23'),
+(331,'Turnover', NULL, '00:08:09'),
+(331,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 332
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(332,'TwoPointerShot'),
-(332,'ThreePointerShot'),
-(332,'Assist');
+
+(332,'TwoPointerShot', 2, '00:12:22'),
+(332,'ThreePointerShot', 3, '00:07:59'),
+(332,'Assist', NULL, '00:04:01'),
 
 -- Participation 333
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(333,'Rebound'),
-(333,'Block'),
-(333,'Foul');
+
+(333,'Rebound', NULL, '00:00:58'),
+(333,'Block', NULL, '00:10:23'),
+(333,'Foul', NULL, '00:02:23');
 
 -- Participation 334
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(334,'Turnover'),
-(334,'FreeThrow'),
-(334,'TwoPointerShot');
+
+INSERT INTO Play (ParticipationId, Type, Points, At) VALUES
+
+(334,'Turnover', NULL, '00:08:09'),
+(334,'FreeThrow', 1, '00:02:45'),
+(334,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 335
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(335,'ThreePointerShot'),
-(335,'Assist'),
-(335,'Rebound');
+
+(335,'ThreePointerShot', 3, '00:07:59'),
+(335,'Assist', NULL, '00:04:01'),
+(335,'Rebound', NULL, '00:00:58'),
 
 -- Participation 336
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(336,'Block'),
-(336,'Foul'),
-(336,'Turnover');
+
+(336,'Block', NULL, '00:10:23'),
+(336,'Foul', NULL, '00:02:23'),
+(336,'Turnover', NULL, '00:08:09'),
 
 -- Participation 337
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(337,'FreeThrow'),
-(337,'TwoPointerShot'),
-(337,'ThreePointerShot');
+
+(337,'FreeThrow', 1, '00:02:45'),
+(337,'TwoPointerShot', 2, '00:12:22'),
+(337,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 338
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(338,'Assist'),
-(338,'Rebound'),
-(338,'Block');
+
+(338,'Assist', NULL, '00:04:01'),
+(338,'Rebound', NULL, '00:00:58'),
+(338,'Block', NULL, '00:10:23'),
 
 -- Participation 339
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(339,'Foul'),
-(339,'Turnover'),
-(339,'FreeThrow');
+
+(339,'Foul', NULL, '00:02:23'),
+(339,'Turnover', NULL, '00:08:09'),
+(339,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 340
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(340,'TwoPointerShot'),
-(340,'ThreePointerShot'),
-(340,'Assist');
+
+(340,'TwoPointerShot', 2, '00:12:22'),
+(340,'ThreePointerShot', 3, '00:07:59'),
+(340,'Assist', NULL, '00:04:01'),
 
 -- Participation 341
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(341,'Rebound'),
-(341,'Block'),
-(341,'Foul');
+
+(341,'Rebound', NULL, '00:00:58'),
+(341,'Block', NULL, '00:10:23'),
+(341,'Foul', NULL, '00:02:23'),
 
 -- Participation 342
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(342,'Turnover'),
-(342,'FreeThrow'),
-(342,'TwoPointerShot');
+
+(342,'Turnover', NULL, '00:08:09'),
+(342,'FreeThrow', 1, '00:02:45'),
+(342,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 343
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(343,'ThreePointerShot'),
-(343,'Assist'),
-(343,'Rebound');
+
+(343,'ThreePointerShot', 3, '00:07:59'),
+(343,'Assist', NULL, '00:04:01'),
+(343,'Rebound', NULL, '00:00:58'),
 
 -- Participation 344
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(344,'Block'),
-(344,'Foul'),
-(344,'Turnover');
+
+(344,'Block', NULL, '00:10:23'),
+(344,'Foul', NULL, '00:02:23'),
+(344,'Turnover', NULL, '00:08:09'),
 
 -- Participation 345
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(345,'FreeThrow'),
-(345,'TwoPointerShot'),
-(345,'ThreePointerShot');
+
+(345,'FreeThrow', 1, '00:02:45'),
+(345,'TwoPointerShot', 2, '00:12:22'),
+(345,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 346
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(346,'Assist'),
-(346,'Rebound'),
-(346,'Block');
+
+(346,'Assist', NULL, '00:04:01'),
+(346,'Rebound', NULL, '00:00:58'),
+(346,'Block', NULL, '00:10:23'),
 
 -- Participation 347
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(347,'Foul'),
-(347,'Turnover'),
-(347,'FreeThrow');
+
+(347,'Foul', NULL, '00:02:23'),
+(347,'Turnover', NULL, '00:08:09'),
+(347,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 348
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(348,'TwoPointerShot'),
-(348,'ThreePointerShot'),
-(348,'Assist');
+
+(348,'TwoPointerShot', 2, '00:12:22'),
+(348,'ThreePointerShot', 3, '00:07:59'),
+(348,'Assist', NULL, '00:04:01'),
 
 -- Participation 349
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(349,'Rebound'),
-(349,'Block'),
-(349,'Foul');
+
+(349,'Rebound', NULL, '00:00:58'),
+(349,'Block', NULL, '00:10:23'),
+(349,'Foul', NULL, '00:02:23'),
 
 -- Participation 350
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(350,'Turnover'),
-(350,'FreeThrow'),
-(350,'TwoPointerShot');
+
+(350,'Turnover', NULL, '00:08:09'),
+(350,'FreeThrow', 1, '00:02:45'),
+(350,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 351
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(351,'ThreePointerShot'),
-(351,'Assist'),
-(351,'Rebound');
+
+(351,'ThreePointerShot', 3, '00:07:59'),
+(351,'Assist', NULL, '00:04:01'),
+(351,'Rebound', NULL, '00:00:58'),
 
 -- Participation 352
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(352,'Block'),
-(352,'Foul'),
-(352,'Turnover');
+
+(352,'Block', NULL, '00:10:23'),
+(352,'Foul', NULL, '00:02:23'),
+(352,'Turnover', NULL, '00:08:09'),
 
 -- Participation 353
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(353,'FreeThrow'),
-(353,'TwoPointerShot'),
-(353,'ThreePointerShot');
+
+(353,'FreeThrow', 1, '00:02:45'),
+(353,'TwoPointerShot', 2, '00:12:22'),
+(353,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 354
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(354,'Assist'),
-(354,'Rebound'),
-(354,'Block');
+
+(354,'Assist', NULL, '00:04:01'),
+(354,'Rebound', NULL, '00:00:58'),
+(354,'Block', NULL, '00:10:23'),
 
 -- Participation 355
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(355,'Foul'),
-(355,'Turnover'),
-(355,'FreeThrow');
+
+(355,'Foul', NULL, '00:02:23'),
+(355,'Turnover', NULL, '00:08:09'),
+(355,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 356
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(356,'TwoPointerShot'),
-(356,'ThreePointerShot'),
-(356,'Assist');
+
+(356,'TwoPointerShot', 2, '00:12:22'),
+(356,'ThreePointerShot', 3, '00:07:59'),
+(356,'Assist', NULL, '00:04:01'),
 
 -- Participation 357
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(357,'Rebound'),
-(357,'Block'),
-(357,'Foul');
+
+(357,'Rebound', NULL, '00:00:58'),
+(357,'Block', NULL, '00:10:23'),
+(357,'Foul', NULL, '00:02:23'),
 
 -- Participation 358
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(358,'Turnover'),
-(358,'FreeThrow'),
-(358,'TwoPointerShot');
+
+(358,'Turnover', NULL, '00:08:09'),
+(358,'FreeThrow', 1, '00:02:45'),
+(358,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 359
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(359,'ThreePointerShot'),
-(359,'Assist'),
-(359,'Rebound');
+
+(359,'ThreePointerShot', 3, '00:07:59'),
+(359,'Assist', NULL, '00:04:01'),
+(359,'Rebound', NULL, '00:00:58'),
 
 -- Participation 360
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(360,'Block'),
-(360,'Foul'),
-(360,'Turnover');
+
+(360,'Block', NULL, '00:10:23'),
+(360,'Foul', NULL, '00:02:23'),
+(360,'Turnover', NULL, '00:08:09'),
 
 -- Participation 361
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(361,'FreeThrow'),
-(361,'TwoPointerShot'),
-(361,'ThreePointerShot');
+
+(361,'FreeThrow', 1, '00:02:45'),
+(361,'TwoPointerShot', 2, '00:12:22'),
+(361,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 362
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(362,'Assist'),
-(362,'Rebound'),
-(362,'Block');
+
+(362,'Assist', NULL, '00:04:01'),
+(362,'Rebound', NULL, '00:00:58'),
+(362,'Block', NULL, '00:10:23'),
 
 -- Participation 363
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(363,'Foul'),
-(363,'Turnover'),
-(363,'FreeThrow');
+
+(363,'Foul', NULL, '00:02:23'),
+(363,'Turnover', NULL, '00:08:09'),
+(363,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 364
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(364,'TwoPointerShot'),
-(364,'ThreePointerShot'),
-(364,'Assist');
+
+(364,'TwoPointerShot', 2, '00:12:22'),
+(364,'ThreePointerShot', 3, '00:07:59'),
+(364,'Assist', NULL, '00:04:01'),
 
 -- Participation 365
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(365,'Rebound'),
-(365,'Block'),
-(365,'Foul');
+
+(365,'Rebound', NULL, '00:00:58'),
+(365,'Block', NULL, '00:10:23'),
+(365,'Foul', NULL, '00:02:23'),
 
 -- Participation 366
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(366,'Turnover'),
-(366,'FreeThrow'),
-(366,'TwoPointerShot');
+
+(366,'Turnover', NULL, '00:08:09'),
+(366,'FreeThrow', 1, '00:02:45'),
+(366,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 367
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(367,'ThreePointerShot'),
-(367,'Assist'),
-(367,'Rebound');
+
+(367,'ThreePointerShot', 3, '00:07:59'),
+(367,'Assist', NULL, '00:04:01'),
+(367,'Rebound', NULL, '00:00:58'),
 
 -- Participation 368
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(368,'Block'),
-(368,'Foul'),
-(368,'Turnover');
+
+(368,'Block', NULL, '00:10:23'),
+(368,'Foul', NULL, '00:02:23'),
+(368,'Turnover', NULL, '00:08:09'),
 
 -- Participation 369
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(369,'FreeThrow'),
-(369,'TwoPointerShot'),
-(369,'ThreePointerShot');
+
+(369,'FreeThrow', 1, '00:02:45'),
+(369,'TwoPointerShot', 2, '00:12:22'),
+(369,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 370
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(370,'Assist'),
-(370,'Rebound'),
-(370,'Block');
+
+(370,'Assist', NULL, '00:04:01'),
+(370,'Rebound', NULL, '00:00:58'),
+(370,'Block', NULL, '00:10:23'),
 
 -- Participation 371
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(371,'Foul'),
-(371,'Turnover'),
-(371,'FreeThrow');
+
+(371,'Foul', NULL, '00:02:23'),
+(371,'Turnover', NULL, '00:08:09'),
+(371,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 372
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(372,'TwoPointerShot'),
-(372,'ThreePointerShot'),
-(372,'Assist');
+
+(372,'TwoPointerShot', 2, '00:12:22'),
+(372,'ThreePointerShot', 3, '00:07:59'),
+(372,'Assist', NULL, '00:04:01'),
 
 -- Participation 373
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(373,'Rebound'),
-(373,'Block'),
-(373,'Foul');
+
+(373,'Rebound', NULL, '00:00:58'),
+(373,'Block', NULL, '00:10:23'),
+(373,'Foul', NULL, '00:02:23'),
 
 -- Participation 374
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(374,'Turnover'),
-(374,'FreeThrow'),
-(374,'TwoPointerShot');
+
+(374,'Turnover', NULL, '00:08:09'),
+(374,'FreeThrow', 1, '00:02:45'),
+(374,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 375
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(375,'ThreePointerShot'),
-(375,'Assist'),
-(375,'Rebound');
+
+(375,'ThreePointerShot', 3, '00:07:59'),
+(375,'Assist', NULL, '00:04:01'),
+(375,'Rebound', NULL, '00:00:58'),
 
 -- Participation 376
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(376,'Block'),
-(376,'Foul'),
-(376,'Turnover');
+
+(376,'Block', NULL, '00:10:23'),
+(376,'Foul', NULL, '00:02:23'),
+(376,'Turnover', NULL, '00:08:09'),
 
 -- Participation 377
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(377,'FreeThrow'),
-(377,'TwoPointerShot'),
-(377,'ThreePointerShot');
+
+(377,'FreeThrow', 1, '00:02:45'),
+(377,'TwoPointerShot', 2, '00:12:22'),
+(377,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 378
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(378,'Assist'),
-(378,'Rebound'),
-(378,'Block');
+
+(378,'Assist', NULL, '00:04:01'),
+(378,'Rebound', NULL, '00:00:58'),
+(378,'Block', NULL, '00:10:23'),
 
 -- Participation 379
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(379,'Foul'),
-(379,'Turnover'),
-(379,'FreeThrow');
+
+(379,'Foul', NULL, '00:02:23'),
+(379,'Turnover', NULL, '00:08:09'),
+(379,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 380
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(380,'TwoPointerShot'),
-(380,'ThreePointerShot'),
-(380,'Assist');
+
+(380,'TwoPointerShot', 2, '00:12:22'),
+(380,'ThreePointerShot', 3, '00:07:59'),
+(380,'Assist', NULL, '00:04:01'),
 
 -- Participation 381
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(381,'Rebound'),
-(381,'Block'),
-(381,'Foul');
+
+(381,'Rebound', NULL, '00:00:58'),
+(381,'Block', NULL, '00:10:23'),
+(381,'Foul', NULL, '00:02:23'),
 
 -- Participation 382
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(382,'Turnover'),
-(382,'FreeThrow'),
-(382,'TwoPointerShot');
+
+(382,'Turnover', NULL, '00:08:09'),
+(382,'FreeThrow', 1, '00:02:45'),
+(382,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 383
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(383,'ThreePointerShot'),
-(383,'Assist'),
-(383,'Rebound');
+
+(383,'ThreePointerShot', 3, '00:07:59'),
+(383,'Assist', NULL, '00:04:01'),
+(383,'Rebound', NULL, '00:00:58'),
 
 -- Participation 384
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(384,'Block'),
-(384,'Foul'),
-(384,'Turnover');
+
+(384,'Block', NULL, '00:10:23'),
+(384,'Foul', NULL, '00:02:23'),
+(384,'Turnover', NULL, '00:08:09'),
 
 -- Participation 385
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(385,'FreeThrow'),
-(385,'TwoPointerShot'),
-(385,'ThreePointerShot');
+
+(385,'FreeThrow', 1, '00:02:45'),
+(385,'TwoPointerShot', 2, '00:12:22'),
+(385,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 386
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(386,'Assist'),
-(386,'Rebound'),
-(386,'Block');
+
+(386,'Assist', NULL, '00:04:01'),
+(386,'Rebound', NULL, '00:00:58'),
+(386,'Block', NULL, '00:10:23'),
 
 -- Participation 387
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(387,'Foul'),
-(387,'Turnover'),
-(387,'FreeThrow');
+
+(387,'Foul', NULL, '00:02:23'),
+(387,'Turnover', NULL, '00:08:09'),
+(387,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 388
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(388,'TwoPointerShot'),
-(388,'ThreePointerShot'),
-(388,'Assist');
+
+(388,'TwoPointerShot', 2, '00:12:22'),
+(388,'ThreePointerShot', 3, '00:07:59'),
+(388,'Assist', NULL, '00:04:01'),
 
 -- Participation 389
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(389,'Rebound'),
-(389,'Block'),
-(389,'Foul');
+
+(389,'Rebound', NULL, '00:00:58'),
+(389,'Block', NULL, '00:10:23'),
+(389,'Foul', NULL, '00:02:23'),
 
 -- Participation 390
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(390,'Turnover'),
-(390,'FreeThrow'),
-(390,'TwoPointerShot');
+
+(390,'Turnover', NULL, '00:08:09'),
+(390,'FreeThrow', 1, '00:02:45'),
+(390,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 391
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(391,'ThreePointerShot'),
-(391,'Assist'),
-(391,'Rebound');
+
+(391,'ThreePointerShot', 3, '00:07:59'),
+(391,'Assist', NULL, '00:04:01'),
+(391,'Rebound', NULL, '00:00:58'),
 
 -- Participation 392
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(392,'Block'),
-(392,'Foul'),
-(392,'Turnover');
+
+(392,'Block', NULL, '00:10:23'),
+(392,'Foul', NULL, '00:02:23'),
+(392,'Turnover', NULL, '00:08:09'),
 
 -- Participation 393
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(393,'FreeThrow'),
-(393,'TwoPointerShot'),
-(393,'ThreePointerShot');
+
+(393,'FreeThrow', 1, '00:02:45'),
+(393,'TwoPointerShot', 2, '00:12:22'),
+(393,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 394
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(394,'Assist'),
-(394,'Rebound'),
-(394,'Block');
+
+(394,'Assist', NULL, '00:04:01'),
+(394,'Rebound', NULL, '00:00:58'),
+(394,'Block', NULL, '00:10:23'),
 
 -- Participation 395
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(395,'Foul'),
-(395,'Turnover'),
-(395,'FreeThrow');
+
+(395,'Foul', NULL, '00:02:23'),
+(395,'Turnover', NULL, '00:08:09'),
+(395,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 396
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(396,'TwoPointerShot'),
-(396,'ThreePointerShot'),
-(396,'Assist');
+
+(396,'TwoPointerShot', 2, '00:12:22'),
+(396,'ThreePointerShot', 3, '00:07:59'),
+(396,'Assist', NULL, '00:04:01'),
 
 -- Participation 397
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(397,'Rebound'),
-(397,'Block'),
-(397,'Foul');
+
+(397,'Rebound', NULL, '00:00:58'),
+(397,'Block', NULL, '00:10:23'),
+(397,'Foul', NULL, '00:02:23'),
 
 -- Participation 398
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(398,'Turnover'),
-(398,'FreeThrow'),
-(398,'TwoPointerShot');
+
+(398,'Turnover', NULL, '00:08:09'),
+(398,'FreeThrow', 1, '00:02:45'),
+(398,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 399
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(399,'ThreePointerShot'),
-(399,'Assist'),
-(399,'Rebound');
+
+(399,'ThreePointerShot', 3, '00:07:59'),
+(399,'Assist', NULL, '00:04:01'),
+(399,'Rebound', NULL, '00:00:58'),
 
 -- Participation 400
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(400,'Block'),
-(400,'Foul'),
-(400,'Turnover');
+
+(400,'Block', NULL, '00:10:23'),
+(400,'Foul', NULL, '00:02:23'),
+(400,'Turnover', NULL, '00:08:09'),
 
 -- Participation 401
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(401,'FreeThrow'),
-(401,'TwoPointerShot'),
-(401,'ThreePointerShot');
+
+(401,'FreeThrow', 1, '00:02:45'),
+(401,'TwoPointerShot', 2, '00:12:22'),
+(401,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 402
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(402,'Assist'),
-(402,'Rebound'),
-(402,'Block');
+
+(402,'Assist', NULL, '00:04:01'),
+(402,'Rebound', NULL, '00:00:58'),
+(402,'Block', NULL, '00:10:23'),
 
 -- Participation 403
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(403,'Foul'),
-(403,'Turnover'),
-(403,'FreeThrow');
+
+(403,'Foul', NULL, '00:02:23'),
+(403,'Turnover', NULL, '00:08:09'),
+(403,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 404
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(404,'TwoPointerShot'),
-(404,'ThreePointerShot'),
-(404,'Assist');
+
+(404,'TwoPointerShot', 2, '00:12:22'),
+(404,'ThreePointerShot', 3, '00:07:59'),
+(404,'Assist', NULL, '00:04:01'),
 
 -- Participation 405
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(405,'Rebound'),
-(405,'Block'),
-(405,'Foul');
+
+(405,'Rebound', NULL, '00:00:58'),
+(405,'Block', NULL, '00:10:23'),
+(405,'Foul', NULL, '00:02:23'),
 
 -- Participation 406
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(406,'Turnover'),
-(406,'FreeThrow'),
-(406,'TwoPointerShot');
+
+(406,'Turnover', NULL, '00:08:09'),
+(406,'FreeThrow', 1, '00:02:45'),
+(406,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 407
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(407,'ThreePointerShot'),
-(407,'Assist'),
-(407,'Rebound');
+
+(407,'ThreePointerShot', 3, '00:07:59'),
+(407,'Assist', NULL, '00:04:01'),
+(407,'Rebound', NULL, '00:00:58'),
 
 -- Participation 408
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(408,'Block'),
-(408,'Foul'),
-(408,'Turnover');
+
+(408,'Block', NULL, '00:10:23'),
+(408,'Foul', NULL, '00:02:23'),
+(408,'Turnover', NULL, '00:08:09'),
 
 -- Participation 409
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(409,'FreeThrow'),
-(409,'TwoPointerShot'),
-(409,'ThreePointerShot');
+
+(409,'FreeThrow', 1, '00:02:45'),
+(409,'TwoPointerShot', 2, '00:12:22'),
+(409,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 410
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(410,'Assist'),
-(410,'Rebound'),
-(410,'Block');
+
+(410,'Assist', NULL, '00:04:01'),
+(410,'Rebound', NULL, '00:00:58'),
+(410,'Block', NULL, '00:10:23'),
 
 -- Participation 411
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(411,'Foul'),
-(411,'Turnover'),
-(411,'FreeThrow');
+
+(411,'Foul', NULL, '00:02:23'),
+(411,'Turnover', NULL, '00:08:09'),
+(411,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 412
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(412,'TwoPointerShot'),
-(412,'ThreePointerShot'),
-(412,'Assist');
+
+(412,'TwoPointerShot', 2, '00:12:22'),
+(412,'ThreePointerShot', 3, '00:07:59'),
+(412,'Assist', NULL, '00:04:01'),
 
 -- Participation 413
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(413,'Rebound'),
-(413,'Block'),
-(413,'Foul');
+
+(413,'Rebound', NULL, '00:00:58'),
+(413,'Block', NULL, '00:10:23'),
+(413,'Foul', NULL, '00:02:23'),
 
 -- Participation 414
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(414,'Turnover'),
-(414,'FreeThrow'),
-(414,'TwoPointerShot');
+
+(414,'Turnover', NULL, '00:08:09'),
+(414,'FreeThrow', 1, '00:02:45'),
+(414,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 415
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(415,'ThreePointerShot'),
-(415,'Assist'),
-(415,'Rebound');
+
+(415,'ThreePointerShot', 3, '00:07:59'),
+(415,'Assist', NULL, '00:04:01'),
+(415,'Rebound', NULL, '00:00:58'),
 
 -- Participation 416
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(416,'Block'),
-(416,'Foul'),
-(416,'Turnover');
+
+(416,'Block', NULL, '00:10:23'),
+(416,'Foul', NULL, '00:02:23'),
+(416,'Turnover', NULL, '00:08:09'),
 
 -- Participation 417
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(417,'FreeThrow'),
-(417,'TwoPointerShot'),
-(417,'ThreePointerShot');
+
+(417,'FreeThrow', 1, '00:02:45'),
+(417,'TwoPointerShot', 2, '00:12:22'),
+(417,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 418
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(418,'Assist'),
-(418,'Rebound'),
-(418,'Block');
+
+(418,'Assist', NULL, '00:04:01'),
+(418,'Rebound', NULL, '00:00:58'),
+(418,'Block', NULL, '00:10:23'),
 
 -- Participation 419
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(419,'Foul'),
-(419,'Turnover'),
-(419,'FreeThrow');
+
+(419,'Foul', NULL, '00:02:23'),
+(419,'Turnover', NULL, '00:08:09'),
+(419,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 420
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(420,'TwoPointerShot'),
-(420,'ThreePointerShot'),
-(420,'Assist');
+
+(420,'TwoPointerShot', 2, '00:12:22'),
+(420,'ThreePointerShot', 3, '00:07:59'),
+(420,'Assist', NULL, '00:04:01'),
 
 -- Participation 421
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(421,'Rebound'),
-(421,'Block'),
-(421,'Foul');
+
+(421,'Rebound', NULL, '00:00:58'),
+(421,'Block', NULL, '00:10:23'),
+(421,'Foul', NULL, '00:02:23'),
 
 -- Participation 422
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(422,'Turnover'),
-(422,'FreeThrow'),
-(422,'TwoPointerShot');
+
+(422,'Turnover', NULL, '00:08:09'),
+(422,'FreeThrow', 1, '00:02:45'),
+(422,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 423
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(423,'ThreePointerShot'),
-(423,'Assist'),
-(423,'Rebound');
+
+(423,'ThreePointerShot', 3, '00:07:59'),
+(423,'Assist', NULL, '00:04:01'),
+(423,'Rebound', NULL, '00:00:58'),
 
 -- Participation 424
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(424,'Block'),
-(424,'Foul'),
-(424,'Turnover');
+
+(424,'Block', NULL, '00:10:23'),
+(424,'Foul', NULL, '00:02:23'),
+(424,'Turnover', NULL, '00:08:09'),
 
 -- Participation 425
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(425,'FreeThrow'),
-(425,'TwoPointerShot'),
-(425,'ThreePointerShot');
+
+(425,'FreeThrow', 1, '00:02:45'),
+(425,'TwoPointerShot', 2, '00:12:22'),
+(425,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 426
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(426,'Assist'),
-(426,'Rebound'),
-(426,'Block');
+
+(426,'Assist', NULL, '00:04:01'),
+(426,'Rebound', NULL, '00:00:58'),
+(426,'Block', NULL, '00:10:23'),
 
 -- Participation 427
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(427,'Foul'),
-(427,'Turnover'),
-(427,'FreeThrow');
+
+(427,'Foul', NULL, '00:02:23'),
+(427,'Turnover', NULL, '00:08:09'),
+(427,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 428
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(428,'TwoPointerShot'),
-(428,'ThreePointerShot'),
-(428,'Assist');
+
+(428,'TwoPointerShot', 2, '00:12:22'),
+(428,'ThreePointerShot', 3, '00:07:59'),
+(428,'Assist', NULL, '00:04:01'),
 
 -- Participation 429
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(429,'Rebound'),
-(429,'Block'),
-(429,'Foul');
+
+(429,'Rebound', NULL, '00:00:58'),
+(429,'Block', NULL, '00:10:23'),
+(429,'Foul', NULL, '00:02:23'),
 
 -- Participation 430
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(430,'Turnover'),
-(430,'FreeThrow'),
-(430,'TwoPointerShot');
+
+(430,'Turnover', NULL, '00:08:09'),
+(430,'FreeThrow', 1, '00:02:45'),
+(430,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 431
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(431,'ThreePointerShot'),
-(431,'Assist'),
-(431,'Rebound');
+
+(431,'ThreePointerShot', 3, '00:07:59'),
+(431,'Assist', NULL, '00:04:01'),
+(431,'Rebound', NULL, '00:00:58'),
 
 -- Participation 432
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(432,'Block'),
-(432,'Foul'),
-(432,'Turnover');
+
+(432,'Block', NULL, '00:10:23'),
+(432,'Foul', NULL, '00:02:23'),
+(432,'Turnover', NULL, '00:08:09'),
 
 -- Participation 433
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(433,'FreeThrow'),
-(433,'TwoPointerShot'),
-(433,'ThreePointerShot');
+
+(433,'FreeThrow', 1, '00:02:45'),
+(433,'TwoPointerShot', 2, '00:12:22'),
+(433,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 434
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(434,'Assist'),
-(434,'Rebound'),
-(434,'Block');
+
+(434,'Assist', NULL, '00:04:01'),
+(434,'Rebound', NULL, '00:00:58'),
+(434,'Block', NULL, '00:10:23'),
 
 -- Participation 435
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(435,'Foul'),
-(435,'Turnover'),
-(435,'FreeThrow');
+
+(435,'Foul', NULL, '00:02:23'),
+(435,'Turnover', NULL, '00:08:09'),
+(435,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 436
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(436,'TwoPointerShot'),
-(436,'ThreePointerShot'),
-(436,'Assist');
+
+(436,'TwoPointerShot', 2, '00:12:22'),
+(436,'ThreePointerShot', 3, '00:07:59'),
+(436,'Assist', NULL, '00:04:01'),
 
 -- Participation 437
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(437,'Rebound'),
-(437,'Block'),
-(437,'Foul');
+
+(437,'Rebound', NULL, '00:00:58'),
+(437,'Block', NULL, '00:10:23'),
+(437,'Foul', NULL, '00:02:23'),
 
 -- Participation 438
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(438,'Turnover'),
-(438,'FreeThrow'),
-(438,'TwoPointerShot');
+
+(438,'Turnover', NULL, '00:08:09'),
+(438,'FreeThrow', 1, '00:02:45'),
+(438,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 439
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(439,'ThreePointerShot'),
-(439,'Assist'),
-(439,'Rebound');
+
+(439,'ThreePointerShot', 3, '00:07:59'),
+(439,'Assist', NULL, '00:04:01'),
+(439,'Rebound', NULL, '00:00:58'),
 
 -- Participation 440
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(440,'Block'),
-(440,'Foul'),
-(440,'Turnover');
+
+(440,'Block', NULL, '00:10:23'),
+(440,'Foul', NULL, '00:02:23'),
+(440,'Turnover', NULL, '00:08:09'),
 
 -- Participation 441
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(441,'FreeThrow'),
-(441,'TwoPointerShot'),
-(441,'ThreePointerShot');
+
+(441,'FreeThrow', 1, '00:02:45'),
+(441,'TwoPointerShot', 2, '00:12:22'),
+(441,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 442
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(442,'Assist'),
-(442,'Rebound'),
-(442,'Block');
+
+(442,'Assist', NULL, '00:04:01'),
+(442,'Rebound', NULL, '00:00:58'),
+(442,'Block', NULL, '00:10:23'),
 
 -- Participation 443
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(443,'Foul'),
-(443,'Turnover'),
-(443,'FreeThrow');
+
+(443,'Foul', NULL, '00:02:23'),
+(443,'Turnover', NULL, '00:08:09'),
+(443,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 444
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(444,'TwoPointerShot'),
-(444,'ThreePointerShot'),
-(444,'Assist');
+
+(444,'TwoPointerShot', 2, '00:12:22'),
+(444,'ThreePointerShot', 3, '00:07:59'),
+(444,'Assist', NULL, '00:04:01'),
 
 -- Participation 445
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(445,'Rebound'),
-(445,'Block'),
-(445,'Foul');
+
+(445,'Rebound', NULL, '00:00:58'),
+(445,'Block', NULL, '00:10:23'),
+(445,'Foul', NULL, '00:02:23'),
 
 -- Participation 446
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(446,'Turnover'),
-(446,'FreeThrow'),
-(446,'TwoPointerShot');
+
+(446,'Turnover', NULL, '00:08:09'),
+(446,'FreeThrow', 1, '00:02:45'),
+(446,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 447
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(447,'ThreePointerShot'),
-(447,'Assist'),
-(447,'Rebound');
+
+(447,'ThreePointerShot', 3, '00:07:59'),
+(447,'Assist', NULL, '00:04:01'),
+(447,'Rebound', NULL, '00:00:58'),
 
 -- Participation 448
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(448,'Block'),
-(448,'Foul'),
-(448,'Turnover');
+
+(448,'Block', NULL, '00:10:23'),
+(448,'Foul', NULL, '00:02:23'),
+(448,'Turnover', NULL, '00:08:09'),
 
 -- Participation 449
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(449,'FreeThrow'),
-(449,'TwoPointerShot'),
-(449,'ThreePointerShot');
+
+(449,'FreeThrow', 1, '00:02:45'),
+(449,'TwoPointerShot', 2, '00:12:22'),
+(449,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 450
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(450,'Assist'),
-(450,'Rebound'),
-(450,'Block');
+
+(450,'Assist', NULL, '00:04:01'),
+(450,'Rebound', NULL, '00:00:58'),
+(450,'Block', NULL, '00:10:23'),
 
 -- Participation 451
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(451,'Foul'),
-(451,'Turnover'),
-(451,'FreeThrow');
+
+(451,'Foul', NULL, '00:02:23'),
+(451,'Turnover', NULL, '00:08:09'),
+(451,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 452
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(452,'TwoPointerShot'),
-(452,'ThreePointerShot'),
-(452,'Assist');
+
+(452,'TwoPointerShot', 2, '00:12:22'),
+(452,'ThreePointerShot', 3, '00:07:59'),
+(452,'Assist', NULL, '00:04:01'),
 
 -- Participation 453
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(453,'Rebound'),
-(453,'Block'),
-(453,'Foul');
+
+(453,'Rebound', NULL, '00:00:58'),
+(453,'Block', NULL, '00:10:23'),
+(453,'Foul', NULL, '00:02:23'),
 
 -- Participation 454
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(454,'Turnover'),
-(454,'FreeThrow'),
-(454,'TwoPointerShot');
+
+(454,'Turnover', NULL, '00:08:09'),
+(454,'FreeThrow', 1, '00:02:45'),
+(454,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 455
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(455,'ThreePointerShot'),
-(455,'Assist'),
-(455,'Rebound');
+
+(455,'ThreePointerShot', 3, '00:07:59'),
+(455,'Assist', NULL, '00:04:01'),
+(455,'Rebound', NULL, '00:00:58'),
 
 -- Participation 456
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(456,'Block'),
-(456,'Foul'),
-(456,'Turnover');
+
+(456,'Block', NULL, '00:10:23'),
+(456,'Foul', NULL, '00:02:23'),
+(456,'Turnover', NULL, '00:08:09'),
 
 -- Participation 457
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(457,'FreeThrow'),
-(457,'TwoPointerShot'),
-(457,'ThreePointerShot');
+
+(457,'FreeThrow', 1, '00:02:45'),
+(457,'TwoPointerShot', 2, '00:12:22'),
+(457,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 458
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(458,'Assist'),
-(458,'Rebound'),
-(458,'Block');
+
+(458,'Assist', NULL, '00:04:01'),
+(458,'Rebound', NULL, '00:00:58'),
+(458,'Block', NULL, '00:10:23'),
 
 -- Participation 459
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(459,'Foul'),
-(459,'Turnover'),
-(459,'FreeThrow');
+
+(459,'Foul', NULL, '00:02:23'),
+(459,'Turnover', NULL, '00:08:09'),
+(459,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 460
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(460,'TwoPointerShot'),
-(460,'ThreePointerShot'),
-(460,'Assist');
+
+(460,'TwoPointerShot', 2, '00:12:22'),
+(460,'ThreePointerShot', 3, '00:07:59'),
+(460,'Assist', NULL, '00:04:01'),
 
 -- Participation 461
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(461,'Rebound'),
-(461,'Block'),
-(461,'Foul');
+
+(461,'Rebound', NULL, '00:00:58'),
+(461,'Block', NULL, '00:10:23'),
+(461,'Foul', NULL, '00:02:23'),
 
 -- Participation 462
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(462,'Turnover'),
-(462,'FreeThrow'),
-(462,'TwoPointerShot');
+
+(462,'Turnover', NULL, '00:08:09'),
+(462,'FreeThrow', 1, '00:02:45'),
+(462,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 463
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(463,'ThreePointerShot'),
-(463,'Assist'),
-(463,'Rebound');
+
+(463,'ThreePointerShot', 3, '00:07:59'),
+(463,'Assist', NULL, '00:04:01'),
+(463,'Rebound', NULL, '00:00:58'),
 
 -- Participation 464
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(464,'Block'),
-(464,'Foul'),
-(464,'Turnover');
+
+(464,'Block', NULL, '00:10:23'),
+(464,'Foul', NULL, '00:02:23'),
+(464,'Turnover', NULL, '00:08:09'),
 
 -- Participation 465
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(465,'FreeThrow'),
-(465,'TwoPointerShot'),
-(465,'ThreePointerShot');
+
+(465,'FreeThrow', 1, '00:02:45'),
+(465,'TwoPointerShot', 2, '00:12:22'),
+(465,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 466
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(466,'Assist'),
-(466,'Rebound'),
-(466,'Block');
+
+(466,'Assist', NULL, '00:04:01'),
+(466,'Rebound', NULL, '00:00:58'),
+(466,'Block', NULL, '00:10:23'),
 
 -- Participation 467
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(467,'Foul'),
-(467,'Turnover'),
-(467,'FreeThrow');
+
+(467,'Foul', NULL, '00:02:23'),
+(467,'Turnover', NULL, '00:08:09'),
+(467,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 468
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(468,'TwoPointerShot'),
-(468,'ThreePointerShot'),
-(468,'Assist');
+
+(468,'TwoPointerShot', 2, '00:12:22'),
+(468,'ThreePointerShot', 3, '00:07:59'),
+(468,'Assist', NULL, '00:04:01'),
 
 -- Participation 469
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(469,'Rebound'),
-(469,'Block'),
-(469,'Foul');
+
+(469,'Rebound', NULL, '00:00:58'),
+(469,'Block', NULL, '00:10:23'),
+(469,'Foul', NULL, '00:02:23'),
 
 -- Participation 470
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(470,'Turnover'),
-(470,'FreeThrow'),
-(470,'TwoPointerShot');
+
+(470,'Turnover', NULL, '00:08:09'),
+(470,'FreeThrow', 1, '00:02:45'),
+(470,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 471
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(471,'ThreePointerShot'),
-(471,'Assist'),
-(471,'Rebound');
+
+(471,'ThreePointerShot', 3, '00:07:59'),
+(471,'Assist', NULL, '00:04:01'),
+(471,'Rebound', NULL, '00:00:58'),
 
 -- Participation 472
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(472,'Block'),
-(472,'Foul'),
-(472,'Turnover');
+
+(472,'Block', NULL, '00:10:23'),
+(472,'Foul', NULL, '00:02:23'),
+(472,'Turnover', NULL, '00:08:09'),
 
 -- Participation 473
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(473,'FreeThrow'),
-(473,'TwoPointerShot'),
-(473,'ThreePointerShot');
+
+(473,'FreeThrow', 1, '00:02:45'),
+(473,'TwoPointerShot', 2, '00:12:22'),
+(473,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 474
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(474,'Assist'),
-(474,'Rebound'),
-(474,'Block');
+
+(474,'Assist', NULL, '00:04:01'),
+(474,'Rebound', NULL, '00:00:58'),
+(474,'Block', NULL, '00:10:23'),
 
 -- Participation 475
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(475,'Foul'),
-(475,'Turnover'),
-(475,'FreeThrow');
+
+(475,'Foul', NULL, '00:02:23'),
+(475,'Turnover', NULL, '00:08:09'),
+(475,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 476
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(476,'TwoPointerShot'),
-(476,'ThreePointerShot'),
-(476,'Assist');
+
+(476,'TwoPointerShot', 2, '00:12:22'),
+(476,'ThreePointerShot', 3, '00:07:59'),
+(476,'Assist', NULL, '00:04:01'),
 
 -- Participation 477
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(477,'Rebound'),
-(477,'Block'),
-(477,'Foul');
+
+(477,'Rebound', NULL, '00:00:58'),
+(477,'Block', NULL, '00:10:23'),
+(477,'Foul', NULL, '00:02:23'),
 
 -- Participation 478
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(478,'Turnover'),
-(478,'FreeThrow'),
-(478,'TwoPointerShot');
+
+(478,'Turnover', NULL, '00:08:09'),
+(478,'FreeThrow', 1, '00:02:45'),
+(478,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 479
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(479,'ThreePointerShot'),
-(479,'Assist'),
-(479,'Rebound');
+
+(479,'ThreePointerShot', 3, '00:07:59'),
+(479,'Assist', NULL, '00:04:01'),
+(479,'Rebound', NULL, '00:00:58'),
 
 -- Participation 480
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(480,'Block'),
-(480,'Foul'),
-(480,'Turnover');
+
+(480,'Block', NULL, '00:10:23'),
+(480,'Foul', NULL, '00:02:23'),
+(480,'Turnover', NULL, '00:08:09'),
 
 -- Participation 481
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(481,'FreeThrow'),
-(481,'TwoPointerShot'),
-(481,'ThreePointerShot');
+
+(481,'FreeThrow', 1, '00:02:45'),
+(481,'TwoPointerShot', 2, '00:12:22'),
+(481,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 482
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(482,'Assist'),
-(482,'Rebound'),
-(482,'Block');
+
+(482,'Assist', NULL, '00:04:01'),
+(482,'Rebound', NULL, '00:00:58'),
+(482,'Block', NULL, '00:10:23'),
 
 -- Participation 483
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(483,'Foul'),
-(483,'Turnover'),
-(483,'FreeThrow');
+
+(483,'Foul', NULL, '00:02:23'),
+(483,'Turnover', NULL, '00:08:09'),
+(483,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 484
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(484,'TwoPointerShot'),
-(484,'ThreePointerShot'),
-(484,'Assist');
+
+(484,'TwoPointerShot', 2, '00:12:22'),
+(484,'ThreePointerShot', 3, '00:07:59'),
+(484,'Assist', NULL, '00:04:01'),
 
 -- Participation 485
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(485,'Rebound'),
-(485,'Block'),
-(485,'Foul');
+
+(485,'Rebound', NULL, '00:00:58'),
+(485,'Block', NULL, '00:10:23'),
+(485,'Foul', NULL, '00:02:23'),
 
 -- Participation 486
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(486,'Turnover'),
-(486,'FreeThrow'),
-(486,'TwoPointerShot');
+
+(486,'Turnover', NULL, '00:08:09'),
+(486,'FreeThrow', 1, '00:02:45'),
+(486,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 487
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(487,'ThreePointerShot'),
-(487,'Assist'),
-(487,'Rebound');
+
+(487,'ThreePointerShot', 3, '00:07:59'),
+(487,'Assist', NULL, '00:04:01'),
+(487,'Rebound', NULL, '00:00:58'),
 
 -- Participation 488
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(488,'Block'),
-(488,'Foul'),
-(488,'Turnover');
+
+(488,'Block', NULL, '00:10:23'),
+(488,'Foul', NULL, '00:02:23'),
+(488,'Turnover', NULL, '00:08:09'),
 
 -- Participation 489
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(489,'FreeThrow'),
-(489,'TwoPointerShot'),
-(489,'ThreePointerShot');
+
+(489,'FreeThrow', 1, '00:02:45'),
+(489,'TwoPointerShot', 2, '00:12:22'),
+(489,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 490
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(490,'Assist'),
-(490,'Rebound'),
-(490,'Block');
+
+(490,'Assist', NULL, '00:04:01'),
+(490,'Rebound', NULL, '00:00:58'),
+(490,'Block', NULL, '00:10:23'),
 
 -- Participation 491
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(491,'Foul'),
-(491,'Turnover'),
-(491,'FreeThrow');
+
+(491,'Foul', NULL, '00:02:23'),
+(491,'Turnover', NULL, '00:08:09'),
+(491,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 492
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(492,'TwoPointerShot'),
-(492,'ThreePointerShot'),
-(492,'Assist');
+
+(492,'TwoPointerShot', 2, '00:12:22'),
+(492,'ThreePointerShot', 3, '00:07:59'),
+(492,'Assist', NULL, '00:04:01'),
 
 -- Participation 493
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(493,'Rebound'),
-(493,'Block'),
-(493,'Foul');
+
+(493,'Rebound', NULL, '00:00:58'),
+(493,'Block', NULL, '00:10:23'),
+(493,'Foul', NULL, '00:02:23'),
 
 -- Participation 494
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(494,'Turnover'),
-(494,'FreeThrow'),
-(494,'TwoPointerShot');
+
+(494,'Turnover', NULL, '00:08:09'),
+(494,'FreeThrow', 1, '00:02:45'),
+(494,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 495
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(495,'ThreePointerShot'),
-(495,'Assist'),
-(495,'Rebound');
+
+(495,'ThreePointerShot', 3, '00:07:59'),
+(495,'Assist', NULL, '00:04:01'),
+(495,'Rebound', NULL, '00:00:58'),
 
 -- Participation 496
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(496,'Block'),
-(496,'Foul'),
-(496,'Turnover');
+
+(496,'Block', NULL, '00:10:23'),
+(496,'Foul', NULL, '00:02:23'),
+(496,'Turnover', NULL, '00:08:09'),
 
 -- Participation 497
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(497,'FreeThrow'),
-(497,'TwoPointerShot'),
-(497,'ThreePointerShot');
+
+(497,'FreeThrow', 1, '00:02:45'),
+(497,'TwoPointerShot', 2, '00:12:22'),
+(497,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 498
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(498,'Assist'),
-(498,'Rebound'),
-(498,'Block');
+
+(498,'Assist', NULL, '00:04:01'),
+(498,'Rebound', NULL, '00:00:58'),
+(498,'Block', NULL, '00:10:23'),
 
 -- Participation 499
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(499,'Foul'),
-(499,'Turnover'),
-(499,'FreeThrow');
+
+(499,'Foul', NULL, '00:02:23'),
+(499,'Turnover', NULL, '00:08:09'),
+(499,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 500
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(500,'TwoPointerShot'),
-(500,'ThreePointerShot'),
-(500,'Assist');
+
+(500,'TwoPointerShot', 2, '00:12:22'),
+(500,'ThreePointerShot', 3, '00:07:59'),
+(500,'Assist', NULL, '00:04:01'),
 
 -- Participation 501
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(501,'Rebound'),
-(501,'Block'),
-(501,'Foul');
+
+(501,'Rebound', NULL, '00:00:58'),
+(501,'Block', NULL, '00:10:23'),
+(501,'Foul', NULL, '00:02:23'),
 
 -- Participation 502
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(502,'Turnover'),
-(502,'FreeThrow'),
-(502,'TwoPointerShot');
+
+(502,'Turnover', NULL, '00:08:09'),
+(502,'FreeThrow', 1, '00:02:45'),
+(502,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 503
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(503,'ThreePointerShot'),
-(503,'Assist'),
-(503,'Rebound');
+
+(503,'ThreePointerShot', 3, '00:07:59'),
+(503,'Assist', NULL, '00:04:01'),
+(503,'Rebound', NULL, '00:00:58'),
 
 -- Participation 504
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(504,'Block'),
-(504,'Foul'),
-(504,'Turnover');
+
+(504,'Block', NULL, '00:10:23'),
+(504,'Foul', NULL, '00:02:23'),
+(504,'Turnover', NULL, '00:08:09'),
 
 -- Participation 505
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(505,'FreeThrow'),
-(505,'TwoPointerShot'),
-(505,'ThreePointerShot');
+
+(505,'FreeThrow', 1, '00:02:45'),
+(505,'TwoPointerShot', 2, '00:12:22'),
+(505,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 506
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(506,'Assist'),
-(506,'Rebound'),
-(506,'Block');
+
+(506,'Assist', NULL, '00:04:01'),
+(506,'Rebound', NULL, '00:00:58'),
+(506,'Block', NULL, '00:10:23'),
 
 -- Participation 507
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(507,'Foul'),
-(507,'Turnover'),
-(507,'FreeThrow');
+
+(507,'Foul', NULL, '00:02:23'),
+(507,'Turnover', NULL, '00:08:09'),
+(507,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 508
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(508,'TwoPointerShot'),
-(508,'ThreePointerShot'),
-(508,'Assist');
+
+(508,'TwoPointerShot', 2, '00:12:22'),
+(508,'ThreePointerShot', 3, '00:07:59'),
+(508,'Assist', NULL, '00:04:01'),
 
 -- Participation 509
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(509,'Rebound'),
-(509,'Block'),
-(509,'Foul');
+
+(509,'Rebound', NULL, '00:00:58'),
+(509,'Block', NULL, '00:10:23'),
+(509,'Foul', NULL, '00:02:23'),
 
 -- Participation 510
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(510,'Turnover'),
-(510,'FreeThrow'),
-(510,'TwoPointerShot');
+
+(510,'Turnover', NULL, '00:08:09'),
+(510,'FreeThrow', 1, '00:02:45'),
+(510,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 511
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(511,'ThreePointerShot'),
-(511,'Assist'),
-(511,'Rebound');
+
+(511,'ThreePointerShot', 3, '00:07:59'),
+(511,'Assist', NULL, '00:04:01'),
+(511,'Rebound', NULL, '00:00:58'),
 
 -- Participation 512
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(512,'Block'),
-(512,'Foul'),
-(512,'Turnover');
+
+(512,'Block', NULL, '00:10:23'),
+(512,'Foul', NULL, '00:02:23'),
+(512,'Turnover', NULL, '00:08:09'),
 
 -- Participation 513
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(513,'FreeThrow'),
-(513,'TwoPointerShot'),
-(513,'ThreePointerShot');
+
+(513,'FreeThrow', 1, '00:02:45'),
+(513,'TwoPointerShot', 2, '00:12:22'),
+(513,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 514
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(514,'Assist'),
-(514,'Rebound'),
-(514,'Block');
+
+(514,'Assist', NULL, '00:04:01'),
+(514,'Rebound', NULL, '00:00:58'),
+(514,'Block', NULL, '00:10:23'),
 
 -- Participation 515
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(515,'Foul'),
-(515,'Turnover'),
-(515,'FreeThrow');
+
+(515,'Foul', NULL, '00:02:23'),
+(515,'Turnover', NULL, '00:08:09'),
+(515,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 516
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(516,'TwoPointerShot'),
-(516,'ThreePointerShot'),
-(516,'Assist');
+
+(516,'TwoPointerShot', 2, '00:12:22'),
+(516,'ThreePointerShot', 3, '00:07:59'),
+(516,'Assist', NULL, '00:04:01'),
 
 -- Participation 517
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(517,'Rebound'),
-(517,'Block'),
-(517,'Foul');
+
+(517,'Rebound', NULL, '00:00:58'),
+(517,'Block', NULL, '00:10:23'),
+(517,'Foul', NULL, '00:02:23'),
 
 -- Participation 518
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(518,'Turnover'),
-(518,'FreeThrow'),
-(518,'TwoPointerShot');
+
+(518,'Turnover', NULL, '00:08:09'),
+(518,'FreeThrow', 1, '00:02:45'),
+(518,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 519
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(519,'ThreePointerShot'),
-(519,'Assist'),
-(519,'Rebound');
+
+(519,'ThreePointerShot', 3, '00:07:59'),
+(519,'Assist', NULL, '00:04:01'),
+(519,'Rebound', NULL, '00:00:58'),
 
 -- Participation 520
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(520,'Block'),
-(520,'Foul'),
-(520,'Turnover');
+
+(520,'Block', NULL, '00:10:23'),
+(520,'Foul', NULL, '00:02:23'),
+(520,'Turnover', NULL, '00:08:09'),
 
 -- Participation 521
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(521,'FreeThrow'),
-(521,'TwoPointerShot'),
-(521,'ThreePointerShot');
+
+(521,'FreeThrow', 1, '00:02:45'),
+(521,'TwoPointerShot', 2, '00:12:22'),
+(521,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 522
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(522,'Assist'),
-(522,'Rebound'),
-(522,'Block');
+
+(522,'Assist', NULL, '00:04:01'),
+(522,'Rebound', NULL, '00:00:58'),
+(522,'Block', NULL, '00:10:23'),
 
 -- Participation 523
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(523,'Foul'),
-(523,'Turnover'),
-(523,'FreeThrow');
+
+(523,'Foul', NULL, '00:02:23'),
+(523,'Turnover', NULL, '00:08:09'),
+(523,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 524
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(524,'TwoPointerShot'),
-(524,'ThreePointerShot'),
-(524,'Assist');
+
+(524,'TwoPointerShot', 2, '00:12:22'),
+(524,'ThreePointerShot', 3, '00:07:59'),
+(524,'Assist', NULL, '00:04:01'),
 
 -- Participation 525
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(525,'Rebound'),
-(525,'Block'),
-(525,'Foul');
+
+(525,'Rebound', NULL, '00:00:58'),
+(525,'Block', NULL, '00:10:23'),
+(525,'Foul', NULL, '00:02:23'),
 
 -- Participation 526
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(526,'Turnover'),
-(526,'FreeThrow'),
-(526,'TwoPointerShot');
+
+(526,'Turnover', NULL, '00:08:09'),
+(526,'FreeThrow', 1, '00:02:45'),
+(526,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 527
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(527,'ThreePointerShot'),
-(527,'Assist'),
-(527,'Rebound');
+
+(527,'ThreePointerShot', 3, '00:07:59'),
+(527,'Assist', NULL, '00:04:01'),
+(527,'Rebound', NULL, '00:00:58'),
 
 -- Participation 528
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(528,'Block'),
-(528,'Foul'),
-(528,'Turnover');
+
+(528,'Block', NULL, '00:10:23'),
+(528,'Foul', NULL, '00:02:23'),
+(528,'Turnover', NULL, '00:08:09'),
 
 -- Participation 529
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(529,'FreeThrow'),
-(529,'TwoPointerShot'),
-(529,'ThreePointerShot');
+
+(529,'FreeThrow', 1, '00:02:45'),
+(529,'TwoPointerShot', 2, '00:12:22'),
+(529,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 530
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(530,'Assist'),
-(530,'Rebound'),
-(530,'Block');
+
+(530,'Assist', NULL, '00:04:01'),
+(530,'Rebound', NULL, '00:00:58'),
+(530,'Block', NULL, '00:10:23'),
 
 -- Participation 531
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(531,'Foul'),
-(531,'Turnover'),
-(531,'FreeThrow');
+
+(531,'Foul', NULL, '00:02:23'),
+(531,'Turnover', NULL, '00:08:09'),
+(531,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 532
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(532,'TwoPointerShot'),
-(532,'ThreePointerShot'),
-(532,'Assist');
+
+(532,'TwoPointerShot', 2, '00:12:22'),
+(532,'ThreePointerShot', 3, '00:07:59'),
+(532,'Assist', NULL, '00:04:01'),
 
 -- Participation 533
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(533,'Rebound'),
-(533,'Block'),
-(533,'Foul');
+
+(533,'Rebound', NULL, '00:00:58'),
+(533,'Block', NULL, '00:10:23'),
+(533,'Foul', NULL, '00:02:23'),
 
 -- Participation 534
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(534,'Turnover'),
-(534,'FreeThrow'),
-(534,'TwoPointerShot');
+
+(534,'Turnover', NULL, '00:08:09'),
+(534,'FreeThrow', 1, '00:02:45'),
+(534,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 535
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(535,'ThreePointerShot'),
-(535,'Assist'),
-(535,'Rebound');
+
+(535,'ThreePointerShot', 3, '00:07:59'),
+(535,'Assist', NULL, '00:04:01'),
+(535,'Rebound', NULL, '00:00:58'),
 
 -- Participation 536
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(536,'Block'),
-(536,'Foul'),
-(536,'Turnover');
+
+(536,'Block', NULL, '00:10:23'),
+(536,'Foul', NULL, '00:02:23'),
+(536,'Turnover', NULL, '00:08:09'),
 
 -- Participation 537
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(537,'FreeThrow'),
-(537,'TwoPointerShot'),
-(537,'ThreePointerShot');
+
+(537,'FreeThrow', 1, '00:02:45'),
+(537,'TwoPointerShot', 2, '00:12:22'),
+(537,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 538
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(538,'Assist'),
-(538,'Rebound'),
-(538,'Block');
+
+(538,'Assist', NULL, '00:04:01'),
+(538,'Rebound', NULL, '00:00:58'),
+(538,'Block', NULL, '00:10:23'),
 
 -- Participation 539
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(539,'Foul'),
-(539,'Turnover'),
-(539,'FreeThrow');
+
+(539,'Foul', NULL, '00:02:23'),
+(539,'Turnover', NULL, '00:08:09'),
+(539,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 540
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(540,'TwoPointerShot'),
-(540,'ThreePointerShot'),
-(540,'Assist');
+
+(540,'TwoPointerShot', 2, '00:12:22'),
+(540,'ThreePointerShot', 3, '00:07:59'),
+(540,'Assist', NULL, '00:04:01'),
 
 -- Participation 541
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(541,'Rebound'),
-(541,'Block'),
-(541,'Foul');
+
+(541,'Rebound', NULL, '00:00:58'),
+(541,'Block', NULL, '00:10:23'),
+(541,'Foul', NULL, '00:02:23'),
 
 -- Participation 542
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(542,'Turnover'),
-(542,'FreeThrow'),
-(542,'TwoPointerShot');
+
+(542,'Turnover', NULL, '00:08:09'),
+(542,'FreeThrow', 1, '00:02:45'),
+(542,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 543
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(543,'ThreePointerShot'),
-(543,'Assist'),
-(543,'Rebound');
+
+(543,'ThreePointerShot', 3, '00:07:59'),
+(543,'Assist', NULL, '00:04:01'),
+(543,'Rebound', NULL, '00:00:58'),
 
 -- Participation 544
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(544,'Block'),
-(544,'Foul'),
-(544,'Turnover');
+
+(544,'Block', NULL, '00:10:23'),
+(544,'Foul', NULL, '00:02:23'),
+(544,'Turnover', NULL, '00:08:09'),
 
 -- Participation 545
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(545,'FreeThrow'),
-(545,'TwoPointerShot'),
-(545,'ThreePointerShot');
+
+(545,'FreeThrow', 1, '00:02:45'),
+(545,'TwoPointerShot', 2, '00:12:22'),
+(545,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 546
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(546,'Assist'),
-(546,'Rebound'),
-(546,'Block');
+
+(546,'Assist', NULL, '00:04:01'),
+(546,'Rebound', NULL, '00:00:58'),
+(546,'Block', NULL, '00:10:23'),
 
 -- Participation 547
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(547,'Foul'),
-(547,'Turnover'),
-(547,'FreeThrow');
+
+(547,'Foul', NULL, '00:02:23'),
+(547,'Turnover', NULL, '00:08:09'),
+(547,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 548
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(548,'TwoPointerShot'),
-(548,'ThreePointerShot'),
-(548,'Assist');
+
+(548,'TwoPointerShot', 2, '00:12:22'),
+(548,'ThreePointerShot', 3, '00:07:59'),
+(548,'Assist', NULL, '00:04:01'),
 
 -- Participation 549
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(549,'Rebound'),
-(549,'Block'),
-(549,'Foul');
+
+(549,'Rebound', NULL, '00:00:58'),
+(549,'Block', NULL, '00:10:23'),
+(549,'Foul', NULL, '00:02:23'),
 
 -- Participation 550
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(550,'Turnover'),
-(550,'FreeThrow'),
-(550,'TwoPointerShot');
+
+(550,'Turnover', NULL, '00:08:09'),
+(550,'FreeThrow', 1, '00:02:45'),
+(550,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 551
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(551,'ThreePointerShot'),
-(551,'Assist'),
-(551,'Rebound');
+
+(551,'ThreePointerShot', 3, '00:07:59'),
+(551,'Assist', NULL, '00:04:01'),
+(551,'Rebound', NULL, '00:00:58'),
 
 -- Participation 552
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(552,'Block'),
-(552,'Foul'),
-(552,'Turnover');
+
+(552,'Block', NULL, '00:10:23'),
+(552,'Foul', NULL, '00:02:23'),
+(552,'Turnover', NULL, '00:08:09'),
 
 -- Participation 553
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(553,'FreeThrow'),
-(553,'TwoPointerShot'),
-(553,'ThreePointerShot');
+
+(553,'FreeThrow', 1, '00:02:45'),
+(553,'TwoPointerShot', 2, '00:12:22'),
+(553,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 554
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(554,'Assist'),
-(554,'Rebound'),
-(554,'Block');
+
+(554,'Assist', NULL, '00:04:01'),
+(554,'Rebound', NULL, '00:00:58'),
+(554,'Block', NULL, '00:10:23'),
 
 -- Participation 555
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(555,'Foul'),
-(555,'Turnover'),
-(555,'FreeThrow');
+
+(555,'Foul', NULL, '00:02:23'),
+(555,'Turnover', NULL, '00:08:09'),
+(555,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 556
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(556,'TwoPointerShot'),
-(556,'ThreePointerShot'),
-(556,'Assist');
+
+(556,'TwoPointerShot', 2, '00:12:22'),
+(556,'ThreePointerShot', 3, '00:07:59'),
+(556,'Assist', NULL, '00:04:01'),
 
 -- Participation 557
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(557,'Rebound'),
-(557,'Block'),
-(557,'Foul');
+
+(557,'Rebound', NULL, '00:00:58'),
+(557,'Block', NULL, '00:10:23'),
+(557,'Foul', NULL, '00:02:23'),
 
 -- Participation 558
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(558,'Turnover'),
-(558,'FreeThrow'),
-(558,'TwoPointerShot');
+
+(558,'Turnover', NULL, '00:08:09'),
+(558,'FreeThrow', 1, '00:02:45'),
+(558,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 559
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(559,'ThreePointerShot'),
-(559,'Assist'),
-(559,'Rebound');
+
+(559,'ThreePointerShot', 3, '00:07:59'),
+(559,'Assist', NULL, '00:04:01'),
+(559,'Rebound', NULL, '00:00:58'),
 
 -- Participation 560
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(560,'Block'),
-(560,'Foul'),
-(560,'Turnover');
+
+(560,'Block', NULL, '00:10:23'),
+(560,'Foul', NULL, '00:02:23'),
+(560,'Turnover', NULL, '00:08:09'),
 
 -- Participation 561
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(561,'FreeThrow'),
-(561,'TwoPointerShot'),
-(561,'ThreePointerShot');
+
+(561,'FreeThrow', 1, '00:02:45'),
+(561,'TwoPointerShot', 2, '00:12:22'),
+(561,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 562
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(562,'Assist'),
-(562,'Rebound'),
-(562,'Block');
+
+(562,'Assist', NULL, '00:04:01'),
+(562,'Rebound', NULL, '00:00:58'),
+(562,'Block', NULL, '00:10:23'),
 
 -- Participation 563
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(563,'Foul'),
-(563,'Turnover'),
-(563,'FreeThrow');
+
+(563,'Foul', NULL, '00:02:23'),
+(563,'Turnover', NULL, '00:08:09'),
+(563,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 564
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(564,'TwoPointerShot'),
-(564,'ThreePointerShot'),
-(564,'Assist');
+
+(564,'TwoPointerShot', 2, '00:12:22'),
+(564,'ThreePointerShot', 3, '00:07:59'),
+(564,'Assist', NULL, '00:04:01'),
 
 -- Participation 565
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(565,'Rebound'),
-(565,'Block'),
-(565,'Foul');
+
+(565,'Rebound', NULL, '00:00:58'),
+(565,'Block', NULL, '00:10:23'),
+(565,'Foul', NULL, '00:02:23'),
 
 -- Participation 566
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(566,'Turnover'),
-(566,'FreeThrow'),
-(566,'TwoPointerShot');
+
+(566,'Turnover', NULL, '00:08:09'),
+(566,'FreeThrow', 1, '00:02:45'),
+(566,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 567
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(567,'ThreePointerShot'),
-(567,'Assist'),
-(567,'Rebound');
+
+(567,'ThreePointerShot', 3, '00:07:59'),
+(567,'Assist', NULL, '00:04:01'),
+(567,'Rebound', NULL, '00:00:58'),
 
 -- Participation 568
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(568,'Block'),
-(568,'Foul'),
-(568,'Turnover');
+
+(568,'Block', NULL, '00:10:23'),
+(568,'Foul', NULL, '00:02:23'),
+(568,'Turnover', NULL, '00:08:09'),
 
 -- Participation 569
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(569,'FreeThrow'),
-(569,'TwoPointerShot'),
-(569,'ThreePointerShot');
+
+(569,'FreeThrow', 1, '00:02:45'),
+(569,'TwoPointerShot', 2, '00:12:22'),
+(569,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 570
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(570,'Assist'),
-(570,'Rebound'),
-(570,'Block');
+
+(570,'Assist', NULL, '00:04:01'),
+(570,'Rebound', NULL, '00:00:58'),
+(570,'Block', NULL, '00:10:23'),
 
 -- Participation 571
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(571,'Foul'),
-(571,'Turnover'),
-(571,'FreeThrow');
+
+(571,'Foul', NULL, '00:02:23'),
+(571,'Turnover', NULL, '00:08:09'),
+(571,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 572
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(572,'TwoPointerShot'),
-(572,'ThreePointerShot'),
-(572,'Assist');
+
+(572,'TwoPointerShot', 2, '00:12:22'),
+(572,'ThreePointerShot', 3, '00:07:59'),
+(572,'Assist', NULL, '00:04:01'),
 
 -- Participation 573
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(573,'Rebound'),
-(573,'Block'),
-(573,'Foul');
+
+(573,'Rebound', NULL, '00:00:58'),
+(573,'Block', NULL, '00:10:23'),
+(573,'Foul', NULL, '00:02:23'),
 
 -- Participation 574
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(574,'Turnover'),
-(574,'FreeThrow'),
-(574,'TwoPointerShot');
+
+(574,'Turnover', NULL, '00:08:09'),
+(574,'FreeThrow', 1, '00:02:45'),
+(574,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 575
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(575,'ThreePointerShot'),
-(575,'Assist'),
-(575,'Rebound');
+
+(575,'ThreePointerShot', 3, '00:07:59'),
+(575,'Assist', NULL, '00:04:01'),
+(575,'Rebound', NULL, '00:00:58'),
 
 -- Participation 576
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(576,'Block'),
-(576,'Foul'),
-(576,'Turnover');
+
+(576,'Block', NULL, '00:10:23'),
+(576,'Foul', NULL, '00:02:23'),
+(576,'Turnover', NULL, '00:08:09'),
 
 -- Participation 577
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(577,'FreeThrow'),
-(577,'TwoPointerShot'),
-(577,'ThreePointerShot');
+
+(577,'FreeThrow', 1, '00:02:45'),
+(577,'TwoPointerShot', 2, '00:12:22'),
+(577,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 578
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(578,'Assist'),
-(578,'Rebound'),
-(578,'Block');
+
+(578,'Assist', NULL, '00:04:01'),
+(578,'Rebound', NULL, '00:00:58'),
+(578,'Block', NULL, '00:10:23'),
 
 -- Participation 579
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(579,'Foul'),
-(579,'Turnover'),
-(579,'FreeThrow');
+
+(579,'Foul', NULL, '00:02:23'),
+(579,'Turnover', NULL, '00:08:09'),
+(579,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 580
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(580,'TwoPointerShot'),
-(580,'ThreePointerShot'),
-(580,'Assist');
+
+(580,'TwoPointerShot', 2, '00:12:22'),
+(580,'ThreePointerShot', 3, '00:07:59'),
+(580,'Assist', NULL, '00:04:01'),
 
 -- Participation 581
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(581,'Rebound'),
-(581,'Block'),
-(581,'Foul');
+
+(581,'Rebound', NULL, '00:00:58'),
+(581,'Block', NULL, '00:10:23'),
+(581,'Foul', NULL, '00:02:23'),
 
 -- Participation 582
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(582,'Turnover'),
-(582,'FreeThrow'),
-(582,'TwoPointerShot');
+
+(582,'Turnover', NULL, '00:08:09'),
+(582,'FreeThrow', 1, '00:02:45'),
+(582,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 583
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(583,'ThreePointerShot'),
-(583,'Assist'),
-(583,'Rebound');
+
+(583,'ThreePointerShot', 3, '00:07:59'),
+(583,'Assist', NULL, '00:04:01'),
+(583,'Rebound', NULL, '00:00:58'),
 
 -- Participation 584
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(584,'Block'),
-(584,'Foul'),
-(584,'Turnover');
+
+(584,'Block', NULL, '00:10:23'),
+(584,'Foul', NULL, '00:02:23'),
+(584,'Turnover', NULL, '00:08:09'),
 
 -- Participation 585
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(585,'FreeThrow'),
-(585,'TwoPointerShot'),
-(585,'ThreePointerShot');
+
+(585,'FreeThrow', 1, '00:02:45'),
+(585,'TwoPointerShot', 2, '00:12:22'),
+(585,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 586
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(586,'Assist'),
-(586,'Rebound'),
-(586,'Block');
+
+(586,'Assist', NULL, '00:04:01'),
+(586,'Rebound', NULL, '00:00:58'),
+(586,'Block', NULL, '00:10:23'),
 
 -- Participation 587
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(587,'Foul'),
-(587,'Turnover'),
-(587,'FreeThrow');
+
+(587,'Foul', NULL, '00:02:23'),
+(587,'Turnover', NULL, '00:08:09'),
+(587,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 588
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(588,'TwoPointerShot'),
-(588,'ThreePointerShot'),
-(588,'Assist');
+
+(588,'TwoPointerShot', 2, '00:12:22'),
+(588,'ThreePointerShot', 3, '00:07:59'),
+(588,'Assist', NULL, '00:04:01'),
 
 -- Participation 589
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(589,'Rebound'),
-(589,'Block'),
-(589,'Foul');
+
+(589,'Rebound', NULL, '00:00:58'),
+(589,'Block', NULL, '00:10:23'),
+(589,'Foul', NULL, '00:02:23'),
 
 -- Participation 590
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(590,'Turnover'),
-(590,'FreeThrow'),
-(590,'TwoPointerShot');
+
+(590,'Turnover', NULL, '00:08:09'),
+(590,'FreeThrow', 1, '00:02:45'),
+(590,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 591
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(591,'ThreePointerShot'),
-(591,'Assist'),
-(591,'Rebound');
+
+(591,'ThreePointerShot', 3, '00:07:59'),
+(591,'Assist', NULL, '00:04:01'),
+(591,'Rebound', NULL, '00:00:58'),
 
 -- Participation 592
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(592,'Block'),
-(592,'Foul'),
-(592,'Turnover');
+
+(592,'Block', NULL, '00:10:23'),
+(592,'Foul', NULL, '00:02:23'),
+(592,'Turnover', NULL, '00:08:09'),
 
 -- Participation 593
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(593,'FreeThrow'),
-(593,'TwoPointerShot'),
-(593,'ThreePointerShot');
+
+(593,'FreeThrow', 1, '00:02:45'),
+(593,'TwoPointerShot', 2, '00:12:22'),
+(593,'ThreePointerShot', 3, '00:07:59'),
 
 -- Participation 594
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(594,'Assist'),
-(594,'Rebound'),
-(594,'Block');
+
+(594,'Assist', NULL, '00:04:01'),
+(594,'Rebound', NULL, '00:00:58'),
+(594,'Block', NULL, '00:10:23'),
 
 -- Participation 595
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(595,'Foul'),
-(595,'Turnover'),
-(595,'FreeThrow');
+
+(595,'Foul', NULL, '00:02:23'),
+(595,'Turnover', NULL, '00:08:09'),
+(595,'FreeThrow', 1, '00:02:45'),
 
 -- Participation 596
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(596,'TwoPointerShot'),
-(596,'ThreePointerShot'),
-(596,'Assist');
+
+(596,'TwoPointerShot', 2, '00:12:22'),
+(596,'ThreePointerShot', 3, '00:07:59'),
+(596,'Assist', NULL, '00:04:01'),
 
 -- Participation 597
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(597,'Rebound'),
-(597,'Block'),
-(597,'Foul');
+
+(597,'Rebound', NULL, '00:00:58'),
+(597,'Block', NULL, '00:10:23'),
+(597,'Foul', NULL, '00:02:23'),
 
 -- Participation 598
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(598,'Turnover'),
-(598,'FreeThrow'),
-(598,'TwoPointerShot');
+
+(598,'Turnover', NULL, '00:08:09'),
+(598,'FreeThrow', 1, '00:02:45'),
+(598,'TwoPointerShot', 2, '00:12:22'),
 
 -- Participation 599
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(599,'ThreePointerShot'),
-(599,'Assist'),
-(599,'Rebound');
+
+(599,'ThreePointerShot', 3, '00:07:59'),
+(599,'Assist', NULL, '00:04:01'),
+(599,'Rebound', NULL, '00:00:58'),
 
 -- Participation 600
-INSERT INTO Play (ParticipationId, PlayType) VALUES
-(600,'Block'),
-(600,'Foul'),
-(600,'Turnover');
+
+(600,'Block', NULL, '00:10:23'),
+(600,'Foul', NULL, '00:02:23'),
+(600,'Turnover', NULL, '00:08:09');
+
+
+--SELECT TOP 2 
+--       '(' + CAST(Id AS VARCHAR) + ',' 
+--	   + CAST(ParticipationId AS VARCHAR) + ',"' 
+--	   + CAST(Type AS VARCHAR) + '",' 
+--	   + CAST(Points AS VARCHAR) + ',"' 
+--	   + CONVERT(VARCHAR(25), At, 120) + '"),'
+--FROM Play
+

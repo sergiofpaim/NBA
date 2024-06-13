@@ -4,7 +4,6 @@ GO
 CREATE TABLE Scalation (
 SeasonId char(5) NOT NULL,
 TeamId varchar(3) NOT NULL,
-Ranking integer
 );
 
 ALTER TABLE Scalation

@@ -9,12 +9,12 @@ Table Team {
   Id varchar [primary key]
   TeamName varchar
   TeamState varchar
+  Conference char
 }
 
 Table Scalation {
    SeasonId char [primary key]
    TeamId varchar [primary key]
-   Ranking integer
 }
 
 Table Season {

@@ -17,3 +17,5 @@ ADD CONSTRAINT FK_Participation_GameId FOREIGN KEY (GameId) REFERENCES Game(Id);
 ALTER TABLE Participation
 ADD CONSTRAINT FK_Participation_SelectionId FOREIGN KEY (SelectionId) REFERENCES Selection(Id);
 
+SET IDENTITY_INSERT Participation ON;
+
