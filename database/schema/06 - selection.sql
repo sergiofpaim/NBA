@@ -17,6 +17,3 @@ ADD CONSTRAINT FK_Selection_PlayerId FOREIGN KEY (PlayerId) REFERENCES Player(Id
 
 ALTER TABLE Selection
 ADD CONSTRAINT FK_Selection_TeamId_SeasonId FOREIGN KEY (SeasonId, TeamId) REFERENCES Scalation(SeasonId, TeamId);
-
-SET IDENTITY_INSERT Selection ON;
-

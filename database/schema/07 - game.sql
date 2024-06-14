@@ -15,5 +15,3 @@ ADD CONSTRAINT FK_HomeTeamId_TeamId FOREIGN KEY (SeasonId, HomeTeamId) REFERENCE
 ALTER TABLE Game
 ADD CONSTRAINT FK_VisitorTeamId_TeamId FOREIGN KEY (SeasonId, VisitorTeamId) REFERENCES Scalation(SeasonId, TeamId);
 
-SET IDENTITY_INSERT Game ON;
-

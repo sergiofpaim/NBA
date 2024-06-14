@@ -2,7 +2,7 @@ USE Basketball;
 GO
 
 -- Temporada 2022-2023
-INSERT INTO Game (SeasonId, HomeTeamId, VisitorsTeamId, At) VALUES
+INSERT INTO Game (SeasonId, HomeTeamId, VisitorTeamId, At) VALUES
 ('22-23', 'ATL', 'BOS', '2022-10-01T19:30:00'),
 ('22-23', 'BKN', 'CHA', '2022-10-02T20:00:00'),
 ('22-23', 'CHI', 'CLE', '2022-10-03T21:00:00'),
@@ -20,7 +20,7 @@ INSERT INTO Game (SeasonId, HomeTeamId, VisitorsTeamId, At) VALUES
 ('22-23', 'UTA', 'WAS', '2022-10-15T20:00:00');
 
 -- Temporada 2023-2024
-INSERT INTO Game (SeasonId, HomeTeamId, VisitorsTeamId, At) VALUES
+INSERT INTO Game (SeasonId, HomeTeamId, VisitorTeamId, At) VALUES
 ('23-24', 'ATL', 'BOS', '2023-10-01T19:45:00'),
 ('23-24', 'BKN', 'CHA', '2023-10-02T20:15:00'),
 ('23-24', 'CHI', 'CLE', '2023-10-03T21:15:00'),

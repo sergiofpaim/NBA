@@ -31,11 +31,11 @@ SELECT g.Id AS GameId,
 FROM Game AS g
 JOIN Selection AS s
   ON g.SeasonId = s.SeasonId
- AND g.VisitorsTeamId = s.TeamId
+ AND g.VisitorTeamId = s.TeamId
 JOIN Player AS p
   ON s.PlayerId = p.Id
 JOIN Team AS t
-   ON g.VisitorsTeamId = t.Id
+   ON g.VisitorTeamId = t.Id
 JOIN Team AS th
   ON g.HomeTeamId = th.Id
 WHERE g.Id = 3
