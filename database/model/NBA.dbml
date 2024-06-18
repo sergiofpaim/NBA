@@ -1,14 +1,17 @@
 Table Game {
   Id integer [primary key]
+  SeasonId char
   VisitorsTeamId varchar
   HomeTeamId varchar
-  MatchDate date
+  At datetime
 }
 
 Table Team {
   Id varchar [primary key]
-  TeamName varchar
-  TeamState varchar
+  Name varchar
+  State varchar
+  City varchar
+  Stadium varchar
   Conference char
 }
 
@@ -23,17 +26,20 @@ Table Season {
 
 Table Player {
   Id integer [primary key]
-  PlayerName varchar
-  DateOfBirth date
+  Name varchar
+  BornOn date
   Position varchar
 }
 
 Table Selection {
   Id integer [primary key]
-  PlayerId integer [unique]
-  SeasonId char [unique]
-  TeamId varchar [unique]
+  PlayerId integer
+  SeasonId char
+  TeamId varchar
   Jersey integer
+  Indexes {
+    (PlayerId, SeasonId, TeamId) [unique]
+  }
 }
 
 Table Participation {
@@ -46,13 +52,14 @@ Table Participation {
 Table Play {
   Id integer [primary key]
   ParticipationId integer
-  PlayType integer
-  Time time
+  Type integer
+  Points Integer
+  At time
 }
 
 Ref: Game.Id > Participation.GameId
-Ref: Game.HomeTeamId > Scalation.TeamId
-Ref: Game.VisitorsTeamId > Scalation.TeamId
+Ref: Game.(SeasonId, HomeTeamId) > Scalation.(SeasonId, TeamId)
+Ref: Game.(SeasonId, VisitorsTeamId) > Scalation.(SeasonId, TeamId)
 Ref: Participation.Id > Play.ParticipationId
 Ref: Scalation.SeasonId > Season.Id
 Ref: Scalation.TeamId > Team.Id
