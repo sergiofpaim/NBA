@@ -17,7 +17,6 @@ JOIN Player AS p
   ON s.PlayerId = p.Id
 JOIN Team AS t
   ON g.HomeTeamId = t.Id
-WHERE g.Id = 3 
 UNION ALL
 SELECT g.Id AS GameId,
        g.At, 
@@ -39,7 +38,6 @@ JOIN Team AS t
    ON g.VisitorTeamId = t.Id
 JOIN Team AS th
   ON g.HomeTeamId = th.Id
-WHERE g.Id = 3
 )
 SELECT gp.*, pn.Quarter, py.Type, py.Points, py.At 
 FROM gp
@@ -50,3 +48,4 @@ JOIN Selection AS sl
 JOIN Play AS py
   ON pn.Id = py.ParticipationId
 WHERE sl.Id= pn.SelectionId
+  AND gp.GameId = 1
