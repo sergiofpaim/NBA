@@ -7,7 +7,8 @@ SELECT g.Id AS GameId,
        t.Name AS Team, 
        s.Jersey, 
        p.Name AS Player, 
-       p.Position 
+       p.Position,
+	   p.Id AS PlayerId
 FROM Game AS g
 JOIN Selection AS s
   ON g.SeasonId = s.SeasonId
@@ -17,7 +18,6 @@ JOIN Player AS p
 JOIN Team AS t
   ON g.HomeTeamId = t.Id
 WHERE g.Id = 3 
-  AND p.Id = 41
 UNION ALL
 SELECT g.Id AS GameId,
        g.At, 
@@ -27,7 +27,8 @@ SELECT g.Id AS GameId,
        t.Name AS Team, 
        s.Jersey, 
        p.Name AS Player, 
-       p.Position 
+       p.Position,
+	   p.Id
 FROM Game AS g
 JOIN Selection AS s
   ON g.SeasonId = s.SeasonId
@@ -39,11 +40,13 @@ JOIN Team AS t
 JOIN Team AS th
   ON g.HomeTeamId = th.Id
 WHERE g.Id = 3
-  AND p.Id = 41
 )
 SELECT gp.*, pn.Quarter, py.Type, py.Points, py.At 
 FROM gp
 JOIN Participation AS pn
   ON gp.GameId = pn.GameId
+JOIN Selection AS sl
+	ON gp.PlayerId = sl.PlayerId
 JOIN Play AS py
   ON pn.Id = py.ParticipationId
+WHERE sl.Id= pn.SelectionId
