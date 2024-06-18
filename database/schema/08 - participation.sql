@@ -2,7 +2,7 @@ USE Basketball;
 GO
 
 CREATE TABLE Participation (
-Id int IDENTITY(1,1) PRIMARY KEY,
+Id int PRIMARY KEY,
 SelectionId int NOT NULL,
 GameId int NOT NULL,
 Quarter int NOT NULL

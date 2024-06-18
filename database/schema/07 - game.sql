@@ -2,7 +2,7 @@ USE Basketball;
 GO
 
 CREATE TABLE Game (
-Id int IDENTITY(1,1) PRIMARY KEY,
+Id int PRIMARY KEY,
 SeasonId char(5),
 HomeTeamId varchar(3),
 VisitorTeamId varchar(3),

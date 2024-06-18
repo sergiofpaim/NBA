@@ -2,7 +2,7 @@ USE Basketball;
 GO
 
 CREATE TABLE Selection (
-Id int IDENTITY(1,1) PRIMARY KEY,
+Id int PRIMARY KEY,
 PlayerId int,
 SeasonId char(5),
 TeamId varchar(3),
