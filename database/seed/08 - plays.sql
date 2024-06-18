@@ -1001,9 +1001,9 @@ INSERT INTO Play (Id, ParticipationId, Type, Points, At) VALUES
 (996,332,'Assist', NULL, '00:04:01'),
 (997,333,'Rebound', NULL, '00:00:58'),
 (998,333,'Block', NULL, '00:10:23'),
-(999,333,'Foul', NULL, '00:02:23';),
+(999,333,'Foul', NULL, '00:02:23');
 
-INSERT INTO Play (ParticipationId, Type, Points, At) VALUES
+INSERT INTO Play (Id, ParticipationId, Type, Points, At) VALUES
 
 (1001,334,'Turnover', NULL, '00:08:09'),
 (1002,334,'FreeThrow',1, '00:02:45'),
