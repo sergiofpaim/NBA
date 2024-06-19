@@ -13,7 +13,7 @@ BEGIN
             (SELECT ISNULL(MAX(Id), 0) FROM Season),
 			@HomeTeamId,
 			@VisitorsTeamId,
-            COALESCE(@At, GETDATE())
+			@At
         );
         PRINT 'Game created successfully.';
 END;
