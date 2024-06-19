@@ -48,4 +48,4 @@ JOIN Selection AS sl
 JOIN Play AS py
   ON pn.Id = py.ParticipationId
 WHERE sl.Id= pn.SelectionId
-  AND gp.GameId = 1
+  AND gp.GameId = 15
