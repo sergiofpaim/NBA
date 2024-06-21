@@ -78,7 +78,8 @@ BEGIN TRY
 	
 	 		SET @ParticipationId = (SELECT ISNULL(MAX(Id), 0) + 1 
 			                        FROM Participation);
-									-- TODO: Put WriteLock
+									
+			EXEC sp_getapplock @Resource = 'ParticipationLock', @LockMode = 'Exclusive';
 
 	 		INSERT INTO Participation
 	 		       (Id,
@@ -91,6 +92,9 @@ BEGIN TRY
 	 			    @GameId,
 	 			    @Quarter,
 	 			    @Points);
+
+			EXEC sp_releaseapplock @Resource = 'ParticipationLock';		
+					
 	 	-- If exists, updates its points
 	 	END ELSE BEGIN 
 
@@ -100,7 +104,7 @@ BEGIN TRY
 
 	 	END;	
         -- Gets the next Id of Play
-			-- TODO: Put WriteLock
+		EXEC sp_getapplock @Resource = 'PlayLock', @LockMode = 'Exclusive';
 			
 		DECLARE @PlayId INT;
 
@@ -115,6 +119,8 @@ BEGIN TRY
 			@Points,
 			@At
 		);
+
+		EXEC sp_releaseapplock @Resource = 'PlayLock';
 
 	COMMIT TRAN;
 END TRY;
