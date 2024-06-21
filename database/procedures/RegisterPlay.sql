@@ -10,19 +10,33 @@ AS
 BEGIN TRY	
 	BEGIN TRAN
 	 	-- Checks the parameters
-	 		-- Checks if the GameId is not empty
-	 		-- Checks if PlayerId is greater than 0
-	 		-- Checks if Quarter is between 1 and 6
+			IF @GameId IS NULL
+				RAISERROR ('Invalid Game.', 20)
+
+			IF @PlayerId < 1
+				RAISERROR ('Invalid Player.', 20)
+
 	 		IF @Quarter NOT BETWEEN 1 AND 6
-	 			RAISERROR ('Invalid Quarter.', 1)
-     	    -- Checks if Type is valid
-	
-     	    -- Checks if At is not in the future
-	
+	 			RAISERROR ('Invalid Quarter.', 20)
+
+			IF @Type NOT IN ('FreeThrowHit', 'TwoPointerHit', 'ThreePointerHit',
+                             'FreeThrowMiss', 'TwoPointerMiss', 'ThreePointerMiss',
+                             'Assist', 'Rebound', 'Block', 'Foul', 'Turnover')
+				RAISERROR ('Invalid Type.', 20)
+
+			IF @At > GETDATE()
+				RAISERROR ('Invalid At.', 20)
+
 	 	-- Calculates the points from the Play.Type
 	 	DECLARE @Points INT = 0;
-	
-	 		--Case When Else
+
+			SET @Points = 
+    			CASE @Type
+        			WHEN 'FreeThrowHit' THEN 1
+        			WHEN 'TwoPointerHit' THEN 2
+        			WHEN 'ThreePointerHit' THEN 3
+        			ELSE 0
+    			END;
 	
      	-- Tries to recover the existing participation for this Player, Game and Quarter
 	 	DECLARE @ParticipationId INT = 0;
@@ -38,16 +52,30 @@ BEGIN TRY
 	 	  AND p.Quarter = @Quarter
 
 	 	-- If doesn't exist, creates
-	 	IF @ParticipationId = 0 BEGIN
-     	    -- Tries to recover the Selection of the Player for this Game 
-     	    		--SELECT from Selection and Game (Compare if the player selected plays 
-	 				--in the same team and season as the game takes place)
-	
+	 	IF @ParticipationId = 0 
+		BEGIN
+			-- Tries to recover the Selection of the Player for this Game 
+			SELECT @SelectionId = se.Id
+            FROM Selection AS se
+			JOIN Game AS ga
+			  ON ga.HomeTeamId = se.TeamId
+			WHERE @GameId = ga.Id 
+			  AND @PlayerId = se.PlayerId 
+			
+			IF @SelectionId = 0 
+			BEGIN
+				SELECT @SelectionId = se.Id
+            	FROM Selection AS se
+				JOIN Game AS ga
+				  ON ga.VisitorsTeamId = se.TeamId
+				WHERE @GameId = ga.Id 
+				  AND @PlayerId = se.PlayerId 
+			END;
+
 	 		-- Raise error if Player is not participating in the Team
      	    IF @SelectionId = 0 
-	 		    RAISERROR ('The Player does not participate in the Team for the Season.', 1)
+	 		    RAISERROR ('The Player does not participate in the Team for the Season.', 20)
 	
-     	    -- If doesn't exist, raise an error
 	 		SET @ParticipationId = (SELECT ISNULL(MAX(Id), 0) + 1 
 			                        FROM Participation);
 									-- TODO: Put WriteLock
@@ -73,7 +101,20 @@ BEGIN TRY
 	 	END;	
         -- Gets the next Id of Play
 			-- TODO: Put WriteLock
-		-- Insert Play
+			
+		DECLARE @PlayId INT;
+
+		SET @PlayId = (SELECT ISNULL(MAX(Id), 0) + 1 
+			                        FROM Play);
+
+		INSERT INTO Play (Id, ParticipationId, Type, Points, At)
+		VALUES (
+			@PlayId,
+			@ParticipationId,
+			@Type,
+			@Points,
+			@At
+		);
 
 	COMMIT TRAN;
 END TRY;

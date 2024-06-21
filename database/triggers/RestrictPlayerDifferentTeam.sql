@@ -12,7 +12,7 @@ BEGIN
 			   WHERE se.TeamId != ga.HomeTeamId
                  AND se.TeamId != ga.VisitorTeamId)
     BEGIN
-        RAISERROR('Inserted player must be part of one of the teams playing the game', 16, 1);
+        RAISERROR('Inserted player must be part of one of the teams playing the game', 20, 1);
     END
     ELSE
     BEGIN
