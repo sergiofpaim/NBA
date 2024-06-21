@@ -47,12 +47,13 @@ Table Participation {
   GameId integer 
   SelectionId integer
   Quarter integer
+  Points integer
 }
 
 Table Play {
   Id integer [primary key]
   ParticipationId integer
-  Type integer
+  Type varchar
   Points Integer
   At time
 }

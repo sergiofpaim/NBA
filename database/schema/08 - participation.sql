@@ -1,11 +1,14 @@
 USE Basketball;
 GO
 
+--DROP TABLE Participation;
+
 CREATE TABLE Participation (
 Id int PRIMARY KEY,
 SelectionId int NOT NULL,
 GameId int NOT NULL,
-Quarter int NOT NULL
+Quarter int NOT NULL,
+Points int DEFAULT 0
 );
 
 ALTER TABLE Participation
@@ -16,4 +19,5 @@ ADD CONSTRAINT FK_Participation_GameId FOREIGN KEY (GameId) REFERENCES Game(Id);
 
 ALTER TABLE Participation
 ADD CONSTRAINT FK_Participation_SelectionId FOREIGN KEY (SelectionId) REFERENCES Selection(Id);
+
 

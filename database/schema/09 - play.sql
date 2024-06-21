@@ -1,6 +1,8 @@
 USE Basketball;
 GO
 
+--DROP TABLE Play
+
 CREATE TABLE Play (
 Id int PRIMARY KEY,
 ParticipationId int,
