@@ -1,7 +1,9 @@
 USE Basketball;
 GO
 
-CREATE TABLE Scalation (
+--DROP TABLE Basketball.dbo.Scalation;
+
+CREATE TABLE Basketball.dbo.Scalation (
 SeasonId char(5) NOT NULL,
 TeamId varchar(3) NOT NULL,
 );

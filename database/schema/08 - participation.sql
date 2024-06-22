@@ -1,9 +1,9 @@
 USE Basketball;
 GO
 
---DROP TABLE Participation;
+--DROP TABLE Basketball.dbo.Participation;
 
-CREATE TABLE Participation (
+CREATE TABLE Basketball.dbo.Participation (
 Id int PRIMARY KEY,
 SelectionId int NOT NULL,
 GameId int NOT NULL,

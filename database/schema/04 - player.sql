@@ -1,7 +1,9 @@
 USE Basketball;
 GO
 
-CREATE TABLE Player (
+--DROP TABLE Basketball.dbo.Player;
+
+CREATE TABLE Basketball.dbo.Player (
 Id int PRIMARY KEY ,
 Name varchar(50),
 BornOn date,

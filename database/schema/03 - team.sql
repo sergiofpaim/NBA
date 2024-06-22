@@ -1,7 +1,9 @@
 USE Basketball;
 GO
 
-CREATE TABLE Team (
+--DROP TABLE Basketball.dbo.Team;
+
+CREATE TABLE Basketball.dbo.Team (
     Id VARCHAR(3) NOT NULL PRIMARY KEY,
     Name VARCHAR(20),
     State VARCHAR(20),

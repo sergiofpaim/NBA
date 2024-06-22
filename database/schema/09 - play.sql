@@ -1,9 +1,9 @@
 USE Basketball;
 GO
 
---DROP TABLE Play
+--DROP TABLE Basketball.dbo.Play
 
-CREATE TABLE Play (
+CREATE TABLE Basketball.dbo.Play (
 Id int PRIMARY KEY,
 ParticipationId int,
 Type varchar(20),

@@ -1,7 +1,9 @@
 USE Basketball;
 GO
 
-CREATE TABLE Game (
+--DROP TABLE Basketball.dbo.Game;
+
+CREATE TABLE Basketball.dbo.Game (
 Id int PRIMARY KEY,
 SeasonId char(5),
 HomeTeamId varchar(3),
