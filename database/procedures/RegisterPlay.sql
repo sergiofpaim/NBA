@@ -5,27 +5,28 @@ CREATE PROCEDURE RegisterPlay @GameId varchar(3),
 	                          @PlayerId int,
 	                          @Quarter int,
                               @Type varchar(20),
-	                          @At datetime
+	                          @At time
 AS
 BEGIN TRY	
+	SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
 	BEGIN TRAN
 	 	-- Checks the parameters
 			IF @GameId IS NULL
-				RAISERROR ('Invalid Game.', 20)
+				RAISERROR ('Invalid Game.', 16, 1);
 
 			IF @PlayerId < 1
-				RAISERROR ('Invalid Player.', 20)
+				RAISERROR ('Invalid Player.', 16, 1);
 
 	 		IF @Quarter NOT BETWEEN 1 AND 6
-	 			RAISERROR ('Invalid Quarter.', 20)
+	 			RAISERROR ('Invalid Quarter.', 16, 1);
 
 			IF @Type NOT IN ('FreeThrowHit', 'TwoPointerHit', 'ThreePointerHit',
                              'FreeThrowMiss', 'TwoPointerMiss', 'ThreePointerMiss',
                              'Assist', 'Rebound', 'Block', 'Foul', 'Turnover')
-				RAISERROR ('Invalid Type.', 20)
+				RAISERROR ('Invalid Type.', 16, 1);
 
-			IF @At > GETDATE()
-				RAISERROR ('Invalid At.', 20)
+			IF (@Quarter < 5 AND @At NOT BETWEEN '00:00:00' AND '00:15:00') OR (@Quarter >= 5 AND @At NOT BETWEEN '00:00:00' AND '00:05:00')
+				RAISERROR ('Invalid At.', 16, 1);
 
 	 	-- Calculates the points from the Play.Type
 	 	DECLARE @Points INT = 0;
@@ -67,17 +68,15 @@ BEGIN TRY
 				SELECT @SelectionId = se.Id
             	FROM Selection AS se
 				JOIN Game AS ga
-				  ON ga.VisitorsTeamId = se.TeamId
+				  ON ga.VisitorTeamId = se.TeamId
 				WHERE @GameId = ga.Id 
 				  AND @PlayerId = se.PlayerId 
 			END;
 
 	 		-- Raise error if Player is not participating in the Team
      	    IF @SelectionId = 0 
-	 		    RAISERROR ('The Player does not participate in the Team for the Season.', 20)
-	
-			EXEC sp_getapplock @Resource = 'ParticipationLock', @LockMode = 'Exclusive';
-	 		
+	 		    RAISERROR ('The Player does not participate in the Team for the Season.', 16, 1);
+		 		
 			SET @ParticipationId = (SELECT ISNULL(MAX(Id), 0) + 1 
 			                        FROM Participation);						
 
@@ -92,20 +91,16 @@ BEGIN TRY
 	 			    @GameId,
 	 			    @Quarter,
 	 			    @Points);
-
-			EXEC sp_releaseapplock @Resource = 'ParticipationLock';		
 					
 	 	-- If exists, updates its points
 	 	END ELSE BEGIN 
 
-	 		UPDATE Participation AS p
-	 		SET p.Points = p.Points + @Points
-	 		WHERE p.Id = @ParticipationId
+	 		UPDATE Participation
+	 		SET Participation.Points = Participation.Points + @Points
+	 		WHERE Participation.Id = @ParticipationId
 
 	 	END;	
         -- Gets the next Id of Play
-		EXEC sp_getapplock @Resource = 'PlayLock', @LockMode = 'Exclusive';
-			
 		DECLARE @PlayId INT;
 
 		SET @PlayId = (SELECT ISNULL(MAX(Id), 0) + 1 
@@ -120,14 +115,12 @@ BEGIN TRY
 			@At
 		);
 
-		EXEC sp_releaseapplock @Resource = 'PlayLock';
-
 	COMMIT TRAN;
-END TRY;
-
+END TRY
 BEGIN CATCH
-    IF @@TRANCOUNT > 0
-    BEGIN
-        ROLLBACK TRANSACTION;
-    END;
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END;
+        THROW;
 END CATCH;
