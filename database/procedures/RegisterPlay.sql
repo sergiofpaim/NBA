@@ -60,9 +60,9 @@ BEGIN TRY
             FROM Selection AS se
 			JOIN Game AS ga
 			  ON ga.HomeTeamId = se.TeamId
+			  AND ga.SeasonId = se.SeasonId
 			WHERE @GameId = ga.Id 
 			  AND @PlayerId = se.PlayerId 
-			  AND se.SeasonId = ga.SeasonId
 			
 			IF @SelectionId = 0 
 			BEGIN
@@ -70,9 +70,9 @@ BEGIN TRY
             	FROM Selection AS se
 				JOIN Game AS ga
 				  ON ga.VisitorTeamId = se.TeamId
+				  AND ga.SeasonId = se.SeasonId
 				WHERE @GameId = ga.Id 
 				  AND @PlayerId = se.PlayerId
-				  AND se.SeasonId = ga.SeasonId
 				  
 			END;
 
