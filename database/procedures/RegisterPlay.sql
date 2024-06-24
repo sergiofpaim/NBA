@@ -76,6 +76,8 @@ BEGIN TRY
 	 		-- Raise error if Player is not participating in the Team
      	    IF @SelectionId = 0 
 	 		    RAISERROR ('The Player does not participate in the Team for the Season.', 16, 1);
+
+			-- Creates an Participation
 		 		
 			SET @ParticipationId = (SELECT ISNULL(MAX(Id), 0) + 1 
 			                        FROM Participation);						

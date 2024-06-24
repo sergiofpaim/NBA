@@ -8,7 +8,7 @@ Id int PRIMARY KEY,
 SelectionId int NOT NULL,
 GameId int NOT NULL,
 Quarter int NOT NULL,
-Points int DEFAULT 0
+Points int
 );
 
 ALTER TABLE Participation
