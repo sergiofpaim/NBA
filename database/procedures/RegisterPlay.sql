@@ -62,6 +62,7 @@ BEGIN TRY
 			  ON ga.HomeTeamId = se.TeamId
 			WHERE @GameId = ga.Id 
 			  AND @PlayerId = se.PlayerId 
+			  AND se.SeasonId = ga.SeasonId
 			
 			IF @SelectionId = 0 
 			BEGIN
@@ -70,7 +71,9 @@ BEGIN TRY
 				JOIN Game AS ga
 				  ON ga.VisitorTeamId = se.TeamId
 				WHERE @GameId = ga.Id 
-				  AND @PlayerId = se.PlayerId 
+				  AND @PlayerId = se.PlayerId
+				  AND se.SeasonId = ga.SeasonId
+				  
 			END;
 
 	 		-- Raise error if Player is not participating in the Team
