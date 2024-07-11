@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using System.Threading;
 using Demo.Utilities;
@@ -42,6 +43,10 @@ public sealed class AddPackageCommand : Command<AddPackageCommand.Settings>
     public override int Execute(CommandContext context, Settings settings)
     {
         SettingsDumper.Dump(settings);
+
+        Console.WriteLine($"Esse é o source informado: {settings.Source}");
+
+
         Thread.Sleep(1000);
         return 0;
     }
