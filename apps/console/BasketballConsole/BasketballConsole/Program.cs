@@ -18,10 +18,13 @@ class Program
         config.AddExample("add");
 
         // Add
-        config.AddBranch<AddSettings>("add", add =>
+        config.AddBranch<CommandSettings> ("add", add =>
         {
-            add.SetDescription("Add a play or a game to the database");
-            add.AddCommand<AddPlayCommand>("play");
+            add.SetDescription("Add a game to the database");
+            add.AddCommand<AddGameCommand>("game");
+
+            add.SetDescription("Add a play to the database");
+            add.AddCommand<AddPlayCommand>("play"); 
         });
     }
 }
