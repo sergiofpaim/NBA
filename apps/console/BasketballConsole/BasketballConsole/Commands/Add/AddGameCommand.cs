@@ -12,7 +12,7 @@ public class AddGameCommand: Command<AddGameCommand.GameParms>
 {
     public sealed class GameParms : CommandSettings
     {
-        [CommandOption("-h|--home <HOMETEAMIID>")]
+        [CommandOption("-o|--home <HOMETEAMIID>")]
         [Description("The id of the home team")]
         public string HomeTeamId { get; set; }
 

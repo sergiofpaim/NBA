@@ -5,7 +5,6 @@ using Spectre.Console.Cli;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace NBA.Commands;
 
@@ -32,26 +31,10 @@ public class AddPlayCommand : Command<AddPlayCommand.GameParms>
             DateTime gameTime;
             string getTimeQuery = $"SELECT At FROM Game WHERE Game.Id = {settings.GameId}";
 
-            AnsiConsole.MarkupLine("Write the type of the play:\n");
-
-            var tableOptions = new Table();
-            tableOptions.AddColumn("Option").Centered();
-            tableOptions.AddColumn("Description");
-
-            tableOptions.AddRow("1", "Made a one pointer bucket");
-            tableOptions.AddRow("2", "Made a two pointer bucket");
-            tableOptions.AddRow("3", "Made a three pointer bucket");
-            tableOptions.AddRow("q", "Missed a one pointer shot");
-            tableOptions.AddRow("w", "Missed a two pointer shot");
-            tableOptions.AddRow("e", "Missed a three pointer shot");
-            tableOptions.AddRow("a", "Assist");
-            tableOptions.AddRow("r", "Rebound");
-            tableOptions.AddRow("t", "Turnover");
-            tableOptions.AddRow("b", "Block");
-            tableOptions.AddRow("f", "Foul");
-            tableOptions.AddRow("X", "Exit");
-
-            AnsiConsole.Render(tableOptions);
+            AnsiConsole.MarkupLine($"\n\n Game Id: {settings.GameId}\n");
+            AnsiConsole.MarkupLine($"\n Current Time: {DateTime.Now}\n");
+            AnsiConsole.MarkupLine($"\n Quarter: {settings.Quarter}\n");
+            AnsiConsole.MarkupLine($"\n Player: {settings.PlayerId}\n");
 
             while (true)
             {
@@ -103,6 +86,30 @@ public class AddPlayCommand : Command<AddPlayCommand.GameParms>
                     case "F":
                         type = PlayType.Foul;
                         break;
+                    case "H":
+                        {
+                            AnsiConsole.MarkupLine("\nWrite the type of the play:\n");
+
+                            var tableOptions = new Table();
+                            tableOptions.AddColumn("Option").Centered();
+                            tableOptions.AddColumn("Description");
+
+                            tableOptions.AddRow("1", "Made a one pointer bucket");
+                            tableOptions.AddRow("2", "Made a two pointer bucket");
+                            tableOptions.AddRow("3", "Made a three pointer bucket");
+                            tableOptions.AddRow("q", "Missed a one pointer shot");
+                            tableOptions.AddRow("w", "Missed a two pointer shot");
+                            tableOptions.AddRow("e", "Missed a three pointer shot");
+                            tableOptions.AddRow("a", "Assist");
+                            tableOptions.AddRow("r", "Rebound");
+                            tableOptions.AddRow("t", "Turnover");
+                            tableOptions.AddRow("b", "Block");
+                            tableOptions.AddRow("f", "Foul");
+                            tableOptions.AddRow("x", "Exit");
+
+                            AnsiConsole.Render(tableOptions);
+                            continue;
+                        }
                     case "X":
                         return 0;
                     default:
