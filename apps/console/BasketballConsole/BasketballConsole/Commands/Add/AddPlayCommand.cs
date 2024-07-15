@@ -5,6 +5,7 @@ using Spectre.Console.Cli;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace NBA.Commands;
 
@@ -29,12 +30,9 @@ public class AddPlayCommand : Command<AddPlayCommand.GameParms>
     {
         {
             DateTime gameTime;
-            string serverName = "NOTE-SFP";
-            string databaseName = "Basketball";
-            string connectionString = $"Data Source={serverName};Initial Catalog={databaseName};Integrated Security=True";
             string getTimeQuery = $"SELECT At FROM Game WHERE Game.Id = {settings.GameId}";
 
-            Console.WriteLine("Player Write the type of the play:\n");
+            Console.WriteLine("Write the type of the play:\n");
             Console.Write("Enter your choice: ");
             Console.WriteLine("\n\n1. Made a one pointer bucket");
             Console.WriteLine("\n2. Made a two pointer bucket");
@@ -51,7 +49,7 @@ public class AddPlayCommand : Command<AddPlayCommand.GameParms>
 
             while (true)
             {
-                using SqlConnection conn = new(connectionString);
+                using SqlConnection conn = new(Program.connectionString);
                 conn.Open();
 
                 using SqlCommand cmd = new("RegisterPlay", conn);

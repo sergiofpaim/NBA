@@ -27,11 +27,7 @@ public class AddGameCommand: Command<AddGameCommand.GameParms>
     public override int Execute(CommandContext context, GameParms settings)
     {
         {
-            string serverName = "NOTE-SFP";
-            string databaseName = "Basketball";
-            string connectionString = $"Data Source={serverName};Initial Catalog={databaseName};Integrated Security=True";
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(Program.connectionString))
             {
                 conn.Open();
 
