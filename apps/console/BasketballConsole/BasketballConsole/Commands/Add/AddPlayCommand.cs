@@ -32,20 +32,26 @@ public class AddPlayCommand : Command<AddPlayCommand.GameParms>
             DateTime gameTime;
             string getTimeQuery = $"SELECT At FROM Game WHERE Game.Id = {settings.GameId}";
 
-            Console.WriteLine("Write the type of the play:\n");
-            Console.Write("Enter your choice: ");
-            Console.WriteLine("\n\n1. Made a one pointer bucket");
-            Console.WriteLine("\n2. Made a two pointer bucket");
-            Console.WriteLine("\n3. Made a three pointer bucket");
-            Console.WriteLine("\nq. Missed a one pointer shot");
-            Console.WriteLine("\nw. Missed a two pointer shot");
-            Console.WriteLine("\ne. Missed a three pointer shot");
-            Console.WriteLine("\na. Assist");
-            Console.WriteLine("\nr. Rebound");
-            Console.WriteLine("\nt. Turnover");
-            Console.WriteLine("\nb. Block");
-            Console.WriteLine("\nf. Foul");
-            Console.WriteLine("\nX. Exit\n");
+            AnsiConsole.MarkupLine("Write the type of the play:\n");
+
+            var tableOptions = new Table();
+            tableOptions.AddColumn("Option").Centered();
+            tableOptions.AddColumn("Description");
+
+            tableOptions.AddRow("1", "Made a one pointer bucket");
+            tableOptions.AddRow("2", "Made a two pointer bucket");
+            tableOptions.AddRow("3", "Made a three pointer bucket");
+            tableOptions.AddRow("q", "Missed a one pointer shot");
+            tableOptions.AddRow("w", "Missed a two pointer shot");
+            tableOptions.AddRow("e", "Missed a three pointer shot");
+            tableOptions.AddRow("a", "Assist");
+            tableOptions.AddRow("r", "Rebound");
+            tableOptions.AddRow("t", "Turnover");
+            tableOptions.AddRow("b", "Block");
+            tableOptions.AddRow("f", "Foul");
+            tableOptions.AddRow("X", "Exit");
+
+            AnsiConsole.Render(tableOptions);
 
             while (true)
             {
