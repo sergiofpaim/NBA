@@ -3,6 +3,7 @@
     "NBA": {
       "commandName": "Project",
       "commandLineArgs": "add play -g 31 -q 4 -p 131"
+      //"commandLineArgs": "add game -o LAL -v BOS -a 2022-10-01T19:30:00"
     }
   }
 }
