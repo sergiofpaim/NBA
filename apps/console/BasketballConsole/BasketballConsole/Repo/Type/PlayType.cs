@@ -1,4 +1,4 @@
-﻿namespace NBA.Type
+﻿namespace NBA.Repo.Type
 {
     internal enum PlayType
     {
@@ -13,5 +13,5 @@
         Turnover,
         Block,
         Foul
-    } 
+    }
 }

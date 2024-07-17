@@ -1,17 +1,16 @@
 ﻿using NBA.Commands;
+using NBA.Repo;
 using Spectre.Console.Cli;
 using System.Data.SqlClient;
 
 class Program
 {
-    static public string serverName = "NOTE-SFP";
-    static public string databaseName = "Basketball";
-    static public string connectionString = $"Data Source={serverName};Initial Catalog={databaseName};Integrated Security=True";
-
     public static int Main(string[] args)
     {
         var app = new CommandApp();
         app.Configure(MyConfigurator);
+
+        BasketballRepo.Initialize();
 
         return app.Run(args);
     }

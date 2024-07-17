@@ -1,9 +1,9 @@
-﻿using NBA.Type;
+﻿using NBA.Repo;
+using NBA.Repo.Models;
+using NBA.Repo.Type;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
 
 namespace NBA.Commands;
 
@@ -24,62 +24,19 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
         [Description("The id of the player")]
         public int PlayerId { get; set; }
     }
+
     public override int Execute(CommandContext context, AddParms settings)
     {
-        using SqlConnection conn = new(Program.connectionString);
-        conn.Open();
-
-        string getNameCommand = $"SELECT p.Name FROM Player AS p WHERE p.Id = {settings.PlayerId}";
-
-        using SqlCommand getPlayerName = new SqlCommand(getNameCommand, conn);
-        string playerName = (string)getPlayerName.ExecuteScalar();
-
-        AnsiConsole.MarkupLine($"Game Id: {settings.GameId}\nCurrent Time: {DateTime.Now}\nQuarter: {settings.Quarter}\nPlayer: {playerName}");
+        ShowData(settings.GameId, settings.Quarter, settings.PlayerId);
+        var gameStart = BasketballRepo.GetGameStart(settings.GameId);
 
         while (true)
         {
-            DateTime gameTime;
-            string procedure = "RegisterPlay";
-            string getTime = $"SELECT At FROM Game WHERE Game.Id = {settings.GameId}";
-            string getPlays = "SELECT TOP 5 p.Points, p.Type, p.At " +
-                                  "FROM Play AS p " +
-                                  "JOIN Participation AS pa " +
-                                  "ON pa.Id = p.ParticipationId " +
-                                  "JOIN Selection AS s " +
-                                  "ON pa.SelectionId = s.Id " +
-                                  "JOIN Player as pl " +
-                                  "ON s.PlayerId = pl.Id " +
-                                  $"WHERE pa.GameId = {settings.GameId} " +
-                                  $"AND s.PlayerId = {settings.PlayerId} " +
-                                  "ORDER BY p.At DESC;";
-
-            using SqlCommand cmd = new(procedure, conn);
-            using SqlCommand getTimeCmd = new(getTime, conn);
-            using SqlCommand getPlaysCommand = new SqlCommand(getPlays, conn);
-
-            using (SqlDataReader reader = getPlaysCommand.ExecuteReader())
-            {
-                Console.WriteLine("Points\tType\tAt");
-                Console.WriteLine(new string('-', 40));
-
-                while (reader.Read())
-                {
-                    int points = reader.GetInt32(0);
-                    string lastPlayType = reader.GetString(1);
-                    TimeSpan at = reader.GetTimeSpan(2);
-
-                    Console.WriteLine($"{points}\t{lastPlayType}\t{at}");
-                }
-            }
-
-            gameTime = (DateTime)getTimeCmd.ExecuteScalar();
-            TimeSpan timeDifference = DateTime.Now - gameTime;
+            AnsiConsole.MarkupLine("\nType the letter of the play (or h for help) and press enter:");
 
             PlayType? type = null;
-
-            AnsiConsole.MarkupLine("\nWrite the type of the play:\n");
             string choice = Console.ReadLine()?.ToUpper() ?? "";
-
+            
             switch (choice)
             {
                 case "1":
@@ -115,7 +72,7 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
                 case "F":
                     type = PlayType.Foul;
                     break;
-                case "-H":
+                case "H":
                     {
                         var tableOptions = new Table();
                         tableOptions.AddColumn("Option").Centered();
@@ -143,19 +100,32 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
                     Console.WriteLine("Invalid choice. Please try again.");
                     continue;
             }
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@GameId", settings.GameId);
-            cmd.Parameters.AddWithValue("@Quarter", settings.Quarter);
-            cmd.Parameters.AddWithValue("@PlayerId", settings.PlayerId);
-            cmd.Parameters.AddWithValue("@At", timeDifference);
-            cmd.Parameters.AddWithValue("@Type", type.ToString());
 
-            int rowsAffected = cmd.ExecuteNonQuery();
+            int rowsAffected = BasketballRepo.RegisterPlay(settings.GameId, 
+                                                           settings.Quarter,
+                                                           settings.PlayerId,
+                                                           DateTime.Now - gameStart,
+                                                           type.ToString());
 
             if (rowsAffected > 0)
                 AnsiConsole.MarkupLine($"[green]Play added to the database.[/]");
             else
                 AnsiConsole.MarkupLine($"[red]Failed to add the play to the database.[/]");
+
+            ShowLastPlays(settings.GameId, settings.PlayerId);
         }
+    }
+
+    private void ShowData(int gameId, int quarter, int playerId)
+    {
+        AnsiConsole.MarkupLine($"Game Id: {gameId}\nCurrent Time: {DateTime.Now}\nQuarter: {quarter}\nPlayer: {BasketballRepo.GetPlayerName(playerId)}");
+    }
+
+    private void ShowLastPlays(int gameId, int playerId)
+    {
+        List<PlaySummary> plays = BasketballRepo.GetLastPlays(gameId, playerId, 5);
+
+        foreach (var play in plays)
+            Console.WriteLine($"{play.Points}\t{play.Type}\t{play.At}");
     }
 }
