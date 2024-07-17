@@ -126,6 +126,15 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
         List<PlaySummary> plays = BasketballRepo.GetLastPlays(gameId, playerId, 5);
 
         foreach (var play in plays)
-            Console.WriteLine($"{play.Points}\t{play.Type}\t{play.At}");
+        {
+            var tableOptions = new Table();
+            tableOptions.AddColumn("Points");
+            tableOptions.AddColumn("Type");
+            tableOptions.AddColumn("At");
+
+            tableOptions.AddRow($"{play.Points}", $"{play.Type}", $"{play.At}");
+
+            AnsiConsole.Write(tableOptions);
+        }
     }
 }

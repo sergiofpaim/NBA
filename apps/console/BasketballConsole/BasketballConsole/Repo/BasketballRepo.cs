@@ -68,9 +68,6 @@ namespace NBA.Repo
 
             using (SqlDataReader reader = getPlaysCommand.ExecuteReader())
             {
-                Console.WriteLine("Points\tType\tAt");
-                Console.WriteLine(new string('-', 40));
-
                 while (reader.Read())
                 {
                     int points = reader.GetInt32(0);
