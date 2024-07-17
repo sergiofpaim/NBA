@@ -41,7 +41,7 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
             DateTime gameTime;
             string procedure = "RegisterPlay";
             string getTime = $"SELECT At FROM Game WHERE Game.Id = {settings.GameId}";
-            string getPlays = "SELECT TOP 5 pl.Name, p.Points, p.Type, p.At " +
+            string getPlays = "SELECT TOP 5 p.Points, p.Type, p.At " +
                                   "FROM Play AS p " +
                                   "JOIN Participation AS pa " +
                                   "ON pa.Id = p.ParticipationId " +
@@ -59,17 +59,16 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
 
             using (SqlDataReader reader = getPlaysCommand.ExecuteReader())
             {
-                Console.WriteLine("Name\tPoints\tType\tAt");
+                Console.WriteLine("Points\tType\tAt");
                 Console.WriteLine(new string('-', 40));
 
                 while (reader.Read())
                 {
-                    string name = reader.GetString(0);
-                    int points = reader.GetInt32(1);
-                    string lastPlayType = reader.GetString(2);
-                    TimeSpan at = reader.GetTimeSpan(3);
+                    int points = reader.GetInt32(0);
+                    string lastPlayType = reader.GetString(1);
+                    TimeSpan at = reader.GetTimeSpan(2);
 
-                    Console.WriteLine($"{name}\t{points}\t{lastPlayType}\t{at}");
+                    Console.WriteLine($"{points}\t{lastPlayType}\t{at}");
                 }
             }
 
