@@ -1,7 +1,7 @@
 USE Basketball;
 GO
 
-CREATE PROCEDURE RegisterPlay @GameId varchar(3),
+CREATE PROCEDURE RegisterPlay @GameId int,
 	                          @PlayerId int,
 	                          @Quarter int,
                               @Type varchar(20),

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "NBA": {
+      "commandName": "Project",
+      "commandLineArgs": "add play -g 31 -q 1 -p 131"
+    }
+  }
+}
