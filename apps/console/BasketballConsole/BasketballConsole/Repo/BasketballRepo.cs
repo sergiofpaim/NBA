@@ -46,7 +46,7 @@ namespace NBA.Repo
             return cmd.ExecuteNonQuery();
         }
 
-        internal static List<Play> GetLastPlays(int gameId, int quarterId, int playerId, int topRows)
+        internal static List<Play> GetLastPlays(int gameId, int quarterId, int playerId, int quarter int topRows)
         {
             using (var context = new ApplicationDbContext())
             {
