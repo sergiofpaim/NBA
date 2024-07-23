@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
+using NBA.Models;
 using NBA.Repo.Models;
 
 namespace NBA.Repo
@@ -45,52 +46,40 @@ namespace NBA.Repo
             return cmd.ExecuteNonQuery();
         }
 
-        internal static List<PlaySummary> GetLastPlays(int gameId, int playerId, int topRows)
+        internal static List<Play> GetLastPlays(int gameId, int quarterId, int playerId, int topRows)
         {
-            List<PlaySummary> plays = [];
-
-            string getPlays = $@"SELECT TOP {topRows} 
-                                        p.Points,
-                                        p.Type, 
-                                        p.At 
-                                 FROM Play AS p 
-                                 JOIN Participation AS pa 
-                                   ON pa.Id = p.ParticipationId 
-                                 JOIN Selection AS s
-                                   ON pa.SelectionId = s.Id
-                                 JOIN Player as pl
-                                   ON s.PlayerId = pl.Id
-                                 WHERE pa.GameId = {gameId}
-                                   AND s.PlayerId = {playerId}
-                                 ORDER BY p.At DESC;";
-
-            using SqlCommand getPlaysCommand = new SqlCommand(getPlays, conn);
-
-            using (SqlDataReader reader = getPlaysCommand.ExecuteReader())
+            using (var context = new ApplicationDbContext())
             {
-                while (reader.Read())
-                {
-                    int points = reader.GetInt32(0);
-                    string lastPlayType = reader.GetString(1);
-                    TimeSpan at = reader.GetTimeSpan(2);
+                var plays = (from p in context.Plays
+                             join pa in context.Participations on p.ParticipationId equals pa.Id
+                             join s in context.Selections on pa.SelectionId equals s.Id
+                             join pl in context.Players on s.PlayerId equals pl.Id
+                             where pa.GameId == gameId && s.PlayerId == playerId
+                             orderby p.At descending
+                             select new Play
+                             {
+                                 Points = p.Points,
+                                 Type = p.Type,
+                                 At = p.At
+                             })
+                             .Take(topRows)
+                             .ToList();
 
-                    plays.Add(new PlaySummary()
-                    {
-                        Points = reader.GetInt32(0),
-                        Type = reader.GetString(1),
-                        At = reader.GetTimeSpan(2)
-                    });
-                }
+                return plays;
             }
-            return plays;
         }
 
         internal static DateTime GetGameStart(int gameId)
         {
-            string getTime = $"SELECT At FROM Game WHERE Game.Id = {gameId}";
-            using SqlCommand getTimeCmd = new(getTime, conn);
-
-            return (DateTime)getTimeCmd.ExecuteScalar();
+            using (var context = new ApplicationDbContext())
+            {
+                var game = context.Games.FirstOrDefault(g => g.Id == gameId);
+                if (game == null)
+                {
+                    throw new InvalidOperationException("Game not found.");
+                }
+                return game.At;
+            }
         }
 
         internal static string GetPlayerName(int playerId)

@@ -1,4 +1,5 @@
-﻿using NBA.Repo;
+﻿using NBA.Models;
+using NBA.Repo;
 using NBA.Repo.Models;
 using NBA.Repo.Type;
 using Spectre.Console;
@@ -123,7 +124,7 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
 
     private void ShowLastPlays(int gameId, int playerId)
     {
-        List<PlaySummary> plays = BasketballRepo.GetLastPlays(gameId, playerId, 5);
+        List<Play> plays = BasketballRepo.GetLastPlays(gameId, playerId, 5);
 
         foreach (var play in plays)
         {
