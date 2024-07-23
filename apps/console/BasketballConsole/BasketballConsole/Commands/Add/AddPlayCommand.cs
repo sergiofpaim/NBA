@@ -112,7 +112,7 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
             else
                 AnsiConsole.MarkupLine($"[red]Failed to add the play to the database.[/]");
 
-            ShowLastPlays(settings.GameId, settings.PlayerId);
+            ShowLastPlays(settings.GameId, settings.PlayerId, settings.Quarter);
         }
     }
 
@@ -121,9 +121,9 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
         AnsiConsole.MarkupLine($"Game Id: {gameId}\nCurrent Time: {DateTime.Now}\nQuarter: {quarter}\nPlayer: {BasketballRepo.GetPlayerName(playerId)}");
     }
 
-    private void ShowLastPlays(int gameId, int playerId)
+    private void ShowLastPlays(int gameId, int playerId, int quarter)
     {
-        List<PlaySummary> plays = BasketballRepo.GetLastPlays(gameId, playerId, 5);
+        List<PlaySummary> plays = BasketballRepo.GetLastPlays(gameId, playerId, quarter, 5);
 
         foreach (var play in plays)
         {

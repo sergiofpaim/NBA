@@ -45,22 +45,21 @@ namespace NBA.Repo
             return cmd.ExecuteNonQuery();
         }
 
-        internal static List<PlaySummary> GetLastPlays(int gameId, int playerId, int topRows)
+        internal static List<PlaySummary> GetLastPlays(int gameId, int playerId, int quarter, int topRows)
         {
             List<PlaySummary> plays = [];
 
             string getPlays = $@"SELECT TOP {topRows} 
                                         p.Points,
-                                        p.Type, 
+                                        p.Type,
                                         p.At 
                                  FROM Play AS p 
                                  JOIN Participation AS pa 
                                    ON pa.Id = p.ParticipationId 
                                  JOIN Selection AS s
                                    ON pa.SelectionId = s.Id
-                                 JOIN Player as pl
-                                   ON s.PlayerId = pl.Id
                                  WHERE pa.GameId = {gameId}
+                                   AND pa.Quarter = {quarter}
                                    AND s.PlayerId = {playerId}
                                  ORDER BY p.At DESC;";
 
