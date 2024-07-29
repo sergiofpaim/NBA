@@ -31,21 +31,28 @@ namespace NBA.Repo
             cmd.Parameters.AddWithValue("@PlayerId", playerId);
             cmd.Parameters.AddWithValue("@At", timeDiff);
             cmd.Parameters.AddWithValue("@Type", type);
-
-            return cmd.ExecuteNonQuery();
         }
 
         internal static int CreateGame(string? homeTeamId, string? visitorTeamId, DateTime at)
         {
-            using SqlCommand cmd = new("CreateGame", conn);
+            using (var context = new ApplicationDbContext())
+            {
+                var game = new Game
+                {
+                    Id = context.Games.Max(g => g.Id) + 1,
+                    SeasonId = context.Seasons.Max(s => s.Id) + 1,
+                    HomeTeamId = homeTeamId,
+                    VisitorTeamId = visitorTeamId,
+                    At = at
+                };
 
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@HomeTeamId", homeTeamId);
-            cmd.Parameters.AddWithValue("@VisitorTeamId", visitorTeamId);
-            cmd.Parameters.AddWithValue("@At", at);
+                context.Games.Add(game);
 
-            return cmd.ExecuteNonQuery();
+                int affectedRows = context.SaveChanges();
+                return affectedRows;
+            }
         }
+
 
         internal static List<Play> GetLastPlays(int gameId, int playerId, int quarter, int topRows)
         {
@@ -82,10 +89,12 @@ namespace NBA.Repo
 
         internal static string GetPlayerName(int playerId)
         {
-            string getNameCommand = $"SELECT p.Name FROM Player AS p WHERE p.Id = {playerId}";
-            using SqlCommand getPlayerName = new SqlCommand(getNameCommand, conn);
+            using (var context = new ApplicationDbContext())
+            {
+                var name = context.Players.Where(p => p.Id == playerId).Select(p => p.Name).FirstOrDefault();
 
-            return (string)getPlayerName.ExecuteScalar();
+                return name ?? "Player not registered";
+            }
         }
     }
 }
