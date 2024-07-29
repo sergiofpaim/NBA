@@ -1,12 +1,11 @@
-﻿using System.Data;
-using System.Data.SqlClient;
-using NBA.Models;
-using NBA.Repo.Models;
+﻿using NBA.Models;
 using Spectre.Console;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace NBA.Repo
 {
-    internal static class BasketballRepo
+    public class BasketballRepoEF : IBasketballRepo
     {
         static private readonly string serverName = "NOTE-SFP";
         static private readonly string databaseName = "Basketball";
@@ -14,13 +13,13 @@ namespace NBA.Repo
 
         private static readonly SqlConnection conn = new(connectionString);
 
-        internal static void Initialize()
+        public void Initialize()
         {
             conn.Open();
         }
 
 
-        internal static int RegisterPlay(int gameId, int quarter, int playerId, TimeSpan timeDiff, string? type)
+        public int RegisterPlay(int gameId, int quarter, int playerId, TimeSpan timeDiff, string? type)
         {
             string procedure = "RegisterPlay";
             using SqlCommand cmd = new(procedure, conn);
@@ -32,18 +31,10 @@ namespace NBA.Repo
             cmd.Parameters.AddWithValue("@At", timeDiff);
             cmd.Parameters.AddWithValue("@Type", type);
 
-
-            using (var context = new ApplicationDbContext())
-            {
-                var play = new Play
-                {
-
-
-                };
-            }
+            return cmd.ExecuteNonQuery();
         }
 
-        internal static int CreateGame(string? homeTeamId, string? visitorTeamId, DateTime at)
+        public int CreateGame(string? homeTeamId, string? visitorTeamId, DateTime at)
         {
             using (var context = new ApplicationDbContext())
             {
@@ -63,7 +54,7 @@ namespace NBA.Repo
         }
 
 
-        internal static List<Play> GetLastPlays(int gameId, int playerId, int quarter, int topRows)
+        public List<Play> GetLastPlays(int gameId, int playerId, int quarter, int topRows)
         {
             using (var context = new ApplicationDbContext())
             {
@@ -73,30 +64,29 @@ namespace NBA.Repo
                            && pa.GameId == gameId
                            && pa.Quarter == quarter
                            && context.Selections
-                              .Any(s => s.PlayerId == playerId 
+                              .Any(s => s.PlayerId == playerId
                                    && s.Id == pa.SelectionId)))
                     .OrderByDescending(p => p.At)
                     .Take(topRows)
                     .ToList();
 
-                    return plays;
+                return plays;
             }
         }
 
-        internal static DateTime GetGameStart(int gameId)
+        public DateTime GetGameStart(int gameId)
         {
             using (var context = new ApplicationDbContext())
             {
                 var game = context.Games.FirstOrDefault(g => g.Id == gameId);
                 if (game == null)
-                {
                     throw new InvalidOperationException("Game not found.");
-                }
+
                 return game.At;
             }
         }
 
-        internal static string GetPlayerName(int playerId)
+        public string GetPlayerName(int playerId)
         {
             using (var context = new ApplicationDbContext())
             {

@@ -7,10 +7,11 @@ class Program
 {
     public static int Main(string[] args)
     {
+        IBasketballRepo repo = new BasketballRepoEF();
         var app = new CommandApp();
         app.Configure(MyConfigurator);
 
-        BasketballRepo.Initialize();
+        repo.Initialize();
 
         return app.Run(args);
     }

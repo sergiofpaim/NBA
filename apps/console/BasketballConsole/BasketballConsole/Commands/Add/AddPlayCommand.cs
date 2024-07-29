@@ -1,6 +1,5 @@
 ﻿using NBA.Models;
 using NBA.Repo;
-using NBA.Repo.Models;
 using NBA.Repo.Type;
 using Spectre.Console;
 using Spectre.Console.Cli;
@@ -28,8 +27,10 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
 
     public override int Execute(CommandContext context, AddParms settings)
     {
+        IBasketballRepo repo = new BasketballRepoEF();
+
         ShowData(settings.GameId, settings.Quarter, settings.PlayerId);
-        var gameStart = BasketballRepo.GetGameStart(settings.GameId);
+        var gameStart = repo.GetGameStart(settings.GameId);
 
         while (true)
         {
@@ -102,7 +103,7 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
                     continue;
             }
 
-            int rowsAffected = BasketballRepo.RegisterPlay(settings.GameId, 
+            int rowsAffected = repo.RegisterPlay(settings.GameId, 
                                                            settings.Quarter,
                                                            settings.PlayerId,
                                                            DateTime.Now - gameStart,
@@ -119,23 +120,23 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
 
     private void ShowData(int gameId, int quarter, int playerId)
     {
-        AnsiConsole.MarkupLine($"Game Id: {gameId}\nCurrent Time: {DateTime.Now}\nQuarter: {quarter}\nPlayer: {BasketballRepo.GetPlayerName(playerId)}");
+        IBasketballRepo repo = new BasketballRepoEF();
+        AnsiConsole.MarkupLine($"Game Id: {gameId}\nCurrent Time: {DateTime.Now}\nQuarter: {quarter}\nPlayer: {repo.GetPlayerName(playerId)}");
     }
 
     private void ShowLastPlays(int gameId, int playerId, int quarter)
     {
-        List<Play> plays = BasketballRepo.GetLastPlays(gameId, playerId, quarter, 5);
+        IBasketballRepo repo = new BasketballRepoEF();
+        List<Play> plays = repo.GetLastPlays(gameId, playerId, quarter, 5);
+
+        var tableOptions = new Table();
+        tableOptions.AddColumn("Points");
+        tableOptions.AddColumn("Type");
+        tableOptions.AddColumn("At");
 
         foreach (var play in plays)
-        {
-            var tableOptions = new Table();
-            tableOptions.AddColumn("Points");
-            tableOptions.AddColumn("Type");
-            tableOptions.AddColumn("At");
-
             tableOptions.AddRow($"{play.Points}", $"{play.Type}", $"{play.At}");
 
-            AnsiConsole.Write(tableOptions);
-        }
+        AnsiConsole.Write(tableOptions);
     }
 }
