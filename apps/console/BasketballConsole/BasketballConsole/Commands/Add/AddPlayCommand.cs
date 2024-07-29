@@ -30,7 +30,7 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
         IBasketballRepo repo = new BasketballRepoEF();
 
         ShowData(settings.GameId, settings.Quarter, settings.PlayerId);
-        var gameStart = repo.GetGameStart(settings.GameId);
+        DateTime gameStart = repo.GetGameStart(settings.GameId);
 
         while (true)
         {
@@ -104,10 +104,10 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
             }
 
             int rowsAffected = repo.RegisterPlay(settings.GameId, 
-                                                           settings.Quarter,
-                                                           settings.PlayerId,
-                                                           DateTime.Now - gameStart,
-                                                           type.ToString());
+                                                 settings.Quarter,
+                                                 settings.PlayerId,
+                                                 gameStart,
+                                                 type.ToString());
 
             if (rowsAffected > 0)
                 AnsiConsole.MarkupLine($"[green]Play added to the database.[/]");

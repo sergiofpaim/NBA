@@ -1,4 +1,5 @@
 ﻿using NBA.Models;
+using NBA.Repo.Type;
 using Spectre.Console;
 using System.Data;
 using System.Data.SqlClient;
@@ -18,20 +19,66 @@ namespace NBA.Repo
             conn.Open();
         }
 
-
-        public int RegisterPlay(int gameId, int quarter, int playerId, TimeSpan timeDiff, string? type)
+        public int RegisterPlay(int gameId, int quarter, int playerId, DateTime gameStart, string? type)
         {
-            string procedure = "RegisterPlay";
-            using SqlCommand cmd = new(procedure, conn);
+            using (var context = new ApplicationDbContext())
+            {
+                int points = 0;
+                TimeSpan timediff = DateTime.Now - gameStart;
 
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@GameId", gameId);
-            cmd.Parameters.AddWithValue("@Quarter", quarter);
-            cmd.Parameters.AddWithValue("@PlayerId", playerId);
-            cmd.Parameters.AddWithValue("@At", timeDiff);
-            cmd.Parameters.AddWithValue("@Type", type);
+                var selection = context.Selections
+                    .Where(s => s.PlayerId == playerId &&
+                                context.Games.Any(g => g.HomeTeamId == s.TeamId || g.VisitorTeamId == s.TeamId))
+                    .FirstOrDefault();
 
-            return cmd.ExecuteNonQuery();
+                if (selection == null)
+                    throw new InvalidOperationException("Selection not found.");
+
+                var participation = context.Participations
+                    .Where(pa => pa.GameId == gameId && pa.Quarter == quarter &&
+                                 context.Selections.Any(se => se.PlayerId == playerId && se.Id == pa.SelectionId))
+                    .FirstOrDefault();
+
+                if (participation == null)
+                {
+                    var newParticipation = new Participation
+                    {
+                        SelectionId = selection.Id,
+                        GameId = gameId,
+                        Quarter = quarter
+                    };
+                    context.Participations.Add(newParticipation);
+                    context.SaveChanges();
+                    participation = newParticipation;
+                }
+
+                switch (type)
+                {
+                    case "FreeThrowHit":
+                        points = 1;
+                        break;
+                    case "TwoPointerHit":
+                        points = 2;
+                        break;
+                    case "ThreePointerHit":
+                        points = 3;
+                        break;
+                    default:
+                        throw new ArgumentException("Invalid play type.", nameof(type));
+                }
+
+                var newPlay = new Play
+                {
+                    Id = context.Plays.Max(g => g.Id) + 1,
+                    ParticipationId = participation.Id,
+                    Type = type,
+                    Points = points,
+                    At = timediff
+                };
+
+                context.Add(newPlay);
+                return context.SaveChanges();
+            }
         }
 
         public int CreateGame(string? homeTeamId, string? visitorTeamId, DateTime at)
