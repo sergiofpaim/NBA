@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using NBA.Models;
 using NBA.Repo.Models;
+using Spectre.Console;
 
 namespace NBA.Repo
 {
@@ -46,26 +47,23 @@ namespace NBA.Repo
             return cmd.ExecuteNonQuery();
         }
 
-        internal static List<Play> GetLastPlays(int gameId, int quarterId, int playerId, int quarter int topRows)
+        internal static List<Play> GetLastPlays(int gameId, int playerId, int quarter, int topRows)
         {
             using (var context = new ApplicationDbContext())
             {
-                var plays = (from p in context.Plays
-                             join pa in context.Participations on p.ParticipationId equals pa.Id
-                             join s in context.Selections on pa.SelectionId equals s.Id
-                             join pl in context.Players on s.PlayerId equals pl.Id
-                             where pa.GameId == gameId && s.PlayerId == playerId
-                             orderby p.At descending
-                             select new Play
-                             {
-                                 Points = p.Points,
-                                 Type = p.Type,
-                                 At = p.At
-                             })
-                             .Take(topRows)
-                             .ToList();
+                var plays = context.Plays
+                    .Where(p => context.Participations
+                      .Any(pa => pa.Id == p.ParticipationId
+                           && pa.GameId == gameId
+                           && pa.Quarter == quarter
+                           && context.Selections
+                              .Any(s => s.PlayerId == playerId 
+                                   && s.Id == pa.SelectionId)))
+                    .OrderByDescending(p => p.At)
+                    .Take(topRows)
+                    .ToList();
 
-                return plays;
+                    return plays;
             }
         }
 

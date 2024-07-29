@@ -13,5 +13,5 @@ public partial class Play
 
     public int? Points { get; set; }
 
-    public TimeOnly? At { get; set; }
+    public TimeSpan? At { get; set; }
 }
