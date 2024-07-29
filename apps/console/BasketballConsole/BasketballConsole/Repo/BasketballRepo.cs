@@ -31,6 +31,16 @@ namespace NBA.Repo
             cmd.Parameters.AddWithValue("@PlayerId", playerId);
             cmd.Parameters.AddWithValue("@At", timeDiff);
             cmd.Parameters.AddWithValue("@Type", type);
+
+
+            using (var context = new ApplicationDbContext())
+            {
+                var play = new Play
+                {
+
+
+                };
+            }
         }
 
         internal static int CreateGame(string? homeTeamId, string? visitorTeamId, DateTime at)
@@ -48,8 +58,7 @@ namespace NBA.Repo
 
                 context.Games.Add(game);
 
-                int affectedRows = context.SaveChanges();
-                return affectedRows;
+                return context.SaveChanges();
             }
         }
 
