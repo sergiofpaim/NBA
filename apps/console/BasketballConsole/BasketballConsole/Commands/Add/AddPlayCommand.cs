@@ -30,7 +30,6 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
         IBasketballRepo repo = new BasketballRepoEF();
 
         ShowData(settings.GameId, settings.Quarter, settings.PlayerId);
-        DateTime gameStart = repo.GetGameStart(settings.GameId);
 
         while (true)
         {
@@ -106,7 +105,6 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
             int rowsAffected = repo.RegisterPlay(settings.GameId, 
                                                  settings.Quarter,
                                                  settings.PlayerId,
-                                                 gameStart,
                                                  type.ToString());
 
             if (rowsAffected > 0)

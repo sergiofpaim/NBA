@@ -19,12 +19,13 @@ namespace NBA.Repo
             conn.Open();
         }
 
-        public int RegisterPlay(int gameId, int quarter, int playerId, DateTime gameStart, string? type)
+        public int RegisterPlay(int gameId, int quarter, int playerId, string? type)
         {
             using (var context = new ApplicationDbContext())
             {
                 int points = 0;
-                TimeSpan timediff = DateTime.Now - gameStart;
+
+                var game = context.Games.FirstOrDefault(g => g.Id == gameId);
 
                 var selection = context.Selections
                     .Where(s => s.PlayerId == playerId &&
@@ -43,13 +44,14 @@ namespace NBA.Repo
                 {
                     var newParticipation = new Participation
                     {
+                        Id = context.Participations.Max(g => g.Id) + 1,
                         SelectionId = selection.Id,
                         GameId = gameId,
                         Quarter = quarter
                     };
-                    context.Participations.Add(newParticipation);
-                    context.SaveChanges();
                     participation = newParticipation;
+                    context.Participations.Add(participation);
+                    context.SaveChanges();
                 }
 
                 switch (type)
@@ -63,8 +65,6 @@ namespace NBA.Repo
                     case "ThreePointerHit":
                         points = 3;
                         break;
-                    default:
-                        throw new ArgumentException("Invalid play type.", nameof(type));
                 }
 
                 var newPlay = new Play
@@ -73,9 +73,8 @@ namespace NBA.Repo
                     ParticipationId = participation.Id,
                     Type = type,
                     Points = points,
-                    At = timediff
+                    At = DateTime.Now - game.At
                 };
-
                 context.Add(newPlay);
                 return context.SaveChanges();
             }

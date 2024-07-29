@@ -5,7 +5,13 @@
   --INSERT INTO Game (Id, SeasonId, HomeTeamId, VisitorTeamId, At) VALUES
   --(31,'23-24','LAL','BOS','2024-10-15T20:15:00');
   
-  DELETE FROM Participation WHERE GameId > 30;
-  DELETE FROM Play WHERE ParticipationId > 600;
+  --DELETE FROM Participation WHERE GameId > 30;
 
-  --SELECT * FROM Play WHERE ParticipationId > 600;
+  --DELETE p
+  --FROM Play AS p
+  --JOIN Participation AS pa ON p.ParticipationId = pa.Id
+  --JOIN Selection AS s ON pa.SelectionId = s.Id
+  --WHERE s.Id = 131 AND pa.GameId > 30;
+
+
+  --DELETE FROM Play WHERE ParticipationId > 600;
