@@ -25,7 +25,7 @@ namespace NBA.Repo
             {
                 int points = 0;
 
-                var game = context.Games.FirstOrDefault(g => g.Id == gameId);
+                var gameAt = context.Games.Where(g => g.Id == gameId).Select(g => g.At).FirstOrDefault();
 
                 var selection = context.Selections
                     .Where(s => s.PlayerId == playerId &&
@@ -33,26 +33,12 @@ namespace NBA.Repo
                     .FirstOrDefault();
 
                 if (selection == null)
-                    throw new InvalidOperationException("Selection not found.");
+                    throw new InvalidOperationException("The player does not participate in the team for the season.");
 
                 var participation = context.Participations
                     .Where(pa => pa.GameId == gameId && pa.Quarter == quarter &&
                                  context.Selections.Any(se => se.PlayerId == playerId && se.Id == pa.SelectionId))
                     .FirstOrDefault();
-
-                if (participation == null)
-                {
-                    var newParticipation = new Participation
-                    {
-                        Id = context.Participations.Max(g => g.Id) + 1,
-                        SelectionId = selection.Id,
-                        GameId = gameId,
-                        Quarter = quarter
-                    };
-                    participation = newParticipation;
-                    context.Participations.Add(participation);
-                    context.SaveChanges();
-                }
 
                 switch (type)
                 {
@@ -67,13 +53,28 @@ namespace NBA.Repo
                         break;
                 }
 
+                if (participation == null)
+                {
+                    var newParticipation = new Participation
+                    {
+                        Id = context.Participations.Max(g => g.Id) + 1,
+                        SelectionId = selection.Id,
+                        GameId = gameId,
+                        Quarter = quarter,
+                        Points = points
+                    };
+                    participation = newParticipation;
+                    context.Participations.Add(participation);
+                    context.SaveChanges();
+                }
+
                 var newPlay = new Play
                 {
                     Id = context.Plays.Max(g => g.Id) + 1,
                     ParticipationId = participation.Id,
                     Type = type,
                     Points = points,
-                    At = DateTime.Now - game.At
+                    At = DateTime.Now - gameAt
                 };
                 context.Add(newPlay);
                 return context.SaveChanges();
