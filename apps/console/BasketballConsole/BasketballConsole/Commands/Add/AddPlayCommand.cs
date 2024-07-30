@@ -29,7 +29,7 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
 
     public override int Execute(CommandContext context, AddParms settings)
     {
-        var selection = Repository.Main.GetSelection(settings.GameId, settings.PlayerId);
+        var selection = BasketballRepoEF.GetSelection(settings.GameId, settings.PlayerId);
         if (selection is null)
             throw new Exception("Player does not participate in the team for the season");
 

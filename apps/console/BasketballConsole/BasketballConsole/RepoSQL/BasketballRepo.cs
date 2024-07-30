@@ -101,9 +101,5 @@ namespace NBA.Repo
 
             return (Player)getPlayerName.ExecuteScalar();
         }
-
-        public Selection? GetSelection(int gameId, int playerId)
-        {
-        }
     }
 }

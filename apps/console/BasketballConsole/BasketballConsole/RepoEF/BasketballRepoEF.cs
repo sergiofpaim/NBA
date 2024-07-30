@@ -91,11 +91,13 @@ namespace NBA.Repo
             return context.SaveChanges();
         }
 
-        public Selection? GetSelection(int gameId, int playerId)
+        public static Selection? GetSelection(int gameId, int playerId)
         {
-            var selection = context.Selections
+            ApplicationDbContext selectionContext = new ApplicationDbContext();
+
+            var selection = selectionContext.Selections
                 .Where(s => s.PlayerId == playerId &&
-                            context.Games.Any(g => (g.HomeTeamId == s.TeamId || g.VisitorTeamId == s.TeamId) && g.Id == gameId))
+                            selectionContext.Games.Any(g => (g.HomeTeamId == s.TeamId || g.VisitorTeamId == s.TeamId) && g.Id == gameId))
                 .FirstOrDefault();
 
             return selection;
