@@ -1,17 +1,15 @@
 ﻿using NBA.Commands;
 using NBA.Repo;
 using Spectre.Console.Cli;
-using System.Data.SqlClient;
 
 class Program
 {
     public static int Main(string[] args)
     {
         IBasketballRepo repo = new BasketballRepoEF();
+
         var app = new CommandApp();
         app.Configure(MyConfigurator);
-
-        repo.Initialize();
 
         return app.Run(args);
     }

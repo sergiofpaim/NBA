@@ -4,7 +4,6 @@ namespace NBA.Repo
 {
     interface IBasketballRepo
     {
-        void Initialize();
         int CheckSelection(int gameId, int playerId);
         int RegisterPlay(int gameId, int quarter, int playerId, PlayType type);
         int CreateGame(string? homeTeamId, string? visitorTeamId, DateTime at);
