@@ -6,7 +6,7 @@ class Program
 {
     public static int Main(string[] args)
     {
-        IBasketballRepo repo = new BasketballRepoEF();
+        Repository.SetRepo(new BasketballRepoEF());
 
         var app = new CommandApp();
         app.Configure(MyConfigurator);
@@ -27,18 +27,19 @@ class Program
             add.SetDescription("Add operations");
 
             add.AddCommand<AddGameCommand>("game")
-               .WithDescription("Add a game to the database");
+               .WithDescription("Add a game");
 
             add.AddCommand<AddPlayCommand>("play")
-               .WithDescription("Add a play to the database");
+               .WithDescription("Add a play of a player in a game");
         });
 
-        config.AddBranch<CommandSettings>("select", select =>
+        //List
+        config.AddBranch<CommandSettings>("list", select =>
         {
-            select.SetDescription("Select operations");
+            select.SetDescription("List operations");
 
-            select.AddCommand<SelectPlayCommand>("play")
-              .WithDescription("Selects a play from the database");
+            select.AddCommand<ListPlayCommand>("play")
+              .WithDescription("Lists all plays of a player in a game");
         });
     }
 }

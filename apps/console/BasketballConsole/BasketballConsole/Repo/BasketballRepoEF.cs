@@ -2,7 +2,6 @@
 using NBA.Repo.Type;
 using Spectre.Console;
 using System.Data;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace NBA.Repo
 {
@@ -19,7 +18,10 @@ namespace NBA.Repo
         {
             int points = 0;
 
-            var gameAt = context.Games.Where(g => g.Id == gameId).Select(g => g.At).FirstOrDefault();
+            var gameStart = GetGame(gameId).At;
+
+            //Validar At correto
+            //throw new InvalidConstraintException("Invalid At");
 
             var selection = context.Selections
                 .Where(s => s.PlayerId == playerId &&
@@ -51,7 +53,7 @@ namespace NBA.Repo
                 var newParticipation = new Participation
                 {
                     Id = context.Participations.Max(g => g.Id) + 1,
-                    SelectionId = selection.Id,
+                    SelectionId = selection?.Id ?? -1,
                     GameId = gameId,
                     Quarter = quarter,
                     Points = points
@@ -67,7 +69,7 @@ namespace NBA.Repo
                 ParticipationId = participation.Id,
                 Type = type.ToString(),
                 Points = points,
-                At = DateTime.Now - gameAt
+                At = DateTime.Now - gameStart
             };
             context.Add(newPlay);
             return context.SaveChanges();
@@ -89,11 +91,11 @@ namespace NBA.Repo
             return context.SaveChanges();
         }
 
-        public int CheckSelection(int gameId, int playerId)
+        public Selection? GetSelection(int gameId, int playerId)
         {
             var selection = context.Selections
                 .Where(s => s.PlayerId == playerId &&
-                            context.Games.Any(g => g.HomeTeamId == s.TeamId || g.VisitorTeamId == s.TeamId)).Select(s => s.Id)
+                            context.Games.Any(g => g.HomeTeamId == s.TeamId || g.VisitorTeamId == s.TeamId))
                 .FirstOrDefault();
 
             return selection;
@@ -109,29 +111,26 @@ namespace NBA.Repo
                        && context.Selections
                           .Any(s => s.PlayerId == playerId
                                && s.Id == pa.SelectionId)))
-                .OrderByDescending(p => p.At)
-                .ToList();
+                .OrderByDescending(p => p.At);
 
             if (topRows > 0)
-                plays = (List<Play>)plays.Take(topRows);
+                return [.. plays.Take(topRows)];
 
-            return plays;
+            return [.. plays];
         }
 
-        public DateTime GetGameStart(int gameId)
+        public Game GetGame(int gameId)
         {
             var game = context.Games.FirstOrDefault(g => g.Id == gameId);
             if (game == null)
                 throw new InvalidOperationException("Game not found.");
 
-            return game.At;
+            return game;
         }
 
-        public string GetPlayerName(int playerId)
+        public Player GetPlayer(int playerId)
         {
-            var name = context.Players.Where(p => p.Id == playerId).Select(p => p.Name).FirstOrDefault();
-
-            return name ?? "Player not registered";
+            return context.Players.Where(p => p.Id == playerId).FirstOrDefault();
         }        
     }
 }

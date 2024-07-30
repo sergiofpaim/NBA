@@ -26,9 +26,7 @@ public class AddGameCommand : Command<AddGameCommand.GameParms>
 
     public override int Execute(CommandContext context, GameParms settings)
     {
-        IBasketballRepo repo = new BasketballRepoEF();
-
-        int rowsAffected = repo.CreateGame(settings.HomeTeamId, settings.VisitorTeamId, settings.At);
+        int rowsAffected = Repository.Main.CreateGame(settings.HomeTeamId, settings.VisitorTeamId, settings.At);
 
         if (rowsAffected > 0)
             AnsiConsole.MarkupLine($"[green]Game added to the database.[/]");

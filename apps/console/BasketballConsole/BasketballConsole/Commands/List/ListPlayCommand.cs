@@ -8,7 +8,7 @@ namespace NBA.Commands;
 
 [Description("\n\nSelects the plays of a specific player in a specific game and quarter, from the data base")]
 
-public class SelectPlayCommand : Command<SelectPlayCommand.GameParms>
+public class ListPlayCommand : Command<ListPlayCommand.GameParms>
 {
     public sealed class GameParms : CommandSettings
     {
@@ -25,10 +25,8 @@ public class SelectPlayCommand : Command<SelectPlayCommand.GameParms>
     }
     public override int Execute(CommandContext context, GameParms settings)
     {
-        IBasketballRepo repo = new BasketballRepoEF();
-
-        var selection = repo.CheckSelection(settings.GameId, settings.PlayerId);
-        if (selection == 0)
+        var selection = Repository.Main.GetSelection(settings.GameId, settings.PlayerId);
+        if (selection is null)
             throw new Exception("Player does not participate in the team for the season");
 
         ShowAllPlays(settings.GameId, settings.PlayerId, settings.Quarter);
@@ -38,11 +36,10 @@ public class SelectPlayCommand : Command<SelectPlayCommand.GameParms>
 
     private void ShowAllPlays(int gameId, int playerId, int quarter)
     {
-        IBasketballRepo repo = new BasketballRepoEF();
-        List<Play> plays = repo.GetLastPlays(gameId, playerId, quarter);
+        List<Play> plays = Repository.Main.GetLastPlays(gameId, playerId, quarter);
 
         var tableOptions = new Table();
-        tableOptions.Title = new TableTitle($"\n\n{repo.GetPlayerName(playerId)}'s plays in game {gameId}");
+        tableOptions.Title = new TableTitle($"\n\n{Repository.Main.GetPlayer(playerId).Name}'s plays in game of Id: {gameId}");
         tableOptions.AddColumn("Points");
         tableOptions.AddColumn("Type");
         tableOptions.AddColumn("At");

@@ -4,6 +4,7 @@ using NBA.Repo.Type;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
+using System.Data;
 
 namespace NBA.Commands;
 
@@ -27,10 +28,8 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
 
     public override int Execute(CommandContext context, AddParms settings)
     {
-        IBasketballRepo repo = new BasketballRepoEF();
-
-        var selection = repo.CheckSelection(settings.GameId, settings.PlayerId);
-        if (selection == 0)
+        var selection = Repository.Main.GetSelection(settings.GameId, settings.PlayerId);
+        if (selection is null)
             throw new Exception("Player does not participate in the team for the season");
 
         ShowData(settings.GameId, settings.Quarter, settings.PlayerId);
@@ -106,24 +105,30 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
                     continue;
             }
 
-            int rowsAffected = repo.RegisterPlay(settings.GameId, 
-                                                 settings.Quarter,
-                                                 settings.PlayerId,
-                                                 type.Value);
+            try
+            {
+                int rowsAffected = Repository.Main.RegisterPlay(settings.GameId,
+                                                                settings.Quarter,
+                                                                settings.PlayerId,
+                                                                type.Value);
+                if (rowsAffected > 0)
+                    AnsiConsole.MarkupLine($"[green]Play added to the database.[/]");
+                else
+                    AnsiConsole.MarkupLine($"[red]Failed to add the play to the database.[/]");
 
-            if (rowsAffected > 0)
-                AnsiConsole.MarkupLine($"[green]Play added to the database.[/]");
-            else
-                AnsiConsole.MarkupLine($"[red]Failed to add the play to the database.[/]");
-
-            ShowLastPlays(settings.GameId, settings.PlayerId, settings.Quarter);
+                ShowLastPlays(settings.GameId, settings.PlayerId, settings.Quarter);
+            }
+            catch (InvalidConstraintException ex)
+            {
+                AnsiConsole.MarkupLine(ex.Message);
+            }
         }
     }
 
     private void ShowData(int gameId, int quarter, int playerId)
     {
         IBasketballRepo repo = new BasketballRepoEF();
-        AnsiConsole.MarkupLine($"Game Id: {gameId}\nCurrent Time: {DateTime.Now}\nQuarter: {quarter}\nPlayer: {repo.GetPlayerName(playerId)}");
+        AnsiConsole.MarkupLine($"Game Id: {gameId}\nCurrent Time: {DateTime.Now}\nQuarter: {quarter}\nPlayer: {repo.GetPlayer(playerId).Name}");
     }
 
     private void ShowLastPlays(int gameId, int playerId, int quarter)

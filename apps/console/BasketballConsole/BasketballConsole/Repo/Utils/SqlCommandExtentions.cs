@@ -26,7 +26,7 @@ namespace NBA.Repo.Utils
                 else
                 {
                     // Handle other data types without quotes
-                    parameterValue = param.Value.ToString();
+                    parameterValue = param.Value?.ToString() ?? "";
                 }
 
                 // Replace parameter name with parameter value
