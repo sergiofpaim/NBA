@@ -39,7 +39,10 @@ public class ListPlayCommand : Command<ListPlayCommand.GameParms>
         List<Play> plays = Repository.Main.GetLastPlays(gameId, playerId, quarter);
 
         var tableOptions = new Table();
-        tableOptions.Title = new TableTitle($"\n\n{Repository.Main.GetPlayer(playerId).Name}'s plays in game of Id: {gameId}");
+        tableOptions.Title = new TableTitle($"\n\n{Repository.Main.GetPlayer(playerId).Name}'s plays in the" +
+                                            $" '{Repository.Main.GetGame(gameId).HomeTeamId} vs" +
+                                            $" {Repository.Main.GetGame(gameId).VisitorTeamId}' game" +
+                                            $" on: {Repository.Main.GetGame(gameId).At}");
         tableOptions.AddColumn("Points");
         tableOptions.AddColumn("Type");
         tableOptions.AddColumn("At");

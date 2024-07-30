@@ -2,7 +2,7 @@
 {
     internal static class Repository
     {
-        private static IBasketballRepo main;
+        private static IBasketballRepo? main;
 
         public static IBasketballRepo Main { get => main; private set => main = value; }
 

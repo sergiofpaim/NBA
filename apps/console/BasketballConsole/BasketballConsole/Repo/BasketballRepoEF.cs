@@ -17,11 +17,12 @@ namespace NBA.Repo
         public int RegisterPlay(int gameId, int quarter, int playerId, PlayType type)
         {
             int points = 0;
+            var game = GetGame(gameId);
 
-            var gameStart = GetGame(gameId).At;
-
-            //Validar At correto
-            //throw new InvalidConstraintException("Invalid At");
+            if (((DateTime.Now - game.At).TotalMinutes < 0) ||
+                ((DateTime.Now - game.At).TotalMinutes > 15 && quarter < 4) ||
+                ((DateTime.Now - game.At).TotalMinutes > 5 && quarter >= 5))
+                throw new InvalidConstraintException("Invalid At");
 
             var selection = context.Selections
                 .Where(s => s.PlayerId == playerId &&
@@ -53,7 +54,7 @@ namespace NBA.Repo
                 var newParticipation = new Participation
                 {
                     Id = context.Participations.Max(g => g.Id) + 1,
-                    SelectionId = selection?.Id ?? -1,
+                    SelectionId = selection?.Id ?? 0,
                     GameId = gameId,
                     Quarter = quarter,
                     Points = points
@@ -69,7 +70,7 @@ namespace NBA.Repo
                 ParticipationId = participation.Id,
                 Type = type.ToString(),
                 Points = points,
-                At = DateTime.Now - gameStart
+                At = DateTime.Now - game.At
             };
             context.Add(newPlay);
             return context.SaveChanges();
@@ -85,9 +86,7 @@ namespace NBA.Repo
                 VisitorTeamId = visitorTeamId,
                 At = at
             };
-
             context.Games.Add(game);
-
             return context.SaveChanges();
         }
 
@@ -95,7 +94,7 @@ namespace NBA.Repo
         {
             var selection = context.Selections
                 .Where(s => s.PlayerId == playerId &&
-                            context.Games.Any(g => g.HomeTeamId == s.TeamId || g.VisitorTeamId == s.TeamId))
+                            context.Games.Any(g => (g.HomeTeamId == s.TeamId || g.VisitorTeamId == s.TeamId) && g.Id == gameId))
                 .FirstOrDefault();
 
             return selection;
