@@ -2,6 +2,7 @@
 using NBA.Models;
 using NBA.Models.Type;
 using NBA.Repo;
+using NBA.Repo.RepoEF;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
@@ -29,7 +30,7 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
 
     public override int Execute(CommandContext context, AddParms settings)
     {
-        var selection = BasketballRepoEF.GetSelection(settings.GameId, settings.PlayerId);
+        var selection = BasketballEF.GetSelection(settings.GameId, settings.PlayerId);
         if (selection is null)
             throw new Exception("Player does not participate in the team for the season");
 
@@ -108,7 +109,7 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
 
             try
             {
-                int rowsAffected = Repository.Main.RegisterPlay(settings.GameId,
+                int rowsAffected = Basketball.Repo.RegisterPlay(settings.GameId,
                                                                 settings.Quarter,
                                                                 settings.PlayerId,
                                                                 type.Value);
@@ -128,13 +129,13 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
 
     private void ShowData(int gameId, int quarter, int playerId)
     {
-        IBasketballRepo repo = new BasketballRepoEF();
+        IBasketballRepo repo = new BasketballEF();
         AnsiConsole.MarkupLine($"Game Id: {gameId}\nCurrent Time: {DateTime.Now}\nQuarter: {quarter}\nPlayer: {repo.GetPlayer(playerId).Name}");
     }
 
     private void ShowLastPlays(int gameId, int playerId, int quarter)
     {
-        IBasketballRepo repo = new BasketballRepoEF();
+        IBasketballRepo repo = new BasketballEF();
         List<Play> plays = repo.GetLastPlays(gameId, playerId, quarter, 5);
 
         var tableOptions = new Table();

@@ -1,5 +1,6 @@
 ﻿using NBA.Models;
 using NBA.Repo;
+using NBA.Repo.RepoEF;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
@@ -25,7 +26,7 @@ public class ListPlayCommand : Command<ListPlayCommand.GameParms>
     }
     public override int Execute(CommandContext context, GameParms settings)
     {
-        var selection = BasketballRepoEF.GetSelection(settings.GameId, settings.PlayerId);
+        var selection = BasketballEF.GetSelection(settings.GameId, settings.PlayerId);
         if (selection is null)
             throw new Exception("Player does not participate in the team for the season");
 
@@ -36,13 +37,15 @@ public class ListPlayCommand : Command<ListPlayCommand.GameParms>
 
     private void ShowAllPlays(int gameId, int playerId, int quarter)
     {
-        List<Play> plays = Repository.Main.GetLastPlays(gameId, playerId, quarter);
+        List<Play> plays = Basketball.Repo.GetLastPlays(gameId, playerId, quarter);
 
-        var tableOptions = new Table();
-        tableOptions.Title = new TableTitle($"\n\n{Repository.Main.GetPlayer(playerId).Name}'s plays in the" +
-                                            $" '{Repository.Main.GetGame(gameId).HomeTeamId} vs" +
-                                            $" {Repository.Main.GetGame(gameId).VisitorTeamId}' game" +
-                                            $" on: {Repository.Main.GetGame(gameId).At}");
+        Table tableOptions = new() 
+        {
+            Title = new TableTitle($"\n\n{Basketball.Repo.GetPlayer(playerId).Name}'s plays in the" +
+                                            $" '{Basketball.Repo.GetGame(gameId).HomeTeamId} vs" +
+                                            $" {Basketball.Repo.GetGame(gameId).VisitorTeamId}' game" +
+                                            $" on: {Basketball.Repo.GetGame(gameId).At}")
+        };
         tableOptions.AddColumn("Points");
         tableOptions.AddColumn("Type");
         tableOptions.AddColumn("At");

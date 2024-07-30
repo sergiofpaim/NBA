@@ -1,16 +1,15 @@
 ﻿using NBA.Interfaces;
 using NBA.Models;
 using NBA.Models.Type;
-using Spectre.Console;
 using System.Data;
 
 namespace NBA.Repo
 {
-    public class BasketballRepoEF : IBasketballRepo
+    public class BasketballEF : IBasketballRepo
     {
         public ApplicationDbContext context;
 
-        public BasketballRepoEF()
+        public BasketballEF()
         {
             context = new ApplicationDbContext();
         }
@@ -20,9 +19,9 @@ namespace NBA.Repo
             int points = 0;
             var game = GetGame(gameId);
 
-            if (((DateTime.Now - game.At).TotalMinutes < 0) ||
-                ((DateTime.Now - game.At).TotalMinutes > 15 && quarter < 4) ||
-                ((DateTime.Now - game.At).TotalMinutes > 5 && quarter >= 5))
+            if ((DateTime.Now - game.At).TotalMinutes < 0 ||
+                (DateTime.Now - game.At).TotalMinutes > 15 && quarter < 4 ||
+                (DateTime.Now - game.At).TotalMinutes > 5 && quarter >= 5)
                 throw new InvalidConstraintException("Invalid At");
 
             var selection = context.Selections
@@ -91,13 +90,11 @@ namespace NBA.Repo
             return context.SaveChanges();
         }
 
-        public static Selection? GetSelection(int gameId, int playerId)
+        public Selection? GetSelection(int gameId, int playerId)
         {
-            ApplicationDbContext selectionContext = new ApplicationDbContext();
-
-            var selection = selectionContext.Selections
+            var selection = context.Selections
                 .Where(s => s.PlayerId == playerId &&
-                            selectionContext.Games.Any(g => (g.HomeTeamId == s.TeamId || g.VisitorTeamId == s.TeamId) && g.Id == gameId))
+                            context.Games.Any(g => (g.HomeTeamId == s.TeamId || g.VisitorTeamId == s.TeamId) && g.Id == gameId))
                 .FirstOrDefault();
 
             return selection;
@@ -133,6 +130,6 @@ namespace NBA.Repo
         public Player GetPlayer(int playerId)
         {
             return context.Players.Where(p => p.Id == playerId).FirstOrDefault();
-        }        
+        }
     }
 }

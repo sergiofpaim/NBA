@@ -1,4 +1,5 @@
-﻿using Spectre.Console;
+﻿using NBA.Repo;
+using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
 
@@ -25,7 +26,7 @@ public class AddGameCommand : Command<AddGameCommand.GameParms>
 
     public override int Execute(CommandContext context, GameParms settings)
     {
-        int rowsAffected = Repository.Main.CreateGame(settings.HomeTeamId, settings.VisitorTeamId, settings.At);
+        int rowsAffected = Basketball.Repo.CreateGame(settings.HomeTeamId, settings.VisitorTeamId, settings.At);
 
         if (rowsAffected > 0)
             AnsiConsole.MarkupLine($"[green]Game added to the database.[/]");

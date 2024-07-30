@@ -1,13 +1,12 @@
-﻿using System.Data;
-using System.Data.SqlClient;
-using NBA.Interfaces;
+﻿using NBA.Interfaces;
 using NBA.Models;
 using NBA.Models.Type;
-using NBA.Repo.Models;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace NBA.Repo
 {
-    internal class BasketballRepo : IBasketballRepo
+    internal class BasketballSQL : IBasketballRepo
     {
         static private readonly string serverName = "NOTE-SFP";
         static private readonly string databaseName = "Basketball";
@@ -100,6 +99,55 @@ namespace NBA.Repo
             using SqlCommand getPlayerName = new SqlCommand(getNameCommand, conn);
 
             return (Player)getPlayerName.ExecuteScalar();
+        }
+
+        public Selection? GetSelection(int gameId, int playerId)
+        {
+            using (SqlConnection conn = new SqlConnection("your_connection_string"))
+            {
+                string getSelectionHomeTeam = $@"SELECT @SelectionId = se.Id
+                                                   FROM Selection AS se
+		                                           JOIN Game AS ga
+		                                             ON ga.HomeTeamId = se.TeamId
+		                                             AND ga.SeasonId = se.SeasonId
+		                                           WHERE ga.Id = {gameId} 
+		                                             AND se.PlayerId = {playerId}";
+
+                string getSelectionVisitorTeam = $@"SELECT @SelectionId = se.Id
+                                                   FROM Selection AS se
+		                                           JOIN Game AS ga
+		                                             ON ga.VisitorTeamId = se.TeamId
+		                                             AND ga.SeasonId = se.SeasonId
+		                                           WHERE ga.Id = {gameId} 
+		                                             AND se.PlayerId = {playerId}";
+
+                using (SqlCommand getSelectionH = new SqlCommand(getSelectionHomeTeam, conn))
+                {
+                    if (getSelectionHomeTeam == null)
+                    {
+                        using (SqlCommand getSelectionV = new SqlCommand(getSelectionVisitorTeam, conn))
+                        {
+                            using (SqlDataReader reader = getSelectionV.ExecuteReader())
+                            {
+                                Selection selection = new()
+                                {
+                                    Id = reader.GetInt32(0)
+                                };
+                                return selection;
+                            }
+                        }
+                    }
+                    else
+                        using (SqlDataReader reader = getSelectionH.ExecuteReader())
+                        {
+                            Selection selection = new()
+                            {
+                                Id = reader.GetInt32(0)
+                            };
+                            return selection;
+                        }
+                }
+            }
         }
     }
 }

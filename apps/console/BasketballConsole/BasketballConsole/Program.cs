@@ -1,14 +1,13 @@
-﻿using NBA;
-using NBA.Commands;
+﻿using NBA.Commands;
 using NBA.Repo;
 using Spectre.Console.Cli;
 
 class Program
 {
+    private static bool RepoSql = true;
+
     public static int Main(string[] args)
     {
-        Repository.SetRepo(new BasketballRepoEF());
-
         var app = new CommandApp();
         app.Configure(MyConfigurator);
 
@@ -42,5 +41,13 @@ class Program
             select.AddCommand<ListPlayCommand>("play")
               .WithDescription("Lists all plays of a player in a game");
         });
+
+        if (RepoSql)
+        {
+            BasketballSQL.Initialize();
+            Basketball.SetRepo(new BasketballSQL());
+        }
+        else
+            Basketball.SetRepo(new BasketballEF());
     }
 }
