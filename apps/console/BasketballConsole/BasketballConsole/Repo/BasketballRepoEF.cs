@@ -2,6 +2,7 @@
 using NBA.Repo.Type;
 using Spectre.Console;
 using System.Data;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace NBA.Repo
 {
@@ -98,7 +99,7 @@ namespace NBA.Repo
             return selection;
         }
 
-        public List<Play> GetLastPlays(int gameId, int playerId, int quarter, int topRows)
+        public List<Play> GetLastPlays(int gameId, int playerId, int quarter, int topRows = 0)
         {
             var plays = context.Plays
                 .Where(p => context.Participations
@@ -109,8 +110,10 @@ namespace NBA.Repo
                           .Any(s => s.PlayerId == playerId
                                && s.Id == pa.SelectionId)))
                 .OrderByDescending(p => p.At)
-                .Take(topRows)
                 .ToList();
+
+            if (topRows > 0)
+                plays = (List<Play>)plays.Take(topRows);
 
             return plays;
         }

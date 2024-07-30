@@ -32,5 +32,13 @@ class Program
             add.AddCommand<AddPlayCommand>("play")
                .WithDescription("Add a play to the database");
         });
+
+        config.AddBranch<CommandSettings>("select", select =>
+        {
+            select.SetDescription("Select operations");
+
+            select.AddCommand<SelectPlayCommand>("play")
+              .WithDescription("Selects a play from the database");
+        });
     }
 }

@@ -132,7 +132,7 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
         List<Play> plays = repo.GetLastPlays(gameId, playerId, quarter, 5);
 
         var tableOptions = new Table();
-        tableOptions.Title = new TableTitle("Last 5 Plays");
+        tableOptions.Title = new TableTitle("\n\nLast 5 Plays");
         tableOptions.AddColumn("Points");
         tableOptions.AddColumn("Type");
         tableOptions.AddColumn("At");
