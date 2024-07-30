@@ -29,6 +29,10 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
     {
         IBasketballRepo repo = new BasketballRepoEF();
 
+        var selection = repo.CheckSelection(settings.GameId, settings.PlayerId);
+        if (selection == 0)
+            throw new Exception("Player does not participate in the team for the season");
+
         ShowData(settings.GameId, settings.Quarter, settings.PlayerId);
 
         while (true)
@@ -105,7 +109,7 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
             int rowsAffected = repo.RegisterPlay(settings.GameId, 
                                                  settings.Quarter,
                                                  settings.PlayerId,
-                                                 type.ToString());
+                                                 type.Value);
 
             if (rowsAffected > 0)
                 AnsiConsole.MarkupLine($"[green]Play added to the database.[/]");
@@ -128,6 +132,7 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
         List<Play> plays = repo.GetLastPlays(gameId, playerId, quarter, 5);
 
         var tableOptions = new Table();
+        tableOptions.Title = new TableTitle("Last 5 Plays");
         tableOptions.AddColumn("Points");
         tableOptions.AddColumn("Type");
         tableOptions.AddColumn("At");

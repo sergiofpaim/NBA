@@ -19,7 +19,7 @@ namespace NBA.Repo
             conn.Open();
         }
 
-        public int RegisterPlay(int gameId, int quarter, int playerId, string? type)
+        public int RegisterPlay(int gameId, int quarter, int playerId, PlayType type)
         {
             using (var context = new ApplicationDbContext())
             {
@@ -29,26 +29,25 @@ namespace NBA.Repo
 
                 var selection = context.Selections
                     .Where(s => s.PlayerId == playerId &&
-                                context.Games.Any(g => g.HomeTeamId == s.TeamId || g.VisitorTeamId == s.TeamId))
+                                context.Games.Any(g => g.Id == gameId && 
+                                (g.HomeTeamId == s.TeamId || g.VisitorTeamId == s.TeamId)))
                     .FirstOrDefault();
 
-                if (selection == null)
-                    throw new InvalidOperationException("The player does not participate in the team for the season.");
 
                 var participation = context.Participations
                     .Where(pa => pa.GameId == gameId && pa.Quarter == quarter &&
-                                 context.Selections.Any(se => se.PlayerId == playerId && se.Id == pa.SelectionId))
+                                 context.Selections.Any(se => se.Id == pa.SelectionId))
                     .FirstOrDefault();
 
                 switch (type)
                 {
-                    case "FreeThrowHit":
+                    case PlayType.FreeThrowHit:
                         points = 1;
                         break;
-                    case "TwoPointerHit":
+                    case PlayType.TwoPointerHit:
                         points = 2;
                         break;
-                    case "ThreePointerHit":
+                    case PlayType.ThreePointerHit:
                         points = 3;
                         break;
                 }
@@ -72,7 +71,7 @@ namespace NBA.Repo
                 {
                     Id = context.Plays.Max(g => g.Id) + 1,
                     ParticipationId = participation.Id,
-                    Type = type,
+                    Type = type.ToString(),
                     Points = points,
                     At = DateTime.Now - gameAt
                 };
@@ -100,6 +99,18 @@ namespace NBA.Repo
             }
         }
 
+        public int CheckSelection(int gameId, int playerId)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var selection = context.Selections
+                    .Where(s => s.PlayerId == playerId &&
+                                context.Games.Any(g => g.HomeTeamId == s.TeamId || g.VisitorTeamId == s.TeamId)).Select(s => s.Id)
+                    .FirstOrDefault();
+
+                return selection;
+            }
+        }
 
         public List<Play> GetLastPlays(int gameId, int playerId, int quarter, int topRows)
         {
