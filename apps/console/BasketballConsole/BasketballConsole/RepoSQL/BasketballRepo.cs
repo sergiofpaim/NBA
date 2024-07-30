@@ -1,10 +1,13 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
+using NBA.Interfaces;
+using NBA.Models;
+using NBA.Models.Type;
 using NBA.Repo.Models;
 
 namespace NBA.Repo
 {
-    internal static class BasketballRepo
+    internal class BasketballRepo : IBasketballRepo
     {
         static private readonly string serverName = "NOTE-SFP";
         static private readonly string databaseName = "Basketball";
@@ -17,8 +20,7 @@ namespace NBA.Repo
             conn.Open();
         }
 
-
-        internal static int RegisterPlay(int gameId, int quarter, int playerId, TimeSpan timeDiff, string? type)
+        public int RegisterPlay(int gameId, int quarter, int playerId, PlayType type)
         {
             string procedure = "RegisterPlay";
             using SqlCommand cmd = new(procedure, conn);
@@ -27,13 +29,13 @@ namespace NBA.Repo
             cmd.Parameters.AddWithValue("@GameId", gameId);
             cmd.Parameters.AddWithValue("@Quarter", quarter);
             cmd.Parameters.AddWithValue("@PlayerId", playerId);
-            cmd.Parameters.AddWithValue("@At", timeDiff);
+            cmd.Parameters.AddWithValue("@At", DateTime.Now - GetGame(gameId).At);
             cmd.Parameters.AddWithValue("@Type", type);
 
             return cmd.ExecuteNonQuery();
         }
 
-        internal static int CreateGame(string? homeTeamId, string? visitorTeamId, DateTime at)
+        int IBasketballRepo.CreateGame(string? homeTeamId, string? visitorTeamId, DateTime at)
         {
             using SqlCommand cmd = new("CreateGame", conn);
 
@@ -45,9 +47,9 @@ namespace NBA.Repo
             return cmd.ExecuteNonQuery();
         }
 
-        internal static List<PlaySummary> GetLastPlays(int gameId, int playerId, int quarter, int topRows)
+        List<Play> IBasketballRepo.GetLastPlays(int gameId, int playerId, int quarter, int topRows)
         {
-            List<PlaySummary> plays = [];
+            List<Play> plays = [];
 
             string getPlays = $@"SELECT TOP {topRows} 
                                         p.Points,
@@ -73,7 +75,7 @@ namespace NBA.Repo
                     string lastPlayType = reader.GetString(1);
                     TimeSpan at = reader.GetTimeSpan(2);
 
-                    plays.Add(new PlaySummary()
+                    plays.Add(new Play()
                     {
                         Points = reader.GetInt32(0),
                         Type = reader.GetString(1),
@@ -84,20 +86,24 @@ namespace NBA.Repo
             return plays;
         }
 
-        internal static DateTime GetGameStart(int gameId)
+        public Game GetGame(int gameId)
         {
             string getTime = $"SELECT At FROM Game WHERE Game.Id = {gameId}";
             using SqlCommand getTimeCmd = new(getTime, conn);
 
-            return (DateTime)getTimeCmd.ExecuteScalar();
+            return (Game)getTimeCmd.ExecuteScalar();
         }
 
-        internal static string GetPlayerName(int playerId)
+        public Player GetPlayer(int playerId)
         {
             string getNameCommand = $"SELECT p.Name FROM Player AS p WHERE p.Id = {playerId}";
             using SqlCommand getPlayerName = new SqlCommand(getNameCommand, conn);
 
-            return (string)getPlayerName.ExecuteScalar();
+            return (Player)getPlayerName.ExecuteScalar();
+        }
+
+        public Selection? GetSelection(int gameId, int playerId)
+        {
         }
     }
 }
