@@ -1,4 +1,5 @@
-﻿using NBA.Models;
+﻿using NBA.Interfaces;
+using NBA.Models;
 using NBA.Repo.Type;
 using Spectre.Console;
 using System.Data;

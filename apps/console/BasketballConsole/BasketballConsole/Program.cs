@@ -1,4 +1,5 @@
-﻿using NBA.Commands;
+﻿using NBA;
+using NBA.Commands;
 using NBA.Repo;
 using Spectre.Console.Cli;
 

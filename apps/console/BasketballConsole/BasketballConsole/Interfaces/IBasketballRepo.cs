@@ -1,6 +1,6 @@
 ﻿using NBA.Models;
 using NBA.Repo.Type;
-namespace NBA.Repo
+namespace NBA.Interfaces
 {
     interface IBasketballRepo
     {

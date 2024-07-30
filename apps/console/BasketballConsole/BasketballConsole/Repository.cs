@@ -1,4 +1,6 @@
-﻿namespace NBA.Repo
+﻿using NBA.Interfaces;
+
+namespace NBA
 {
     internal static class Repository
     {
