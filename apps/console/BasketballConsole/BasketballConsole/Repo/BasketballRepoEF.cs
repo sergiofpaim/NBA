@@ -1,16 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NBA.Models;
+﻿using NBA.Models;
 using NBA.Repo.Type;
 using Spectre.Console;
 using System.Data;
-using System.Data.SqlClient;
 
 namespace NBA.Repo
 {
     public class BasketballRepoEF : IBasketballRepo
     {
         public ApplicationDbContext? context;
-        public int i = 0;
 
         public BasketballRepoEF()
         {
