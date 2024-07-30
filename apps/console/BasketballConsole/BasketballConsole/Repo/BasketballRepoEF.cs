@@ -7,7 +7,7 @@ namespace NBA.Repo
 {
     public class BasketballRepoEF : IBasketballRepo
     {
-        public ApplicationDbContext? context;
+        public ApplicationDbContext context;
 
         public BasketballRepoEF()
         {

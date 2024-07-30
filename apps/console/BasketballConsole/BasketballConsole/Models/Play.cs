@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace NBA.Models;
+﻿namespace NBA.Models;
 
 public partial class Play
 {
