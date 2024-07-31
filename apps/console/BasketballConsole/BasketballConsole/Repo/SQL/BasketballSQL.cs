@@ -29,7 +29,7 @@ namespace NBA.Repo
             cmd.Parameters.AddWithValue("@Quarter", quarter);
             cmd.Parameters.AddWithValue("@PlayerId", playerId);
             cmd.Parameters.AddWithValue("@At", DateTime.Now - GetGame(gameId).At);
-            cmd.Parameters.AddWithValue("@Type", type);
+            cmd.Parameters.AddWithValue("@Type", type.ToString());
 
             return cmd.ExecuteNonQuery();
         }
@@ -87,64 +87,70 @@ namespace NBA.Repo
 
         public Game GetGame(int gameId)
         {
-            string getTime = $"SELECT At FROM Game WHERE Game.Id = {gameId}";
+            string getTime = $"SELECT * FROM Game WHERE Game.Id = {gameId}";
             using SqlCommand getTimeCmd = new(getTime, conn);
 
-            return (Game)getTimeCmd.ExecuteScalar();
+            using SqlDataReader reader = getTimeCmd.ExecuteReader();
+            if (reader.Read())
+            {
+                return new Game
+                {
+                    SeasonId = reader["SeasonId"] as string,
+                    HomeTeamId = reader["HomeTeamId"] as string,
+                    VisitorTeamId = reader["VisitorTeamId"] as string,
+                    At = reader.GetDateTime(reader.GetOrdinal("At"))
+                };
+            }
+            else
+                return null;
         }
 
         public Player GetPlayer(int playerId)
         {
             string getNameCommand = $"SELECT p.Name FROM Player AS p WHERE p.Id = {playerId}";
-            using SqlCommand getPlayerName = new SqlCommand(getNameCommand, conn);
+            using SqlCommand getPlayerCmd = new SqlCommand(getNameCommand, conn);
 
-            return (Player)getPlayerName.ExecuteScalar();
+            using SqlDataReader reader = getPlayerCmd.ExecuteReader();
+            if (reader.Read())
+            {
+                return new Player
+                {
+                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                    Name = reader["Name"] as string,
+                    BornOn = reader.IsDBNull(reader.GetOrdinal("BornOn")) ? (DateOnly?)null : DateOnly.FromDateTime(reader.GetDateTime(reader.GetOrdinal("BornOn"))),
+                    Position = reader["Position"] as string
+                };
+            }
+            else
+                return null;
         }
 
         public Selection? GetSelection(int gameId, int playerId)
         {
-            string getSelectionHomeTeam = $@"SELECT se.Id
-                                                   FROM Selection AS se
-		                                           JOIN Game AS ga
-		                                             ON ga.HomeTeamId = se.TeamId
-		                                             AND ga.SeasonId = se.SeasonId
-		                                           WHERE ga.Id = {gameId} 
-		                                             AND se.PlayerId = {playerId}";
+            string query = $@"SELECT se.Id, se.PlayerId, se.SeasonId, se.TeamId, se.Jersey
+                              FROM Selection AS se
+                              JOIN Game AS ga ON (ga.HomeTeamId = se.TeamId OR ga.VisitorTeamId = se.TeamId)
+                                              AND ga.SeasonId = se.SeasonId
+                              WHERE ga.Id = @GameId
+                                AND se.PlayerId = @PlayerId";
 
-            string getSelectionVisitorTeam = $@"SELECT se.Id
-                                                   FROM Selection AS se
-		                                           JOIN Game AS ga
-		                                             ON ga.VisitorTeamId = se.TeamId
-		                                             AND ga.SeasonId = se.SeasonId
-		                                           WHERE ga.Id = {gameId} 
-		                                             AND se.PlayerId = {playerId}";
-
-            using (SqlCommand getSelectionH = new SqlCommand(getSelectionHomeTeam, conn))
+            using (SqlCommand command = new SqlCommand(query, conn))
             {
-                using (SqlDataReader reader = getSelectionH.ExecuteReader())
+                command.Parameters.AddWithValue("@GameId", gameId);
+                command.Parameters.AddWithValue("@PlayerId", playerId);
+
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
                     if (reader.Read())
                     {
-                        Selection selection = new Selection
+                        return new Selection
                         {
-                            Id = reader.GetInt32(0)
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            PlayerId = reader.IsDBNull(reader.GetOrdinal("PlayerId")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("PlayerId")),
+                            SeasonId = reader["SeasonId"] as string,
+                            TeamId = reader["TeamId"] as string,
+                            Jersey = reader.IsDBNull(reader.GetOrdinal("Jersey")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("Jersey"))
                         };
-                        return selection;
-                    }
-                }
-            }
-
-            using (SqlCommand getSelectionV = new SqlCommand(getSelectionVisitorTeam, conn))
-            {
-                using (SqlDataReader reader = getSelectionV.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        Selection selection = new Selection
-                        {
-                            Id = reader.GetInt32(0)
-                        };
-                        return selection;
                     }
                 }
             }

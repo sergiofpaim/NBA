@@ -1,27 +1,45 @@
 ﻿using NBA.Commands;
 using NBA.Repo;
+using Spectre.Console;
 using Spectre.Console.Cli;
-using System.Diagnostics.CodeAnalysis;
 
 class Program
 {
     public static int Main(string[] args)
     {
-        Console.WriteLine("Type the Repo type (sql/ef):");
-        string repoType = Console.ReadLine()?.Trim().ToLower();
-
-        if (repoType == "sql")
-            Basketball.SetRepo(new BasketballSQL());
-
-        else if (repoType == "ef")
-            Basketball.SetRepo(new BasketballEF());
-        else
-            Console.WriteLine("Invalid repo type. Defaulting to SQL.");
+        ConfigConsole();
 
         var app = new CommandApp();
         app.Configure(MyConfigurator);
 
         return app.Run(args);
+    }
+
+    private static void ConfigConsole()
+    {
+        var repoType = AnsiConsole.Prompt(
+        new SelectionPrompt<string>()
+            .Title("Select the [green]Repo Type[/] (sql/ef):")
+            .AddChoices("SQL", "EF")
+    );
+
+        switch (repoType)
+        {
+            case "SQL":
+                Basketball.SetRepo(new BasketballSQL());
+                AnsiConsole.MarkupLine("[yellow]SQL Repository selected.[/]");
+                break;
+
+            case "EF":
+                Basketball.SetRepo(new BasketballEF());
+                AnsiConsole.MarkupLine("[yellow]EF Repository selected.[/]");
+                break;
+
+            default:
+                AnsiConsole.MarkupLine("[red]Invalid repo type. Defaulting to SQL.[/]");
+                Basketball.SetRepo(new BasketballSQL());
+                break;
+        }
     }
 
     private static void MyConfigurator(IConfigurator config)

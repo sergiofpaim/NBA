@@ -29,13 +29,6 @@ public class AddPlayCommand : Command<AddPlayCommand.PlayParms>
 
     public override int Execute(CommandContext context, PlayParms settings)
     {
-        var repo = Basketball.Repo;
-        if (repo == null)
-        {
-            Console.WriteLine("Repository is not configured. Please run 'configure' command first.");
-            return -1;
-        }
-
         var selection = Basketball.Repo.GetSelection(settings.GameId, settings.PlayerId);
         if (selection is null)
             throw new Exception("Player does not participate in the team for the season");
