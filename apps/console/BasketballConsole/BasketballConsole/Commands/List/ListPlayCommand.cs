@@ -1,6 +1,5 @@
 ﻿using NBA.Models;
 using NBA.Repo;
-using NBA.Repo.RepoEF;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
@@ -26,7 +25,7 @@ public class ListPlayCommand : Command<ListPlayCommand.GameParms>
     }
     public override int Execute(CommandContext context, GameParms settings)
     {
-        var selection = BasketballEF.GetSelection(settings.GameId, settings.PlayerId);
+        var selection = Basketball.Repo.GetSelection(settings.GameId, settings.PlayerId);
         if (selection is null)
             throw new Exception("Player does not participate in the team for the season");
 

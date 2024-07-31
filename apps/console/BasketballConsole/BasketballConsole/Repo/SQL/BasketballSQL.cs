@@ -14,7 +14,7 @@ namespace NBA.Repo
 
         private static readonly SqlConnection conn = new(connectionString);
 
-        internal static void Initialize()
+        public BasketballSQL()
         {
             conn.Open();
         }
@@ -103,9 +103,7 @@ namespace NBA.Repo
 
         public Selection? GetSelection(int gameId, int playerId)
         {
-            using (SqlConnection conn = new SqlConnection("your_connection_string"))
-            {
-                string getSelectionHomeTeam = $@"SELECT @SelectionId = se.Id
+            string getSelectionHomeTeam = $@"SELECT se.Id
                                                    FROM Selection AS se
 		                                           JOIN Game AS ga
 		                                             ON ga.HomeTeamId = se.TeamId
@@ -113,7 +111,7 @@ namespace NBA.Repo
 		                                           WHERE ga.Id = {gameId} 
 		                                             AND se.PlayerId = {playerId}";
 
-                string getSelectionVisitorTeam = $@"SELECT @SelectionId = se.Id
+            string getSelectionVisitorTeam = $@"SELECT se.Id
                                                    FROM Selection AS se
 		                                           JOIN Game AS ga
 		                                             ON ga.VisitorTeamId = se.TeamId
@@ -121,33 +119,36 @@ namespace NBA.Repo
 		                                           WHERE ga.Id = {gameId} 
 		                                             AND se.PlayerId = {playerId}";
 
-                using (SqlCommand getSelectionH = new SqlCommand(getSelectionHomeTeam, conn))
+            using (SqlCommand getSelectionH = new SqlCommand(getSelectionHomeTeam, conn))
+            {
+                using (SqlDataReader reader = getSelectionH.ExecuteReader())
                 {
-                    if (getSelectionHomeTeam == null)
+                    if (reader.Read())
                     {
-                        using (SqlCommand getSelectionV = new SqlCommand(getSelectionVisitorTeam, conn))
+                        Selection selection = new Selection
                         {
-                            using (SqlDataReader reader = getSelectionV.ExecuteReader())
-                            {
-                                Selection selection = new()
-                                {
-                                    Id = reader.GetInt32(0)
-                                };
-                                return selection;
-                            }
-                        }
+                            Id = reader.GetInt32(0)
+                        };
+                        return selection;
                     }
-                    else
-                        using (SqlDataReader reader = getSelectionH.ExecuteReader())
-                        {
-                            Selection selection = new()
-                            {
-                                Id = reader.GetInt32(0)
-                            };
-                            return selection;
-                        }
                 }
             }
+
+            using (SqlCommand getSelectionV = new SqlCommand(getSelectionVisitorTeam, conn))
+            {
+                using (SqlDataReader reader = getSelectionV.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        Selection selection = new Selection
+                        {
+                            Id = reader.GetInt32(0)
+                        };
+                        return selection;
+                    }
+                }
+            }
+            return null;
         }
     }
 }

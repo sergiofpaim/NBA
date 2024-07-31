@@ -2,7 +2,6 @@
 using NBA.Models;
 using NBA.Models.Type;
 using NBA.Repo;
-using NBA.Repo.RepoEF;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
@@ -12,9 +11,9 @@ namespace NBA.Commands;
 
 [Description("\n\nAdds a play for an specific game")]
 
-public class AddPlayCommand : Command<AddPlayCommand.AddParms>
+public class AddPlayCommand : Command<AddPlayCommand.PlayParms>
 {
-    public sealed class AddParms : CommandSettings
+    public sealed class PlayParms : CommandSettings
     {
         [CommandOption("-g|--game <GAMEID>")]
         [Description("The game Id")]
@@ -28,9 +27,16 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
         public int PlayerId { get; set; }
     }
 
-    public override int Execute(CommandContext context, AddParms settings)
+    public override int Execute(CommandContext context, PlayParms settings)
     {
-        var selection = BasketballEF.GetSelection(settings.GameId, settings.PlayerId);
+        var repo = Basketball.Repo;
+        if (repo == null)
+        {
+            Console.WriteLine("Repository is not configured. Please run 'configure' command first.");
+            return -1;
+        }
+
+        var selection = Basketball.Repo.GetSelection(settings.GameId, settings.PlayerId);
         if (selection is null)
             throw new Exception("Player does not participate in the team for the season");
 
