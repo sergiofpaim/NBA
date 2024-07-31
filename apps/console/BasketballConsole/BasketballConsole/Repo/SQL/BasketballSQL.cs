@@ -46,11 +46,12 @@ namespace NBA.Repo
             return cmd.ExecuteNonQuery();
         }
 
-        List<Play> IBasketballRepo.GetLastPlays(int gameId, int playerId, int quarter, int topRows)
+        List<Play> IBasketballRepo.GetLastPlays(int gameId, int playerId, int quarter, int topRows = 0)
         {
             List<Play> plays = [];
+            string getPlays;
 
-            string getPlays = $@"SELECT TOP {topRows} * 
+            getPlays = $@"SELECT TOP {topRows} * 
                                  FROM Play AS p 
                                  JOIN Participation AS pa 
                                    ON pa.Id = p.ParticipationId 
@@ -60,22 +61,34 @@ namespace NBA.Repo
                                    AND pa.Quarter = {quarter}
                                    AND s.PlayerId = {playerId}
                                  ORDER BY p.At DESC;";
+            if (topRows == 0)
+            {
+                getPlays = $@"SELECT * 
+                                 FROM Play AS p 
+                                 JOIN Participation AS pa 
+                                   ON pa.Id = p.ParticipationId 
+                                 JOIN Selection AS s
+                                   ON pa.SelectionId = s.Id
+                                 WHERE pa.GameId = {gameId}
+                                   AND pa.Quarter = {quarter}
+                                   AND s.PlayerId = {playerId}
+                                 ORDER BY p.At DESC;";
+            }
 
             using SqlCommand getPlaysCommand = new SqlCommand(getPlays, conn);
-            using (SqlDataReader reader = getPlaysCommand.ExecuteReader())
+            using SqlDataReader reader = getPlaysCommand.ExecuteReader();
+
+            while (reader.Read())
             {
-                while (reader.Read())
+                Play play = new Play
                 {
-                    Play play = new Play
-                    {
-                        Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                        ParticipationId = reader.IsDBNull(1) ? (int?)null : reader.GetInt32(1),
-                        Type = reader.IsDBNull(2) ? null : reader.GetString(2),
-                        Points = reader.IsDBNull(3) ? (int?)null : reader.GetInt32(3),
-                        At = reader.IsDBNull(4) ? (TimeSpan?)null : reader.GetTimeSpan(4)
-                    };
-                    plays.Add(play);
-                }
+                    Id = reader.GetInt32(0),
+                    ParticipationId = reader.IsDBNull(1) ? (int?)null : reader.GetInt32(1),
+                    Type = reader.IsDBNull(2) ? null : reader.GetString(2),
+                    Points = reader.IsDBNull(3) ? (int?)null : reader.GetInt32(3),
+                    At = reader.IsDBNull(4) ? (TimeSpan?)null : reader.GetTimeSpan(4)
+                };
+                plays.Add(play);
             }
             return plays;
         }

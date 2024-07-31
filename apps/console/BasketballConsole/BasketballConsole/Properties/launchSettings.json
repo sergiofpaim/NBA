@@ -4,7 +4,7 @@
       "commandName": "Project",
       //"commandLineArgs": "list play -g 31 -q 1 -p 131"
       //"commandLineArgs": "add play -g 31 -q 1 -p 131"
-      "commandLineArgs": "add game -o LAL -v CHI -a 2022-08-01T19:30:00"
+      //"commandLineArgs": "add game -o LAL -v BOS -a 2022-08-01T19:30:00"
     }
   }
 }
