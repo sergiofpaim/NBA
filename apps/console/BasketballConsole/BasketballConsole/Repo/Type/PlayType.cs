@@ -1,4 +1,4 @@
-﻿namespace NBA.Models.Type
+﻿namespace NBA.Repo.Type
 {
     public enum PlayType
     {

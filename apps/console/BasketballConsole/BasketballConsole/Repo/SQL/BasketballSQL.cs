@@ -1,6 +1,6 @@
 ﻿using NBA.Interfaces;
 using NBA.Models;
-using NBA.Models.Type;
+using NBA.Repo.Type;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -50,10 +50,7 @@ namespace NBA.Repo
         {
             List<Play> plays = [];
 
-            string getPlays = $@"SELECT TOP {topRows} 
-                                        p.Points,
-                                        p.Type,
-                                        p.At 
+            string getPlays = $@"SELECT TOP {topRows} * 
                                  FROM Play AS p 
                                  JOIN Participation AS pa 
                                    ON pa.Id = p.ParticipationId 
@@ -65,21 +62,19 @@ namespace NBA.Repo
                                  ORDER BY p.At DESC;";
 
             using SqlCommand getPlaysCommand = new SqlCommand(getPlays, conn);
-
             using (SqlDataReader reader = getPlaysCommand.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    int points = reader.GetInt32(0);
-                    string lastPlayType = reader.GetString(1);
-                    TimeSpan at = reader.GetTimeSpan(2);
-
-                    plays.Add(new Play()
+                    Play play = new Play
                     {
-                        Points = reader.GetInt32(0),
-                        Type = reader.GetString(1),
-                        At = reader.GetTimeSpan(2)
-                    });
+                        Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                        ParticipationId = reader.IsDBNull(1) ? (int?)null : reader.GetInt32(1),
+                        Type = reader.IsDBNull(2) ? null : reader.GetString(2),
+                        Points = reader.IsDBNull(3) ? (int?)null : reader.GetInt32(3),
+                        At = reader.IsDBNull(4) ? (TimeSpan?)null : reader.GetTimeSpan(4)
+                    };
+                    plays.Add(play);
                 }
             }
             return plays;
@@ -107,7 +102,7 @@ namespace NBA.Repo
 
         public Player GetPlayer(int playerId)
         {
-            string getNameCommand = $"SELECT p.Name FROM Player AS p WHERE p.Id = {playerId}";
+            string getNameCommand = $"SELECT * FROM Player AS p WHERE p.Id = {playerId}";
             using SqlCommand getPlayerCmd = new SqlCommand(getNameCommand, conn);
 
             using SqlDataReader reader = getPlayerCmd.ExecuteReader();
@@ -127,7 +122,7 @@ namespace NBA.Repo
 
         public Selection? GetSelection(int gameId, int playerId)
         {
-            string query = $@"SELECT se.Id, se.PlayerId, se.SeasonId, se.TeamId, se.Jersey
+            string query = $@"SELECT *
                               FROM Selection AS se
                               JOIN Game AS ga ON (ga.HomeTeamId = se.TeamId OR ga.VisitorTeamId = se.TeamId)
                                               AND ga.SeasonId = se.SeasonId

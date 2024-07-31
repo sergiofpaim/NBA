@@ -1,7 +1,7 @@
 ﻿using NBA.Interfaces;
 using NBA.Models;
-using NBA.Models.Type;
 using NBA.Repo;
+using NBA.Repo.Type;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;

@@ -1,6 +1,6 @@
 ﻿using NBA.Interfaces;
 using NBA.Models;
-using NBA.Models.Type;
+using NBA.Repo.Type;
 using System.Data;
 
 namespace NBA.Repo
@@ -81,12 +81,13 @@ namespace NBA.Repo
             var game = new Game
             {
                 Id = context.Games.Max(g => g.Id) + 1,
-                SeasonId = context.Seasons.Max(s => s.Id) + 1,
+                SeasonId = context.Seasons.OrderByDescending(s => s.Id).Select(s => s.Id).FirstOrDefault(),
                 HomeTeamId = homeTeamId,
                 VisitorTeamId = visitorTeamId,
                 At = at
             };
             context.Games.Add(game);
+
             return context.SaveChanges();
         }
 
