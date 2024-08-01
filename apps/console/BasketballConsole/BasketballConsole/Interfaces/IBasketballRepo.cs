@@ -1,5 +1,4 @@
 ﻿using NBA.Models;
-using NBA.Repo.Type;
 
 namespace NBA.Interfaces
 {

@@ -1,7 +1,6 @@
 ﻿using NBA.Interfaces;
 using NBA.Models;
 using NBA.Repo;
-using NBA.Repo.Type;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
@@ -13,7 +12,7 @@ namespace NBA.Commands;
 
 public class AddPlayCommand : Command<AddPlayCommand.PlayParms>
 {
-    public sealed class PlayParms : CommandSettings
+    public sealed class PlayParms : GlobalCommandSettings
     {
         [CommandOption("-g|--game <GAMEID>")]
         [Description("The game Id")]

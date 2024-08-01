@@ -1,6 +1,5 @@
 ﻿using NBA.Interfaces;
 using NBA.Models;
-using NBA.Repo.Type;
 using System.Data;
 
 namespace NBA.Repo
@@ -121,8 +120,9 @@ namespace NBA.Repo
 
         public Game GetGame(int gameId)
         {
+            Game a = null;
             var game = context.Games.FirstOrDefault(g => g.Id == gameId);
-            if (game == null)
+            if (game is null)
                 throw new InvalidOperationException("Game not found.");
 
             return game;

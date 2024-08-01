@@ -9,7 +9,7 @@ namespace NBA.Commands;
 
 public class AddGameCommand : Command<AddGameCommand.GameParms>
 {
-    public sealed class GameParms : CommandSettings
+    public sealed class GameParms : GlobalCommandSettings
     {
         [CommandOption("-o|--home <HOMETEAMIID>")]
         [Description("The id of the home team")]

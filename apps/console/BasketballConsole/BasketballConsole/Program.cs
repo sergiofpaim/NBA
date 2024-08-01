@@ -7,38 +7,39 @@ class Program
 {
     public static int Main(string[] args)
     {
-        ConfigConsole();
-
+        ConfigRepo([.. args]);
         var app = new CommandApp();
         app.Configure(MyConfigurator);
 
         return app.Run(args);
     }
 
-    private static void ConfigConsole()
+    private static void ConfigRepo(List<string> args)
     {
-        var repoType = AnsiConsole.Prompt(
-        new SelectionPrompt<string>()
-            .Title("Select the [green]Repo Type[/] (sql/ef):")
-            .AddChoices("SQL", "EF")
-    );
+        var repoIndex = args.IndexOf(args.FirstOrDefault(a => a.Equals("-r", StringComparison.CurrentCultureIgnoreCase) ||
+                                                              a.Equals("--repo", StringComparison.CurrentCultureIgnoreCase)) ?? "");
 
-        switch (repoType)
+        if (repoIndex > 0 && repoIndex < args.Count)
         {
-            case "SQL":
-                Basketball.SetRepo(new BasketballSQL());
-                AnsiConsole.MarkupLine("[yellow]SQL Repository selected.[/]");
-                break;
+            var repo = args[repoIndex + 1].ToLower();
 
-            case "EF":
-                Basketball.SetRepo(new BasketballEF());
-                AnsiConsole.MarkupLine("[yellow]EF Repository selected.[/]");
-                break;
+            switch (repo)
+            {
+                case "sql":
+                    Basketball.SetRepo(new BasketballSQL());
+                    AnsiConsole.MarkupLine("[yellow]SQL Repository selected.[/]");
+                    break;
 
-            default:
-                AnsiConsole.MarkupLine("[red]Invalid repo type. Defaulting to SQL.[/]");
-                Basketball.SetRepo(new BasketballSQL());
-                break;
+                case "ef":
+                    Basketball.SetRepo(new BasketballEF());
+                    AnsiConsole.MarkupLine("[yellow]EF Repository selected.[/]");
+                    break;
+
+                default:
+                    AnsiConsole.MarkupLine("[red]Invalid repo type. Defaulting to SQL.[/]");
+                    Basketball.SetRepo(new BasketballSQL());
+                    break;
+            }
         }
     }
 
@@ -46,11 +47,10 @@ class Program
     {
         config.SetApplicationName("NBA");
         config.ValidateExamples();
-        config.AddExample("add", "game");
-        config.AddExample("add", "play");
+        config.AddExample("add", "play", "-g", "31", "-q", "1", "-p", "131");
 
         // Add
-        config.AddBranch<CommandSettings>("add", add =>
+        config.AddBranch<GlobalCommandSettings>("add", add =>
         {
             add.SetDescription("Add operations");
 
@@ -62,7 +62,7 @@ class Program
         });
 
         // List
-        config.AddBranch<CommandSettings>("list", list =>
+        config.AddBranch<GlobalCommandSettings>("list", list =>
         {
             list.SetDescription("List operations");
 

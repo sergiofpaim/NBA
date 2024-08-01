@@ -1,6 +1,5 @@
 ﻿using NBA.Interfaces;
 using NBA.Models;
-using NBA.Repo.Type;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -51,42 +50,31 @@ namespace NBA.Repo
             List<Play> plays = [];
             string getPlays;
 
-            getPlays = $@"SELECT TOP {topRows} * 
-                                 FROM Play AS p 
-                                 JOIN Participation AS pa 
-                                   ON pa.Id = p.ParticipationId 
-                                 JOIN Selection AS s
-                                   ON pa.SelectionId = s.Id
-                                 WHERE pa.GameId = {gameId}
-                                   AND pa.Quarter = {quarter}
-                                   AND s.PlayerId = {playerId}
-                                 ORDER BY p.At DESC;";
-            if (topRows == 0)
-            {
-                getPlays = $@"SELECT * 
-                                 FROM Play AS p 
-                                 JOIN Participation AS pa 
-                                   ON pa.Id = p.ParticipationId 
-                                 JOIN Selection AS s
-                                   ON pa.SelectionId = s.Id
-                                 WHERE pa.GameId = {gameId}
-                                   AND pa.Quarter = {quarter}
-                                   AND s.PlayerId = {playerId}
-                                 ORDER BY p.At DESC;";
-            }
+            string topClause = topRows > 0 ? $"TOP {topRows}" : "";
 
-            using SqlCommand getPlaysCommand = new SqlCommand(getPlays, conn);
+            getPlays = $@"SELECT {topClause} * 
+                          FROM Play AS p 
+                          JOIN Participation AS pa 
+                            ON pa.Id = p.ParticipationId 
+                          JOIN Selection AS s
+                            ON pa.SelectionId = s.Id
+                          WHERE pa.GameId = {gameId}
+                            AND pa.Quarter = {quarter}
+                            AND s.PlayerId = {playerId}
+                          ORDER BY p.At DESC;";
+
+            using SqlCommand getPlaysCommand = new(getPlays, conn);
             using SqlDataReader reader = getPlaysCommand.ExecuteReader();
 
             while (reader.Read())
             {
-                Play play = new Play
+                Play play = new()
                 {
                     Id = reader.GetInt32(0),
                     ParticipationId = reader.IsDBNull(1) ? (int?)null : reader.GetInt32(1),
                     Type = reader.IsDBNull(2) ? null : reader.GetString(2),
-                    Points = reader.IsDBNull(3) ? (int?)null : reader.GetInt32(3),
-                    At = reader.IsDBNull(4) ? (TimeSpan?)null : reader.GetTimeSpan(4)
+                    Points = reader.IsDBNull(3) ? null : reader.GetInt32(3),
+                    At = reader.IsDBNull(4) ? null : reader.GetTimeSpan(4)
                 };
                 plays.Add(play);
             }
@@ -101,7 +89,7 @@ namespace NBA.Repo
             using SqlDataReader reader = getTimeCmd.ExecuteReader();
             if (reader.Read())
             {
-                return new Game
+                return new()
                 {
                     SeasonId = reader["SeasonId"] as string,
                     HomeTeamId = reader["HomeTeamId"] as string,
@@ -116,16 +104,18 @@ namespace NBA.Repo
         public Player GetPlayer(int playerId)
         {
             string getNameCommand = $"SELECT * FROM Player AS p WHERE p.Id = {playerId}";
-            using SqlCommand getPlayerCmd = new SqlCommand(getNameCommand, conn);
+            using SqlCommand getPlayerCmd = new(getNameCommand, conn);
 
             using SqlDataReader reader = getPlayerCmd.ExecuteReader();
             if (reader.Read())
             {
-                return new Player
+                return new()
                 {
                     Id = reader.GetInt32(reader.GetOrdinal("Id")),
                     Name = reader["Name"] as string,
-                    BornOn = reader.IsDBNull(reader.GetOrdinal("BornOn")) ? (DateOnly?)null : DateOnly.FromDateTime(reader.GetDateTime(reader.GetOrdinal("BornOn"))),
+                    BornOn = reader.IsDBNull(reader.GetOrdinal("BornOn"))
+                                ? null 
+                                : DateOnly.FromDateTime(reader.GetDateTime(reader.GetOrdinal("BornOn"))),
                     Position = reader["Position"] as string
                 };
             }
@@ -142,25 +132,21 @@ namespace NBA.Repo
                               WHERE ga.Id = @GameId
                                 AND se.PlayerId = @PlayerId";
 
-            using (SqlCommand command = new SqlCommand(query, conn))
-            {
-                command.Parameters.AddWithValue("@GameId", gameId);
-                command.Parameters.AddWithValue("@PlayerId", playerId);
+            using SqlCommand command = new(query, conn);
+            command.Parameters.AddWithValue("@GameId", gameId);
+            command.Parameters.AddWithValue("@PlayerId", playerId);
 
-                using (SqlDataReader reader = command.ExecuteReader())
+            using SqlDataReader reader = command.ExecuteReader();
+            if (reader.Read())
+            {
+                return new()
                 {
-                    if (reader.Read())
-                    {
-                        return new Selection
-                        {
-                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                            PlayerId = reader.IsDBNull(reader.GetOrdinal("PlayerId")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("PlayerId")),
-                            SeasonId = reader["SeasonId"] as string,
-                            TeamId = reader["TeamId"] as string,
-                            Jersey = reader.IsDBNull(reader.GetOrdinal("Jersey")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("Jersey"))
-                        };
-                    }
-                }
+                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                    PlayerId = reader.IsDBNull(reader.GetOrdinal("PlayerId")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("PlayerId")),
+                    SeasonId = reader["SeasonId"] as string,
+                    TeamId = reader["TeamId"] as string,
+                    Jersey = reader.IsDBNull(reader.GetOrdinal("Jersey")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("Jersey"))
+                };
             }
             return null;
         }

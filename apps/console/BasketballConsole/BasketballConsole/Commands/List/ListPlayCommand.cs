@@ -10,7 +10,7 @@ namespace NBA.Commands;
 
 public class ListPlayCommand : Command<ListPlayCommand.GameParms>
 {
-    public sealed class GameParms : CommandSettings
+    public sealed class GameParms : GlobalCommandSettings
     {
         [CommandOption("-g|--game <GAMEID>")]
         [Description("The game Id")]
