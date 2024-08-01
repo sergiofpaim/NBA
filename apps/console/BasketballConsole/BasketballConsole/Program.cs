@@ -1,10 +1,8 @@
 ﻿using NBA.Commands;
 using NBA.Interfaces;
-using NBA.Models;
 using NBA.Repo;
 using Spectre.Console;
 using Spectre.Console.Cli;
-using System.Collections.Generic;
 
 class Program
 {
