@@ -9,7 +9,7 @@ namespace NBA.Commands;
 
 public class AddGameCommand : Command<AddGameCommand.GameParms>
 {
-    public sealed class GameParms : CommandSettings
+    public sealed class GameParms : GlobalCommandSettings
     {
         [CommandOption("-o|--home <HOMETEAMIID>")]
         [Description("The id of the home team")]
@@ -26,7 +26,7 @@ public class AddGameCommand : Command<AddGameCommand.GameParms>
 
     public override int Execute(CommandContext context, GameParms settings)
     {
-        int rowsAffected = BasketballRepo.CreateGame(settings.HomeTeamId, settings.VisitorTeamId, settings.At);
+        int rowsAffected = Basketball.Repo.CreateGame(settings.HomeTeamId, settings.VisitorTeamId, settings.At);
 
         if (rowsAffected > 0)
             AnsiConsole.MarkupLine($"[green]Game added to the database.[/]");

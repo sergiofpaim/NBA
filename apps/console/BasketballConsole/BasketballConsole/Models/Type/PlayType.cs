@@ -1,6 +1,6 @@
-﻿namespace NBA.Repo.Type
+﻿namespace NBA.Models
 {
-    internal enum PlayType
+    public enum PlayType
     {
         FreeThrowHit,
         TwoPointerHit,

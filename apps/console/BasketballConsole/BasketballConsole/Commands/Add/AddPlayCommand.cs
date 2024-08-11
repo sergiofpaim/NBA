@@ -1,17 +1,18 @@
-﻿using NBA.Repo;
-using NBA.Repo.Models;
-using NBA.Repo.Type;
+﻿using NBA.Interfaces;
+using NBA.Models;
+using NBA.Repo;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
+using System.Data;
 
 namespace NBA.Commands;
 
 [Description("\n\nAdds a play for an specific game")]
 
-public class AddPlayCommand : Command<AddPlayCommand.AddParms>
+public class AddPlayCommand : Command<AddPlayCommand.PlayParms>
 {
-    public sealed class AddParms : CommandSettings
+    public sealed class PlayParms : GlobalCommandSettings
     {
         [CommandOption("-g|--game <GAMEID>")]
         [Description("The game Id")]
@@ -25,10 +26,13 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
         public int PlayerId { get; set; }
     }
 
-    public override int Execute(CommandContext context, AddParms settings)
+    public override int Execute(CommandContext context, PlayParms settings)
     {
+        var selection = Basketball.Repo.GetSelection(settings.GameId, settings.PlayerId);
+        if (selection is null)
+            throw new Exception("Player does not participate in the team for the season");
+
         ShowData(settings.GameId, settings.Quarter, settings.PlayerId);
-        var gameStart = BasketballRepo.GetGameStart(settings.GameId);
 
         while (true)
         {
@@ -101,40 +105,46 @@ public class AddPlayCommand : Command<AddPlayCommand.AddParms>
                     continue;
             }
 
-            int rowsAffected = BasketballRepo.RegisterPlay(settings.GameId, 
-                                                           settings.Quarter,
-                                                           settings.PlayerId,
-                                                           DateTime.Now - gameStart,
-                                                           type.ToString());
+            try
+            {
+                int rowsAffected = Basketball.Repo.RegisterPlay(settings.GameId,
+                                                                settings.Quarter,
+                                                                settings.PlayerId,
+                                                                type.Value);
+                if (rowsAffected > 0)
+                    AnsiConsole.MarkupLine($"[green]Play added to the database.[/]");
+                else
+                    AnsiConsole.MarkupLine($"[red]Failed to add the play to the database.[/]");
 
-            if (rowsAffected > 0)
-                AnsiConsole.MarkupLine($"[green]Play added to the database.[/]");
-            else
-                AnsiConsole.MarkupLine($"[red]Failed to add the play to the database.[/]");
-
-            ShowLastPlays(settings.GameId, settings.PlayerId, settings.Quarter);
+                ShowLastPlays(settings.GameId, settings.PlayerId, settings.Quarter);
+            }
+            catch (InvalidConstraintException ex)
+            {
+                AnsiConsole.MarkupLine(ex.Message);
+            }
         }
     }
 
     private void ShowData(int gameId, int quarter, int playerId)
     {
-        AnsiConsole.MarkupLine($"Game Id: {gameId}\nCurrent Time: {DateTime.Now}\nQuarter: {quarter}\nPlayer: {BasketballRepo.GetPlayerName(playerId)}");
+        IBasketballRepo repo = new BasketballEF();
+        AnsiConsole.MarkupLine($"Game Id: {gameId}\nCurrent Time: {DateTime.Now}\nQuarter: {quarter}\nPlayer: {repo.GetPlayer(playerId).Name}");
     }
 
     private void ShowLastPlays(int gameId, int playerId, int quarter)
     {
-        List<PlaySummary> plays = BasketballRepo.GetLastPlays(gameId, playerId, quarter, 5);
+        IBasketballRepo repo = new BasketballEF();
+        List<Play> plays = repo.GetLastPlays(gameId, playerId, quarter, 5);
+
+        var tableOptions = new Table();
+        tableOptions.Title = new TableTitle("\n\nLast 5 Plays");
+        tableOptions.AddColumn("Points");
+        tableOptions.AddColumn("Type");
+        tableOptions.AddColumn("At");
 
         foreach (var play in plays)
-        {
-            var tableOptions = new Table();
-            tableOptions.AddColumn("Points");
-            tableOptions.AddColumn("Type");
-            tableOptions.AddColumn("At");
-
             tableOptions.AddRow($"{play.Points}", $"{play.Type}", $"{play.At}");
 
-            AnsiConsole.Write(tableOptions);
-        }
+        AnsiConsole.Write(tableOptions);
     }
 }
