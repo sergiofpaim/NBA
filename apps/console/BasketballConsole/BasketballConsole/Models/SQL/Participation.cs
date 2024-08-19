@@ -12,7 +12,7 @@ public partial class Participation
 
     public int? Points { get; set; }
 
-    public virtual Game Game { get; set; } = null!;
+    public virtual Game Game { get; set; }
 
-    public virtual Selection Selection { get; set; } = null!;
+    public virtual Selection Selection { get; set; }
 }

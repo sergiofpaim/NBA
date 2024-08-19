@@ -6,5 +6,5 @@ public partial class CScalation
 
     public CTeam Team { get; set; }
 
-    public virtual List<CPlayer> Players { get; set; } = [];
+    public List<CPlayer> Players { get; set; } = [];
 }

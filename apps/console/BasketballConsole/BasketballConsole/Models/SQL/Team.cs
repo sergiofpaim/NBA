@@ -2,7 +2,7 @@
 
 public partial class Team
 {
-    public string Id { get; set; } = null!;
+    public string Id { get; set; }
 
     public string Name { get; set; }
 
@@ -14,5 +14,5 @@ public partial class Team
 
     public string Conference { get; set; }
 
-    public virtual ICollection<Scalation> Scalations { get; set; } = new List<Scalation>();
+    public virtual ICollection<Scalation> Scalations { get; set; } = [];
 }

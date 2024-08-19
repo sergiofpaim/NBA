@@ -14,5 +14,5 @@ public partial class CTeam
 
     public string Conference { get; set; }
 
-    public virtual List<CPlayer> Players { get; set; } = [];
+    public List<CPlayer> Players { get; set; } = [];
 }
