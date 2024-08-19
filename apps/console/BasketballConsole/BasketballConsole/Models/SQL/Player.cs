@@ -6,9 +6,9 @@ public partial class Player
 
     public string Name { get; set; }
 
-    public DateOnly BornOn { get; set; }
+    public DateOnly? BornOn { get; set; }
 
     public string Position { get; set; }
 
-    public virtual ICollection<Selection> Selections { get; set; } = [];
+    public virtual ICollection<Selection> Selections { get; set; } = new List<Selection>();
 }

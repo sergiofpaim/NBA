@@ -6,5 +6,5 @@ public partial class CSeason
 
     public CTeam Winner { get; set; } = null;
 
-    public List<CTeam> Teams { get; set; } = [];
+    public virtual List<CTeam> Teams { get; set; } = [];
 }
