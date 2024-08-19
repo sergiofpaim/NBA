@@ -1,6 +1,8 @@
 ﻿using NBA.Interfaces;
-using NBA.Models;
 using NBA.Repo;
+using NBA.SQL.Models;
+using NBA.SQL.Models.Type;
+using NBA.SQL.Repo;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;

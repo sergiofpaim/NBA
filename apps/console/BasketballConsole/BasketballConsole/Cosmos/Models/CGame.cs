@@ -1,6 +1,6 @@
 ﻿namespace NBA.Models;
 
-public partial class Game
+public partial class CGame
 {
     public int Id { get; set; }
 

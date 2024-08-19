@@ -1,6 +1,6 @@
 ﻿using NBA.Interfaces;
 
-namespace NBA.Repo
+namespace NBA.SQL.Repo
 {
     internal static class Basketball
     {

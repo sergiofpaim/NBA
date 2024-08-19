@@ -1,8 +1,9 @@
 ﻿using NBA.Interfaces;
-using NBA.Models;
+using NBA.SQL.Models;
+using NBA.SQL.Models.Type;
 using System.Data;
 
-namespace NBA.Repo
+namespace NBA.SQL.Repo.EF
 {
     public class BasketballEF : IBasketballRepo
     {

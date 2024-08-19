@@ -1,6 +1,6 @@
 ﻿namespace NBA.Models;
 
-public partial class Participation
+public partial class CParticipation
 {
     public int Id { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using NBA.Models;
+﻿using NBA.SQL.Models;
+using NBA.SQL.Models.Type;
 
 namespace NBA.Interfaces
 {

@@ -1,6 +1,6 @@
-﻿namespace NBA.Models;
+﻿namespace NBA.SQL.Models;
 
-public partial class Season
+public partial class CSeason
 {
     public string Id { get; set; } = null!;
 

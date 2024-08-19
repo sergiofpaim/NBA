@@ -1,4 +1,4 @@
-﻿using NBA.Repo;
+﻿using NBA.SQL.Repo;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;

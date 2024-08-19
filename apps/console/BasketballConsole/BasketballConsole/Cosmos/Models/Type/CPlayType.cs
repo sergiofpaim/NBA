@@ -1,6 +1,6 @@
-﻿namespace NBA.Models
+﻿namespace NBA.SQL.Models.Type
 {
-    public enum PlayType
+    public enum CPlayType
     {
         FreeThrowHit,
         TwoPointerHit,

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace NBA.Models;
+namespace NBA.SQL.Models;
 
 public partial class ApplicationDbContext : DbContext
 {

@@ -1,6 +1,6 @@
-﻿namespace NBA.Models;
+﻿namespace NBA.SQL.Models;
 
-public partial class Player
+public partial class CPlayer
 {
     public int Id { get; set; }
 

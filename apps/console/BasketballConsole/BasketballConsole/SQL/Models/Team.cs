@@ -1,4 +1,4 @@
-﻿namespace NBA.Models;
+﻿namespace NBA.SQL.Models;
 
 public partial class Team
 {

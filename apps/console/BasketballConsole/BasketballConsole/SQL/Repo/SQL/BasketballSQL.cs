@@ -1,9 +1,10 @@
 ﻿using NBA.Interfaces;
-using NBA.Models;
+using NBA.SQL.Models;
+using NBA.SQL.Models.Type;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace NBA.Repo
+namespace NBA.SQL.Repo.SQL
 {
     internal class BasketballSQL : IBasketballRepo
     {
@@ -71,7 +72,7 @@ namespace NBA.Repo
                 Play play = new()
                 {
                     Id = reader.GetInt32(0),
-                    ParticipationId = reader.IsDBNull(1) ? (int?)null : reader.GetInt32(1),
+                    ParticipationId = reader.IsDBNull(1) ? null : reader.GetInt32(1),
                     Type = reader.IsDBNull(2) ? null : reader.GetString(2),
                     Points = reader.IsDBNull(3) ? null : reader.GetInt32(3),
                     At = reader.IsDBNull(4) ? null : reader.GetTimeSpan(4)
@@ -114,7 +115,7 @@ namespace NBA.Repo
                     Id = reader.GetInt32(reader.GetOrdinal("Id")),
                     Name = reader["Name"] as string,
                     BornOn = reader.IsDBNull(reader.GetOrdinal("BornOn"))
-                                ? null 
+                                ? null
                                 : DateOnly.FromDateTime(reader.GetDateTime(reader.GetOrdinal("BornOn"))),
                     Position = reader["Position"] as string
                 };
@@ -142,10 +143,10 @@ namespace NBA.Repo
                 return new()
                 {
                     Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                    PlayerId = reader.IsDBNull(reader.GetOrdinal("PlayerId")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("PlayerId")),
+                    PlayerId = reader.IsDBNull(reader.GetOrdinal("PlayerId")) ? null : reader.GetInt32(reader.GetOrdinal("PlayerId")),
                     SeasonId = reader["SeasonId"] as string,
                     TeamId = reader["TeamId"] as string,
-                    Jersey = reader.IsDBNull(reader.GetOrdinal("Jersey")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("Jersey"))
+                    Jersey = reader.IsDBNull(reader.GetOrdinal("Jersey")) ? null : reader.GetInt32(reader.GetOrdinal("Jersey"))
                 };
             }
             return null;
