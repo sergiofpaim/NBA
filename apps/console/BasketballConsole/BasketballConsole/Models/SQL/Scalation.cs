@@ -1,4 +1,4 @@
-﻿namespace NBA.SQL.Models;
+﻿namespace NBA.Models.SQL;
 
 public partial class Scalation
 {

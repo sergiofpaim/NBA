@@ -1,5 +1,5 @@
-﻿using NBA.SQL.Models;
-using NBA.SQL.Repo;
+﻿using NBA.Models.SQL;
+using NBA.Repo;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;

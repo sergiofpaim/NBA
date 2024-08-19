@@ -1,6 +1,4 @@
-﻿using NBA.SQL.Models;
-
-namespace NBA.Models;
+﻿namespace NBA.Models.CosmosDB;
 
 public partial class CGame
 {

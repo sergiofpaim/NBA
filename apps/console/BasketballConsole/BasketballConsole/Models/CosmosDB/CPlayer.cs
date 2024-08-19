@@ -1,4 +1,4 @@
-﻿namespace NBA.SQL.Models;
+﻿namespace NBA.Models.CosmosDB;
 
 public partial class CPlayer
 {

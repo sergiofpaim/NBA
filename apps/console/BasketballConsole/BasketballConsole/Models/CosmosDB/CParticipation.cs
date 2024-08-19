@@ -1,6 +1,6 @@
-﻿using NBA.SQL.Models;
+﻿using NBA.Models.Type;
 
-namespace NBA.Models;
+namespace NBA.Models.CosmosDB;
 
 public partial class CParticipation
 {
@@ -13,4 +13,6 @@ public partial class CParticipation
     public int Quarter { get; set; }
 
     public int Points { get; set; }
+
+    public List<PlayType> Plays { get; set; } = [];
 }

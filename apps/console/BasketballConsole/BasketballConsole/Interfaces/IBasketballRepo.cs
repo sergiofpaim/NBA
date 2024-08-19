@@ -1,5 +1,5 @@
-﻿using NBA.SQL.Models;
-using NBA.SQL.Models.Type;
+﻿using NBA.Models.SQL;
+using NBA.Models.Type;
 
 namespace NBA.Interfaces
 {

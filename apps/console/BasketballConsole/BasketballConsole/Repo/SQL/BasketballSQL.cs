@@ -1,10 +1,10 @@
 ﻿using NBA.Interfaces;
-using NBA.SQL.Models;
-using NBA.SQL.Models.Type;
+using NBA.Models.SQL;
+using NBA.Models.Type;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace NBA.SQL.Repo.SQL
+namespace NBA.Repo.SQL
 {
     internal class BasketballSQL : IBasketballRepo
     {
@@ -34,7 +34,7 @@ namespace NBA.SQL.Repo.SQL
             return cmd.ExecuteNonQuery();
         }
 
-        int IBasketballRepo.CreateGame(string? homeTeamId, string? visitorTeamId, DateTime at)
+        int IBasketballRepo.CreateGame(string homeTeamId, string visitorTeamId, DateTime at)
         {
             using SqlCommand cmd = new("CreateGame", conn);
 
@@ -124,7 +124,7 @@ namespace NBA.SQL.Repo.SQL
                 return null;
         }
 
-        public Selection? GetSelection(int gameId, int playerId)
+        public Selection GetSelection(int gameId, int playerId)
         {
             string query = $@"SELECT *
                               FROM Selection AS se

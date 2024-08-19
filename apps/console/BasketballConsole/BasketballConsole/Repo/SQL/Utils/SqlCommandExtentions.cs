@@ -1,7 +1,7 @@
 ﻿using System.Data.SqlClient;
 using System.Text;
 
-namespace NBA.SQL.Repo.SQL.Utils
+namespace NBA.Repo.SQL.Utils
 {
     internal static class SqlCommandExtensions
     {

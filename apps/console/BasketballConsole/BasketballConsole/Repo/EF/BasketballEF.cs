@@ -1,9 +1,9 @@
 ﻿using NBA.Interfaces;
-using NBA.SQL.Models;
-using NBA.SQL.Models.Type;
+using NBA.Models.SQL;
+using NBA.Models.Type;
 using System.Data;
 
-namespace NBA.SQL.Repo.EF
+namespace NBA.Repo.EF
 {
     public class BasketballEF : IBasketballRepo
     {
@@ -76,7 +76,7 @@ namespace NBA.SQL.Repo.EF
             return context.SaveChanges();
         }
 
-        public int CreateGame(string? homeTeamId, string? visitorTeamId, DateTime at)
+        public int CreateGame(string homeTeamId, string visitorTeamId, DateTime at)
         {
             var game = new Game
             {
@@ -91,7 +91,7 @@ namespace NBA.SQL.Repo.EF
             return context.SaveChanges();
         }
 
-        public Selection? GetSelection(int gameId, int playerId)
+        public Selection GetSelection(int gameId, int playerId)
         {
             var selection = context.Selections
                 .Where(s => s.PlayerId == playerId &&

@@ -1,4 +1,4 @@
-﻿namespace NBA.SQL.Models;
+﻿namespace NBA.Models.SQL;
 
 public partial class Selection
 {
@@ -6,15 +6,15 @@ public partial class Selection
 
     public int? PlayerId { get; set; }
 
-    public string? SeasonId { get; set; }
+    public string SeasonId { get; set; }
 
-    public string? TeamId { get; set; }
+    public string TeamId { get; set; }
 
     public int? Jersey { get; set; }
 
     public virtual ICollection<Participation> Participations { get; set; } = new List<Participation>();
 
-    public virtual Player? Player { get; set; }
+    public virtual Player Player { get; set; }
 
-    public virtual Scalation? Scalation { get; set; }
+    public virtual Scalation Scalation { get; set; }
 }
