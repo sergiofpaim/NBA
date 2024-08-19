@@ -14,5 +14,5 @@ public partial class Team
 
     public string Conference { get; set; }
 
-    public virtual ICollection<Scalation> Scalations { get; set; } = new List<Scalation>();
+    public virtual ICollection<Scalation> Scalations { get; set; } = [];
 }

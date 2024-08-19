@@ -10,5 +10,5 @@ public partial class CPlayer
 
     public string Position { get; set; }
 
-    public virtual List<CTeam> Teams { get; set; } = [];
+    public virtual List<CPlay> Plays { get; set; } = [];
 }

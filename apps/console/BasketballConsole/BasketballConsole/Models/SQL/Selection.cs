@@ -12,7 +12,7 @@ public partial class Selection
 
     public int? Jersey { get; set; }
 
-    public virtual ICollection<Participation> Participations { get; set; } = new List<Participation>();
+    public virtual ICollection<Participation> Participations { get; set; } = [];
 
     public virtual Player Player { get; set; }
 

@@ -10,5 +10,5 @@ public partial class Player
 
     public string Position { get; set; }
 
-    public virtual ICollection<Selection> Selections { get; set; } = new List<Selection>();
+    public virtual ICollection<Selection> Selections { get; set; } = [];
 }

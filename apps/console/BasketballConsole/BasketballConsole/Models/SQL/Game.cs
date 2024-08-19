@@ -12,7 +12,7 @@ public partial class Game
 
     public DateTime At { get; set; }
 
-    public virtual ICollection<Participation> Participations { get; set; } = new List<Participation>();
+    public virtual ICollection<Participation> Participations { get; set; } = [];
 
     public virtual Scalation Scalation { get; set; }
 
