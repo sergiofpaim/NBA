@@ -4,11 +4,11 @@ public partial class CPlayer
 {
     public int Id { get; set; }
 
-    public string? Name { get; set; }
+    public string Name { get; set; }
 
-    public DateOnly? BornOn { get; set; }
+    public DateOnly BornOn { get; set; }
 
-    public string? Position { get; set; }
+    public string Position { get; set; }
 
-    public virtual ICollection<Selection> Selections { get; set; } = new List<Selection>();
+    public virtual List<CTeam> Teams { get; set; } = [];
 }

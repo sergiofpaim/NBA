@@ -2,7 +2,9 @@
 
 public partial class CSeason
 {
-    public string Id { get; set; } = null!;
+    public string Id { get; set; }
 
-    public virtual ICollection<Scalation> Scalations { get; set; } = new List<Scalation>();
+    public CTeam Winner { get; set; } = null;
+
+    public virtual List<CTeam> Teams { get; set; } = [];
 }

@@ -2,17 +2,9 @@
 
 public partial class CScalation
 {
-    public string SeasonId { get; set; } = null!;
+    public CSeason Season { get; set; }
 
-    public string TeamId { get; set; } = null!;
+    public CTeam Team { get; set; }
 
-    public virtual ICollection<Game> GameScalationNavigations { get; set; } = new List<Game>();
-
-    public virtual ICollection<Game> GameScalations { get; set; } = new List<Game>();
-
-    public virtual Season Season { get; set; } = null!;
-
-    public virtual ICollection<Selection> Selections { get; set; } = new List<Selection>();
-
-    public virtual Team Team { get; set; } = null!;
+    public virtual List<CPlayer> Players { get; set; } = [];
 }

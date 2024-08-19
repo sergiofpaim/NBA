@@ -1,18 +1,16 @@
-﻿namespace NBA.Models;
+﻿using NBA.SQL.Models;
+
+namespace NBA.Models;
 
 public partial class CParticipation
 {
     public int Id { get; set; }
 
-    public int SelectionId { get; set; }
+    public CPlayer Player { get; set; }
 
-    public int GameId { get; set; }
+    public CGame Game { get; set; }
 
     public int Quarter { get; set; }
 
-    public int? Points { get; set; }
-
-    public virtual Game Game { get; set; } = null!;
-
-    public virtual Selection Selection { get; set; } = null!;
+    public int Points { get; set; }
 }

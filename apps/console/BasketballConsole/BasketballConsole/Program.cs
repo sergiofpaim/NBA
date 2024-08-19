@@ -1,7 +1,8 @@
 ﻿using NBA.Commands;
 using NBA.Interfaces;
-using NBA.Repo;
 using NBA.SQL.Repo;
+using NBA.SQL.Repo.EF;
+using NBA.SQL.Repo.SQL;
 using Spectre.Console;
 using Spectre.Console.Cli;
 
