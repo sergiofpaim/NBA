@@ -26,7 +26,7 @@ namespace NBA.Commands
                 Console.WriteLine("No items found.");
             else
             {
-                string jsonString = JsonConvert.SerializeObject(player, Newtonsoft.Json.Formatting.Indented);
+                string jsonString = JsonConvert.SerializeObject(player, Formatting.Indented);
                 Console.WriteLine(jsonString);
             }
             return 0;
