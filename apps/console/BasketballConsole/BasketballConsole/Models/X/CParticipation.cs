@@ -2,7 +2,7 @@
 
 namespace NBA.Models.CosmosDB;
 
-public partial class CPlay
+public partial class CParticipation
 {
     public int Id { get; set; }
 
@@ -12,7 +12,9 @@ public partial class CPlay
 
     public int Quarter { get; set; }
 
+    public int MinutesPlayed { get; set; }
+
     public int Points { get; set; }
 
-    public PlayType PlayType { get; set; }
+    public List<PlayType> PlayType { get; set; }
 }

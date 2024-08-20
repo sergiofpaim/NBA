@@ -12,7 +12,7 @@ public partial class CGame
 
     public DateTime At { get; set; }
 
-    public List<CPlay> Plays = [];
+    public List<CParticipation> Participations = [];
 
     public CTeam Winner { get; set; } = null;
 }
