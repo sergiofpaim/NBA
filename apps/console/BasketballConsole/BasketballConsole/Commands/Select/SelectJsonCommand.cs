@@ -20,7 +20,6 @@ namespace NBA.Commands
 
         public override int Execute(CommandContext context, SelectParms settings)
         {
-            new BasketballCosmos();
             var player = BasketballCosmos.GetAsync(settings.Id, settings.Name).Result;
 
             if (player is null)

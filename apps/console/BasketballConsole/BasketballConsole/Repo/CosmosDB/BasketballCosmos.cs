@@ -1,10 +1,12 @@
 ﻿using Microsoft.Azure.Cosmos;
+using NBA.Interfaces;
 using NBA.Models.CosmosDB;
+using NBA.Models.Type;
 using System.ComponentModel;
 
 namespace NBA.Repo.CosmosDB
 {
-    internal class BasketballCosmos
+    internal class BasketballCosmos : IBasketballRepo
     {
         private static readonly string EndpointUri = "https://localhost:8081";
         private static readonly string PrimaryKey = "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==";
@@ -71,6 +73,36 @@ namespace NBA.Repo.CosmosDB
             parms.ForEach(p => definition.WithParameter(p.Key, p.Value));
 
             return definition;
+        }
+
+        public int RegisterPlay(int gameId, int quarter, int playerId, PlayType type)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int CreateGame(string homeTeamId, string visitorTeamId, DateTime at)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Models.SQL.Play> GetLastPlays(int gameId, int playerId, int quarter, int topRows = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Models.SQL.Game GetGame(int gameId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Models.SQL.Player GetPlayer(int playerId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Models.SQL.Selection GetSelection(int gameId, int playerId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using NBA.Commands;
 using NBA.Interfaces;
 using NBA.Repo;
+using NBA.Repo.CosmosDB;
 using NBA.Repo.EF;
 using NBA.Repo.SQL;
 using Spectre.Console;
@@ -37,6 +38,7 @@ class Program
                 {
                     "sql" => new BasketballSQL(),
                     "ef" => new BasketballEF(),
+                    "cosmos" => new BasketballCosmos(),
                     _ => null
                 };
 
@@ -46,9 +48,7 @@ class Program
                     AnsiConsole.MarkupLine($"[yellow]{repo.ToUpper()} Repository selected.[/]\n");
                 }
                 else
-                {
-                    AnsiConsole.MarkupLine("Cosmos selected.");
-                }
+                    AnsiConsole.MarkupLine("Invalid repository.");
             }
         }
     }
