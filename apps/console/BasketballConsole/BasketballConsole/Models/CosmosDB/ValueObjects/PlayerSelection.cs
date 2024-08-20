@@ -6,8 +6,6 @@ namespace NBA.Models.CosmosDB
     {
         public int PlayerId { get; set; }
         public string PlayerName { get; set; }
-        public string TeamId { get; set; }
-        public string SeasonId { get; set; }
         public int Jersey { get; set; }
     }
 }

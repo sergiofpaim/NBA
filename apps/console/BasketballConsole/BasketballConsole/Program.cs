@@ -20,7 +20,7 @@ class Program
 
     private static void ConfigRepo(List<string> args)
     {
-        AnsiConsole.MarkupLine("[bold]Note:[/] You have to set the repository type using the `-r` or `--repo` options followed by `sql` or `ef`\n");
+        AnsiConsole.MarkupLine("[bold]Note:[/] You have to set the repository type using the `-r` or `--repo` options followed by `sql`, `ef` or 'cosmos'\n");
 
         var repoOption = args
             .FirstOrDefault(a => a.Equals("-r", StringComparison.CurrentCultureIgnoreCase) ||
@@ -47,8 +47,7 @@ class Program
                 }
                 else
                 {
-                    AnsiConsole.MarkupLine("[red]Invalid repo type. Defaulting to SQL.[/]\n");
-                    Basketball.SetRepo(new BasketballSQL());
+                    AnsiConsole.MarkupLine("Cosmos selected.");
                 }
             }
         }
@@ -81,6 +80,15 @@ class Program
 
             list.AddCommand<ListPlayCommand>("play")
               .WithDescription("Lists all plays of a player in a game");
+        });
+
+        // List
+        config.AddBranch<CommandSettings>("select", select =>
+        {
+            select.SetDescription("Select operations");
+
+            select.AddCommand<SelectJsonCommand>("json")
+              .WithDescription("Selects json in CosmosDb");
         });
     }
 }

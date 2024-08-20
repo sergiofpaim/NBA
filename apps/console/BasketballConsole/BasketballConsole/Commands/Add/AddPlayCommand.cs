@@ -2,6 +2,7 @@
 using NBA.Models.SQL;
 using NBA.Models.Type;
 using NBA.Repo;
+using NBA.Repo.EF;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
