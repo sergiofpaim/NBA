@@ -1,0 +1,14 @@
+[
+  {
+    "id": "1",
+    "name": "LeBron James",
+    "bornOn": "1984-12-30T00:00:00",
+    "position": "Forward"
+  },
+  {
+    "id": "2",
+    "name": "Anthony Davis",
+    "bornon": "1993-03-11T00:00:00",
+    "position": "Forward"
+  }
+]

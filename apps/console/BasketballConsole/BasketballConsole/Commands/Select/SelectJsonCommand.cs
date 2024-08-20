@@ -1,4 +1,6 @@
-﻿using NBA.Repo.CosmosDB;
+﻿using NBA.Models.CosmosDB;
+using NBA.Models.Type;
+using NBA.Repo.CosmosDB;
 using Newtonsoft.Json;
 using Spectre.Console.Cli;
 using System.ComponentModel;
@@ -20,6 +22,9 @@ namespace NBA.Commands
 
         public override int Execute(CommandContext context, SelectParms settings)
         {
+            Participation part = new();
+            part.Plays.Insert(0, new() { At = new(2000), Type = PlayType.FreeThrowHit.ToString() });
+
             var player = BasketballCosmos.GetAsync(settings.Id, settings.Name).Result;
 
             if (player is null)

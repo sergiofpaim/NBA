@@ -11,7 +11,7 @@ namespace NBA.Repo.CosmosDB
         private static readonly string EndpointUri = "https://localhost:8081";
         private static readonly string PrimaryKey = "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==";
         private static readonly string DatabaseId = "NBA";
-        private static readonly string ContainerId = "Player";
+        private static readonly string ContainerId = "player";
 
         public static CosmosClient CosmosClient { get; private set; }
         public static Microsoft.Azure.Cosmos.Container Container { get; private set; }
@@ -38,7 +38,7 @@ namespace NBA.Repo.CosmosDB
 
             try
             {
-                var player = await Container.ReadItemAsync<Models.CosmosDB.Player>(id, new(id));
+                var player = await Container.ReadItemAsync<Player>(id, new(id));
 
                 return player;
             }
@@ -47,32 +47,6 @@ namespace NBA.Repo.CosmosDB
                 Console.WriteLine($"Error exporting items: {ex.StatusCode} - {ex.Message}");
                 return null;
             }
-        }
-
-        private static QueryDefinition BuildQuery(string id = null, string name = null)
-        {
-            var where = "";
-            var parms = new List<(string Key, object Value)>();
-
-            if (!string.IsNullOrEmpty(id))
-            {
-                where += " c.id = @Id";
-                parms.Add(("@Id", id));
-            }
-
-            if (!string.IsNullOrEmpty(name))
-            {
-                where += " AND c.name = @Name";
-                parms.Add(("@Name", name));
-            }
-
-            where = string.IsNullOrEmpty(where) ? "" : $"WHERE {where}";
-
-            var definition = new QueryDefinition($"SELECT * FROM c {where}");
-
-            parms.ForEach(p => definition.WithParameter(p.Key, p.Value));
-
-            return definition;
         }
 
         public int RegisterPlay(int gameId, int quarter, int playerId, PlayType type)
@@ -103,6 +77,32 @@ namespace NBA.Repo.CosmosDB
         public Models.SQL.Selection GetSelection(int gameId, int playerId)
         {
             throw new NotImplementedException();
+        }
+
+        private static QueryDefinition BuildQuery(string id = null, string name = null)
+        {
+            var where = "";
+            var parms = new List<(string Key, object Value)>();
+
+            if (!string.IsNullOrEmpty(id))
+            {
+                where += " c.id = @Id";
+                parms.Add(("@Id", id));
+            }
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                where += " AND c.name = @Name";
+                parms.Add(("@Name", name));
+            }
+
+            where = string.IsNullOrEmpty(where) ? "" : $"WHERE {where}";
+
+            var definition = new QueryDefinition($"SELECT * FROM c {where}");
+
+            parms.ForEach(p => definition.WithParameter(p.Key, p.Value));
+
+            return definition;
         }
     }
 }
