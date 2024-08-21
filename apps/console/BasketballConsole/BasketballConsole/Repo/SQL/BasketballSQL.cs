@@ -35,7 +35,7 @@ namespace NBA.Repo.SQL
             return cmd.ExecuteNonQuery();
         }
 
-        int IBasketballRepo.CreateGame(string homeTeamId, string visitorTeamId, DateTime at)
+        public int CreateGame(string homeTeamId, string visitorTeamId, DateTime at)
         {
             using SqlCommand cmd = new("CreateGame", conn);
 
@@ -47,7 +47,7 @@ namespace NBA.Repo.SQL
             return cmd.ExecuteNonQuery();
         }
 
-        List<PlayVM> IBasketballRepo.GetLastPlays(int gameId, int playerId, int quarter, int topRows = 0)
+        public List<PlayVM> GetLastPlays(int gameId, int playerId, int quarter, int topRows = 0)
         {
             List<PlayVM> plays = [];
             string getPlays;
@@ -78,12 +78,12 @@ namespace NBA.Repo.SQL
                     Points = reader.IsDBNull(3) ? null : reader.GetInt32(3),
                     At = reader.IsDBNull(4) ? null : reader.GetTimeSpan(4)
                 };
-                plays.Add(play);
+                plays.Add(PlayVM.FactoryFrom(play));
             }
             return plays;
         }
 
-        public Game GetGame(int gameId)
+        public GameVM GetGame(int gameId)
         {
             string getTime = $"SELECT * FROM Game WHERE Game.Id = {gameId}";
             using SqlCommand getTimeCmd = new(getTime, conn);
@@ -103,7 +103,7 @@ namespace NBA.Repo.SQL
                 return null;
         }
 
-        public Player GetPlayer(int playerId)
+        public PlayerVM GetPlayer(int playerId)
         {
             string getNameCommand = $"SELECT * FROM Player AS p WHERE p.Id = {playerId}";
             using SqlCommand getPlayerCmd = new(getNameCommand, conn);
@@ -125,7 +125,7 @@ namespace NBA.Repo.SQL
                 return null;
         }
 
-        public Selection GetSelection(int gameId, int playerId)
+        public SelectionVM GetSelection(int gameId, int playerId)
         {
             string query = $@"SELECT *
                               FROM Selection AS se
