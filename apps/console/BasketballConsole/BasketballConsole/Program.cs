@@ -16,7 +16,7 @@ class Program
         var app = new CommandApp();
         app.Configure(MyConfigurator);
 
-        return app.Run(args);
+        return app.Ru n(args);
     }
 
     private static void ConfigRepo(List<string> args)

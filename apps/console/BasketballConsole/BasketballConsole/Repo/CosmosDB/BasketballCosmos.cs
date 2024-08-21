@@ -49,36 +49,6 @@ namespace NBA.Repo.CosmosDB
             }
         }
 
-        public int RegisterPlay(int gameId, int quarter, int playerId, PlayType type)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int CreateGame(string homeTeamId, string visitorTeamId, DateTime at)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Models.SQL.Play> GetLastPlays(int gameId, int playerId, int quarter, int topRows = 0)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Models.SQL.Game GetGame(int gameId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Models.SQL.Player GetPlayer(int playerId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Models.SQL.Selection GetSelection(int gameId, int playerId)
-        {
-            throw new NotImplementedException();
-        }
-
         private static QueryDefinition BuildQuery(string id = null, string name = null)
         {
             var where = "";

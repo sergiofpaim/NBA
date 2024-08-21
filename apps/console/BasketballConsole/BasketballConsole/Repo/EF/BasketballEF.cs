@@ -1,6 +1,7 @@
 ﻿using NBA.Interfaces;
 using NBA.Models.SQL;
 using NBA.Models.Type;
+using NBA.ViewModels;
 using System.Data;
 
 namespace NBA.Repo.EF
@@ -91,17 +92,17 @@ namespace NBA.Repo.EF
             return context.SaveChanges();
         }
 
-        public Selection GetSelection(int gameId, int playerId)
+        public SelectionVM GetSelection(int gameId, int playerId)
         {
             var selection = context.Selections
                 .Where(s => s.PlayerId == playerId &&
                             context.Games.Any(g => (g.HomeTeamId == s.TeamId || g.VisitorTeamId == s.TeamId) && g.Id == gameId))
                 .FirstOrDefault();
 
-            return selection;
+            return SelectionVM.FactoryFrom(selection);
         }
 
-        public List<Play> GetLastPlays(int gameId, int playerId, int quarter, int topRows = 0)
+        public List<PlayVM> GetLastPlays(int gameId, int playerId, int quarter, int topRows = 0)
         {
             var plays = context.Plays
                 .Where(p => context.Participations
@@ -114,24 +115,24 @@ namespace NBA.Repo.EF
                 .OrderByDescending(p => p.At);
 
             if (topRows > 0)
-                return [.. plays.Take(topRows)];
+                return [.. plays.Take(topRows).Select(p => PlayVM.FactoryFrom(p))];
 
-            return [.. plays];
+            return [.. plays.Select(p => PlayVM.FactoryFrom(p))];
         }
 
-        public Game GetGame(int gameId)
+        public GameVM GetGame(int gameId)
         {
-            Game a = null;
+            Game g = null;
             var game = context.Games.FirstOrDefault(g => g.Id == gameId);
             if (game is null)
                 throw new InvalidOperationException("Game not found.");
 
-            return game;
+            return GameVM.FactoryFrom(game);
         }
 
-        public Player GetPlayer(int playerId)
+        public PlayerVM GetPlayer(int playerId)
         {
-            return context.Players.Where(p => p.Id == playerId).FirstOrDefault();
+            return PlayerVM.FactoryFrom(context.Players.Where(p => p.Id == playerId).FirstOrDefault());
         }
     }
 }

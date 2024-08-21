@@ -1,6 +1,7 @@
 ﻿using NBA.Interfaces;
 using NBA.Models.SQL;
 using NBA.Models.Type;
+using NBA.ViewModels;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -46,9 +47,9 @@ namespace NBA.Repo.SQL
             return cmd.ExecuteNonQuery();
         }
 
-        List<Play> IBasketballRepo.GetLastPlays(int gameId, int playerId, int quarter, int topRows = 0)
+        List<PlayVM> IBasketballRepo.GetLastPlays(int gameId, int playerId, int quarter, int topRows = 0)
         {
-            List<Play> plays = [];
+            List<PlayVM> plays = [];
             string getPlays;
 
             string topClause = topRows > 0 ? $"TOP {topRows}" : "";

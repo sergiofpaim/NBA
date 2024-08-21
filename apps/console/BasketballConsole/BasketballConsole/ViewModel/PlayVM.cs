@@ -1,0 +1,35 @@
+﻿using NBA.Models.SQL;
+
+namespace NBA.ViewModels;
+
+public class PlayVM
+{
+    public int Id { get; set; }
+
+    public int? ParticipationId { get; set; }
+
+    public string Type { get; set; }
+
+    public int? Points { get; set; }
+
+    public TimeSpan? At { get; set; }
+
+    public void MapTo(Play p)
+    {
+        p.ParticipationId = ParticipationId;
+        p.Type = Type;
+        p.Points = Points;
+        p.At = At;
+    }
+
+    public static PlayVM FactoryFrom(Play p)
+    {
+        return new()
+        {
+            ParticipationId = p.ParticipationId,
+            Type = p.Type,
+            Points = p.Points,
+            At = p.At
+        };
+    }
+}
