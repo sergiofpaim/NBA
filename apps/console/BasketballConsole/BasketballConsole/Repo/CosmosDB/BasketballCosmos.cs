@@ -2,6 +2,7 @@
 using NBA.Interfaces;
 using NBA.Models.CosmosDB;
 using NBA.Models.Type;
+using NBA.ViewModels;
 using System.ComponentModel;
 
 namespace NBA.Repo.CosmosDB
@@ -73,6 +74,36 @@ namespace NBA.Repo.CosmosDB
             parms.ForEach(p => definition.WithParameter(p.Key, p.Value));
 
             return definition;
+        }
+
+        public int RegisterPlay(int gameId, int quarter, int playerId, PlayType type)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int CreateGame(string homeTeamId, string visitorTeamId, DateTime at)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<PlayVM> GetLastPlays(int gameId, int playerId, int quarter, int topRows = 0)
+        {
+            throw new NotImplementedException();
+        }
+
+        public GameVM GetGame(int gameId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PlayerVM GetPlayer(int playerId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public SelectionVM GetSelection(int gameId, int playerId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

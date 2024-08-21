@@ -99,7 +99,7 @@ namespace NBA.Repo.EF
                             context.Games.Any(g => (g.HomeTeamId == s.TeamId || g.VisitorTeamId == s.TeamId) && g.Id == gameId))
                 .FirstOrDefault();
 
-            return SelectionVM.FactoryFrom(selection);
+            return Selection.FactoryFrom(selection);
         }
 
         public List<PlayVM> GetLastPlays(int gameId, int playerId, int quarter, int topRows = 0)
@@ -115,9 +115,9 @@ namespace NBA.Repo.EF
                 .OrderByDescending(p => p.At);
 
             if (topRows > 0)
-                return [.. plays.Take(topRows).Select(p => PlayVM.FactoryFrom(p))];
+                return [.. plays.Take(topRows).Select(p => Play.FactoryFrom(p))];
 
-            return [.. plays.Select(p => PlayVM.FactoryFrom(p))];
+            return [.. plays.Select(p => Play.FactoryFrom(p))];
         }
 
         public GameVM GetGame(int gameId)
@@ -127,12 +127,12 @@ namespace NBA.Repo.EF
             if (game is null)
                 throw new InvalidOperationException("Game not found.");
 
-            return GameVM.FactoryFrom(game);
+            return Game.FactoryFrom(game);
         }
 
         public PlayerVM GetPlayer(int playerId)
         {
-            return PlayerVM.FactoryFrom(context.Players.Where(p => p.Id == playerId).FirstOrDefault());
+            return Player.FactoryFrom(context.Players.Where(p => p.Id == playerId).FirstOrDefault());
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace NBA.Models.SQL;
+﻿using NBA.ViewModels;
+
+namespace NBA.Models.SQL;
 
 public partial class Selection
 {
@@ -17,4 +19,29 @@ public partial class Selection
     public virtual Player Player { get; set; }
 
     public virtual Scalation Scalation { get; set; }
+
+    public void MapTo(SelectionVM s)
+    {
+        s.PlayerId = PlayerId;
+        s.SeasonId = SeasonId;
+        s.TeamId = TeamId;
+        s.Jersey = Jersey;
+        s.Participations = Participations;
+        s.Player = Player;
+        s.Scalation = Scalation;
+    }
+
+    public static SelectionVM FactoryFrom(Selection s)
+    {
+        return new()
+        {
+            PlayerId = s.PlayerId,
+            SeasonId = s.SeasonId,
+            TeamId = s.TeamId,
+            Jersey = s.Jersey,
+            Participations = s.Participations,
+            Player = s.Player,
+            Scalation = s.Scalation
+        };
+    }
 }

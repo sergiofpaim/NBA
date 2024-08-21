@@ -78,7 +78,7 @@ namespace NBA.Repo.SQL
                     Points = reader.IsDBNull(3) ? null : reader.GetInt32(3),
                     At = reader.IsDBNull(4) ? null : reader.GetTimeSpan(4)
                 };
-                plays.Add(PlayVM.FactoryFrom(play));
+                plays.Add(Play.FactoryFrom(play));
             }
             return plays;
         }
