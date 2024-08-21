@@ -50,32 +50,6 @@ namespace NBA.Repo.CosmosDB
             }
         }
 
-        private static QueryDefinition BuildQuery(string id = null, string name = null)
-        {
-            var where = "";
-            var parms = new List<(string Key, object Value)>();
-
-            if (!string.IsNullOrEmpty(id))
-            {
-                where += " c.id = @Id";
-                parms.Add(("@Id", id));
-            }
-
-            if (!string.IsNullOrEmpty(name))
-            {
-                where += " AND c.name = @Name";
-                parms.Add(("@Name", name));
-            }
-
-            where = string.IsNullOrEmpty(where) ? "" : $"WHERE {where}";
-
-            var definition = new QueryDefinition($"SELECT * FROM c {where}");
-
-            parms.ForEach(p => definition.WithParameter(p.Key, p.Value));
-
-            return definition;
-        }
-
         public int RegisterPlay(int gameId, int quarter, int playerId, PlayType type)
         {
             throw new NotImplementedException();
