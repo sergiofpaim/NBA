@@ -19,4 +19,17 @@ public class GameVM
     public virtual Scalation Scalation { get; set; }
 
     public virtual Scalation ScalationNavigation { get; set; }
+
+    //Cosmos
+
+    public int IdCosmos { get; set; }
+
+    public string HomeTeamName { get; set; }
+
+    public List<int> HomePlayerIds { get; set; } = [];
+
+    public string VisitorTeamName { get; set; }
+
+    public List<int> VisitorPlayerIds { get; set; } = [];
+
 }

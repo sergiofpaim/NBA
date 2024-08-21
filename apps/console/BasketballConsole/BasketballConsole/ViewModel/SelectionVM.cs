@@ -19,4 +19,10 @@ public class SelectionVM
     public virtual Player Player { get; set; }
 
     public virtual Scalation Scalation { get; set; }
+
+    //Cosmos
+
+    public int IdCosmos { get; set; }
+
+    public string PlayerName { get; set; }
 }

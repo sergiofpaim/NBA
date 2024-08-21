@@ -13,4 +13,10 @@ public class PlayVM
     public int? Points { get; set; }
 
     public TimeSpan? At { get; set; }
+
+    //Cosmos
+
+    public int IdCosmos { get; set; }
+
+    public int Quarter { get; set; }
 }

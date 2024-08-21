@@ -2,9 +2,13 @@
 {
     internal class Player
     {
+        
         public string Id { get; set; }
+        
         public string Name { get; set; }
-        public DateTime BornOn { get; set; }
+        
+        public DateOnly BornOn { get; set; }
+        
         public string Position { get; set; }
     }
 }
