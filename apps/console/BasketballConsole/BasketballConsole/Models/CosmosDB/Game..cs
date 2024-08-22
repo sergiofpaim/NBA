@@ -11,13 +11,13 @@
         
         public string HomeTeamName { get; set; }
         
-        public List<int> HomePlayerIds { get; set; } = [];
+        public List<string> HomePlayerIds { get; set; } = [];
         
         public string VisitorTeamId { get; set; }
         
         public string VisitorTeamName { get; set; }
         
-        public List<int> VisitorPlayerIds { get; set; } = [];
+        public List<string> VisitorPlayerIds { get; set; } = [];
         
         public DateTime At { get; set; }
     }

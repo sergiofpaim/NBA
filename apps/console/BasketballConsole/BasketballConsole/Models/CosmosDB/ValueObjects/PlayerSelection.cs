@@ -5,7 +5,7 @@ namespace NBA.Models.CosmosDB
     public class PlayerSelection
     {
         
-        public int PlayerId { get; set; }
+        public string PlayerId { get; set; }
         
         public string PlayerName { get; set; }
         

@@ -18,7 +18,7 @@ namespace TestCosmos.Commands
 
         public override int Execute(CommandContext context, Settings settings)
         {
-            var playerIds = string.Join("\n", BasketballCosmos.AddJsonAsync(settings.FilePath).GetAwaiter().GetResult().Select(p => p.Id));
+            var playerIds = string.Join("\n", BasketballCosmos.CreatePlayerAsync(settings.FilePath).GetAwaiter().GetResult().Select(p => p.Id));
 
             if (playerIds is null)
                 AnsiConsole.MarkupLine($"[Red] Failed to add player to the database.[/]");
