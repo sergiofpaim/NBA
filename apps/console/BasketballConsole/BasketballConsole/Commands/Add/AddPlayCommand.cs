@@ -3,6 +3,7 @@ using NBA.Models.SQL;
 using NBA.Models.Type;
 using NBA.Repo;
 using NBA.Repo.EF;
+using NBA.ViewModels;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
@@ -136,7 +137,7 @@ public class AddPlayCommand : Command<AddPlayCommand.PlayParms>
     private void ShowLastPlays(int gameId, int playerId, int quarter)
     {
         IBasketballRepo repo = new BasketballEF();
-        List<Play> plays = repo.GetLastPlays(gameId, playerId, quarter, 5);
+        List<PlayVM> plays = repo.GetLastPlays(gameId, playerId, quarter, 5);
 
         var tableOptions = new Table();
         tableOptions.Title = new TableTitle("\n\nLast 5 Plays");

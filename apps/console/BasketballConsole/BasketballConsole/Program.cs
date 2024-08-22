@@ -1,4 +1,5 @@
 ﻿using NBA.Commands;
+using NBA.Commands.Select.Json;
 using NBA.Interfaces;
 using NBA.Repo;
 using NBA.Repo.CosmosDB;
@@ -6,6 +7,7 @@ using NBA.Repo.EF;
 using NBA.Repo.SQL;
 using Spectre.Console;
 using Spectre.Console.Cli;
+using TestCosmos.Commands;
 
 class Program
 {
@@ -83,12 +85,15 @@ class Program
         });
 
         // List
-        config.AddBranch<CommandSettings>("select", select =>
+        config.AddBranch<CommandSettings>("json", json =>
         {
-            select.SetDescription("Select operations");
+            json.SetDescription("Manipulates json");
 
-            select.AddCommand<SelectJsonCommand>("json")
-              .WithDescription("Selects json in CosmosDb");
+            json.AddCommand<ExportCommand>("export")
+              .WithDescription("Export JSON in CosmosDb");
+
+            json.AddCommand<ImportCommand>("import")
+                   .WithDescription("Import JSON string to Cosmos DB");
         });
     }
 }

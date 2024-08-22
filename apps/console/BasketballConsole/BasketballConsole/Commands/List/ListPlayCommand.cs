@@ -1,5 +1,6 @@
 ﻿using NBA.Models.SQL;
 using NBA.Repo;
+using NBA.ViewModels;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
@@ -36,7 +37,7 @@ public class ListPlayCommand : Command<ListPlayCommand.GameParms>
 
     private void ShowAllPlays(int gameId, int playerId, int quarter)
     {
-        List<Play> plays = Basketball.Repo.GetLastPlays(gameId, playerId, quarter);
+        List<PlayVM> plays = Basketball.Repo.GetLastPlays(gameId, playerId, quarter);
 
         Table tableOptions = new() 
         {
