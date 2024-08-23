@@ -14,7 +14,6 @@ namespace NBA.Repo.CosmosDB
         private static readonly string EndpointUri = "https://localhost:8081";
         private static readonly string PrimaryKey = "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==";
         private static readonly string DatabaseId = "NBA";
-        private static readonly string ContainerId = "Player";
 
         public static CosmosClient CosmosClient { get; private set; }
         public static Microsoft.Azure.Cosmos.Container Container { get; private set; }
@@ -28,10 +27,9 @@ namespace NBA.Repo.CosmosDB
                     PropertyNamingPolicy = CosmosPropertyNamingPolicy.CamelCase
                 }
             });
-            Container = CosmosClient.GetContainer(DatabaseId, ContainerId);
         }
 
-        internal static async Task<Player> GetAsync(string id)
+        internal static Player Get(string id)
         {
             if (Container == null)
             {
@@ -41,30 +39,26 @@ namespace NBA.Repo.CosmosDB
 
             try
             {
-                var player = await Container.ReadItemAsync<Player>(id, new(id));
-
-                return player;
+                var response = Container.ReadItemAsync<Player>(id, new PartitionKey(id)).GetAwaiter().GetResult();
+                return response.Resource;
             }
             catch (CosmosException ex)
             {
-                Console.WriteLine($"Error exporting items: {ex.StatusCode} - {ex.Message}");
+                Console.WriteLine($"Error fetching item: {ex.StatusCode} - {ex.Message}");
                 return null;
             }
         }
 
-        internal static async Task<List<Player>> CreatePlayerAsync(string filePath)
+        internal static List<Player> CreatePlayer(string filePath)
         {
-            string jsonContent = await File.ReadAllTextAsync(filePath);
-
+            Container = CosmosClient.GetContainer(DatabaseId, "Player");
+            string jsonContent = File.ReadAllText(filePath);
             var jsonArray = JArray.Parse(jsonContent);
             var players = jsonArray.ToObject<List<Player>>();
 
             foreach (var player in players)
             {
-                Player created = await CreateAsync(player);
-
-                if (created != null)
-                    players = null;
+                var created = Create(player);
             }
 
             return players;
@@ -77,57 +71,77 @@ namespace NBA.Repo.CosmosDB
 
         public int CreateGame(string homeTeamId, string visitorTeamId, DateTime at)
         {
+            var seasonId = GetSeason();
+            var homeTeam = seasonId.Teams.FirstOrDefault(t => t.TeamId == homeTeamId);
+            var visitorTeam = seasonId.Teams.FirstOrDefault(t => t.TeamId == visitorTeamId);
+
+            if (homeTeam == null || visitorTeam == null)
+            {
+                throw new Exception("Team does not participate in the Season");
+            }
+
             var game = new Game
             {
-                Id = GetMaxGame().Id + 1,
-                SeasonId = GetMaxSeason().Id + 1,
+                Id = (int.Parse(GetLastGame().Id) + 1).ToString(),
+                SeasonId = seasonId.Id,
                 HomeTeamId = homeTeamId,
-                HomeTeamName = GetMaxSeason().Teams.FirstOrDefault(t => t.TeamId == homeTeamId).TeamName,
-                HomePlayerIds = GetMaxSeason().Teams.FirstOrDefault(t => t.TeamId == homeTeamId).Players.Select(p => p.PlayerId).ToList(),
+                HomeTeamName = homeTeam.TeamName,
+                HomePlayerIds = homeTeam.Players.Select(p => p.PlayerId).ToList(),
                 VisitorTeamId = visitorTeamId,
-                VisitorTeamName = GetMaxSeason().Teams.FirstOrDefault(t => t.TeamId == visitorTeamId).TeamName,
-                VisitorPlayerIds = GetMaxSeason().Teams.FirstOrDefault(t => t.TeamId == homeTeamId).Players.Select(p => p.PlayerId).ToList(),
+                VisitorTeamName = visitorTeam.TeamName,
+                VisitorPlayerIds = visitorTeam.Players.Select(p => p.PlayerId).ToList(),
                 At = at
             };
 
-            if (Container.CreateItemAsync(game, new PartitionKey(game.Id)).GetAwaiter().GetResult().StatusCode == HttpStatusCode.Created)
-                return 1; 
-            
-            else
-                return 0; 
+            Container = CosmosClient.GetContainer(DatabaseId, "Game");
+            var result = Container.CreateItemAsync(game, new PartitionKey(game.Id)).GetAwaiter().GetResult();
+
+            return result.StatusCode == HttpStatusCode.Created ? 1 : 0;
         }
 
-        private Season GetMaxSeason()
+        private Season GetSeason()
         {
+            Container = CosmosClient.GetContainer(DatabaseId, "Season");
             var query = Container.GetItemQueryIterator<Season>("SELECT * FROM c");
-            List<Season> seasons = [];
+            var seasons = new List<Season>();
 
             while (query.HasMoreResults)
             {
                 var response = query.ReadNextAsync().GetAwaiter().GetResult();
-                seasons.AddRange(response.Resource);
+                seasons.AddRange(response);
             }
 
             return seasons
-                   .OrderByDescending(s => s.Id) 
+                   .OrderByDescending(s => s.Id)
                    .FirstOrDefault();
         }
 
-
-        private Game GetMaxGame()
+        private Game GetLastGame()
         {
+            Container = CosmosClient.GetContainer(DatabaseId, "Game");
             var query = Container.GetItemQueryIterator<Game>("SELECT * FROM c");
-            List<Game> games = [];
+            var games = new List<Game>();
 
             while (query.HasMoreResults)
             {
                 var response = query.ReadNextAsync().GetAwaiter().GetResult();
-                games.AddRange(response.Resource);
+                games.AddRange(response);
             }
 
             return games
                    .OrderByDescending(g => g.Id)
-                   .FirstOrDefault();
+                   .FirstOrDefault() ?? new Game
+                   {
+                       Id = "0",
+                       SeasonId = "0",
+                       HomeTeamId = "0",
+                       HomeTeamName = "Unknown",
+                       HomePlayerIds = new List<string>(),
+                       VisitorTeamId = "0",
+                       VisitorTeamName = "Unknown",
+                       VisitorPlayerIds = new List<string>(),
+                       At = DateTime.MinValue
+                   };
         }
 
         public List<PlayVM> GetLastPlays(int gameId, int playerId, int quarter, int topRows = 0)
@@ -150,9 +164,10 @@ namespace NBA.Repo.CosmosDB
             throw new NotImplementedException();
         }
 
-        internal static async Task<Player> CreateAsync(Player player)
+        internal static Player Create(Player player)
         {
-            return await Container.CreateItemAsync(player, new PartitionKey(player.Id));
+            var response = Container.CreateItemAsync(player, new PartitionKey(player.Id)).GetAwaiter().GetResult();
+            return response;
         }
     }
 }

@@ -18,13 +18,13 @@ namespace TestCosmos.Commands
 
         public override int Execute(CommandContext context, Settings settings)
         {
-            var playerIds = string.Join("\n", BasketballCosmos.CreatePlayerAsync(settings.FilePath).GetAwaiter().GetResult().Select(p => p.Id));
+            //var playerIds = string.Join("\n", BasketballCosmos.CreatePlayer(settings.FilePath).GetAwaiter().GetResult().Select(p => p.Id));
 
-            if (playerIds is null)
-                AnsiConsole.MarkupLine($"[Red] Failed to add player to the database.[/]");
+            //if (playerIds is null)
+            //    AnsiConsole.MarkupLine($"[Red] Failed to add player to the database.[/]");
 
-            else
-                AnsiConsole.MarkupLine($"[green]Player of id:\n\n{playerIds}\n\nAdded to the database.[/]");
+            //else
+            //    AnsiConsole.MarkupLine($"[green]Player of id:\n\n{playerIds}\n\nAdded to the database.[/]");
 
             return 0;
         }

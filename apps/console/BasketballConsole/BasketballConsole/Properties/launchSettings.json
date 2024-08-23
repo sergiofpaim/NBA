@@ -2,10 +2,10 @@
   "profiles": {
     "NBA": {
       "commandName": "Project",
-      "commandLineArgs": "json import -f C:\\Users\\sergi\\source\\repos\\sergiofpaim\\NBA\\apps\\console\\BasketballConsole\\BasketballConsole\\Seed\\Player.json -r cosmos"
+      //"commandLineArgs": "json import -f C:\\Users\\sergi\\source\\repos\\sergiofpaim\\NBA\\apps\\console\\BasketballConsole\\BasketballConsole\\Seed\\Player.json -r cosmos"
       //"commandLineArgs": "list play -g 31 -q 1 -p 131 -r sql"
       //"commandLineArgs": "add play -g 31 -q 1 -p 131 -r sql"
-      //"commandLineArgs": "add game -o LAL -v BOS -a 2022-08-01T19:30:00 -r sql"
+      "commandLineArgs": "add game -o LAL -v GSW -a 2022-08-01T19:30:00 -r cosmos"
     }
   }
 }

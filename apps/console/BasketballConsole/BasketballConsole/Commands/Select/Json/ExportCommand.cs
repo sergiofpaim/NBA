@@ -19,15 +19,15 @@ namespace NBA.Commands.Select.Json
 
         public override int Execute(CommandContext context, SelectParms settings)
         {
-            var player = BasketballCosmos.GetAsync(settings.Id).Result;
+            //var player = BasketballCosmos.Get(settings.Id).Result;
 
-            if (player is null)
-                AnsiConsole.MarkupLine($"[Red] No items found.[/]");
-            else
-            {
-                string jsonString = JsonConvert.SerializeObject(player, Formatting.Indented);
-                AnsiConsole.MarkupLine(jsonString);
-            }
+            //if (player is null)
+            //    AnsiConsole.MarkupLine($"[Red] No items found.[/]");
+            //else
+            //{
+            //    string jsonString = JsonConvert.SerializeObject(player, Formatting.Indented);
+            //    AnsiConsole.MarkupLine(jsonString);
+            //}
             return 0;
         }
     }

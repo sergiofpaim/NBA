@@ -2,7 +2,6 @@
 {
     public class GamePlay
     {
-        
         public int Quarter { get; set; }
         
         public string Type { get; set; }
