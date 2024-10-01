@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace NBA.Models;
+namespace NBA.Repo.Tables;
 
 public partial class ApplicationDbContext : DbContext
 {

@@ -1,16 +1,17 @@
 ﻿using NBA.Interfaces;
 using NBA.Models;
+using NBA.Models.ValueObjects;
 using System.Data;
 
 namespace NBA.Repo
 {
     public class BasketballEF : IBasketballRepo
     {
-        public ApplicationDbContext context;
+        public Tables.ApplicationDbContext context;
 
         public BasketballEF()
         {
-            context = new ApplicationDbContext();
+            context = new Tables.ApplicationDbContext();
         }
 
         public int RegisterPlay(int gameId, int quarter, int playerId, PlayType type)
@@ -50,7 +51,7 @@ namespace NBA.Repo
 
             if (participation == null)
             {
-                var newParticipation = new Participation
+                var newParticipation = new Tables.Participation
                 {
                     Id = context.Participations.Max(g => g.Id) + 1,
                     SelectionId = selection?.Id ?? 0,
@@ -63,7 +64,7 @@ namespace NBA.Repo
                 context.SaveChanges();
             }
 
-            var newPlay = new Play
+            var newPlay = new Tables.Play
             {
                 Id = context.Plays.Max(g => g.Id) + 1,
                 ParticipationId = participation.Id,
@@ -75,9 +76,9 @@ namespace NBA.Repo
             return context.SaveChanges();
         }
 
-        public int CreateGame(string? homeTeamId, string? visitorTeamId, DateTime at)
+        public int CreateGame(string homeTeamId, string visitorTeamId, DateTime at)
         {
-            var game = new Game
+            var game = new Tables.Game
             {
                 Id = context.Games.Max(g => g.Id) + 1,
                 SeasonId = context.Seasons.OrderByDescending(s => s.Id).Select(s => s.Id).FirstOrDefault(),
@@ -90,19 +91,19 @@ namespace NBA.Repo
             return context.SaveChanges();
         }
 
-        public Selection? GetSelection(int gameId, int playerId)
+        public PlayerSelection GetSelection(int gameId, int playerId)
         {
             var selection = context.Selections
                 .Where(s => s.PlayerId == playerId &&
                             context.Games.Any(g => (g.HomeTeamId == s.TeamId || g.VisitorTeamId == s.TeamId) && g.Id == gameId))
                 .FirstOrDefault();
 
-            return selection;
+            return PlayerSelection.FactoryFrom(selection, context.Players.Where(p => p.Id == playerId).Select(p => p.Name).FirstOrDefault());
         }
 
-        public List<Play> GetLastPlays(int gameId, int playerId, int quarter, int topRows = 0)
+        public List<GamePlay> GetLastPlays(int gameId, int playerId, int quarter, int topRows = 0)
         {
-            var plays = context.Plays
+            var playsTable = context.Plays
                 .Where(p => context.Participations
                   .Any(pa => pa.Id == p.ParticipationId
                        && pa.GameId == gameId
@@ -112,25 +113,44 @@ namespace NBA.Repo
                                && s.Id == pa.SelectionId)))
                 .OrderByDescending(p => p.At);
 
-            if (topRows > 0)
-                return [.. plays.Take(topRows)];
+            List<GamePlay> gamePlays = [];
 
-            return [.. plays];
+            if (topRows > 0)
+                foreach (var playTable in playsTable.Take(topRows))
+                    gamePlays.Add(GamePlay.FactorFrom(playTable, quarter));
+
+            return gamePlays;
         }
 
         public Game GetGame(int gameId)
         {
-            Game a = null;
             var game = context.Games.FirstOrDefault(g => g.Id == gameId);
             if (game is null)
                 throw new InvalidOperationException("Game not found.");
 
-            return game;
+            var homeTeam = context.Teams.FirstOrDefault(t => t.Id == game.HomeTeamId);
+            var visitorTeam = context.Teams.FirstOrDefault(t => t.Id == game.VisitorTeamId);
+
+            var homeTeamPlayers = context.Selections
+                .Where(s => s.TeamId == game.HomeTeamId && s.SeasonId == game.SeasonId)
+                .Select(s => s.PlayerId)
+                .ToList();
+
+            var visitorTeamPlayers = context.Selections
+                .Where(s => s.TeamId == game.VisitorTeamId && s.SeasonId == game.SeasonId)
+                .Select(s => s.PlayerId)
+                .ToList();
+
+            var homeTeamPlayerIds = homeTeamPlayers.Select(id => id.ToString()).ToList();
+            var visitorTeamPlayerIds = visitorTeamPlayers.Select(id => id.ToString()).ToList();
+
+            return Game.FactoryFrom(game, homeTeam, visitorTeam, homeTeamPlayerIds, visitorTeamPlayerIds);
         }
+
 
         public Player GetPlayer(int playerId)
         {
-            return context.Players.Where(p => p.Id == playerId).FirstOrDefault();
+            return Player.FactoryFrom(context.Players.Where(p => p.Id == playerId).FirstOrDefault());
         }
     }
 }

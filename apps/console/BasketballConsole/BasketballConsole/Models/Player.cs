@@ -1,14 +1,24 @@
-﻿namespace NBA.Models;
-
-public partial class Player
+﻿namespace NBA.Models
 {
-    public int Id { get; set; }
+    public class Player
+    {
+        public string Id { get; set; }
 
-    public string? Name { get; set; }
+        public string Name { get; set; }
 
-    public DateOnly? BornOn { get; set; }
+        public DateOnly? BornOn { get; set; }
 
-    public string? Position { get; set; }
+        public string Position { get; set; }
 
-    public virtual ICollection<Selection> Selections { get; set; } = new List<Selection>();
+        internal static Player FactoryFrom(Repo.Tables.Player player)
+        {
+            return new()
+            {
+                Id = player.Id.ToString(),
+                Name = player.Name,
+                BornOn = player.BornOn,
+                Position = player.Position,
+            };
+        }
+    }
 }

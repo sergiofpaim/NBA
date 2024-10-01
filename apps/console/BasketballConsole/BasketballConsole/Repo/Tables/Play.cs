@@ -1,0 +1,14 @@
+﻿namespace NBA.Repo.Tables;
+
+public partial class Play
+{
+    public int Id { get; set; }
+
+    public int ParticipationId { get; set; }
+
+    public string Type { get; set; }
+
+    public int Points { get; set; }
+
+    public TimeSpan? At { get; set; }
+}

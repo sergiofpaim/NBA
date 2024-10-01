@@ -1,18 +1,19 @@
-﻿namespace NBA.Models;
+﻿using NBA.Models.ValueObjects;
 
-public partial class Participation
+namespace NBA.Models
 {
-    public int Id { get; set; }
+    public class Participation
+    {
+        public string Id { get; set; }
 
-    public int SelectionId { get; set; }
+        public string GameId { get; set; }
 
-    public int GameId { get; set; }
+        public int PlayerId { get; set; }
 
-    public int Quarter { get; set; }
+        public string PlayerName { get; set; }
 
-    public int? Points { get; set; }
+        public string TeamName { get; set; }
 
-    public virtual Game Game { get; set; } = null!;
-
-    public virtual Selection Selection { get; set; } = null!;
+        public List<GamePlay> Plays { get; set; } = [];
+    }
 }

@@ -1,8 +1,11 @@
-﻿namespace NBA.Models;
+﻿using NBA.Models.ValueObjects;
 
-public partial class Season
+namespace NBA.Models
 {
-    public string Id { get; set; } = null!;
+    public class Season
+    {
+        public string Id { get; set; }
 
-    public virtual ICollection<Scalation> Scalations { get; set; } = new List<Scalation>();
+        public List<TeamScalation> Teams { get; set; } = [];
+    }
 }
