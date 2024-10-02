@@ -26,33 +26,35 @@ public class ListPlayCommand : Command<ListPlayCommand.GameParms>
     }
     public override int Execute(CommandContext context, GameParms settings)
     {
-        //var selection = Basketball.Repo.GetSelection(settings.GameId, settings.PlayerId);
-        //if (selection is null)
-        //    throw new Exception("Player does not participate in the team for the season");
+        var game = Basketball.Repo.GetGame(settings.GameId);
+        var participation = Basketball.Repo.GetParticipation(settings.GameId, settings.PlayerId);
 
-        //ShowAllPlays(settings.GameId, settings.PlayerId, settings.Quarter);
+        if (!game.HomePlayerIds.Contains(settings.PlayerId.ToString()) && !game.VisitorPlayerIds.Contains(settings.PlayerId.ToString()))
+            throw new Exception("Player does not participate in the team for the season");
+        else
+            ShowAllPlays(participation, game);
 
         return 0;
     }
 
-    private void ShowAllPlays(int gameId, int playerId, int quarter)
+    private void ShowAllPlays(Participation participation, Game game)
     {
-        //List<GamePlay> plays = Basketball.Repo.GetLastPlays(gameId, playerId, quarter);
+        List<GamePlay> plays = participation.Plays.OrderByDescending(p => p.At).ToList();
 
-        //Table tableOptions = new() 
-        //{
-        //    Title = new TableTitle($"\n\n{Basketball.Repo.GetPlayer(playerId).Name}'s plays in the" +
-        //                                    $" '{Basketball.Repo.GetGame(gameId).HomeTeamId} vs" +
-        //                                    $" {Basketball.Repo.GetGame(gameId).VisitorTeamId}' game" +
-        //                                    $" on: {Basketball.Repo.GetGame(gameId).At}")
-        //};
-        //tableOptions.AddColumn("Points");
-        //tableOptions.AddColumn("Type");
-        //tableOptions.AddColumn("At");
+        Table tableOptions = new()
+        {
+            Title = new TableTitle($"\n\n{participation.PlayerName}'s plays in the" +
+                                            $" '{game.HomeTeamName} vs" +
+                                            $" {game.VisitorTeamName}' game" +
+                                            $" on: {game.At}")
+        };
+        tableOptions.AddColumn("Points");
+        tableOptions.AddColumn("Type");
+        tableOptions.AddColumn("At");
 
-        //foreach (var play in plays)
-        //    tableOptions.AddRow($"{play.Points}", $"{play.Type}", $"{play.At}");
+        foreach (var play in plays)
+            tableOptions.AddRow($"{play.Points}", $"{play.Type}", $"{play.At}");
 
-        //AnsiConsole.Write(tableOptions);
+        AnsiConsole.Write(tableOptions);
     }
 }

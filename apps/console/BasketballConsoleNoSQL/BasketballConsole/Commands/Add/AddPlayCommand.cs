@@ -156,7 +156,9 @@ public class AddPlayCommand : Command<AddPlayCommand.PlayParms>
 
     private void ShowLastPlays(Participation participation, string gameId, string playerId, int quarter)
     {
-        var plays = GetLastPlays(participation, 5);
+        var plays = participation.Plays.OrderByDescending(p => p.At)
+                                       .Take(5)
+                                       .ToList();
 
         var tableOptions = new Table();
         tableOptions.Title = new TableTitle("\n\nLast 5 Plays");
@@ -168,18 +170,5 @@ public class AddPlayCommand : Command<AddPlayCommand.PlayParms>
             tableOptions.AddRow($"{play.Points}", $"{play.Type}", $"{play.At}");
 
         AnsiConsole.Write(tableOptions);
-    }
-
-    private List<GamePlay> GetLastPlays(Participation participation, int topRows = 0)
-    {
-        if (topRows <= 0 || topRows > participation.Plays.Count)
-        {
-            return participation.Plays.OrderByDescending(p => p.At).ToList();
-        }
-
-        return participation.Plays
-            .OrderByDescending(p => p.At)
-            .Take(topRows)
-            .ToList();
     }
 }
