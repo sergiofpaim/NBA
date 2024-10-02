@@ -8,8 +8,9 @@ namespace NBA.Interfaces
         bool Update(Participation participation);
         Task<bool> CreateGame(Game game);
         Season GetLastSeason();
-        Game GetGame(int gameId);
+        Game GetGame(string gameId);
         Participation GetParticipation(string gameId, string playerId); 
-        Player GetPlayer(int playerId);
+        Player GetPlayer(string playerId);
+        string GetTeam(string playerId, string gameId);
     }
 }

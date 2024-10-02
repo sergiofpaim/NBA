@@ -25,6 +25,22 @@ namespace NBA.Repo
             });
         }
 
+        public bool Update(Participation participation)
+        {
+            Container = CosmosClient.GetContainer(DatabaseId, "Participation");
+
+            try
+            {
+                Container.UpsertItemAsync(participation, new PartitionKey(participation.Id)).GetAwaiter().GetResult();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating participation: {ex.Message}");
+                return false;
+            }
+        }
+
         public async Task<bool> CreateGame(Game game)
         {
             Container = CosmosClient.GetContainer(DatabaseId, "Game");
@@ -41,24 +57,71 @@ namespace NBA.Repo
             }
         }
 
-        public Game GetGame(int gameId)
+        public Game GetGame(string gameId)
         {
-            throw new NotImplementedException();
+            Container = CosmosClient.GetContainer(DatabaseId, "Game");
+
+            var query = Container.GetItemLinqQueryable<Game>()
+                                 .Where(p => p.Id == gameId);
+
+            var iterator = query.ToFeedIterator();
+
+            var response = iterator.ReadNextAsync().GetAwaiter().GetResult();
+
+            return response.FirstOrDefault();
         }
 
         public Participation GetParticipation(string gameId, string playerId)
         {
-            throw new NotImplementedException();
+            Container = CosmosClient.GetContainer(DatabaseId, "Participation");
+
+            var query = Container.GetItemLinqQueryable<Participation>()
+                                 .Where(p => p.Id == playerId);
+
+            var iterator = query.ToFeedIterator();
+
+            var response = iterator.ReadNextAsync().GetAwaiter().GetResult();
+
+            return response.FirstOrDefault();
         }
 
-        public Player GetPlayer(int playerId)
+        public Player GetPlayer(string playerId)
         {
-            throw new NotImplementedException();
+            Container = CosmosClient.GetContainer(DatabaseId, "Player");
+
+            var query = Container.GetItemLinqQueryable<Player>()
+                                 .Where(p => p.Id == playerId);
+
+            var iterator = query.ToFeedIterator();
+
+            var response = iterator.ReadNextAsync().GetAwaiter().GetResult();
+
+            return response.FirstOrDefault();
         }
 
-        public bool Update(Participation participation)
+        public string GetTeam(string playerId, string gameId)
         {
-            throw new NotImplementedException();
+            Container = CosmosClient.GetContainer(DatabaseId, "Game");
+
+            var query = Container.GetItemLinqQueryable<Game>()
+                .Where(g => g.Id == gameId &&
+                            (g.HomePlayerIds.Contains(playerId) || g.VisitorPlayerIds.Contains(playerId)))
+                .Select(g => new
+                {
+                    IsHomePlayer = g.HomePlayerIds.Contains(playerId),
+                    TeamName = g.HomePlayerIds.Contains(playerId) ? g.HomeTeamName : g.VisitorTeamName
+                });
+
+            var iterator = query.ToFeedIterator();
+
+            var response = iterator.ReadNextAsync().GetAwaiter().GetResult();
+
+            if (response.Count > 0)
+            {
+                return response.First().TeamName;
+            }
+
+            return null;
         }
 
         public Season GetLastSeason()

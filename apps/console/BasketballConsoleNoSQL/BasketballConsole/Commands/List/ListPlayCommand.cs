@@ -15,14 +15,14 @@ public class ListPlayCommand : Command<ListPlayCommand.GameParms>
     {
         [CommandOption("-g|--game <GAMEID>")]
         [Description("The game Id")]
-        public int GameId { get; set; }
+        public string GameId { get; set; }
         [CommandOption("-q|--quarter <QUARTER>")]
         [Description("The quarter of the play")]
         public int Quarter { get; set; }
 
         [CommandOption("-p|--player <PLAYERID>")]
         [Description("The id of the player")]
-        public int PlayerId { get; set; }
+        public string PlayerId { get; set; }
     }
     public override int Execute(CommandContext context, GameParms settings)
     {

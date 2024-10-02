@@ -1,10 +1,12 @@
 ﻿using NBA.Interfaces;
 using NBA.Models;
+using NBA.Models.ValueObjects;
 using NBA.Repo;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
 using System.Data;
+using System.Linq;
 
 namespace NBA.Commands;
 
@@ -16,134 +18,168 @@ public class AddPlayCommand : Command<AddPlayCommand.PlayParms>
     {
         [CommandOption("-g|--game <GAMEID>")]
         [Description("The game Id")]
-        public int GameId { get; set; }
+        public string GameId { get; set; }
         [CommandOption("-q|--quarter <QUARTER>")]
         [Description("The quarter of the play")]
         public int Quarter { get; set; }
 
         [CommandOption("-p|--player <PLAYERID>")]
         [Description("The id of the player")]
-        public int PlayerId { get; set; }
+        public string PlayerId { get; set; }
     }
 
     public override int Execute(CommandContext context, PlayParms settings)
     {
-        //var selection = Basketball.Repo.GetSelection(settings.GameId, settings.PlayerId);
-        //if (selection is null)
-        //    throw new Exception("Player does not participate in the team for the season");
+        int points = 0;
 
-        //ShowData(settings.GameId, settings.Quarter, settings.PlayerId);
+        var game = Basketball.Repo.GetGame(settings.GameId);
+        var teamName = Basketball.Repo.GetTeam(settings.PlayerId, settings.GameId);
+        var player = Basketball.Repo.GetPlayer(settings.PlayerId);
+        var participation = Basketball.Repo.GetParticipation(settings.GameId, settings.PlayerId);
 
-        //while (true)
-        //{
-        //    AnsiConsole.MarkupLine("\nType the letter of the play (or h for help) and press enter:");
+        if (!game.HomePlayerIds.Contains(settings.PlayerId.ToString()) && !game.VisitorPlayerIds.Contains(settings.PlayerId.ToString()))
+            throw new Exception("Player does not participate in the team for the season");
 
-        //    PlayType? type = null;
-        //    string choice = Console.ReadLine()?.ToUpper() ?? "";
+        ShowData(settings.GameId, settings.Quarter, settings.PlayerId);
 
-        //    switch (choice)
-        //    {
-        //        case "1":
-        //            type = PlayType.FreeThrowHit;
-        //            break;
-        //        case "2":
-        //            type = PlayType.TwoPointerHit;
-        //            break;
-        //        case "3":
-        //            type = PlayType.ThreePointerHit;
-        //            break;
-        //        case "Q":
-        //            type = PlayType.FreeThrowMiss;
-        //            break;
-        //        case "W":
-        //            type = PlayType.TwoPointerMiss;
-        //            break;
-        //        case "E":
-        //            type = PlayType.ThreePointerMiss;
-        //            break;
-        //        case "A":
-        //            type = PlayType.Assist;
-        //            break;
-        //        case "R":
-        //            type = PlayType.Rebound;
-        //            break;
-        //        case "T":
-        //            type = PlayType.Turnover;
-        //            break;
-        //        case "B":
-        //            type = PlayType.Block;
-        //            break;
-        //        case "F":
-        //            type = PlayType.Foul;
-        //            break;
-        //        case "H":
-        //            {
-        //                var tableOptions = new Table();
-        //                tableOptions.AddColumn("Option").Centered();
-        //                tableOptions.AddColumn("Description");
+        while (true)
+        {
+            AnsiConsole.MarkupLine("\nType the letter of the play (or h for help) and press enter:");
 
-        //                tableOptions.AddRow("1", "Made a one pointer bucket");
-        //                tableOptions.AddRow("2", "Made a two pointer bucket");
-        //                tableOptions.AddRow("3", "Made a three pointer bucket");
-        //                tableOptions.AddRow("q", "Missed a one pointer shot");
-        //                tableOptions.AddRow("w", "Missed a two pointer shot");
-        //                tableOptions.AddRow("e", "Missed a three pointer shot");
-        //                tableOptions.AddRow("a", "Assist");
-        //                tableOptions.AddRow("r", "Rebound");
-        //                tableOptions.AddRow("t", "Turnover");
-        //                tableOptions.AddRow("b", "Block");
-        //                tableOptions.AddRow("f", "Foul");
-        //                tableOptions.AddRow("x", "Exit");
+            PlayType? type = null;
+            string choice = Console.ReadLine()?.ToUpper();
 
-        //                AnsiConsole.Write(tableOptions);
-        //                continue;
-        //            }
-        //        case "X":
-        return 0;
-        //        default:
-        //            Console.WriteLine("Invalid choice. Please try again.");
-        //            continue;
-        //    }
+            switch (choice)
+            {
+                case "1":
+                    {
+                        type = PlayType.FreeThrowHit;
+                        points = 1;
+                    }
+                    break;
+                case "2":
+                    {
+                        type = PlayType.TwoPointerHit;
+                        points = 2;
+                    }
+                    break;
+                case "3":
+                    {
+                        type = PlayType.ThreePointerHit;
+                        points = 3;
+                    }
+                    break;
+                case "Q":
+                    type = PlayType.FreeThrowMiss;
+                    break;
+                case "W":
+                    type = PlayType.TwoPointerMiss;
+                    break;
+                case "E":
+                    type = PlayType.ThreePointerMiss;
+                    break;
+                case "A":
+                    type = PlayType.Assist;
+                    break;
+                case "R":
+                    type = PlayType.Rebound;
+                    break;
+                case "T":
+                    type = PlayType.Turnover;
+                    break;
+                case "B":
+                    type = PlayType.Block;
+                    break;
+                case "F":
+                    type = PlayType.Foul;
+                    break;
+                case "H":
+                    {
+                        var tableOptions = new Table();
+                        tableOptions.AddColumn("Option").Centered();
+                        tableOptions.AddColumn("Description");
 
-        //    try
-        //    {
-        //        int rowsAffected = Basketball.Repo.RegisterPlay(settings.GameId,
-        //                                                        settings.Quarter,
-        //                                                        settings.PlayerId,
-        //                                                        type.Value);
-        //        if (rowsAffected > 0)
-        //            AnsiConsole.MarkupLine($"[green]Play added to the database.[/]");
-        //        else
-        //            AnsiConsole.MarkupLine($"[red]Failed to add the play to the database.[/]");
+                        tableOptions.AddRow("1", "Made a one pointer bucket");
+                        tableOptions.AddRow("2", "Made a two pointer bucket");
+                        tableOptions.AddRow("3", "Made a three pointer bucket");
+                        tableOptions.AddRow("q", "Missed a one pointer shot");
+                        tableOptions.AddRow("w", "Missed a two pointer shot");
+                        tableOptions.AddRow("e", "Missed a three pointer shot");
+                        tableOptions.AddRow("a", "Assist");
+                        tableOptions.AddRow("r", "Rebound");
+                        tableOptions.AddRow("t", "Turnover");
+                        tableOptions.AddRow("b", "Block");
+                        tableOptions.AddRow("f", "Foul");
+                        tableOptions.AddRow("x", "Exit");
 
-        //        ShowLastPlays(settings.GameId, settings.PlayerId, settings.Quarter);
-        //    }
-        //    catch (InvalidConstraintException ex)
-        //    {
-        //        AnsiConsole.MarkupLine(ex.Message);
-        //    }
+                        AnsiConsole.Write(tableOptions);
+                        continue;
+                    }
+                case "X":
+                    return 0;
+                default:
+                    Console.WriteLine("Invalid choice. Please try again.");
+                    continue;
+            }
+
+            var minutes = TimeSpan.FromMinutes((DateTime.Now - game.At).TotalMinutes % 15);
+            var newPlay = GamePlay.FactoryFrom(settings.Quarter, type, points, minutes);
+
+            if (participation == null)
+            {
+                participation = Participation.FactoryFrom(game, player, teamName, newPlay);
+            }
+            else
+                participation.Plays.Add(newPlay);
+
+            try
+            {
+                bool success = Basketball.Repo.Update(participation);
+                if (!success)
+                    AnsiConsole.MarkupLine($"[red]Failed to add the play to the database.[/]");
+                else
+                    AnsiConsole.MarkupLine($"[green]Play added to the database.[/]");
+
+                ShowLastPlays(participation, settings.GameId, settings.PlayerId, settings.Quarter);
+            }
+            catch (InvalidConstraintException ex)
+            {
+                AnsiConsole.MarkupLine(ex.Message);
+            }
+        }
     }
 
-    private void ShowData(int gameId, int quarter, int playerId)
+    private void ShowData(string gameId, int quarter, string playerId)
     {
-        //IBasketballRepo repo = new BasketballEF();
-        //AnsiConsole.MarkupLine($"Game Id: {gameId}\nCurrent Time: {DateTime.Now}\nQuarter: {quarter}\nPlayer: {repo.GetPlayer(playerId).Name}");
+        AnsiConsole.MarkupLine($"Game Id: {gameId}\nCurrent Time: {DateTime.Now}\nQuarter: {quarter}\nPlayer: {Basketball.Repo.GetPlayer(playerId).Name}");
     }
 
-    private void ShowLastPlays(int gameId, int playerId, int quarter)
+    private void ShowLastPlays(Participation participation, string gameId, string playerId, int quarter)
     {
-        //IBasketballRepo repo = new BasketballEF();
-        //var plays = repo.GetLastPlays(gameId, playerId, quarter, 5);
+        var plays = GetLastPlays(participation, 5);
 
-        //var tableOptions = new Table();
-        //tableOptions.Title = new TableTitle("\n\nLast 5 Plays");
-        //tableOptions.AddColumn("Points");
-        //tableOptions.AddColumn("Type");
-        //tableOptions.AddColumn("At");
+        var tableOptions = new Table();
+        tableOptions.Title = new TableTitle("\n\nLast 5 Plays");
+        tableOptions.AddColumn("Points");
+        tableOptions.AddColumn("Type");
+        tableOptions.AddColumn("At");
 
-        //foreach (var play in plays)
-        //    tableOptions.AddRow($"{play.Points}", $"{play.Type}", $"{play.At}");
+        foreach (var play in plays)
+            tableOptions.AddRow($"{play.Points}", $"{play.Type}", $"{play.At}");
 
-        //AnsiConsole.Write(tableOptions);
+        AnsiConsole.Write(tableOptions);
+    }
+
+    private List<GamePlay> GetLastPlays(Participation participation, int topRows = 0)
+    {
+        if (topRows <= 0 || topRows > participation.Plays.Count)
+        {
+            return participation.Plays.OrderByDescending(p => p.At).ToList();
+        }
+
+        return participation.Plays
+            .OrderByDescending(p => p.At)
+            .Take(topRows)
+            .ToList();
     }
 }

@@ -8,5 +8,5 @@ namespace NBA.Commands;
 public class GlobalCommandSettings : CommandSettings
 {
     [CommandOption("-r|--repo")]
-    public string? Repo { get; set; }
+    public string Repo { get; set; }
 }

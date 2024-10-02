@@ -127,14 +127,12 @@ public class AddPlayCommand : Command<AddPlayCommand.PlayParms>
 
     private void ShowData(int gameId, int quarter, int playerId)
     {
-        IBasketballRepo repo = new BasketballEF();
-        AnsiConsole.MarkupLine($"Game Id: {gameId}\nCurrent Time: {DateTime.Now}\nQuarter: {quarter}\nPlayer: {repo.GetPlayer(playerId).Name}");
+        AnsiConsole.MarkupLine($"Game Id: {gameId}\nCurrent Time: {DateTime.Now}\nQuarter: {quarter}\nPlayer: {Basketball.Repo.GetPlayer(playerId).Name}");
     }
 
     private void ShowLastPlays(int gameId, int playerId, int quarter)
     {
-        IBasketballRepo repo = new BasketballEF();
-        var plays = repo.GetLastPlays(gameId, playerId, quarter, 5);
+        var plays = Basketball.Repo.GetLastPlays(gameId, playerId, quarter, 5);
 
         var tableOptions = new Table();
         tableOptions.Title = new TableTitle("\n\nLast 5 Plays");
