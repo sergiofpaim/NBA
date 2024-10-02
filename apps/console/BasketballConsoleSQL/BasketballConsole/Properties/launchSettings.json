@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "NBA": {
+      "commandName": "Project",
+      //"commandLineArgs": "list play -g 31 -q 1 -p 131 -r ef"
+      "commandLineArgs": "add play -g 31 -q 1 -p 131 -r ef"
+      //"commandLineArgs": "add game -o LAL -v BOS -a 2024-10-01T15:05:00 -r sql"
+    }
+  }
+}
