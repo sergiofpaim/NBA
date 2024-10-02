@@ -21,12 +21,14 @@ namespace NBA.Repo
                 SerializerOptions = new CosmosSerializationOptions
                 {
                     PropertyNamingPolicy = CosmosPropertyNamingPolicy.CamelCase
-                }
+                },
             });
         }
 
-        public async Task<bool> CreateGame(Task<Game> game)
+        public async Task<bool> CreateGame(Game game)
         {
+            Container = CosmosClient.GetContainer(DatabaseId, "Game");
+
             try
             {
                 await Container.CreateItemAsync(game, new PartitionKey(game.Id));
@@ -59,14 +61,19 @@ namespace NBA.Repo
             throw new NotImplementedException();
         }
 
-        public Task<bool> CreateGame(Game game)
-        {
-            throw new NotImplementedException();
-        }
-
         public Season GetLastSeason()
         {
-            throw new NotImplementedException();
+            Container = CosmosClient.GetContainer(DatabaseId, "Season");
+
+            var query = Container.GetItemLinqQueryable<Season>()
+                                 .OrderByDescending(season => season.Id)
+                                 .Take(1);
+
+            var iterator = query.ToFeedIterator();
+
+            var response = iterator.ReadNextAsync().Result;
+
+            return response.FirstOrDefault();
         }
     }
 }

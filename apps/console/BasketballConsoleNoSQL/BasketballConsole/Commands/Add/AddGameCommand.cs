@@ -14,11 +14,11 @@ public class AddGameCommand : Command<AddGameCommand.GameParms>
     {
         [CommandOption("-o|--home <HOMETEAMIID>")]
         [Description("The id of the home team")]
-        public string? HomeTeamId { get; set; }
+        public string HomeTeamId { get; set; }
 
         [CommandOption("-v|--visitor <VISITORSTEAMID>")]
         [Description("The id of the visitor team")]
-        public string? VisitorTeamId { get; set; }
+        public string VisitorTeamId { get; set; }
 
         [CommandOption("-a|--at <AT>")]
         [Description("The date of the game")]
