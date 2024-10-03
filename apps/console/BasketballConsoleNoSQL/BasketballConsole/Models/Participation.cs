@@ -28,5 +28,10 @@ namespace NBA.Models
                 Plays = new List<GamePlay> { gamePlay }
             };
         }
+
+        internal void RegisterPlay(GamePlay newPlay)
+        {
+            Plays.Insert(0, newPlay);
+        }
     }
 }

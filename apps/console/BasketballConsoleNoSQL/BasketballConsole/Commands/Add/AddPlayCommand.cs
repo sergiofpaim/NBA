@@ -1,12 +1,10 @@
-﻿using NBA.Interfaces;
-using NBA.Models;
+﻿using NBA.Models;
 using NBA.Models.ValueObjects;
 using NBA.Repo;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
 using System.Data;
-using System.Linq;
 
 namespace NBA.Commands;
 
@@ -30,14 +28,16 @@ public class AddPlayCommand : Command<AddPlayCommand.PlayParms>
 
     public override int Execute(CommandContext context, PlayParms settings)
     {
-        int points = 0;
-
         var game = Basketball.Repo.GetGame(settings.GameId);
-        var teamName = Basketball.Repo.GetTeam(settings.PlayerId, settings.GameId);
         var player = Basketball.Repo.GetPlayer(settings.PlayerId);
         var participation = Basketball.Repo.GetParticipation(settings.GameId, settings.PlayerId);
 
-        if (!game.HomePlayerIds.Contains(settings.PlayerId.ToString()) && !game.VisitorPlayerIds.Contains(settings.PlayerId.ToString()))
+        bool isHomePlayer;
+        if (game.HomePlayerIds.Contains(settings.PlayerId.ToString()))
+            isHomePlayer = true;
+        else if (game.VisitorPlayerIds.Contains(settings.PlayerId.ToString()))
+            isHomePlayer = false;
+        else
             throw new Exception("Player does not participate in the team for the season");
 
         ShowData(settings.GameId, settings.Quarter, settings.PlayerId);
@@ -48,6 +48,7 @@ public class AddPlayCommand : Command<AddPlayCommand.PlayParms>
 
             PlayType? type = null;
             string choice = Console.ReadLine()?.ToUpper();
+            int points = 0;
 
             switch (choice)
             {
@@ -126,11 +127,9 @@ public class AddPlayCommand : Command<AddPlayCommand.PlayParms>
             var newPlay = GamePlay.FactoryFrom(settings.Quarter, type, points, minutes);
 
             if (participation == null)
-            {
-                participation = Participation.FactoryFrom(game, player, teamName, newPlay);
-            }
+                participation = Participation.FactoryFrom(game, player, isHomePlayer ? game.HomeTeamName : game.VisitorTeamName, newPlay);
             else
-                participation.Plays.Add(newPlay);
+                participation.RegisterPlay(newPlay);
 
             try
             {
@@ -156,15 +155,15 @@ public class AddPlayCommand : Command<AddPlayCommand.PlayParms>
 
     private void ShowLastPlays(Participation participation, string gameId, string playerId, int quarter)
     {
-        var plays = participation.Plays.OrderByDescending(p => p.At)
+        var plays = participation.Plays.Where(p => p.Quarter == quarter)
                                        .Take(5)
                                        .ToList();
 
         var tableOptions = new Table();
-        tableOptions.Title = new TableTitle("\n\nLast 5 Plays");
         tableOptions.AddColumn("Points");
         tableOptions.AddColumn("Type");
         tableOptions.AddColumn("At");
+        tableOptions.Title = new TableTitle("\n\nLast 5 Plays");
 
         foreach (var play in plays)
             tableOptions.AddRow($"{play.Points}", $"{play.Type}", $"{play.At}");

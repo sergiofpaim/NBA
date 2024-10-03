@@ -1,7 +1,5 @@
 ﻿using NBA.Commands;
-using NBA.Interfaces;
 using NBA.Repo;
-using Spectre.Console;
 using Spectre.Console.Cli;
 
 class Program
@@ -25,9 +23,9 @@ class Program
     {
         config.SetApplicationName("NBA");
 
-        config.AddExample(["add", "play", "-g", "31", "-q", "1", "-p", "131", "--repo", "sql"]);
-        config.AddExample(["add", "game", "-o", "CHI", "-v", "LAL", "-a", "2024-08-01T19:30:00", "--repo", "ef"]);
-        config.AddExample(["list", "play", "-g", "31", "-q", "1", "-p", "131", "-r", "sql"]);
+        config.AddExample(["add", "play", "-g", "31", "-q", "1", "-p", "131"]);
+        config.AddExample(["add", "game", "-o", "CHI", "-v", "LAL", "-a", "2024-08-01T19:30:00"]);
+        config.AddExample(["list", "play", "-g", "31", "-q", "1", "-p", "131"]);
 
         // Add
         config.AddBranch<GlobalCommandSettings>("add", add =>

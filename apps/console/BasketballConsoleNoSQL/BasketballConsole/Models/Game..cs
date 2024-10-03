@@ -1,8 +1,4 @@
-﻿
-using Microsoft.Azure.Cosmos.Linq;
-using Microsoft.Identity.Client;
-using NBA.Models.ValueObjects;
-using NBA.Repo;
+﻿using NBA.Models.ValueObjects;
 
 namespace NBA.Models
 {

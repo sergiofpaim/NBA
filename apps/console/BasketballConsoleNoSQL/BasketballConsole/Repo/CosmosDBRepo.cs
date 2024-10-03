@@ -12,7 +12,10 @@ namespace NBA.Repo
         private static readonly string DatabaseId = "NBA";
 
         public static CosmosClient CosmosClient { get; private set; }
-        public static Container Container { get; private set; }
+        public static Container ParticipationContainer { get; private set; }
+        public static Container GameContainer { get; private set; }
+        public static Container PlayerContainer { get; private set; }
+        public static Container SeasonContainer { get; private set; }
 
         public CosmosDBRepo()
         {
@@ -23,15 +26,18 @@ namespace NBA.Repo
                     PropertyNamingPolicy = CosmosPropertyNamingPolicy.CamelCase
                 },
             });
+
+            ParticipationContainer = CosmosClient.GetContainer(DatabaseId, "Participation");
+            GameContainer = CosmosClient.GetContainer(DatabaseId, "Game");
+            PlayerContainer = CosmosClient.GetContainer(DatabaseId, "Player");
+            SeasonContainer = CosmosClient.GetContainer(DatabaseId, "Season");
         }
 
         public bool Update(Participation participation)
         {
-            Container = CosmosClient.GetContainer(DatabaseId, "Participation");
-
             try
             {
-                Container.UpsertItemAsync(participation, new PartitionKey(participation.Id)).GetAwaiter().GetResult();
+                ParticipationContainer.UpsertItemAsync(participation, new PartitionKey(participation.Id)).GetAwaiter().GetResult();
                 return true;
             }
             catch (Exception ex)
@@ -43,11 +49,9 @@ namespace NBA.Repo
 
         public async Task<bool> CreateGame(Game game)
         {
-            Container = CosmosClient.GetContainer(DatabaseId, "Game");
-
             try
             {
-                await Container.CreateItemAsync(game, new PartitionKey(game.Id));
+                await GameContainer.CreateItemAsync(game, new PartitionKey(game.Id));
                 return true;
             }
             catch (Exception ex)
@@ -59,10 +63,8 @@ namespace NBA.Repo
 
         public Game GetGame(string gameId)
         {
-            Container = CosmosClient.GetContainer(DatabaseId, "Game");
-
-            var query = Container.GetItemLinqQueryable<Game>()
-                                 .Where(p => p.Id == gameId);
+            var query = GameContainer.GetItemLinqQueryable<Game>()
+                                     .Where(p => p.Id == gameId);
 
             var iterator = query.ToFeedIterator();
 
@@ -73,10 +75,8 @@ namespace NBA.Repo
 
         public Participation GetParticipation(string gameId, string playerId)
         {
-            Container = CosmosClient.GetContainer(DatabaseId, "Participation");
-
-            var query = Container.GetItemLinqQueryable<Participation>()
-                                 .Where(p => p.Id == playerId);
+            var query = ParticipationContainer.GetItemLinqQueryable<Participation>()
+                                              .Where(p => p.PlayerId == playerId && p.GameId == gameId);
 
             var iterator = query.ToFeedIterator();
 
@@ -87,10 +87,8 @@ namespace NBA.Repo
 
         public Player GetPlayer(string playerId)
         {
-            Container = CosmosClient.GetContainer(DatabaseId, "Player");
-
-            var query = Container.GetItemLinqQueryable<Player>()
-                                 .Where(p => p.Id == playerId);
+            var query = PlayerContainer.GetItemLinqQueryable<Player>()
+                                       .Where(p => p.Id == playerId);
 
             var iterator = query.ToFeedIterator();
 
@@ -99,38 +97,11 @@ namespace NBA.Repo
             return response.FirstOrDefault();
         }
 
-        public string GetTeam(string playerId, string gameId)
-        {
-            Container = CosmosClient.GetContainer(DatabaseId, "Game");
-
-            var query = Container.GetItemLinqQueryable<Game>()
-                .Where(g => g.Id == gameId &&
-                            (g.HomePlayerIds.Contains(playerId) || g.VisitorPlayerIds.Contains(playerId)))
-                .Select(g => new
-                {
-                    IsHomePlayer = g.HomePlayerIds.Contains(playerId),
-                    TeamName = g.HomePlayerIds.Contains(playerId) ? g.HomeTeamName : g.VisitorTeamName
-                });
-
-            var iterator = query.ToFeedIterator();
-
-            var response = iterator.ReadNextAsync().GetAwaiter().GetResult();
-
-            if (response.Count > 0)
-            {
-                return response.First().TeamName;
-            }
-
-            return null;
-        }
-
         public Season GetLastSeason()
         {
-            Container = CosmosClient.GetContainer(DatabaseId, "Season");
-
-            var query = Container.GetItemLinqQueryable<Season>()
-                                 .OrderByDescending(season => season.Id)
-                                 .Take(1);
+            var query = SeasonContainer.GetItemLinqQueryable<Season>()
+                                       .OrderByDescending(season => season.Id)
+                                       .Take(1);
 
             var iterator = query.ToFeedIterator();
 
