@@ -1,0 +1,25 @@
+[
+  {
+    "id": "855af8fd",
+    "seasonId": "23-24",
+    "homeTeamId": "LAL",
+    "homeTeamName": "Los Angeles Lakers",
+    "homePlayerIds": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "visitorTeamId": "GSW",
+    "visitorTeamName": "Golden State Warriors",
+    "visitorPlayerIds": [
+      "6",
+      "7",
+      "8",
+      "9",
+      "10"
+    ],
+    "at": "2024-10-02T16:00:00"
+  }
+]

@@ -1,18 +1,17 @@
 ﻿using NBA.Models;
-using NBA.Models.ValueObjects;
-using NBA.Repo;
+using NBA.Services;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
 using System.Data;
 
-namespace NBA.Commands;
+namespace NBA.CLI;
 
 [Description("\n\nAdds a play for an specific game")]
 
-public class AddPlayCommand : Command<AddPlayCommand.PlayParms>
+public class AddPlayCommand : NBACommand<AddPlayCommand.PlayParms>
 {
-    public sealed class PlayParms : GlobalCommandSettings
+    public sealed class PlayParms : CommandSettings
     {
         [CommandOption("-g|--game <GAMEID>")]
         [Description("The game Id")]
@@ -28,17 +27,11 @@ public class AddPlayCommand : Command<AddPlayCommand.PlayParms>
 
     public override int Execute(CommandContext context, PlayParms settings)
     {
-        var game = Basketball.Repo.GetGame(settings.GameId);
-        var player = Basketball.Repo.GetPlayer(settings.PlayerId);
-        var participation = Basketball.Repo.GetParticipation(settings.GameId, settings.PlayerId);
+        const int PLAYS_TO_TAKE = 5;
 
-        bool isHomePlayer;
-        if (game.HomePlayerIds.Contains(settings.PlayerId.ToString()))
-            isHomePlayer = true;
-        else if (game.VisitorPlayerIds.Contains(settings.PlayerId.ToString()))
-            isHomePlayer = false;
-        else
-            throw new Exception("Player does not participate in the team for the season");
+        var gameResult = NBAService.CheckGameForPlayer(settings.GameId, settings.PlayerId);
+        if (gameResult.Code != 0) 
+            return PrintResult(gameResult.Message, gameResult.Code);
 
         ShowData(settings.GameId, settings.Quarter, settings.PlayerId);
 
@@ -46,29 +39,19 @@ public class AddPlayCommand : Command<AddPlayCommand.PlayParms>
         {
             AnsiConsole.MarkupLine("\nType the letter of the play (or h for help) and press enter:");
 
-            PlayType? type = null;
+            PlayType type = default;
             string choice = Console.ReadLine()?.ToUpper();
-            int points = 0;
 
             switch (choice)
             {
                 case "1":
-                    {
-                        type = PlayType.FreeThrowHit;
-                        points = 1;
-                    }
+                    type = PlayType.FreeThrowHit;
                     break;
                 case "2":
-                    {
-                        type = PlayType.TwoPointerHit;
-                        points = 2;
-                    }
+                    type = PlayType.TwoPointerHit;
                     break;
                 case "3":
-                    {
-                        type = PlayType.ThreePointerHit;
-                        points = 3;
-                    }
+                    type = PlayType.ThreePointerHit;
                     break;
                 case "Q":
                     type = PlayType.FreeThrowMiss;
@@ -123,40 +106,26 @@ public class AddPlayCommand : Command<AddPlayCommand.PlayParms>
                     continue;
             }
 
-            var minutes = TimeSpan.FromMinutes((DateTime.Now - game.At).TotalMinutes % 15);
-            var newPlay = GamePlay.FactoryFrom(settings.Quarter, type, points, minutes);
+            var playResult = NBAService.AddPlay(settings, gameResult.Game, gameResult.IsHomePlayer, type, PLAYS_TO_TAKE);
+            if (playResult.Code != 0)
+                return PrintResult(playResult.Message, playResult.Code);
 
-            if (participation == null)
-                participation = Participation.FactoryFrom(game, player, isHomePlayer ? game.HomeTeamName : game.VisitorTeamName, newPlay);
-            else
-                participation.RegisterPlay(newPlay);
-
-            try
-            {
-                bool success = Basketball.Repo.Update(participation);
-                if (!success)
-                    AnsiConsole.MarkupLine($"[red]Failed to add the play to the database.[/]");
-                else
-                    AnsiConsole.MarkupLine($"[green]Play added to the database.[/]");
-
-                ShowLastPlays(participation, settings.GameId, settings.PlayerId, settings.Quarter);
-            }
-            catch (InvalidConstraintException ex)
-            {
-                AnsiConsole.MarkupLine(ex.Message);
-            }
+            ShowLastPlays(playResult.Participation, settings.GameId, settings.PlayerId, settings.Quarter);
         }
     }
 
-    private void ShowData(string gameId, int quarter, string playerId)
+    private static void ShowData(string gameId, int quarter, string playerId)
     {
-        AnsiConsole.MarkupLine($"Game Id: {gameId}\nCurrent Time: {DateTime.Now}\nQuarter: {quarter}\nPlayer: {Basketball.Repo.GetPlayer(playerId).Name}");
+        var result = NBAService.GetPlayer(playerId);
+        if (result.Code != 0)
+            PrintResult(result.Message, result.Code);
+        else
+            AnsiConsole.MarkupLine($"Game Id: {gameId}\nCurrent Time: {DateTime.Now}\nQuarter: {quarter}\nPlayer: {result.Player.Name}");
     }
 
-    private void ShowLastPlays(Participation participation, string gameId, string playerId, int quarter)
+    private static void ShowLastPlays(Participation participation, string gameId, string playerId, int quarter)
     {
         var plays = participation.Plays.Where(p => p.Quarter == quarter)
-                                       .Take(5)
                                        .ToList();
 
         var tableOptions = new Table();

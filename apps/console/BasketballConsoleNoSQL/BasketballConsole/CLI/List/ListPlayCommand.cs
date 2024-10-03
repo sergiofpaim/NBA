@@ -1,17 +1,17 @@
 ﻿using NBA.Models;
 using NBA.Models.ValueObjects;
-using NBA.Repo;
+using NBA.Services;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
 
-namespace NBA.Commands;
+namespace NBA.CLI;
 
 [Description("\n\nSelects the plays of a specific player in a specific game and quarter, from the data base")]
 
-public class ListPlayCommand : Command<ListPlayCommand.GameParms>
+public class ListPlayCommand : NBACommand<ListPlayCommand.GameParms>
 {
-    public sealed class GameParms : GlobalCommandSettings
+    public sealed class GameParms : CommandSettings
     {
         [CommandOption("-g|--game <GAMEID>")]
         [Description("The game Id")]
@@ -26,21 +26,17 @@ public class ListPlayCommand : Command<ListPlayCommand.GameParms>
     }
     public override int Execute(CommandContext context, GameParms settings)
     {
-        var game = Basketball.Repo.GetGame(settings.GameId);
-        var participation = Basketball.Repo.GetParticipation(settings.GameId, settings.PlayerId);
+        var gameResult = NBAService.CheckGameForPlayer(settings.GameId, settings.PlayerId);
+        if (gameResult.Code != 0)
+            return PrintResult(gameResult.Message, gameResult.Code);
 
-        if (!game.HomePlayerIds.Contains(settings.PlayerId.ToString()) && !game.VisitorPlayerIds.Contains(settings.PlayerId.ToString()))
-            throw new Exception("Player does not participate in the team for the season");
-        else
-            ShowAllPlays(participation, game);
+        var participationResult = NBAService.GetParticipation(settings.GameId, settings.PlayerId);
 
-        return 0;
+        return ShowAllPlays(participationResult.Participation, gameResult.Game);
     }
 
-    private void ShowAllPlays(Participation participation, Game game)
+    private static int ShowAllPlays(Participation participation, Game game)
     {
-        List<GamePlay> plays = participation.Plays.OrderByDescending(p => p.At).ToList();
-
         Table tableOptions = new()
         {
             Title = new TableTitle($"\n\n{participation.PlayerName}'s plays in the" +
@@ -52,9 +48,10 @@ public class ListPlayCommand : Command<ListPlayCommand.GameParms>
         tableOptions.AddColumn("Type");
         tableOptions.AddColumn("At");
 
-        foreach (var play in plays)
+        foreach (var play in participation.Plays)
             tableOptions.AddRow($"{play.Points}", $"{play.Type}", $"{play.At}");
 
         AnsiConsole.Write(tableOptions);
+        return 0;
     }
 }

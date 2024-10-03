@@ -1,7 +1,9 @@
-﻿using Microsoft.Azure.Cosmos;
+﻿using Azure;
+using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Linq;
 using NBA.Interfaces;
 using NBA.Models;
+using System.Text.Json;
 
 namespace NBA.Repo
 {
@@ -108,6 +110,30 @@ namespace NBA.Repo
             var response = iterator.ReadNextAsync().Result;
 
             return response.FirstOrDefault();
+        }
+
+        public void Reseed()
+        {
+            var playersToClean = PlayerContainer.GetItemQueryIterator<Player>();
+
+            while (playersToClean.HasMoreResults)
+            {
+                var response = playersToClean.ReadNextAsync().Result;
+
+                foreach (var toClean in response)
+                    PlayerContainer.DeleteItemAsync<Player>(toClean.Id, new(toClean.Id));
+            }
+
+            JsonSerializerOptions options = new()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+
+            var playerJson = File.ReadAllText("./Seed/Player.json");
+            var players = JsonSerializer.Deserialize<List<Player>>(playerJson, options);
+
+            foreach (var player in players)
+                PlayerContainer.UpsertItemAsync(player);
         }
     }
 }

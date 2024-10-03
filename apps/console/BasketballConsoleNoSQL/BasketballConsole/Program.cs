@@ -1,4 +1,4 @@
-﻿using NBA.Commands;
+﻿using NBA.CLI;
 using NBA.Repo;
 using Spectre.Console.Cli;
 
@@ -28,7 +28,7 @@ class Program
         config.AddExample(["list", "play", "-g", "31", "-q", "1", "-p", "131"]);
 
         // Add
-        config.AddBranch<GlobalCommandSettings>("add", add =>
+        config.AddBranch<CommandSettings>("add", add =>
         {
             add.SetDescription("Add operations");
 
@@ -40,12 +40,21 @@ class Program
         });
 
         // List
-        config.AddBranch<GlobalCommandSettings>("list", list =>
+        config.AddBranch<CommandSettings>("list", list =>
         {
             list.SetDescription("List operations");
 
             list.AddCommand<ListPlayCommand>("play")
               .WithDescription("Lists all plays of a player in a game");
+        });
+
+        // Utils
+        config.AddBranch<CommandSettings>("utils", utils =>
+        {
+            utils.SetDescription("Utils operations");
+
+            utils.AddCommand<ReseedCommand>("reseed")
+              .WithDescription("Reseeds the repository");
         });
     }
 }

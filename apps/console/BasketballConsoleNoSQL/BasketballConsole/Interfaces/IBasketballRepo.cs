@@ -10,5 +10,6 @@ namespace NBA.Interfaces
         Game GetGame(string gameId);
         Participation GetParticipation(string gameId, string playerId); 
         Player GetPlayer(string playerId);
+        void Reseed();
     }
 }
