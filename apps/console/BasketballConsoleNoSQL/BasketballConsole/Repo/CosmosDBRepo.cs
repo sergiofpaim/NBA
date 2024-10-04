@@ -18,6 +18,14 @@ namespace NBA.Repo
         public static Container GameContainer { get; private set; }
         public static Container PlayerContainer { get; private set; }
         public static Container SeasonContainer { get; private set; }
+        public static Container TeamContainer { get; private set; }
+
+        private static Dictionary<Type, Container> containers = [];
+
+        private static Container GetContainer<T>()
+        {
+            return containers[typeof(T)];
+        }
 
         public CosmosDBRepo()
         {
@@ -29,17 +37,18 @@ namespace NBA.Repo
                 },
             });
 
-            ParticipationContainer = CosmosClient.GetContainer(DatabaseId, "Participation");
-            GameContainer = CosmosClient.GetContainer(DatabaseId, "Game");
-            PlayerContainer = CosmosClient.GetContainer(DatabaseId, "Player");
-            SeasonContainer = CosmosClient.GetContainer(DatabaseId, "Season");
+            containers.Add(typeof(Participation), CosmosClient.GetContainer(DatabaseId, nameof(Participation)));
+            containers.Add(typeof(Game), CosmosClient.GetContainer(DatabaseId, nameof(Game)));
+            containers.Add(typeof(Player), CosmosClient.GetContainer(DatabaseId, nameof(Player)));
+            containers.Add(typeof(Season), CosmosClient.GetContainer(DatabaseId, nameof(Season)));
+            containers.Add(typeof(Team), CosmosClient.GetContainer(DatabaseId, nameof(Team)));
         }
 
         public bool Update(Participation participation)
         {
             try
             {
-                ParticipationContainer.UpsertItemAsync(participation, new PartitionKey(participation.Id)).GetAwaiter().GetResult();
+                GetContainer<Participation>().UpsertItemAsync(participation, new PartitionKey(participation.Id)).GetAwaiter().GetResult();
                 return true;
             }
             catch (Exception ex)
@@ -53,7 +62,7 @@ namespace NBA.Repo
         {
             try
             {
-                await GameContainer.CreateItemAsync(game, new PartitionKey(game.Id));
+                await GetContainer<Game>().CreateItemAsync(game, new PartitionKey(game.Id));
                 return true;
             }
             catch (Exception ex)
@@ -65,8 +74,8 @@ namespace NBA.Repo
 
         public Game GetGame(string gameId)
         {
-            var query = GameContainer.GetItemLinqQueryable<Game>()
-                                     .Where(p => p.Id == gameId);
+            var query = GetContainer<Game>().GetItemLinqQueryable<Game>()
+                                            .Where(p => p.Id == gameId);
 
             var iterator = query.ToFeedIterator();
 
@@ -77,8 +86,8 @@ namespace NBA.Repo
 
         public Participation GetParticipation(string gameId, string playerId)
         {
-            var query = ParticipationContainer.GetItemLinqQueryable<Participation>()
-                                              .Where(p => p.PlayerId == playerId && p.GameId == gameId);
+            var query = GetContainer<Participation>().GetItemLinqQueryable<Participation>()
+                                                     .Where(p => p.PlayerId == playerId && p.GameId == gameId);
 
             var iterator = query.ToFeedIterator();
 
@@ -89,8 +98,8 @@ namespace NBA.Repo
 
         public Player GetPlayer(string playerId)
         {
-            var query = PlayerContainer.GetItemLinqQueryable<Player>()
-                                       .Where(p => p.Id == playerId);
+            var query = GetContainer<Player>().GetItemLinqQueryable<Player>()
+                                              .Where(p => p.Id == playerId);
 
             var iterator = query.ToFeedIterator();
 
@@ -101,9 +110,9 @@ namespace NBA.Repo
 
         public Season GetLastSeason()
         {
-            var query = SeasonContainer.GetItemLinqQueryable<Season>()
-                                       .OrderByDescending(season => season.Id)
-                                       .Take(1);
+            var query = GetContainer<Season>().GetItemLinqQueryable<Season>()
+                                              .OrderByDescending(season => season.Id)
+                                              .Take(1);
 
             var iterator = query.ToFeedIterator();
 
@@ -114,14 +123,23 @@ namespace NBA.Repo
 
         public void Reseed()
         {
-            var playersToClean = PlayerContainer.GetItemQueryIterator<Player>();
+            Reseed<Player>();
+            Reseed<Game>();
+            Reseed<Season>();
+            Reseed<Team>();
+            Reseed<Participation>();
+        }
 
-            while (playersToClean.HasMoreResults)
+        private void Reseed<T>() where T : NBAModel
+        {
+            var modelsToClean = GetContainer<T>().GetItemQueryIterator<T>();
+
+            while (modelsToClean.HasMoreResults)
             {
-                var response = playersToClean.ReadNextAsync().Result;
+                var response = modelsToClean.ReadNextAsync().Result;
 
                 foreach (var toClean in response)
-                    PlayerContainer.DeleteItemAsync<Player>(toClean.Id, new(toClean.Id));
+                    GetContainer<T>().DeleteItemAsync<T>(toClean.Id, new(toClean.Id));
             }
 
             JsonSerializerOptions options = new()
@@ -129,11 +147,11 @@ namespace NBA.Repo
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             };
 
-            var playerJson = File.ReadAllText("./Seed/Player.json");
-            var players = JsonSerializer.Deserialize<List<Player>>(playerJson, options);
+            var modelJson = File.ReadAllText($"./Seed/{typeof(T).Name}.json");
+            var model = JsonSerializer.Deserialize<List<T>>(modelJson, options);
 
-            foreach (var player in players)
-                PlayerContainer.UpsertItemAsync(player);
+            foreach (var player in model)
+                GetContainer<T>().UpsertItemAsync(player);
         }
     }
 }

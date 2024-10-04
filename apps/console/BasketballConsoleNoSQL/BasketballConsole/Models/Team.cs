@@ -1,9 +1,9 @@
-﻿namespace NBA.Models
-{
-    public class Team
-    {
-        public string Id { get; set; }
+﻿using NBA.Repo;
 
+namespace NBA.Models
+{
+    public class Team : NBAModel
+    {
         public string Name { get; set; }
 
         public string State { get; set; }

@@ -1,11 +1,10 @@
 ﻿using NBA.Models.ValueObjects;
+using NBA.Repo;
 
 namespace NBA.Models
 {
-    public class Participation
+    public class Participation : NBAModel
     {
-        public string Id { get; set; }
-
         public string GameId { get; set; }
 
         public string PlayerId { get; set; }
