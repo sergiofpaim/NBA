@@ -20,7 +20,7 @@ namespace NBA.Repo
         public static Container SeasonContainer { get; private set; }
         public static Container TeamContainer { get; private set; }
 
-        private static Dictionary<Type, Container> containers = [];
+        private static readonly Dictionary<Type, Container> containers = [];
 
         private static Container GetContainer<T>()
         {
@@ -130,7 +130,7 @@ namespace NBA.Repo
             Reseed<Participation>();
         }
 
-        private void Reseed<T>() where T : NBAModel
+        private static void Reseed<T>() where T : NBAModel
         {
             var modelsToClean = GetContainer<T>().GetItemQueryIterator<T>();
 

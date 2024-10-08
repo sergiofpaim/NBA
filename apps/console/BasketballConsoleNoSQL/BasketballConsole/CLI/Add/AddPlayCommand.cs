@@ -106,7 +106,7 @@ public class AddPlayCommand : NBACommand<AddPlayCommand.PlayParms>
                     continue;
             }
 
-            var playResult = NBAService.AddPlay(settings, gameResult.Game, gameResult.IsHomePlayer, type, PLAYS_TO_TAKE);
+            var playResult = NBAService.AddPlay(settings.PlayerId, gameResult.Game, settings.Quarter, gameResult.IsHomePlayer, type, PLAYS_TO_TAKE);
             if (playResult.Code != 0)
                 return PrintResult(playResult.Message, playResult.Code);
 

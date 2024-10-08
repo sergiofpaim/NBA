@@ -32,16 +32,16 @@ namespace NBA.Services
             return ("Game added to the database.", 0);
         }
 
-        public static (string Message, int Code, Participation Participation) AddPlay(PlayParms settings, Game game, bool isHomePlayer, PlayType type, int playsToTake)
+        public static (string Message, int Code, Participation Participation) AddPlay(string playerId, Game game, int quarter, bool isHomePlayer, PlayType type, int playsToTake)
         {
-            var newPlay = GamePlay.FactoryFrom(settings.Quarter, type, game.At);
+            var newPlay = GamePlay.FactoryFrom(quarter, type, game.At);
 
-            var player = Basketball.Repo.GetPlayer(settings.PlayerId);
+            var player = Basketball.Repo.GetPlayer(playerId);
 
             if (player is null)
                 return ("Player not found", 128, null);
 
-            var participation = Basketball.Repo.GetParticipation(settings.GameId, settings.PlayerId);
+            var participation = Basketball.Repo.GetParticipation(game.Id, playerId);
 
             if (participation == null)
                 participation = Participation.FactoryFrom(game,
