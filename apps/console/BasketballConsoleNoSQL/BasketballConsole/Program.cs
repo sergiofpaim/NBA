@@ -1,102 +1,63 @@
 ﻿using NBA.CLI;
 using NBA.Repo;
 using Spectre.Console.Cli;
-using NBA.Services;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 class Program
 {
-    public static void Main(string[] args)
+    public static int Main(string[] args)
     {
-        var builder = WebApplication.CreateBuilder(args);
+        ConfigRepo([.. args]);
 
-        // Add services to the container.
-        builder.Services.AddControllers();
-               
-        // Add Swagger
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+        var app = new CommandApp();
+        app.Configure(MyConfigurator);
 
-        var app = builder.Build();
-
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseDeveloperExceptionPage();
-        }
-        else
-        {
-            app.UseExceptionHandler("/Home/Error"); // Replace with your error handling
-        }
-
-        app.UseHttpsRedirection();
-        app.UseAuthorization();
-        app.MapControllers();
-
-        // Enable Swagger
-        app.UseSwagger();
-        app.UseSwaggerUI(c =>
-        {
-            c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-            c.RoutePrefix = string.Empty; // Set the Swagger UI at the app's root
-        });
-
-        app.Run();
+        return app.Run(args);
     }
 
-    //public static int Main(string[] args)
-    //{
-    //    ConfigRepo([.. args]);
+    private static void ConfigRepo(List<string> args)
+    {
+        Basketball.SetRepo(new CosmosDBRepo());
+    }
 
-    //    var app = new CommandApp();
-    //    app.Configure(MyConfigurator);
+    private static void MyConfigurator(IConfigurator config)
+    {
+        config.SetApplicationName("NBA");
 
-    //    return app.Run(args);
-    //}
+        config.AddExample(["add", "play", "-g", "31", "-q", "1", "-p", "131"]);
+        config.AddExample(["add", "game", "-o", "CHI", "-v", "LAL", "-a", "2024-08-01T19:30:00"]);
+        config.AddExample(["list", "play", "-g", "31", "-q", "1", "-p", "131"]);
 
-    //private static void ConfigRepo(List<string> args)
-    //{
-    //    Basketball.SetRepo(new CosmosDBRepo());
-    //}
+        // Add
+        config.AddBranch<CommandSettings>("add", add =>
+        {
+            add.SetDescription("Add operations");
 
-    //private static void MyConfigurator(IConfigurator config)
-    //{
-    //    config.SetApplicationName("NBA");
+            add.AddCommand<AddGameCommand>("game")
+               .WithDescription("Add a game");
 
-    //    config.AddExample(["add", "play", "-g", "31", "-q", "1", "-p", "131"]);
-    //    config.AddExample(["add", "game", "-o", "CHI", "-v", "LAL", "-a", "2024-08-01T19:30:00"]);
-    //    config.AddExample(["list", "play", "-g", "31", "-q", "1", "-p", "131"]);
+            add.AddCommand<AddPlayCommand>("play")
+               .WithDescription("Add a play of a player in a game");
+        });
 
-    //    // Add
-    //    config.AddBranch<CommandSettings>("add", add =>
-    //    {
-    //        add.SetDescription("Add operations");
+        // List
+        config.AddBranch<CommandSettings>("list", list =>
+        {
+            list.SetDescription("List operations");
 
-    //        add.AddCommand<AddGameCommand>("game")
-    //           .WithDescription("Add a game");
+            list.AddCommand<ListPlayCommand>("play")
+              .WithDescription("Lists all plays of a player in a game");
+        });
 
-    //        add.AddCommand<AddPlayCommand>("play")
-    //           .WithDescription("Add a play of a player in a game");
-    //    });
+        // Utils
+        config.AddBranch<CommandSettings>("utils", utils =>
+        {
+            utils.SetDescription("Utils operations");
 
-    //    // List
-    //    config.AddBranch<CommandSettings>("list", list =>
-    //    {
-    //        list.SetDescription("List operations");
+            utils.AddCommand<ReseedCommand>("reseed")
+              .WithDescription("Reseeds the repository");
 
-    //        list.AddCommand<ListPlayCommand>("play")
-    //          .WithDescription("Lists all plays of a player in a game");
-    //    });
-
-    //    // Utils
-    //    config.AddBranch<CommandSettings>("utils", utils =>
-    //    {
-    //        utils.SetDescription("Utils operations");
-
-    //        utils.AddCommand<ReseedCommand>("reseed")
-    //          .WithDescription("Reseeds the repository");
-    //    });
-    //}
+            utils.AddCommand<StartAPICommand>("api")
+              .WithDescription("Starts the API with Swagger UI");
+        });
+    }
 }

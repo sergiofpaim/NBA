@@ -51,7 +51,7 @@ namespace NBA.Controllers
             return Ok(new
             {
                 Message = "Participation retrieved successfully.",
-                Data = participationResult
+                Data = participationResult.Participation.Plays
             });
         }
 
@@ -61,11 +61,7 @@ namespace NBA.Controllers
         {
             var result = NBAService.Reseed();
 
-            return Ok(new
-            {
-                Message = "Participation retrieved successfully.",
-                Data = result
-            });
+            return Ok("Data reseeded.");
         }
     }
 }
