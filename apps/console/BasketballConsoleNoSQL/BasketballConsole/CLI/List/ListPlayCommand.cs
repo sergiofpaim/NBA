@@ -1,5 +1,4 @@
 ﻿using NBA.Models;
-using NBA.Models.ValueObjects;
 using NBA.Services;
 using Spectre.Console;
 using Spectre.Console.Cli;
@@ -31,6 +30,8 @@ public class ListPlayCommand : NBACommand<ListPlayCommand.GameParms>
             return PrintResult(gameResult.Message, gameResult.Code);
 
         var participationResult = NBAService.GetParticipation(settings.GameId, settings.PlayerId);
+        if (participationResult.Code != 0)
+            return PrintResult(participationResult.Message, participationResult.Code);
 
         return ShowAllPlays(participationResult.Participation, gameResult.Game);
     }
