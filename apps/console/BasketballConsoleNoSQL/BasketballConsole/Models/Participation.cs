@@ -24,7 +24,7 @@ namespace NBA.Models
                 PlayerId = player.Id,
                 PlayerName = player.Name,
                 TeamName = teamName,
-                Plays = new List<GamePlay> { gamePlay }
+                Plays = [gamePlay]
             };
         }
 

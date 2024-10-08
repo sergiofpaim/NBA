@@ -24,7 +24,11 @@ namespace NBA.Controllers
 
             var playResult = NBAService.AddPlay(request.PlayerId, gameResult.Game, request.Quarter, gameResult.IsHomePlayer, request.PlayType, PLAYS_TO_TAKE);
             if (playResult.Code == 0)
-                return Ok("Play added successfully.");
+                return Ok(new
+                {
+                    Message = "Play added successfully.",
+                    Data = playResult.Participation.Plays
+                });
 
             return BadRequest("Play failed to be added");
         }
@@ -32,9 +36,9 @@ namespace NBA.Controllers
         [HttpPost("add/game")]
         public IActionResult AddGame([FromBody] AddGameVM request)
         {
-            var result = NBAService.AddGame(request.HomeTeamId, request.VisitorTeamId, request.At);
-            if (result.Code == 0)
-                return Ok("Game created successfully.");
+            var gameResult = NBAService.AddGame(request.HomeTeamId, request.VisitorTeamId, request.At);
+            if (gameResult.Code == 0)
+                return Ok("Game created successfully");
 
             return BadRequest("Game failed to be created.");
         }
@@ -50,7 +54,7 @@ namespace NBA.Controllers
 
             return Ok(new
             {
-                Message = "Participation retrieved successfully.",
+                Message = "Plays retrieved successfully.",
                 Data = participationResult.Participation.Plays
             });
         }
