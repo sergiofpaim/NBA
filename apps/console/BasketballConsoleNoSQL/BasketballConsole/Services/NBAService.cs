@@ -1,9 +1,6 @@
-﻿using Azure;
-using Microsoft.AspNetCore.Http.HttpResults;
-using NBA.Infrastructure;
+﻿using NBA.Infrastructure;
 using NBA.Models;
 using NBA.Models.ValueObjects;
-using System.Collections.Generic;
 
 namespace NBA.Services
 {
@@ -37,7 +34,7 @@ namespace NBA.Services
         {
             var newPlay = GamePlay.FactoryFrom(quarter, type, game.At);
 
-            var player = Basketball.Repo.GetPlayer(playerId);
+            var player = Basketball.Repo.GetById<Player>(playerId);
 
             if (player is null)
                 return NotFound<Participation>("Player not found");
@@ -69,7 +66,7 @@ namespace NBA.Services
 
         internal static BasketballResponse<Game> CheckGameForPlayer(string gameId, string playerId)
         {
-            var game = Basketball.Repo.GetGame(gameId);
+            var game = Basketball.Repo.GetById<Game>(gameId);
 
             if (game is null)
                 return NotFound<Game>("Game not found");
@@ -88,7 +85,7 @@ namespace NBA.Services
 
         internal static BasketballResponse<Player> GetPlayer(string playerId)
         {
-            var player = Basketball.Repo.GetPlayer(playerId);
+            var player = Basketball.Repo.GetById<Player>(playerId);
 
             if (player == null)
                 return NotFound<Player>("Player not found");

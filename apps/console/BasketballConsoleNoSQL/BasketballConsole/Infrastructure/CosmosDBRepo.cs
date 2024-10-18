@@ -71,10 +71,10 @@ namespace NBA.Infrastructure
             }
         }
 
-        public Game GetGame(string gameId)
+        public T GetById<T>(string id) where T : BasketballModel
         {
-            var query = GetContainer<Game>().GetItemLinqQueryable<Game>()
-                                            .Where(p => p.Id == gameId);
+            var query = GetContainer<T>().GetItemLinqQueryable<T>()
+                                          .Where(i => i.Id == id);
 
             var iterator = query.ToFeedIterator();
 
@@ -87,18 +87,6 @@ namespace NBA.Infrastructure
         {
             var query = GetContainer<Participation>().GetItemLinqQueryable<Participation>()
                                                      .Where(p => p.PlayerId == playerId && p.GameId == gameId);
-
-            var iterator = query.ToFeedIterator();
-
-            var response = iterator.ReadNextAsync().GetAwaiter().GetResult();
-
-            return response.FirstOrDefault();
-        }
-
-        public Player GetPlayer(string playerId)
-        {
-            var query = GetContainer<Player>().GetItemLinqQueryable<Player>()
-                                              .Where(p => p.Id == playerId);
 
             var iterator = query.ToFeedIterator();
 
