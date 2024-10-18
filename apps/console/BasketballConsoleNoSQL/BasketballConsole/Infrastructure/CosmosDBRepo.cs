@@ -1,8 +1,9 @@
-﻿using Azure;
-using Microsoft.Azure.Cosmos;
+﻿using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Linq;
 using NBA.Models;
+using System.Linq.Expressions;
 using System.Text.Json;
+
 
 namespace NBA.Infrastructure
 {
@@ -83,10 +84,11 @@ namespace NBA.Infrastructure
             return response.FirstOrDefault();
         }
 
-        public Participation GetParticipation(string gameId, string playerId)
+        public T Get<T>(Expression<Func<T, bool>> predicate) where T : BasketballModel
         {
-            var query = GetContainer<Participation>().GetItemLinqQueryable<Participation>()
-                                                     .Where(p => p.PlayerId == playerId && p.GameId == gameId);
+            var query = GetContainer<T>()
+                .GetItemLinqQueryable<T>()
+                .Where(predicate);
 
             var iterator = query.ToFeedIterator();
 

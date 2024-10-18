@@ -1,16 +1,15 @@
 ﻿using NBA.Models;
+using System.Linq.Expressions;
 
 namespace NBA.Infrastructure
 {
     interface IBasketballRepo
     {
-        bool Update(Participation participation);
         Task<bool> CreateGame(Game game);
-        Season GetLastSeason();
-        Participation GetParticipation(string gameId, string playerId);
+        bool Update(Participation participation);
         T GetById<T>(string id) where T : BasketballModel;
-        //List<T> Get<T>(Func<T, bool> predicate);
-        //var participations = CosmosDBRepo.Get<Participation>(p => p.gameId == gameId && p.playerId == playerId);
+        T Get<T>(Expression<Func<T, bool>> predicate) where T : BasketballModel;
+        Season GetLastSeason();
         void Reseed();
     }
 }

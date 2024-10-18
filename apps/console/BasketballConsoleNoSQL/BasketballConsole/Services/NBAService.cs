@@ -39,7 +39,7 @@ namespace NBA.Services
             if (player is null)
                 return NotFound<Participation>("Player not found");
 
-            var participation = Basketball.Repo.GetParticipation(game.Id, playerId);
+            var participation = Basketball.Repo.Get<Participation>(p => p.GameId == game.Id && p.PlayerId == playerId);
 
             if (participation == null)
                 participation = Participation.FactoryFrom(game,
@@ -76,7 +76,7 @@ namespace NBA.Services
 
         internal static BasketballResponse<Participation> GetParticipation(string gameId, string playerId)
         {
-            var participation = Basketball.Repo.GetParticipation(gameId, playerId);
+            var participation = Basketball.Repo.Get<Participation>(p => p.GameId == gameId && p.PlayerId == playerId);
             if (participation is null)
                 return NotFound<Participation>("Player does not participate in the game");
             else
