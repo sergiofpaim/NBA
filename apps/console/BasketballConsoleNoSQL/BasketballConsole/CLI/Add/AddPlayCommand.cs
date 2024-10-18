@@ -1,4 +1,5 @@
-﻿using NBA.Models;
+﻿using NBA.Infrastructure;
+using NBA.Models;
 using NBA.Services;
 using Spectre.Console;
 using Spectre.Console.Cli;
@@ -30,6 +31,7 @@ public class AddPlayCommand : NBACommand<AddPlayCommand.PlayParms>
         const int PLAYS_TO_TAKE = 5;
 
         var gameResult = NBAService.CheckGameForPlayer(settings.GameId, settings.PlayerId);
+        var isHomePlayer = NBAService.PartOfHomeTeam(gameResult, settings.PlayerId);
         if (gameResult.Code != 0) 
             return PrintResult(gameResult.Message, gameResult.Code);
 
@@ -106,11 +108,11 @@ public class AddPlayCommand : NBACommand<AddPlayCommand.PlayParms>
                     continue;
             }
 
-            var playResult = NBAService.AddPlay(settings.PlayerId, gameResult.Game, settings.Quarter, gameResult.IsHomePlayer, type, PLAYS_TO_TAKE);
+            var playResult = NBAService.AddPlay(settings.PlayerId, gameResult.PayLoad, settings.Quarter, isHomePlayer.PayLoad, type, PLAYS_TO_TAKE);
             if (playResult.Code != 0)
                 return PrintResult(playResult.Message, playResult.Code);
 
-            ShowLastPlays(playResult.Participation, settings.GameId, settings.PlayerId, settings.Quarter);
+            ShowLastPlays(playResult.PayLoad, settings.GameId, settings.PlayerId, settings.Quarter);
         }
     }
 
@@ -120,7 +122,7 @@ public class AddPlayCommand : NBACommand<AddPlayCommand.PlayParms>
         if (result.Code != 0)
             PrintResult(result.Message, result.Code);
         else
-            AnsiConsole.MarkupLine($"Game Id: {gameId}\nCurrent Time: {DateTime.Now}\nQuarter: {quarter}\nPlayer: {result.Player.Name}");
+            AnsiConsole.MarkupLine($"Game Id: {gameId}\nCurrent Time: {DateTime.Now}\nQuarter: {quarter}\nPlayer: {result.PayLoad.Name}");
     }
 
     private static void ShowLastPlays(Participation participation, string gameId, string playerId, int quarter)

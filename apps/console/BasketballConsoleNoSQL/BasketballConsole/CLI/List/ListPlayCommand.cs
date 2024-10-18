@@ -33,7 +33,7 @@ public class ListPlayCommand : NBACommand<ListPlayCommand.GameParms>
         if (participationResult.Code != 0)
             return PrintResult(participationResult.Message, participationResult.Code);
 
-        return ShowAllPlays(participationResult.Participation, gameResult.Game);
+        return ShowAllPlays(participationResult.PayLoad, gameResult.PayLoad);
     }
 
     private static int ShowAllPlays(Participation participation, Game game)

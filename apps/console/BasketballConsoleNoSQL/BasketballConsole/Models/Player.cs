@@ -1,8 +1,8 @@
-﻿using NBA.Repo;
+﻿using NBA.Infrastructure;
 
 namespace NBA.Models
 {
-    public class Player : NBAModel
+    public class Player : BasketballModel
     {
         public string Name { get; set; }
 

@@ -1,9 +1,9 @@
-﻿using NBA.Models.ValueObjects;
-using NBA.Repo;
+﻿using NBA.Infrastructure;
+using NBA.Models.ValueObjects;
 
 namespace NBA.Models
 {
-    public class Game : NBAModel
+    public class Game : BasketballModel
     {
         public string SeasonId { get; set; }
 

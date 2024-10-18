@@ -1,5 +1,5 @@
 ﻿using NBA.CLI;
-using NBA.Repo;
+using NBA.Infrastructure;
 using Spectre.Console.Cli;
 
 class Program

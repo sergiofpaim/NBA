@@ -1,6 +1,4 @@
-﻿using NBA.Interfaces;
-
-namespace NBA.Repo
+﻿namespace NBA.Infrastructure
 {
     internal static class Basketball
     {

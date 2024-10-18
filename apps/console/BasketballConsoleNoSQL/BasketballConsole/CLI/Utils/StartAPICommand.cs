@@ -39,13 +39,6 @@ public class StartAPICommand : NBACommand<EmptyCommandSettings>
             c.RoutePrefix = string.Empty;
         });
 
-        var url = "http://localhost:5000/index.html";
-        Process.Start(new ProcessStartInfo
-        {
-            FileName = url,
-            UseShellExecute = true
-        });
-
         app.Run();
 
         return 0;

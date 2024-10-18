@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using NBA.Infrastructure;
 using NBA.Services;
 using NBA.ViewModels;
 
@@ -7,7 +8,7 @@ namespace NBA.Controllers
 {
     [ApiController]
     [Route("nba")]
-    public class NBAController : ControllerBase
+    public class NBAController : BasketballController
     {
         private readonly ILogger<NBAController> _logger;
 
@@ -22,50 +23,36 @@ namespace NBA.Controllers
             const int PLAYS_TO_TAKE = 5;
             var gameResult = NBAService.CheckGameForPlayer(request.GameId, request.PlayerId);
 
-            var playResult = NBAService.AddPlay(request.PlayerId, gameResult.Game, request.Quarter, gameResult.IsHomePlayer, request.PlayType, PLAYS_TO_TAKE);
-            if (playResult.Code == 0)
-                return Ok(new
-                {
-                    Message = "Play added successfully.",
-                    Data = playResult.Participation.Plays
-                });
+            var isHomePlayer = NBAService.PartOfHomeTeam(gameResult, request.PlayerId);
 
-            return BadRequest("Play failed to be added");
+            var playResult = NBAService.AddPlay(request.PlayerId, gameResult.PayLoad, request.Quarter, isHomePlayer.PayLoad, request.PlayType, PLAYS_TO_TAKE);
+
+            return Result(playResult);
         }
 
         [HttpPost("add/game")]
         public IActionResult AddGame([FromBody] AddGameVM request)
         {
             var gameResult = NBAService.AddGame(request.HomeTeamId, request.VisitorTeamId, request.At);
-            if (gameResult.Code == 0)
-                return Ok("Game created successfully");
 
-            return BadRequest("Game failed to be created.");
+            return Result(gameResult);
         }
 
         [HttpGet("list/play")]
         public IActionResult ListPlay(string gameId, string playerId)
         {
-            var gameResult = NBAService.CheckGameForPlayer(gameId, playerId);
-            if (gameResult.Code != 0)
-                return BadRequest("Player does not participate in the game.");
-
             var participationResult = NBAService.GetParticipation(gameId, playerId);
 
-            return Ok(new
-            {
-                Message = "Plays retrieved successfully.",
-                Data = participationResult.Participation.Plays
-            });
+            return Result(participationResult);
         }
 
 
-        [HttpGet("reseed")]
+        [HttpPut("reseed")]
         public IActionResult Reseed()
         {
             var result = NBAService.Reseed();
 
-            return Ok("Data reseeded.");
+            return Result(result);
         }
     }
 }

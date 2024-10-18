@@ -1,11 +1,10 @@
 ﻿using Azure;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Linq;
-using NBA.Interfaces;
 using NBA.Models;
 using System.Text.Json;
 
-namespace NBA.Repo
+namespace NBA.Infrastructure
 {
     internal class CosmosDBRepo : IBasketballRepo
     {
@@ -130,7 +129,7 @@ namespace NBA.Repo
             Reseed<Participation>();
         }
 
-        private static void Reseed<T>() where T : NBAModel
+        private static void Reseed<T>() where T : BasketballModel
         {
             var modelsToClean = GetContainer<T>().GetItemQueryIterator<T>();
 
