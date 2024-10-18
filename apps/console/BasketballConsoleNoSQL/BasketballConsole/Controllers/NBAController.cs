@@ -18,22 +18,19 @@ namespace NBA.Controllers
         }
 
         [HttpPost("add/play")]
-        public IActionResult AddPlay([FromBody] AddPlayVM request)
+        public async Task<IActionResult> AddPlayAsync([FromBody] AddPlayVM request)
         {
             const int PLAYS_TO_TAKE = 5;
-            var gameResult = NBAService.CheckGameForPlayer(request.GameId, request.PlayerId);
 
-            var isHomePlayer = NBAService.PartOfHomeTeam(gameResult, request.PlayerId);
-
-            var playResult = NBAService.AddPlay(request.PlayerId, gameResult.PayLoad, request.Quarter, isHomePlayer.PayLoad, request.PlayType, PLAYS_TO_TAKE);
+            var playResult = await NBAService.AddPlayAsync(request.PlayerId, request.GameId, request.Quarter, request.PlayType, PLAYS_TO_TAKE);
 
             return Result(playResult);
         }
 
         [HttpPost("add/game")]
-        public IActionResult AddGame([FromBody] AddGameVM request)
+        public async Task<IActionResult> AddGameAsync([FromBody] AddGameVM request)
         {
-            var gameResult = NBAService.AddGame(request.HomeTeamId, request.VisitorTeamId, request.At);
+            var gameResult = await NBAService.AddGameAsync(request.HomeTeamId, request.VisitorTeamId, request.At);
 
             return Result(gameResult);
         }

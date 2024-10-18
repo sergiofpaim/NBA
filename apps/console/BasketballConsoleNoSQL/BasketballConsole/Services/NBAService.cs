@@ -6,57 +6,70 @@ namespace NBA.Services
 {
     internal class NBAService : BasketballService
     {
-        public static BasketballResponse<object> AddGame(string homeTeamId, string visitorTeamId, DateTime at)
+        public static async Task<BasketballResponse<Game>> AddGameAsync(string homeTeamId, string visitorTeamId, DateTime at)
         {
-            var lastSeason = Basketball.Repo.GetLastSeason();
+            var lastSeason = Basketball.Repo.Get<Season>(season => true, season => season.Id, 1).FirstOrDefault();
             if (lastSeason is null)
-                return Error<object>("There is no season registered yet.");
+                return Error<Game>("There is no season registered yet.");
 
             var homeTeam = lastSeason.Teams.FirstOrDefault(t => t.TeamId == homeTeamId);
             if (homeTeam is null)
-                return NotFound<object>("Home team not found");
+                return NotFound<Game>("Home team not found.");
 
             var visitorTeam = lastSeason.Teams.FirstOrDefault(t => t.TeamId == visitorTeamId);
             if (visitorTeam is null)
-                return NotFound<object>("Visitor team not found");
+                return NotFound<Game>("Visitor team not found.");
 
             var game = Game.FactoryFrom(lastSeason.Id, homeTeam, visitorTeam, at);
 
-            bool success = Basketball.Repo.CreateGame(game).Result;
+            var saved = await Basketball.Repo.CreateAsync(game);
 
-            if (!success)
-                return Error<object>("Failed to add the game to the database.");
+            if (saved is null)
+                return Error<Game>("Failed to add the game to the database.");
 
-            return Success<object>(default, $"Game added to the database with Id: {game.Id}");
+            return Success(game, $"Game added to the database with Id: {game.Id}");
         }
 
-        public static BasketballResponse<Participation> AddPlay(string playerId, Game game, int quarter, bool isHomePlayer, PlayType type, int playsToTake)
+        public static async Task<BasketballResponse<Participation>> AddPlayAsync(string playerId, string gameId, int quarter, PlayType type, int playsToTake)
         {
-            var newPlay = GamePlay.FactoryFrom(quarter, type, game.At);
+            var game = Basketball.Repo.GetById<Game>(gameId);
+            if (game is null)
+                return NotFound<Participation>("Game not found.");
+
+            var isHomePlayer = IsPartOfHomeTeam(game, playerId);
+            if (isHomePlayer is null)
+                return NotFound<Participation>("Player does not participate in the game.");
 
             var player = Basketball.Repo.GetById<Player>(playerId);
-
             if (player is null)
-                return NotFound<Participation>("Player not found");
+                return NotFound<Participation>("Player not found.");
 
-            var participation = Basketball.Repo.Get<Participation>(p => p.GameId == game.Id && p.PlayerId == playerId);
+            var participation = Basketball.Repo.Get<Participation>(p => p.GameId == game.Id && p.PlayerId == playerId).FirstOrDefault();
 
+            var newPlay = GamePlay.FactoryFrom(quarter, type, game.At);
+
+            Participation saved = default;
             if (participation == null)
+            {
                 participation = Participation.FactoryFrom(game,
                                                           player,
-                                                          isHomePlayer
+                                                          isHomePlayer.Value
                                                               ? game.HomeTeamName
                                                               : game.VisitorTeamName, newPlay);
-            else
-                participation.RegisterPlay(newPlay);
 
-            bool success = Basketball.Repo.Update(participation);
+                saved = await Basketball.Repo.CreateAsync(participation);
+            }
+            else
+            {
+                participation.RegisterPlay(newPlay);
+                saved = await Basketball.Repo.UpdateAsync(participation);
+            }
 
             //Only cuts the participation after updating the database
             if (participation.Plays.Count > playsToTake)
                 participation.Plays.RemoveRange(playsToTake, participation.Plays.Count - playsToTake);
 
-            if (!success)
+            if (saved is null)
                 return Error<Participation>("Failed to add the play to the database.");
 
             else
@@ -64,21 +77,11 @@ namespace NBA.Services
                 return Success(participation, "Play added to the database.");
         }
 
-        internal static BasketballResponse<Game> CheckGameForPlayer(string gameId, string playerId)
-        {
-            var game = Basketball.Repo.GetById<Game>(gameId);
-
-            if (game is null)
-                return NotFound<Game>("Game not found");
-
-            return Success(game, "Game not found");
-        }
-
         internal static BasketballResponse<Participation> GetParticipation(string gameId, string playerId)
         {
-            var participation = Basketball.Repo.Get<Participation>(p => p.GameId == gameId && p.PlayerId == playerId);
+            var participation = Basketball.Repo.Get<Participation>(p => p.GameId == gameId && p.PlayerId == playerId).FirstOrDefault();
             if (participation is null)
-                return NotFound<Participation>("Player does not participate in the game");
+                return NotFound<Participation>("Player does not participate in the game.");
             else
                 return Success(participation);
         }
@@ -88,28 +91,36 @@ namespace NBA.Services
             var player = Basketball.Repo.GetById<Player>(playerId);
 
             if (player == null)
-                return NotFound<Player>("Player not found");
+                return NotFound<Player>("Player not found.");
             else
                 return Success(player);
         }
 
-        internal static BasketballResponse<bool> PartOfHomeTeam(BasketballResponse<Game> gameResult, string playerId)
+        internal static BasketballResponse<Game> GetGame(string gameId)
         {
-            bool isHomePlayer;
-            if (gameResult.PayLoad.HomePlayerIds.Contains(playerId))
-                isHomePlayer = true;
-            else if (gameResult.PayLoad.VisitorPlayerIds.Contains(playerId))
-                isHomePlayer = false;
-            else
-                return Error<bool>("Player does not participate in the team for the season.");
+            var game = Basketball.Repo.GetById<Game>(gameId);
 
-            return Success(isHomePlayer);
+            if (game == null)
+                return NotFound<Game>("Game not found.");
+            else
+                return Success(game);
+        }
+
+        private static bool? IsPartOfHomeTeam(Game gameResult, string playerId)
+        {
+            bool? isHomePlayer = null;
+            if (gameResult.HomePlayerIds.Contains(playerId))
+                isHomePlayer = true;
+            else if (gameResult.VisitorPlayerIds.Contains(playerId))
+                isHomePlayer = false;
+
+            return isHomePlayer;
         }
 
         internal static BasketballResponse<object> Reseed()
         {
             Basketball.Repo.Reseed();
-            return Success<object>(null, "Reseed completed");
+            return Success<object>(null, "Reseed completed.");
         }
     }
 }

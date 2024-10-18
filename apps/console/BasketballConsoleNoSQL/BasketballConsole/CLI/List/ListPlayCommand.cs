@@ -25,15 +25,13 @@ public class ListPlayCommand : NBACommand<ListPlayCommand.GameParms>
     }
     public override int Execute(CommandContext context, GameParms settings)
     {
-        var gameResult = NBAService.CheckGameForPlayer(settings.GameId, settings.PlayerId);
-        if (gameResult.Code != 0)
-            return PrintResult(gameResult.Message, gameResult.Code);
-
         var participationResult = NBAService.GetParticipation(settings.GameId, settings.PlayerId);
         if (participationResult.Code != 0)
             return PrintResult(participationResult.Message, participationResult.Code);
 
-        return ShowAllPlays(participationResult.PayLoad, gameResult.PayLoad);
+        var game = NBAService.GetGame(settings.GameId);
+
+        return ShowAllPlays(participationResult.PayLoad, game.PayLoad);
     }
 
     private static int ShowAllPlays(Participation participation, Game game)

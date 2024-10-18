@@ -30,11 +30,6 @@ public class AddPlayCommand : NBACommand<AddPlayCommand.PlayParms>
     {
         const int PLAYS_TO_TAKE = 5;
 
-        var gameResult = NBAService.CheckGameForPlayer(settings.GameId, settings.PlayerId);
-        var isHomePlayer = NBAService.PartOfHomeTeam(gameResult, settings.PlayerId);
-        if (gameResult.Code != 0) 
-            return PrintResult(gameResult.Message, gameResult.Code);
-
         ShowData(settings.GameId, settings.Quarter, settings.PlayerId);
 
         while (true)
@@ -108,7 +103,7 @@ public class AddPlayCommand : NBACommand<AddPlayCommand.PlayParms>
                     continue;
             }
 
-            var playResult = NBAService.AddPlay(settings.PlayerId, gameResult.PayLoad, settings.Quarter, isHomePlayer.PayLoad, type, PLAYS_TO_TAKE);
+            var playResult = NBAService.AddPlayAsync(settings.PlayerId, settings.GameId, settings.Quarter, type, PLAYS_TO_TAKE).Result;
             if (playResult.Code != 0)
                 return PrintResult(playResult.Message, playResult.Code);
 

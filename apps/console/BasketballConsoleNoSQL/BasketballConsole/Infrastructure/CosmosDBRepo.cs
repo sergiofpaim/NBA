@@ -1,5 +1,6 @@
 ﻿using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Linq;
+using Microsoft.Azure.Cosmos.Serialization.HybridRow;
 using NBA.Models;
 using System.Linq.Expressions;
 using System.Text.Json;
@@ -44,31 +45,31 @@ namespace NBA.Infrastructure
             containers.Add(typeof(Team), CosmosClient.GetContainer(DatabaseId, nameof(Team)));
         }
 
-        public bool Update(Participation participation)
+        public async Task<T> CreateAsync<T>(T entity) where T : BasketballModel
         {
             try
             {
-                GetContainer<Participation>().UpsertItemAsync(participation, new PartitionKey(participation.Id)).GetAwaiter().GetResult();
-                return true;
+                var result = await GetContainer<T>().CreateItemAsync(entity, new PartitionKey(entity.Id));
+                return result.Resource;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error updating participation: {ex.Message}");
-                return false;
+                Console.WriteLine($"Error updating {typeof(T).Name}: {ex.Message}");
+                return null;
             }
         }
 
-        public async Task<bool> CreateGame(Game game)
+        public async Task<T> UpdateAsync<T>(T entity) where T : BasketballModel
         {
             try
             {
-                await GetContainer<Game>().CreateItemAsync(game, new PartitionKey(game.Id));
-                return true;
+                var result = await GetContainer<T>().UpsertItemAsync(entity, new PartitionKey(entity.Id));
+                return result.Resource;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error creating game: {ex.Message}");
-                return false;
+                Console.WriteLine($"Error creating {typeof(T).Name}: {ex.Message}");
+                return null;
             }
         }
 
@@ -84,30 +85,23 @@ namespace NBA.Infrastructure
             return response.FirstOrDefault();
         }
 
-        public T Get<T>(Expression<Func<T, bool>> predicate) where T : BasketballModel
+        public IEnumerable<T> Get<T>(Expression<Func<T, bool>> where, Expression<Func<T, object>> order = null, int? take = null ) where T : BasketballModel
         {
             var query = GetContainer<T>()
                 .GetItemLinqQueryable<T>()
-                .Where(predicate);
+                .Where(where);
+
+            if (order != null)
+                query = query.OrderBy(order);
+
+            if (take.HasValue)
+                query = query.Take(take.Value);
 
             var iterator = query.ToFeedIterator();
 
             var response = iterator.ReadNextAsync().GetAwaiter().GetResult();
 
-            return response.FirstOrDefault();
-        }
-
-        public Season GetLastSeason()
-        {
-            var query = GetContainer<Season>().GetItemLinqQueryable<Season>()
-                                              .OrderByDescending(season => season.Id)
-                                              .Take(1);
-
-            var iterator = query.ToFeedIterator();
-
-            var response = iterator.ReadNextAsync().Result;
-
-            return response.FirstOrDefault();
+            return response;
         }
 
         public void Reseed()
