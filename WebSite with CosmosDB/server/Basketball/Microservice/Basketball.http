@@ -1,0 +1,6 @@
+@BasketballConsoleNoSQL_HostAddress = http://localhost:5232
+
+GET {{BasketballConsoleNoSQL_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

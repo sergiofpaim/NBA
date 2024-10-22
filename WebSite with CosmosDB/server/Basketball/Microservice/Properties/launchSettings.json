@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "NBA": {
+      "commandName": "Project",
+      //"commandLineArgs": "list play -g 855af8fd -q 1 -p 1"
+      "commandLineArgs": "add play -g 855af8fd -q 1 -p 1"
+      //"commandLineArgs": "add game -o LAL -v GSW -a 2024-10-02T11:00:00"
+      //"commandLineArgs": "utils reseed"
+      //"commandLineArgs": "utils api"
+    }
+  }
+}

@@ -1,36 +1,34 @@
-﻿using NBA.Interfaces;
+﻿using NBA.Infrastructure;
 using NBA.Models;
-using NBA.Repo;
+using NBA.Services;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
 using System.Data;
 
-namespace NBA.Commands;
+namespace NBA.CLI;
 
 [Description("\n\nAdds a play for an specific game")]
 
-public class AddPlayCommand : Command<AddPlayCommand.PlayParms>
+public class AddPlayCommand : NBACommand<AddPlayCommand.PlayParms>
 {
-    public sealed class PlayParms : GlobalCommandSettings
+    public sealed class PlayParms : CommandSettings
     {
         [CommandOption("-g|--game <GAMEID>")]
         [Description("The game Id")]
-        public int GameId { get; set; }
+        public string GameId { get; set; }
         [CommandOption("-q|--quarter <QUARTER>")]
         [Description("The quarter of the play")]
         public int Quarter { get; set; }
 
         [CommandOption("-p|--player <PLAYERID>")]
         [Description("The id of the player")]
-        public int PlayerId { get; set; }
+        public string PlayerId { get; set; }
     }
 
     public override int Execute(CommandContext context, PlayParms settings)
     {
-        var selection = Basketball.Repo.GetSelection(settings.GameId, settings.PlayerId);
-        if (selection is null)
-            throw new Exception("Player does not participate in the team for the season");
+        const int PLAYS_TO_TAKE = 5;
 
         ShowData(settings.GameId, settings.Quarter, settings.PlayerId);
 
@@ -38,9 +36,9 @@ public class AddPlayCommand : Command<AddPlayCommand.PlayParms>
         {
             AnsiConsole.MarkupLine("\nType the letter of the play (or h for help) and press enter:");
 
-            PlayType? type = null;
-            string choice = Console.ReadLine()?.ToUpper() ?? "";
-            
+            PlayType type = default;
+            string choice = Console.ReadLine()?.ToUpper();
+
             switch (choice)
             {
                 case "1":
@@ -105,40 +103,33 @@ public class AddPlayCommand : Command<AddPlayCommand.PlayParms>
                     continue;
             }
 
-            try
-            {
-                int rowsAffected = Basketball.Repo.RegisterPlay(settings.GameId,
-                                                                settings.Quarter,
-                                                                settings.PlayerId,
-                                                                type.Value);
-                if (rowsAffected > 0)
-                    AnsiConsole.MarkupLine($"[green]Play added to the database.[/]");
-                else
-                    AnsiConsole.MarkupLine($"[red]Failed to add the play to the database.[/]");
+            var playResult = NBAService.AddPlayAsync(settings.PlayerId, settings.GameId, settings.Quarter, type, PLAYS_TO_TAKE).Result;
+            if (playResult.Code != 0)
+                return PrintResult(playResult.Message, playResult.Code);
 
-                ShowLastPlays(settings.GameId, settings.PlayerId, settings.Quarter);
-            }
-            catch (InvalidConstraintException ex)
-            {
-                AnsiConsole.MarkupLine(ex.Message);
-            }
+            ShowLastPlays(playResult.PayLoad, settings.GameId, settings.PlayerId, settings.Quarter);
         }
     }
 
-    private void ShowData(int gameId, int quarter, int playerId)
+    private static void ShowData(string gameId, int quarter, string playerId)
     {
-        AnsiConsole.MarkupLine($"Game Id: {gameId}\nCurrent Time: {DateTime.Now}\nQuarter: {quarter}\nPlayer: {Basketball.Repo.GetPlayer(playerId).Name}");
+        var result = NBAService.GetPlayer(playerId);
+        if (result.Code != 0)
+            PrintResult(result.Message, result.Code);
+        else
+            AnsiConsole.MarkupLine($"Game Id: {gameId}\nCurrent Time: {DateTime.Now}\nQuarter: {quarter}\nPlayer: {result.PayLoad.Name}");
     }
 
-    private void ShowLastPlays(int gameId, int playerId, int quarter)
+    private static void ShowLastPlays(Participation participation, string gameId, string playerId, int quarter)
     {
-        var plays = Basketball.Repo.GetLastPlays(gameId, playerId, quarter, 5);
+        var plays = participation.Plays.Where(p => p.Quarter == quarter)
+                                       .ToList();
 
         var tableOptions = new Table();
-        tableOptions.Title = new TableTitle("\n\nLast 5 Plays");
         tableOptions.AddColumn("Points");
         tableOptions.AddColumn("Type");
         tableOptions.AddColumn("At");
+        tableOptions.Title = new TableTitle("\n\nLast 5 Plays");
 
         foreach (var play in plays)
             tableOptions.AddRow($"{play.Points}", $"{play.Type}", $"{play.At}");

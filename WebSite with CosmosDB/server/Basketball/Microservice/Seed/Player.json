@@ -1,0 +1,62 @@
+[
+  {
+    "id": "1",
+    "name": "LeBron James",
+    "bornOn": "1984-12-30",
+    "position": "Small Forward"
+  },
+  {
+    "id": "2",
+    "name": "Anthony Davis",
+    "bornOn": "1993-03-11",
+    "position": "Power Forward"
+  },
+  {
+    "id": "3",
+    "name": "D'Angelo Russell",
+    "bornOn": "1996-02-23",
+    "position": "Point Guard"
+  },
+  {
+    "id": "4",
+    "name": "Rui Hachimura",
+    "bornOn": "1998-02-23",
+    "position": "Small Forward"
+  },
+  {
+    "id": "5",
+    "name": "Jarred Vanderbilt",
+    "bornOn": "1999-04-03",
+    "position": "Power Forward"
+  },
+  {
+    "id": "6",
+    "name": "Stephen Curry",
+    "bornOn": "1988-03-14",
+    "position": "Point Guard"
+  },
+  {
+    "id": "7",
+    "name": "Klay Thompson",
+    "bornOn": "1990-02-08",
+    "position": "Shooting Guard"
+  },
+  {
+    "id": "8",
+    "name": "Draymond Green",
+    "bornOn": "1990-03-04",
+    "position": "Power Forward"
+  },
+  {
+    "id": "9",
+    "name": "Andrew Wiggins",
+    "bornOn": "1995-02-23",
+    "position": "Small Forward"
+  },
+  {
+    "id": "10",
+    "name": "Kevon Looney",
+    "bornOn": "1996-02-06",
+    "position": "Center"
+  }
+]

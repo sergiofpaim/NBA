@@ -1,4 +1,4 @@
-﻿namespace NBA.Models;
+﻿namespace NBA.Repo.Tables;
 
 public partial class Participation
 {
@@ -10,7 +10,7 @@ public partial class Participation
 
     public int Quarter { get; set; }
 
-    public int? Points { get; set; }
+    public int Points { get; set; }
 
     public virtual Game Game { get; set; } = null!;
 

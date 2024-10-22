@@ -1,8 +1,8 @@
-﻿namespace NBA.Models;
+﻿namespace NBA.Repo.Tables;
 
 public partial class Season
 {
     public string Id { get; set; } = null!;
 
-    public virtual ICollection<Scalation> Scalations { get; set; } = new List<Scalation>();
+    public virtual ICollection<Scalation> Scalations { get; set; } = [];
 }
