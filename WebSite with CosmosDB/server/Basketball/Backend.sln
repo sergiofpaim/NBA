@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NBA", "BasketballConsole\NBA.csproj", "{59301897-3B8A-4219-A175-BF84C4460E90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NBA-API", "Microservice\NBA-API.csproj", "{FBD9EE0E-B0FA-4D7A-8393-2DFBAA592326}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{59301897-3B8A-4219-A175-BF84C4460E90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{59301897-3B8A-4219-A175-BF84C4460E90}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{59301897-3B8A-4219-A175-BF84C4460E90}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{59301897-3B8A-4219-A175-BF84C4460E90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBD9EE0E-B0FA-4D7A-8393-2DFBAA592326}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBD9EE0E-B0FA-4D7A-8393-2DFBAA592326}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBD9EE0E-B0FA-4D7A-8393-2DFBAA592326}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBD9EE0E-B0FA-4D7A-8393-2DFBAA592326}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
