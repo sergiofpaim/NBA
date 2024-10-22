@@ -50,6 +50,11 @@ class Program
                 }
             }
         }
+        else
+        {
+            AnsiConsole.MarkupLine("[red]No repo informed. Defaulting to SQL.[/]\n");
+            Basketball.SetRepo(new BasketballSQL());
+        }
     }
 
     private static void MyConfigurator(IConfigurator config)
