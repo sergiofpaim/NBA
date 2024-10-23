@@ -2,8 +2,17 @@
 
 ### **Learned**
 
+### **Goal**
+The goal of this project was to manipulate a NoSQL database, specifically CosmosDB. I created a CLI interface and a RESTful API using the Microsoft Azure Cosmos library. 
+
+At the end of the backend development, a repository was set up for database manipulation, and all methods were adjusted to work with generics.
+
 #### **Database Languages and Operations**
-In this project, I dove deep into NoSQL database management, specifically working with Azure Cosmos DB. I learned how to effectively structure and manipulate data in a document-oriented environment, focusing on essential operations like creating, reading, updating, and deleting documents. Building a RESTful API allowed me to create smooth interactions with the Cosmos DB, making it easy to retrieve and manage data. I also enjoyed developing a CLI interface, which improved user interaction with the database. Throughout this experience, I became more comfortable using the Microsoft.Azure.Cosmos library, which helped me work with generics for flexible data handling. Additionally, I gained valuable skills in deploying and managing Azure resources, deepening my understanding of cloud computing principles and best practices.
+In this project, I dove deep into NoSQL database management, specifically working with Azure Cosmos DB. I learned how to effectively structure and manipulate data in a document-oriented environment, focusing on essential operations like creating, reading, updating, and deleting documents. 
+
+Building a RESTful API allowed me to create interactions with the Cosmos DB, making it easy to retrieve and manage data. I also enjoyed developing a CLI interface, which improved user interaction with the database. 
+
+Throughout this experience, I became more comfortable using the Microsoft.Azure.Cosmos library, which helped me work with generics for flexible data handling.
 
 ### **Prerequisites**
 

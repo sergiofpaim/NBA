@@ -1,14 +1,13 @@
 import React from 'react';
-import './App.css';
+import AddPlay from './components/AddPlay';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header>
-        <h1>NBA Console</h1>
-      </header>
+    <div>
+      <h1>NBA API</h1>
+      <AddPlay />
     </div>
   );
-}
+};
 
 export default App;

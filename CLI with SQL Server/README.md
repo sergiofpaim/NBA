@@ -2,13 +2,17 @@
 
 ## Learned
 
-### **Database Languages and Operations**
-I gained a solid understanding of SQL and its various components:
+### **Goal**
+The goal of this project was to learn how to design and manipulate a SQL database from scratch, using stored procedures, triggers, scripts, models, schemas, and seed data. After learning to work with the database in SSMS, I created a CLI interface using both Entity Framework for query creation and database manipulation. 
+
+At the end of the project, two repositories were established: SQL (which uses raw queries) and EF (which handles operations using LINQ)
 
 - **Database Management Skills**
-I had the chance to define and modify database structures (DDL) and manipulate data through tasks like inserting, updating, and deleting records (DML). I learned how to execute queries efficiently (DQL), manage transactions (DTL), and control user permissions (DCL).
+I had the chance to define and modify database structures (DDL) and manipulate data through tasks like inserting, updating, and deleting records (DML). I learned how to execute queries efficiently (DQL) and manage transactions (DTL).
 
-I successfully integrated the CLI with SQL Server, using both raw SQL and Entity Framework to run queries effectively. For the command-line interface, I utilized Spectre.Console.Cli, which really enhanced the user experience. I also created scripts to automate tasks, such as setting up database objects and populating them with initial data (seed data).
+I successfully integrated the CLI with SQL Server, using both raw SQL (DQL) and Entity Framework (LINQ) to run queries effectively. For the command-line interface, I utilized Spectre.Console.Cli, which really enhanced the user experience. 
+
+I also created scripts to automate tasks, such as setting up database objects and populating them with initial data (seed data).
 
 ### **Prerequisites**
 

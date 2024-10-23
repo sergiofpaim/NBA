@@ -28,6 +28,10 @@ public class StartAPICommand : NBACommand<EmptyCommandSettings>
             app.UseExceptionHandler("/Home/Error");
         }
 
+        app.UseCors(policy => policy.AllowAnyOrigin()
+                                    .AllowAnyMethod()
+                                    .AllowAnyHeader());
+
         app.UseHttpsRedirection();
         app.UseAuthorization();
         app.MapControllers();
