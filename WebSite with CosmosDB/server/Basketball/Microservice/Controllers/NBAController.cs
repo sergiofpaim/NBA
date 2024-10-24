@@ -36,7 +36,7 @@ namespace NBA.Controllers
         }
 
         [HttpGet("list/play")]
-        public IActionResult ListPlay(string gameId, string playerId)
+        public IActionResult ListPlay(string playerId, string gameId)
         {
             var participationResult = NBAService.GetParticipation(gameId, playerId);
 

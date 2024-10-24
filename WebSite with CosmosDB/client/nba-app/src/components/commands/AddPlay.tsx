@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { AddPlayParm } from '../types';
-import { addPlay } from '../services/api';
+import { AddPlayParm } from '../../types';
+import { addPlay } from '../../services/api';
 import axios from 'axios';
 
 const AddPlay: React.FC = () => {
