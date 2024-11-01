@@ -8,9 +8,9 @@ I gained a solid understanding of SQL and its various components:
 - **Database Management Skills**
 I had the chance to define and modify database structures (DDL) and manipulate data through tasks like inserting, updating, and deleting records (DML). I learned how to execute queries efficiently (DQL), manage transactions (DTL), and control user permissions (DCL).
 
-I successfully integrated the CLI with SQL Server, using both raw SQL and Entity Framework to run queries effectively. For the command-line interface, I utilized Spectre.Console.Cli, which really enhanced the user experience. I also created scripts to automate tasks, such as setting up database objects and populating them with initial data (seed data).
-
 - **Architecture**
+![NBA SQL Architecture](https://github.com/sergiofpaim/NBA/blob/README/CLI%20with%20SQL%20Server/resource/img/NBASQL_architecture.png)
+This is the architecture of the first version of my system. In this version, I had the opportunity to understand how to run queries and communicate efficiently with a SQL database, using both manual mapping (DML) and Object-Relational Mapping (ORM) tools like Entity Framework. For the command-line interface, I utilized Spectre.Console.Cli to enhance the user experience. Additionally, I created scripts to automate tasks, such as setting up database objects and populating them with initial seed data. My next step will be to continue learning and expanding my skills.
 
 ### **Prerequisites**
 
