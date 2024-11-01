@@ -10,6 +10,8 @@ I had the chance to define and modify database structures (DDL) and manipulate d
 
 I successfully integrated the CLI with SQL Server, using both raw SQL and Entity Framework to run queries effectively. For the command-line interface, I utilized Spectre.Console.Cli, which really enhanced the user experience. I also created scripts to automate tasks, such as setting up database objects and populating them with initial data (seed data).
 
+- **Architecture**
+
 ### **Prerequisites**
 
 1. **SQL Server Management Studio (SSMS)**
