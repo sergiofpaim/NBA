@@ -47,7 +47,7 @@ export const addGame = async (gameData: AddGameParm) => {
 
 export const listPlay = async (parms: ListPlayParms) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/list/play`, { params: parms });
+        const response = await axios.get(`${API_BASE_URL}/get/participation`, { params: parms });
         console.log('API Response:', response.data);
 
         return response.data?.payLoad?.plays || [];
@@ -56,8 +56,6 @@ export const listPlay = async (parms: ListPlayParms) => {
         throw error;
     }
 };
-
-
 
 export const reseed = async () => {
     try {

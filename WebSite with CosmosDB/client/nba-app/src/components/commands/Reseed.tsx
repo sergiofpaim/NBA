@@ -1,6 +1,7 @@
 import React from 'react';
 import { reseed } from '../../services/api';
 import axios from 'axios';
+import { Button } from '@mui/material';
 
 const Reseed: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
@@ -19,7 +20,9 @@ const Reseed: React.FC = () => {
     };
 
     return (
-        <button onClick={handleSubmit}>Reseed</button>
+        <Button type="submit" variant="contained" color="primary" onClick={handleSubmit}>
+            Reseed
+        </Button>
     );
 };
 

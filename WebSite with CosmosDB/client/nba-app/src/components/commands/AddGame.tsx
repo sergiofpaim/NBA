@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AddGameParm } from '../../types';
 import { addGame } from '../../services/api';
 import axios from 'axios';
+import { Box, Button, TextField } from '@mui/material';
 
 const AddGame: React.FC = () => {
     const [homeTeamId, setHomeId] = useState('');
@@ -44,29 +45,34 @@ const AddGame: React.FC = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                type="text"
-                placeholder="Home Team ID"
+        <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <TextField
+                label="Home Team ID"
+                variant="filled"
                 value={homeTeamId}
                 onChange={(e) => setHomeId(e.target.value)}
                 required
             />
-            <input
-                type="text"
-                placeholder="Visitor Team ID"
+            <TextField
+                label="Visitor Team ID"
+                variant="filled"
                 value={visitorTeamId}
                 onChange={(e) => setVisitorId(e.target.value)}
                 required
             />
-            <input
+            <TextField
+                label="Game Date and Time"
                 type="datetime-local"
+                variant="filled"
                 value={formatDateToLocalInput(at)}
                 onChange={handleDateTimeChange}
                 required
+                sx={{ mt: 1 }}
             />
-            <button type="submit">Add Game</button>
-        </form>
+            <Button type="submit" variant="contained" color="primary">
+                Add Game
+            </Button>
+        </Box>
     );
 };
 

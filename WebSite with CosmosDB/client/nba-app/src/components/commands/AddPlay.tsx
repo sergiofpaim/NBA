@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AddPlayParm } from '../../types';
 import { addPlay } from '../../services/api';
 import axios from 'axios';
+import { Box, Button, TextField } from '@mui/material';
 
 const AddPlay: React.FC = () => {
     const [playerId, setPlayerId] = useState('');
@@ -22,9 +23,6 @@ const AddPlay: React.FC = () => {
         try {
             await addPlay(playData);
             alert('Play added successfully!');
-            setPlayerId('');
-            setGameId('');
-            setQuarter(1);
             setPlayType(1);
         } catch (error: unknown) {
             if (axios.isAxiosError(error)) {
@@ -36,39 +34,41 @@ const AddPlay: React.FC = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                type="text"
-                placeholder="Player ID"
+        <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <TextField
+                label="Player ID"
+                variant="filled"
                 value={playerId}
                 onChange={(e) => setPlayerId(e.target.value)}
                 required
             />
-            <input
-                type="text"
-                placeholder="Game ID"
+            <TextField
+                label="Game ID"
+                variant="outlined"
                 value={gameId}
                 onChange={(e) => setGameId(e.target.value)}
                 required
             />
-            <input
+            <TextField
+                label="Quarter"
                 type="number"
-                min="1"
-                max="4"
-                placeholder="Quarter"
+                variant="filled"
                 value={quarter}
                 onChange={(e) => setQuarter(Number(e.target.value))}
                 required
             />
-            <input
+            <TextField
+                label="Play Type"
                 type="number"
-                placeholder="Play Type"
+                variant="filled"
                 value={playType}
                 onChange={(e) => setPlayType(Number(e.target.value))}
                 required
             />
-            <button type="submit">Add Play</button>
-        </form>
+            <Button type="submit" variant="contained" color="primary">
+                Add Play
+            </Button>
+        </Box>
     );
 };
 

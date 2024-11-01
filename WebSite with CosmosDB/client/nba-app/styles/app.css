@@ -1,0 +1,48 @@
+/* app.css */
+
+body {
+    font-family: Arial, sans-serif;
+    /* Set a font for the entire app */
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    /* Light background for contrast */
+}
+
+h1 {
+    text-align: center;
+    /* Center the title */
+    color: #2c3e50;
+    /* Darker color for the heading */
+    margin: 20px 0;
+    /* Space around the heading */
+}
+
+.command-container {
+    background-color: #ffffff;
+    /* White background for command containers */
+    border: 1px solid #dcdcdc;
+    /* Light gray border */
+    border-radius: 8px;
+    /* Rounded corners */
+    padding: 20px;
+    /* Space inside the containers */
+    margin: 10px;
+    /* Space between command containers */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+    transition: transform 0.2s;
+    /* Smooth transform effect */
+}
+
+.command-container:hover {
+    transform: scale(1.02);
+    /* Slight zoom effect on hover */
+}
+
+.command-container>* {
+    margin: 10px 0;
+    /* Space between elements inside the container */
+}
+
+/* Add any additional styles here */
