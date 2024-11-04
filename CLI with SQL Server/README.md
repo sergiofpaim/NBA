@@ -1,21 +1,40 @@
 # CLI with SQL Server
 
-## Learned
+## Scope
+
+### **Business Domain (Problem)**
+
+This project implements the management of statistics of an NBA season by two basic functional requirements (use cases):
+
+1. Game analysts registering the plays of a given player participating in a given game as the plays happen.
+  
+2. A reporter querying such statistics to give his/her audience realtime insights about teams, players and the game being narrated.
+
+### **Technical Domain (Solution)**
+
+A Command Line Interface (CLI) was chosen in order to provide to the users a fast data input and query experience, considering the realtime (non-functional) requirement derived from the nature of the problem - supporting the narration of a game with realtime data.
+
+### **Architecture Overview**
+  
+![Architecture Diagram](resource/NBASQL_architecture.png)
+
+This is the architecture of the first version of my system. In this version, I had the opportunity to understand how to run queries and communicate efficiently with a SQL database, using both manual mapping (DML) and Object-Relational Mapping (ORM) tools like Entity Framework.
+
+For the command-line interface, I utilized Spectre.Console.Cli to enhance the user experience. Additionally, I created scripts to automate tasks, such as setting up database objects and populating them with initial seed data.
+
+My next step will be to learn how to implement an NoSQL database and a Web Application able to handle realtime inputs.
+
+## Learnings
 
 ### **Database Languages and Operations**
+
 I gained a solid understanding of SQL and its various components:
 
 ### **Database Management Skills**
 
 I had the chance to define and modify database structures (DDL) and manipulate data through tasks like inserting, updating, and deleting records (DML). I learned how to execute queries efficiently (DQL), manage transactions (DTL), and control user permissions (DCL).
 
-### **Architecture**
-  
-![Architecture Diagram](https://raw.githubusercontent.com/sergiofpaim/NBA/main/CLI%20with%20SQL%20Server/resource/img/NBASQL_architecture.png)
-
-  This is the architecture of the first version of my system. In this version, I had the opportunity to understand how to run queries and communicate efficiently with a SQL database, using both manual mapping (DML) and Object-Relational Mapping (ORM) tools like Entity Framework. For the command-line interface, I utilized Spectre.Console.Cli to enhance the user experience. Additionally, I created scripts to automate tasks, such as setting up database objects and populating them with initial seed data. My next step will be to continue learning and expanding my skills.
-
-### **Prerequisites**
+## **Runtime Requirements**
 
 1. **SQL Server Management Studio (SSMS)**
    - **Purpose**: A tool for managing SQL Server databases. Allows users to create and modify database structures, execute queries, and manage database objects.
