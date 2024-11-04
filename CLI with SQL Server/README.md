@@ -1,20 +1,40 @@
 # CLI with SQL Server
 
-## Learned
+## Scope
 
-### **Goal**
-The goal of this project was to learn how to design and manipulate a SQL database from scratch, using stored procedures, triggers, scripts, models, schemas, and seed data. After learning to work with the database in SSMS, I created a CLI interface using both Entity Framework for query creation and database manipulation. 
+### **Business Domain (Problem)**
 
-At the end of the project, two repositories were established: SQL (which uses raw queries) and EF (which handles operations using LINQ)
+This project implements the management of statistics of an NBA season by two basic functional requirements (use cases):
 
-- **Database Management Skills**
-I had the chance to define and modify database structures (DDL) and manipulate data through tasks like inserting, updating, and deleting records (DML). I learned how to execute queries efficiently (DQL) and manage transactions (DTL).
+1. Game analysts registering the plays of a given player participating in a given game as the plays happen.
+  
+2. A reporter querying such statistics to give his/her audience realtime insights about teams, players and the game being narrated.
 
-I successfully integrated the CLI with SQL Server, using both raw SQL (DQL) and Entity Framework (LINQ) to run queries effectively. For the command-line interface, I utilized Spectre.Console.Cli, which really enhanced the user experience. 
+### **Technical Domain (Solution)**
 
-I also created scripts to automate tasks, such as setting up database objects and populating them with initial data (seed data).
+A Command Line Interface (CLI) was chosen in order to provide to the users a fast data input and query experience, considering the realtime (non-functional) requirement derived from the nature of the problem - supporting the narration of a game with realtime data.
 
-### **Prerequisites**
+### **Architecture Overview**
+  
+![Architecture Diagram](resource/NBASQL_architecture.png)
+
+This is the architecture of the first version of my system. In this version, I had the opportunity to understand how to run queries and communicate efficiently with a SQL database, using both manual mapping (DML) and Object-Relational Mapping (ORM) tools like Entity Framework.
+
+For the command-line interface, I utilized Spectre.Console.Cli to enhance the user experience. Additionally, I created scripts to automate tasks, such as setting up database objects and populating them with initial seed data.
+
+My next step will be to learn how to implement an NoSQL database and a Web Application able to handle realtime inputs.
+
+## Learnings
+
+### **Database Languages and Operations**
+
+I gained a solid understanding of SQL and its various components:
+
+### **Database Management Skills**
+
+I had the chance to define and modify database structures (DDL) and manipulate data through tasks like inserting, updating, and deleting records (DML). I learned how to execute queries efficiently (DQL), manage transactions (DTL), and control user permissions (DCL).
+
+## **Runtime Requirements**
 
 1. **SQL Server Management Studio (SSMS)**
    - **Purpose**: A tool for managing SQL Server databases. Allows users to create and modify database structures, execute queries, and manage database objects.

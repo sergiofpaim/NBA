@@ -10,6 +10,9 @@ In both versions, the main interface is the Command Line Interface (CLI), but in
 
 ### Projects
 
-- **[CLI with SQL Server](CLI%20with%20SQL%20Server/README.md)**: Project to design and manipulate SQL database using raw queries and Entity Framework.
-
-- **[CLI and RESTful API with CosmosDB](WebSite%20with%20CosmosDB/README.md)**: Project to manipulate CosmosDB using CLI, RESTful API, and generic repository methods.
+- **[CLI with SQL Server](CLI%20with%20SQL%20Server)**: The goal of this project was to learn how to manipulate a SQL database from scratch, using stored procedures, triggers, scripts, models, schemas, and seed data. After learning to work with the database in SSMS, I created a CLI interface using both Entity Framework for query creation and database manipulation. At the end of the project, two repositories were established: SQL (which uses raw queries) and EF (which handles operations using LINQ).
+Explicar qual o foco dos projetos e uma pequena introdução de cada um abaixo
+- **[CLI and RESTful API with CosmosDB](WebSite%20with%20CosmosDB)**: The goal of this project was to manipulate a NoSQL database, specifically CosmosDB. I created a CLI interface and a RESTful API using the Microsoft Azure Cosmos library. At the end of the backend development, a repository was set up for database manipulation, and all methods were adjusted to work with generics.
+CLI with SQL Server: Objetivo...
+CLI and RESTful API with CosmosDB: Objetivo...
+CLI and RESTful API with CosmosDB: Objetivo...
