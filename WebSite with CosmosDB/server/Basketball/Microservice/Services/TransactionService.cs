@@ -4,7 +4,7 @@ using NBA.Models.ValueObjects;
 
 namespace NBA.Services
 {
-    internal class NBAService : BasketballService
+    internal class TransactionService : BasketballService
     {
         public static async Task<BasketballResponse<Game>> AddGameAsync(string homeTeamId, string visitorTeamId, DateTime at)
         {
@@ -121,6 +121,21 @@ namespace NBA.Services
         {
             Basketball.Repo.Reseed();
             return Success<object>(null, "Reseed completed.");
+        }
+
+        internal static BasketballResponse<object> GetSeasons()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static BasketballResponse<object> GetSeasonGames(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static BasketballResponse<object> GetGamePlayers(string id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

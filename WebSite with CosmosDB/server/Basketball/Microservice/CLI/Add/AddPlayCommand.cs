@@ -103,7 +103,7 @@ public class AddPlayCommand : NBACommand<AddPlayCommand.PlayParms>
                     continue;
             }
 
-            var playResult = NBAService.AddPlayAsync(settings.PlayerId, settings.GameId, settings.Quarter, type, PLAYS_TO_TAKE).Result;
+            var playResult = TransactionService.AddPlayAsync(settings.PlayerId, settings.GameId, settings.Quarter, type, PLAYS_TO_TAKE).Result;
             if (playResult.Code != 0)
                 return PrintResult(playResult.Message, playResult.Code);
 
@@ -113,7 +113,7 @@ public class AddPlayCommand : NBACommand<AddPlayCommand.PlayParms>
 
     private static void ShowData(string gameId, int quarter, string playerId)
     {
-        var result = NBAService.GetPlayer(playerId);
+        var result = TransactionService.GetPlayer(playerId);
         if (result.Code != 0)
             PrintResult(result.Message, result.Code);
         else

@@ -25,7 +25,7 @@ public class AddGameCommand : NBACommand<AddGameCommand.GameParms>
 
     public override int Execute(CommandContext context, GameParms settings)
     {
-        var result = NBAService.AddGameAsync(settings.HomeTeamId, settings.VisitorTeamId, settings.At).Result;
+        var result = TransactionService.AddGameAsync(settings.HomeTeamId, settings.VisitorTeamId, settings.At).Result;
         return PrintResult(result.Message, result.Code);
     }
 }
