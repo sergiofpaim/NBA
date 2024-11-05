@@ -7,7 +7,7 @@ using NBA.ViewModels;
 namespace NBA.Controllers
 {
     [ApiController]
-    [Route("nba")]
+    [Route("")]
     public class NBAController : BasketballController
     {
         private readonly ILogger<NBAController> _logger;
@@ -17,7 +17,7 @@ namespace NBA.Controllers
             _logger = logger;
         }
 
-        [HttpPost("add/play")]
+        [HttpPost("play")]
         public async Task<IActionResult> AddPlayAsync([FromBody] AddPlayVM request)
         {
             const int PLAYS_TO_TAKE = 5;
@@ -27,7 +27,7 @@ namespace NBA.Controllers
             return Result(playResult);
         }
 
-        [HttpPost("add/game")]
+        [HttpPost("game")]
         public async Task<IActionResult> AddGameAsync([FromBody] AddGameVM request)
         {
             var gameResult = await NBAService.AddGameAsync(request.HomeTeamId, request.VisitorTeamId, request.At);
@@ -35,10 +35,10 @@ namespace NBA.Controllers
             return Result(gameResult);
         }
 
-        [HttpGet("list/play")]
-        public IActionResult ListPlay(string gameId, string playerId)
+        [HttpGet("game/{id}/player/{playerId}/participation")]
+        public IActionResult GetParticipation(string id, string playerId)
         {
-            var participationResult = NBAService.GetParticipation(gameId, playerId);
+            var participationResult = NBAService.GetParticipation(id, playerId);
 
             return Result(participationResult);
         }
