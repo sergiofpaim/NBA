@@ -27,10 +27,10 @@ namespace NBA.Models
             {
                 Id = Guid.NewGuid().ToString()[..8],
                 SeasonId = seasonId,
-                HomeTeamId = homeTeam.TeamId,
+                HomeTeamId = homeTeam.Id,
                 HomeTeamName = homeTeam.TeamName,
                 HomePlayerIds = homeTeam.Players.Select(p => p.PlayerId).ToList(),
-                VisitorTeamId = visitorTeam.TeamId,
+                VisitorTeamId = visitorTeam.Id,
                 VisitorTeamName = visitorTeam.TeamName,
                 VisitorPlayerIds = visitorTeam.Players.Select(p => p.PlayerId).ToList(),
                 At = at

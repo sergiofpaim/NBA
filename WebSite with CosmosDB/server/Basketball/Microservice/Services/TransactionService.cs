@@ -1,6 +1,7 @@
 ﻿using NBA.Infrastructure;
 using NBA.Models;
 using NBA.Models.ValueObjects;
+using NBA.ViewModels;
 
 namespace NBA.Services
 {
@@ -12,11 +13,11 @@ namespace NBA.Services
             if (lastSeason is null)
                 return Error<Game>("There is no season registered yet.");
 
-            var homeTeam = lastSeason.Teams.FirstOrDefault(t => t.TeamId == homeTeamId);
+            var homeTeam = lastSeason.Teams.FirstOrDefault(t => t.Id == homeTeamId);
             if (homeTeam is null)
                 return NotFound<Game>("Home team not found.");
 
-            var visitorTeam = lastSeason.Teams.FirstOrDefault(t => t.TeamId == visitorTeamId);
+            var visitorTeam = lastSeason.Teams.FirstOrDefault(t => t.Id == visitorTeamId);
             if (visitorTeam is null)
                 return NotFound<Game>("Visitor team not found.");
 
@@ -123,17 +124,25 @@ namespace NBA.Services
             return Success<object>(null, "Reseed completed.");
         }
 
-        internal static BasketballResponse<object> GetSeasons()
+        internal static BasketballResponse<List<SeasonVM>> GetSeasons()
         {
-            throw new NotImplementedException();
+           var seasons = Basketball.Repo.Get<Season>(s => true);
+           return Success(seasons.OrderByDescending(s => s.Id).Select(SeasonVM.FactorFrom).ToList());
         }
 
-        internal static BasketballResponse<object> GetSeasonGames(string id)
+        internal static BasketballResponse<List<GameVM>> GetSeasonGames(string seasonId)
         {
-            throw new NotImplementedException();
+            var games = Basketball.Repo.Get<Game>(g => g.SeasonId == seasonId);
+            return Success(games.OrderByDescending(g => g.At).Select(GameVM.FactorFrom).ToList());
         }
 
-        internal static BasketballResponse<object> GetGamePlayers(string id)
+        internal static BasketballResponse<List<ParticipatingPlayerVM>> GetGamePlayers(string gameId)
+        {
+            var participations = Basketball.Repo.Get<Participation>(p => p.GameId == gameId);
+            return Success(participations.OrderBy(p => p.PlayerName).Select(ParticipatingPlayerVM.FactorFrom).ToList());
+        }
+
+        internal static BasketballResponse<object> GetLastSeasonGames()
         {
             throw new NotImplementedException();
         }

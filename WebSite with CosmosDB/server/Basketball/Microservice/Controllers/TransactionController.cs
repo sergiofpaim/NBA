@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using NBA.Infrastructure;
 using NBA.Services;
 using NBA.ViewModels;
+using Swashbuckle.Swagger.Annotations;
 
 namespace NBA.Controllers
 {
@@ -18,6 +19,7 @@ namespace NBA.Controllers
         }
 
         [HttpGet("seasons")]
+        [ProducesResponseType(typeof(List<SeasonVM>), 200)]
         public IActionResult GetSeasons()
         {
             var seasonResult = TransactionService.GetSeasons();
@@ -25,7 +27,16 @@ namespace NBA.Controllers
             return Result(seasonResult);
         }
 
+        [HttpGet("seasons/last/games")]
+        public IActionResult GetLastSeasonGames()
+        {
+            var seasonResult = TransactionService.GetLastSeasonGames();
+
+            return Result(seasonResult);
+        }
+
         [HttpGet("seasons/{id}/games")]
+        [ProducesResponseType(typeof(List<GameVM>), 200)]
         public IActionResult GetSeasonGames(string id)
         {
             var seasonResult = TransactionService.GetSeasonGames(id);
@@ -42,6 +53,7 @@ namespace NBA.Controllers
         }
 
         [HttpGet("games/{id}/players")]
+        [ProducesResponseType(typeof(List<ParticipatingPlayerVM>), 200)]
         public IActionResult GetGamePlayers(string id)
         {
             var seasonResult = TransactionService.GetGamePlayers(id);

@@ -1,2 +1,62 @@
 [
+  {
+    "gameId": "855af8fd",
+    "playerId": "1",
+    "playerName": "LeBron James",
+    "teamName": "Los Angeles Lakers",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "FreeThrowMiss",
+        "points": 0,
+        "at": "00:08:48.6421693"
+      },
+      {
+        "quarter": 1,
+        "type": "TwoPointerMiss",
+        "points": 0,
+        "at": "00:08:47.0857598"
+      },
+      {
+        "quarter": 1,
+        "type": "ThreePointerMiss",
+        "points": 0,
+        "at": "00:08:45.2297892"
+      },
+      {
+        "quarter": 1,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": "00:08:43.8770366"
+      },
+      {
+        "quarter": 1,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": "00:08:41.7559711"
+      },
+      {
+        "quarter": 1,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": "00:08:40.9507253"
+      }
+    ],
+    "id": "c6cf3f95"
+  },
+  {
+    "gameId": "855af8fd",
+    "playerId": "3",
+    "playerName": "D'Angelo Russell",
+    "teamName": "Los Angeles Lakers",
+    "plays": [
+      {
+        "quarter": 0,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": "00:10:53.3510090"
+      }
+    ],
+    "id": "f70590fe"
+  }
 ]
