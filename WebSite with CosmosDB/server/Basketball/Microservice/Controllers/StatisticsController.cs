@@ -9,10 +9,11 @@ namespace NBA.Controllers
     [Route("statistics")]
     public class StatisticsController : BasketballController
     {
-        [HttpGet("seasons/{gameId}/players/{playerId}")]
-        public IActionResult GetPlayerInSeason(string gameId, string playerId)
+        [HttpGet("seasons/{seasonId}/players/{playerId}")]
+        [ProducesResponseType(typeof(PlayerStatisticsInSeasonVM), 200)]
+        public IActionResult GetPlayerInSeason(string seasonId, string playerId)
         {
-            var participationResult = StatisticsService.GetPlayerInSeason(gameId, playerId);
+            var participationResult = StatisticsService.GetPlayerInSeason(seasonId, playerId);
 
             return Result(participationResult);
         }

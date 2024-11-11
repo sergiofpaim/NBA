@@ -1,5 +1,4 @@
 ﻿using NBA.Infrastructure;
-using NBA.Models.ValueObjects;
 
 namespace NBA.Models
 {

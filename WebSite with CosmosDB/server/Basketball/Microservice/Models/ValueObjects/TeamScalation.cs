@@ -1,4 +1,4 @@
-﻿namespace NBA.Models.ValueObjects
+﻿namespace NBA.Models
 {
     public class TeamScalation
     {

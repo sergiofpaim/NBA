@@ -6,6 +6,19 @@ namespace NBA.Services
 {
     internal class StatisticsService : BasketballService
     {
+        internal static BasketballResponse<PlayerStatisticsInSeasonVM> GetPlayerInSeason(string seasonId, string playerId)
+        {
+            var participations = Basketball.Repo.Get<Participation>(p => p.SeasonId == seasonId && p.PlayerId == playerId).ToList();
+
+            if (participations.Count == 0)
+                return NotFound<PlayerStatisticsInSeasonVM>("Player does not participate in the season.");
+
+            var plays = participations.SelectMany(p => p.Plays).ToList();
+
+            return Success(PlayerStatisticsInSeasonVM.FactorFrom(participations.Count, plays));
+
+        }
+
         internal static BasketballResponse<List<PlayerStatisticsInGameVM>> GetPlayerInGame(string gameId, string playerId)
         {
             var participation = Basketball.Repo.Get<Participation>(p => p.GameId == gameId && p.PlayerId == playerId).FirstOrDefault();
@@ -18,11 +31,6 @@ namespace NBA.Services
                                         .Select(g => PlayerStatisticsInGameVM.FactorFrom(g.Key, g.Count(), g.Sum(gp => gp.Points) ?? 0))
                                         .OrderBy(s => s.Type)
                                         .ToList());
-        }
-
-        internal static BasketballResponse<object> GetPlayerInSeason(string gameId, string playerId)
-        {
-            throw new NotImplementedException();
         }
     }
 }

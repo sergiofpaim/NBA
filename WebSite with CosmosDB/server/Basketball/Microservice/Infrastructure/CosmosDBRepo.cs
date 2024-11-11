@@ -14,6 +14,11 @@ namespace NBA.Infrastructure
         private static readonly string PrimaryKey = "C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==";
         private static readonly string DatabaseId = "NBA";
 
+        private static readonly JsonSerializerOptions options = new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
+
         public static CosmosClient CosmosClient { get; private set; }
         public static Container ParticipationContainer { get; private set; }
         public static Container GameContainer { get; private set; }
@@ -124,11 +129,6 @@ namespace NBA.Infrastructure
                 foreach (var toClean in response)
                     GetContainer<T>().DeleteItemAsync<T>(toClean.Id, new(toClean.Id));
             }
-
-            JsonSerializerOptions options = new()
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            };
 
             var modelJson = File.ReadAllText($"./Seed/{typeof(T).Name}.json");
             var model = JsonSerializer.Deserialize<List<T>>(modelJson, options);

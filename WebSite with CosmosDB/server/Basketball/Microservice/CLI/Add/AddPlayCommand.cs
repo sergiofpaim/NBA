@@ -107,7 +107,7 @@ public class AddPlayCommand : NBACommand<AddPlayCommand.PlayParms>
             if (playResult.Code != 0)
                 return PrintResult(playResult.Message, playResult.Code);
 
-            ShowLastPlays(playResult.PayLoad, settings.GameId, settings.PlayerId, settings.Quarter);
+            ShowLastPlays(playResult.PayLoad, settings.Quarter);
         }
     }
 
@@ -120,7 +120,7 @@ public class AddPlayCommand : NBACommand<AddPlayCommand.PlayParms>
             AnsiConsole.MarkupLine($"Game Id: {gameId}\nCurrent Time: {DateTime.Now}\nQuarter: {quarter}\nPlayer: {result.PayLoad.Name}");
     }
 
-    private static void ShowLastPlays(Participation participation, string gameId, string playerId, int quarter)
+    private static void ShowLastPlays(Participation participation, int quarter)
     {
         var plays = participation.Plays.Where(p => p.Quarter == quarter)
                                        .ToList();
