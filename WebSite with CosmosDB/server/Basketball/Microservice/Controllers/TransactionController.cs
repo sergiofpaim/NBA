@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using NBA.Infrastructure;
+using NBA.Models;
 using NBA.Services;
 using NBA.ViewModels;
-using Swashbuckle.Swagger.Annotations;
 
 namespace NBA.Controllers
 {
@@ -11,13 +10,6 @@ namespace NBA.Controllers
     [Route("transaction")]
     public class TransactionController : BasketballController
     {
-        private readonly ILogger<TransactionController> _logger;
-
-        public TransactionController(ILogger<TransactionController> logger)
-        {
-            _logger = logger;
-        }
-
         [HttpGet("seasons")]
         [ProducesResponseType(typeof(List<SeasonVM>), 200)]
         public IActionResult GetSeasons()
@@ -28,6 +20,7 @@ namespace NBA.Controllers
         }
 
         [HttpGet("seasons/last/games")]
+        [ProducesResponseType(typeof(List<GameVM>), 200)]
         public IActionResult GetLastSeasonGames()
         {
             var seasonResult = TransactionService.GetLastSeasonGames();
@@ -35,16 +28,17 @@ namespace NBA.Controllers
             return Result(seasonResult);
         }
 
-        [HttpGet("seasons/{id}/games")]
+        [HttpGet("seasons/{seasonId}/games")]
         [ProducesResponseType(typeof(List<GameVM>), 200)]
-        public IActionResult GetSeasonGames(string id)
+        public IActionResult GetSeasonGames(string seasonId)
         {
-            var seasonResult = TransactionService.GetSeasonGames(id);
+            var seasonResult = TransactionService.GetSeasonGames(seasonId);
 
             return Result(seasonResult);
         }
 
         [HttpPost("games")]
+        [ProducesResponseType(typeof(Game), 200)]
         public async Task<IActionResult> AddGameAsync([FromBody] AddGameVM request)
         {
             var gameResult = await TransactionService.AddGameAsync(request.HomeTeamId, request.VisitorTeamId, request.At);
@@ -52,24 +46,26 @@ namespace NBA.Controllers
             return Result(gameResult);
         }
 
-        [HttpGet("games/{id}/players")]
+        [HttpGet("games/{gameId}/players")]
         [ProducesResponseType(typeof(List<ParticipatingPlayerVM>), 200)]
-        public IActionResult GetGamePlayers(string id)
+        public IActionResult GetGamePlayers(string gameId)
         {
-            var seasonResult = TransactionService.GetGamePlayers(id);
+            var seasonResult = TransactionService.GetGamePlayers(gameId);
 
             return Result(seasonResult);
         }
 
-        [HttpGet("games/{id}/players/{playerId}/participation")]
-        public IActionResult GetParticipation(string id, string playerId)
+        [HttpGet("games/{gameId}/players/{playerId}/participation")]
+        [ProducesResponseType(typeof(Participation), 200)]
+        public IActionResult GetParticipation(string gameId, string playerId)
         {
-            var participationResult = TransactionService.GetParticipation(id, playerId);
+            var participationResult = TransactionService.GetParticipation(gameId, playerId);
 
             return Result(participationResult);
         }
 
         [HttpPost("plays")]
+        [ProducesResponseType(typeof(Participation), 200)]
         public async Task<IActionResult> AddPlayAsync([FromBody] AddPlayVM request)
         {
             const int PLAYS_TO_TAKE = 5;

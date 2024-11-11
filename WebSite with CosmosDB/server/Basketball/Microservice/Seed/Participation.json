@@ -1,9 +1,11 @@
 [
   {
+    "seasonId":  "23-24",
     "gameId": "855af8fd",
+    "teamId":  "LAL",
+    "teamName": "Los Angeles Lakers",
     "playerId": "1",
     "playerName": "LeBron James",
-    "teamName": "Los Angeles Lakers",
     "plays": [
       {
         "quarter": 1,
@@ -45,10 +47,12 @@
     "id": "c6cf3f95"
   },
   {
+    "seasonId": "23-24",
     "gameId": "855af8fd",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
     "playerId": "3",
     "playerName": "D'Angelo Russell",
-    "teamName": "Los Angeles Lakers",
     "plays": [
       {
         "quarter": 0,

@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using NBA.Infrastructure;
-using NBA.Models;
 using NBA.Services;
+using NBA.ViewModels;
 
 namespace NBA.Controllers
 {
@@ -10,25 +9,19 @@ namespace NBA.Controllers
     [Route("statistics")]
     public class StatisticsController : BasketballController
     {
-        private readonly ILogger<StatisticsController> _logger;
-
-        public StatisticsController(ILogger<StatisticsController> logger)
+        [HttpGet("seasons/{gameId}/players/{playerId}")]
+        public IActionResult GetPlayerInSeason(string gameId, string playerId)
         {
-            _logger = logger;
-        }
-
-        [HttpGet("seasons/{id}/players/{playerId}")]
-        public IActionResult GetPlayerInSeason(string id, string playerId)
-        {
-            var participationResult = StatisticsService.GetPlayerInSeason(id, playerId);
+            var participationResult = StatisticsService.GetPlayerInSeason(gameId, playerId);
 
             return Result(participationResult);
         }
 
-        [HttpGet("games/{id}/players/{playerId}")]
-        public IActionResult GetPlayerInGame(string id, string playerId)
+        [HttpGet("games/{gameId}/players/{playerId}")]
+        [ProducesResponseType(typeof(List<PlayerStatisticsInGameVM>), 200)]
+        public IActionResult GetPlayerInGame(string gameId, string playerId)
         {
-            var participationResult = StatisticsService.GetPlayerInGame(id, playerId);
+            var participationResult = StatisticsService.GetPlayerInGame(gameId, playerId);
 
             return Result(participationResult);
         }

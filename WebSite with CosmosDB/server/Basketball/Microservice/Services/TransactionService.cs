@@ -1,6 +1,5 @@
 ﻿using NBA.Infrastructure;
 using NBA.Models;
-using NBA.Models.ValueObjects;
 using NBA.ViewModels;
 
 namespace NBA.Services
@@ -52,11 +51,18 @@ namespace NBA.Services
             Participation saved = default;
             if (participation == null)
             {
-                participation = Participation.FactoryFrom(game,
-                                                          player,
-                                                          isHomePlayer.Value
-                                                              ? game.HomeTeamName
-                                                              : game.VisitorTeamName, newPlay);
+                if (isHomePlayer.Value)
+                    participation = Participation.FactoryFrom(game,
+                                                              player,
+                                                              game.HomeTeamName,
+                                                              game.HomeTeamId,
+                                                              newPlay);
+                else
+                    participation = Participation.FactoryFrom(game,
+                                                              player,
+                                                              game.VisitorTeamName,
+                                                              game.VisitorTeamId,
+                                                              newPlay);
 
                 saved = await Basketball.Repo.CreateAsync(participation);
             }
