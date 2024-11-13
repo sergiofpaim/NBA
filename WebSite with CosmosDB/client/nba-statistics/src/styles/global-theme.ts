@@ -10,18 +10,20 @@ const globalTheme = createTheme({
     },
     background: {
       default: '#004aad',
-    }
+    },
+    text: {
+      primary: '#ffffff',
+      secondary: '#004aad', 
+    },
   },
   typography: {
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
     h1: {
       fontSize: '2rem',
-      fontWeight: 700,
-      color: '#333',
+      fontWeight: 700
     },
     body1: {
-      fontSize: '1rem',
-      color: '#555',
+      fontSize: '1rem'
     },
   },
   components: {
