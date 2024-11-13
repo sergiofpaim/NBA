@@ -1,15 +1,22 @@
 import React, { ReactNode } from 'react';
-import { Box, Container, CssBaseline, Toolbar, AppBar, Typography, useMediaQuery } from '@mui/material';
-import { useTheme, Theme, withTheme } from '@mui/material/styles';
+import { Box, Container, CssBaseline, Toolbar, AppBar, Typography, useMediaQuery, Breadcrumbs, Link } from '@mui/material';
+import { useTheme, Theme } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
+
+interface BreadcrumbItem {
+  title: string;
+  route: string;
+}
 
 interface LayoutProps {
   children: ReactNode;
-  breadcrumb?: ReactNode; // Optional breadcrumb prop
+  breadcrumb?: BreadcrumbItem[]; // Breadcrumb as a list of items with title and route
 }
 
 const GlobalLayout: React.FC<LayoutProps> = ({ children, breadcrumb }) => {
-  const globalTheme: Theme = useTheme(); // Access the globalTheme theme
-  const isMobile = useMediaQuery(globalTheme.breakpoints.down('sm')); // Use globalTheme's breakpoints
+  const globalTheme: Theme = useTheme();
+  const isMobile = useMediaQuery(globalTheme.breakpoints.down('sm'));
+  const navigate = useNavigate(); // Hook to programmatically navigate
 
   return (
     <Box
@@ -17,25 +24,42 @@ const GlobalLayout: React.FC<LayoutProps> = ({ children, breadcrumb }) => {
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100vh',
-        backgroundColor: globalTheme.palette.background.default, // Apply globalTheme background color
-        overflow: 'hidden', // Prevent the main content from overflowing
+        backgroundColor: globalTheme.palette.background.default,
+        overflow: 'hidden',
       }}
     >
       <CssBaseline />
 
       {/* AppBar for header */}
-      <AppBar position="static" sx={{ backgroundColor: globalTheme.palette.secondary.main, padding: 0, border: 0}}> 
-       <Toolbar sx={{ background: globalTheme.palette.background.default, display: 'flex', width: '100%'}}>
-        <Box
-          component="img"
-          src="/images/logo.png" // Image from the public folder
-          alt="Logomark"
-          sx={{ width: 'auto', height: 100,  padding: '8px 20px 8px 0px' }} // Adjust the style as needed
+      <AppBar position="static" sx={{ backgroundColor: globalTheme.palette.secondary.main, padding: 0, border: 0 }}>
+        <Toolbar sx={{ background: globalTheme.palette.background.default, display: 'flex', width: '100%' }}>
+          <Box
+            component="img"
+            src="/images/logo.png"
+            alt="Logomark"
+            sx={{ width: 'auto', height: 100, padding: '8px 20px 8px 0px' }}
           />
-          {/* Applying globalTheme typography style directly */}
-          <Typography variant="h1" component="div" sx={{ ...globalTheme.typography.h1, flexGrow: 1, color: globalTheme.palette.primary.main }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+          <Typography variant="h1" component="div" sx={{ ...globalTheme.typography.h1, flexGrow: 1, color: globalTheme.palette.primary.main, paddingTop: 2 }}>
             NBA Analytics
           </Typography>
+
+          {/* Render the breadcrumb here if provided */}
+          {breadcrumb && (
+            <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 2, color: globalTheme.palette.primary.main, font: globalTheme.typography.fontFamily }} separator="›">
+              {breadcrumb.map((item, index) => (
+                <Link
+                  key={index}
+                  color="inherit"
+                  onClick={() => navigate(item.route)}
+                  sx={{ cursor: 'pointer', fontWeight: "bold", color: globalTheme.palette.primary.main }}
+                >
+                  {item.title}
+                </Link>
+              ))}
+            </Breadcrumbs>
+          )}
+          </Box>
         </Toolbar>
       </AppBar>
 
@@ -49,7 +73,6 @@ const GlobalLayout: React.FC<LayoutProps> = ({ children, breadcrumb }) => {
           py: globalTheme.spacing(2),
         }}
       >
-        {/* Main content area */}
         <Container
           component="main"
           sx={{
@@ -59,18 +82,10 @@ const GlobalLayout: React.FC<LayoutProps> = ({ children, breadcrumb }) => {
             bgcolor: globalTheme.palette.background.default,
           }}
         >
-          {/* Render the breadcrumb here if provided */}
-          {breadcrumb && (
-            <Box sx={{ mb: 2 }}>
-              {breadcrumb}
-            </Box>
-          )}
-
           {children}
         </Container>
       </Box>
 
-      {/* Footer */}
       <Box
         component="footer"
         sx={{
