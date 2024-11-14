@@ -10,13 +10,13 @@ interface BreadcrumbItem {
 
 interface LayoutProps {
   children: ReactNode;
-  breadcrumb?: BreadcrumbItem[]; // Breadcrumb as a list of items with title and route
+  breadcrumb?: BreadcrumbItem[];
 }
 
 const GlobalLayout: React.FC<LayoutProps> = ({ children, breadcrumb }) => {
   const globalTheme: Theme = useTheme();
   const isMobile = useMediaQuery(globalTheme.breakpoints.down('sm'));
-  const navigate = useNavigate(); // Hook to programmatically navigate
+  const navigate = useNavigate();
 
   return (
     <Box
@@ -29,9 +29,7 @@ const GlobalLayout: React.FC<LayoutProps> = ({ children, breadcrumb }) => {
       }}
     >
       <CssBaseline />
-
-      {/* AppBar for header */}
-      <AppBar position="static" sx={{ backgroundColor: globalTheme.palette.secondary.main, padding: 0, border: 0 }}>
+      <AppBar position="fixed" sx={{ backgroundColor: globalTheme.palette.secondary.main, padding: 0, border: 0 }}>
         <Toolbar sx={{ background: globalTheme.palette.background.default, display: 'flex', width: '100%' }}>
           <Box
             component="img"
@@ -40,29 +38,26 @@ const GlobalLayout: React.FC<LayoutProps> = ({ children, breadcrumb }) => {
             sx={{ width: 'auto', height: 100, padding: '8px 20px 8px 0px' }}
           />
           <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-          <Typography variant="h1" component="div" sx={{ ...globalTheme.typography.h1, flexGrow: 1, color: globalTheme.palette.primary.main, paddingTop: 2 }}>
-            NBA Analytics
-          </Typography>
-
-          {/* Render the breadcrumb here if provided */}
-          {breadcrumb && (
-            <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 2, color: globalTheme.palette.primary.main, font: globalTheme.typography.fontFamily }} separator="›">
-              {breadcrumb.map((item, index) => (
-                <Link
-                  key={index}
-                  color="inherit"
-                  onClick={() => navigate(item.route)}
-                  sx={{ cursor: 'pointer', fontWeight: "bold", color: globalTheme.palette.primary.main }}
-                >
-                  {item.title}
-                </Link>
-              ))}
-            </Breadcrumbs>
-          )}
+            <Typography variant="h1" component="div" sx={{ ...globalTheme.typography.h1, flexGrow: 1, color: globalTheme.palette.primary.main, paddingTop: 2 }}>
+              NBA Analytics
+            </Typography>
+            {breadcrumb && (
+              <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 2, color: globalTheme.palette.primary.main, font: globalTheme.typography.fontFamily }} separator="›">
+                {breadcrumb.map((item, index) => (
+                  <Link
+                    key={index}
+                    color="inherit"
+                    onClick={() => navigate(item.route)}
+                    sx={{ cursor: 'pointer', fontWeight: "bold", color: globalTheme.palette.primary.main }}
+                  >
+                    {item.title}
+                  </Link>
+                ))}
+              </Breadcrumbs>
+            )}
           </Box>
         </Toolbar>
       </AppBar>
-
       <Box
         sx={{
           display: 'flex',
@@ -85,23 +80,22 @@ const GlobalLayout: React.FC<LayoutProps> = ({ children, breadcrumb }) => {
           {children}
         </Container>
       </Box>
-
       <Box
         component="footer"
         sx={{
           py: globalTheme.spacing(1),
           textAlign: 'center',
-          bgcolor: globalTheme.palette.grey[500],
+          bgcolor: '#f2f2f2',
           color: globalTheme.palette.primary.main,
           position: 'fixed',
           bottom: 0,
           padding: 1,
           width: '100%',
-          borderTop: `2px solid ${globalTheme.palette.grey[600]}`,
+          borderTop: `2px solid #595959`,
           boxShadow: globalTheme.shadows[2],
         }}
       >
-        <Typography variant="body2" sx={{ ...globalTheme.typography.body1, color: globalTheme.palette.grey[50] }}>
+        <Typography variant="body2" sx={{ ...globalTheme.typography.body1, color: '#595959' }}>
           &copy; {new Date().getFullYear()} By Sérgio F. Paim
         </Typography>
       </Box>

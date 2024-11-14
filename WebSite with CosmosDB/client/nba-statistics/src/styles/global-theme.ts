@@ -6,21 +6,25 @@ const globalTheme = createTheme({
       main: '#ffffff',
     },
     secondary: {
-      main: '#c8112e',
+      main: '#DA1A32',
     },
     background: {
-      default: '#004aad',
+      default: '#00438C',
     },
     text: {
       primary: '#ffffff',
-      secondary: '#004aad', 
+      secondary: '#00438C',
     },
   },
   typography: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily: '"Geomanist", "Helvetica", "Arial", sans-serif',
     h1: {
-      fontSize: '2rem',
+      fontSize: '3rem',
       fontWeight: 700
+    },
+    h2: {
+      fontSize: '2rem',
+      fontWeight: 500
     },
     body1: {
       fontSize: '1rem'
@@ -36,7 +40,49 @@ const globalTheme = createTheme({
         },
       },
     },
-  },
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: '#fafafa',
+            borderWidth: 'medium'
+          },
+        },
+      },
+    },
+    MuiSelect: {
+      styleOverrides: {
+        root: {
+          padding: '8px'
+        },
+        icon: {
+          color: '#ffffff',
+        },
+      },
+    },
+    MuiMenu: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: '#ffffff',
+          padding: '10px',
+          borderRadius: '5px',
+        },
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          color: '#00438C',
+          '&.Mui-selected': {
+            backgroundColor: 'lightgrey'
+          },
+          '&:hover': {
+            backgroundColor: '#f2f2f2',
+          },
+        },
+      },
+    },
+  }
 });
 
 export default globalTheme;
