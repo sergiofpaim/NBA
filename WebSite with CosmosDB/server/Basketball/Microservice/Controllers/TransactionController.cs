@@ -11,7 +11,7 @@ namespace NBA.Controllers
     public class TransactionController : BasketballController
     {
         [HttpGet("seasons")]
-        [ProducesResponseType(typeof(List<SeasonVM>), 200)]
+        [ProducesResponseType(typeof(BasketballResponse<List<SeasonVM>>), 200)]
         public IActionResult GetSeasons()
         {
             var seasonResult = TransactionService.GetSeasons();
@@ -20,7 +20,7 @@ namespace NBA.Controllers
         }
 
         [HttpGet("seasons/last/games")]
-        [ProducesResponseType(typeof(List<GameVM>), 200)]
+        [ProducesResponseType(typeof(BasketballResponse<List<GameVM>>), 200)]
         public IActionResult GetLastSeasonGames()
         {
             var seasonResult = TransactionService.GetLastSeasonGames();
@@ -29,7 +29,7 @@ namespace NBA.Controllers
         }
 
         [HttpGet("seasons/{seasonId}/games")]
-        [ProducesResponseType(typeof(List<GameVM>), 200)]
+        [ProducesResponseType(typeof(BasketballResponse<List<GameVM>>), 200)]
         public IActionResult GetSeasonGames(string seasonId)
         {
             var seasonResult = TransactionService.GetSeasonGames(seasonId);
@@ -38,7 +38,7 @@ namespace NBA.Controllers
         }
 
         [HttpPost("games")]
-        [ProducesResponseType(typeof(Game), 200)]
+        [ProducesResponseType(typeof(BasketballResponse<Game>), 200)]
         public async Task<IActionResult> AddGameAsync([FromBody] AddGameVM request)
         {
             var gameResult = await TransactionService.AddGameAsync(request.HomeTeamId, request.VisitorTeamId, request.At);
@@ -47,7 +47,7 @@ namespace NBA.Controllers
         }
 
         [HttpGet("games/{gameId}/players")]
-        [ProducesResponseType(typeof(List<ParticipatingPlayerVM>), 200)]
+        [ProducesResponseType(typeof(BasketballResponse<List<ParticipatingPlayerVM>>), 200)]
         public IActionResult GetGamePlayers(string gameId)
         {
             var seasonResult = TransactionService.GetGamePlayers(gameId);
@@ -56,7 +56,7 @@ namespace NBA.Controllers
         }
 
         [HttpGet("games/{gameId}/players/{playerId}/participation")]
-        [ProducesResponseType(typeof(Participation), 200)]
+        [ProducesResponseType(typeof(BasketballResponse<Participation>), 200)]
         public IActionResult GetParticipation(string gameId, string playerId)
         {
             var participationResult = TransactionService.GetParticipation(gameId, playerId);
@@ -65,7 +65,7 @@ namespace NBA.Controllers
         }
 
         [HttpPost("plays")]
-        [ProducesResponseType(typeof(Participation), 200)]
+        [ProducesResponseType(typeof(BasketballResponse<Participation>), 200)]
         public async Task<IActionResult> AddPlayAsync([FromBody] AddPlayVM request)
         {
             const int PLAYS_TO_TAKE = 5;

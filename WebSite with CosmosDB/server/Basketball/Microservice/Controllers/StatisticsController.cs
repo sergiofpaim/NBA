@@ -10,7 +10,7 @@ namespace NBA.Controllers
     public class StatisticsController : BasketballController
     {
         [HttpGet("seasons/{seasonId}/players/{playerId}")]
-        [ProducesResponseType(typeof(PlayerStatisticsInSeasonVM), 200)]
+        [ProducesResponseType(typeof(BasketballResponse<PlayerStatisticsInSeasonVM>), 200)]
         public IActionResult GetPlayerInSeason(string seasonId, string playerId)
         {
             var participationResult = StatisticsService.GetPlayerInSeason(seasonId, playerId);
@@ -19,7 +19,7 @@ namespace NBA.Controllers
         }
 
         [HttpGet("games/{gameId}/players/{playerId}")]
-        [ProducesResponseType(typeof(List<PlayerStatisticsInGameVM>), 200)]
+        [ProducesResponseType(typeof(BasketballResponse<List<PlayerStatisticsInGameVM>>), 200)]
         public IActionResult GetPlayerInGame(string gameId, string playerId)
         {
             var participationResult = StatisticsService.GetPlayerInGame(gameId, playerId);

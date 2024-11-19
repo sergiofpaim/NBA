@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { Button, colors, Divider, Typography, useMediaQuery } from '@mui/material';
-import globalTheme from '../styles/global-theme';
+import globalTheme from '../styles/GlobalTheme';
 
 const Statistics = () => {
   const [season, setSeason] = React.useState('');

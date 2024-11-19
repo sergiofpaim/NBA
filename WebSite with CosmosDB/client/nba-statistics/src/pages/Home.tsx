@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Container, Box, Typography, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import globalTheme from '../styles/global-theme';
+import globalTheme from '../styles/GlobalTheme';
 
 const HomePage = () => {
   const navigate = useNavigate();
