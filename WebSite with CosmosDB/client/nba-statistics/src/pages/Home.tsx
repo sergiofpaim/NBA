@@ -22,7 +22,7 @@ const HomePage = () => {
     >
       <Box
         display="flex"
-        justifyContent={isMobile ? 'center' : 'space-between'} // Adjust for desktop and mobile
+        justifyContent={isMobile ? 'center' : 'space-between'}
         alignItems="center"
         flexDirection={isMobile ? 'column' : 'row'}
         gap={isMobile ? 4 : 5}
@@ -31,13 +31,12 @@ const HomePage = () => {
           paddingX: isMobile ? 0 : 4,
         }}
       >
-        {/* Statistics Button */}
         <Button
           variant="contained"
           color="primary"
           sx={{
-            width: 300,
-            height: 250,
+            width: isMobile ? 220 : 300,
+            height: isMobile ? 180 : 250,
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
@@ -47,7 +46,7 @@ const HomePage = () => {
             border: 6,
             borderColor: globalTheme.palette.secondary.main,
             textTransform: 'none',
-            marginLeft: isMobile ? 0 : '0', // Remove margin on desktop
+            marginLeft: isMobile ? 0 : '0',
           }}
           onClick={() => navigate('/statistics')}
         >
@@ -58,14 +57,12 @@ const HomePage = () => {
             Access game and player statistics from the database
           </Typography>
         </Button>
-
-        {/* Record Button */}
         <Button
           variant="contained"
           color="primary"
           sx={{
-            width: 300,
-            height: 250,
+            width: isMobile ? 220 : 300,
+            height: isMobile ? 180 : 250,
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
@@ -75,7 +72,7 @@ const HomePage = () => {
             border: 6,
             borderColor: globalTheme.palette.secondary.main,
             textTransform: 'none',
-            marginRight: isMobile ? 0 : '0', // Remove margin on desktop
+            marginRight: isMobile ? 0 : '0',
           }}
           onClick={() => navigate('/record')}
         >

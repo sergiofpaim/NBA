@@ -4,7 +4,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { Button, Divider, Typography, List, ListItem, TextField } from '@mui/material';
+import { Button, colors, Divider, Typography, useMediaQuery } from '@mui/material';
 import globalTheme from '../styles/global-theme';
 
 const Statistics = () => {
@@ -24,25 +24,33 @@ const Statistics = () => {
     setPlayer(event.target.value as string);
   };
 
+  const isMobile = useMediaQuery('(max-width: 600px)');
+
   return (
     <Box
       sx={{
         display: 'flex',
+        flexDirection: isMobile ? 'column' : 'row',
         alignItems: 'flex-start',
         gap: 2,
         position: 'absolute',
         top: '50%',
-        left: '5%',
+        left: isMobile ? '2%' : '5%',
         transform: 'translateY(-50%)',
-        width: '90%',
+        width: isMobile ? '96%' : '90%',
+        paddingTop: isMobile ? '80px' : '120px',
+        paddingBottom: isMobile ? '50px' : '120px',
+        overflowY: 'auto',
+        maxHeight: '100vh',
       }}
     >
       <Box
         sx={{
-          width: '20%',
+          width: isMobile ? '100%' : '20%',
           display: 'flex',
           flexDirection: 'column',
           gap: 2,
+          marginTop: isMobile ? 14 : 0
         }}
       >
         <Typography variant="h1" gutterBottom sx={{ fontWeight: 'bold' }}>Pick a player</Typography>
@@ -107,42 +115,140 @@ const Statistics = () => {
           Retrieve
         </Button>
       </Box>
-      <Divider orientation="vertical" flexItem sx={{ marginLeft: 2, marginRight: 2, borderColor: globalTheme.palette.primary.main, borderWidth: 2 }} />
+      <Divider
+        orientation={isMobile ? 'vertical' : 'horizontal'}
+        flexItem
+        sx={{ marginLeft: isMobile ? 0 : 2, marginRight: isMobile ? 0 : 2, borderColor: globalTheme.palette.primary.main, borderWidth: 2, marginTop: isMobile ? 4 : 0 }}
+      />
       <Box
         sx={{
-          width: '75%',
+          width: isMobile ? '100%' : '75%',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'left',
-          paddingLeft: 4,
+          paddingLeft: isMobile ? 0 : 4,
           gap: 2,
+          marginTop: isMobile ? 3 : 0,
         }}
       >
-        <Typography variant="h2" gutterBottom>
+        <Typography variant={isMobile ? "h4" : 'h2'} gutterBottom>
           Performance
         </Typography>
         <Box
           sx={{
             width: 'auto',
             backgroundColor: 'rgba(0, 0, 0, 0.1)',
+            padding: 2,
+            display: 'grid',
+            gridTemplateRows: '1fr auto',
+            gap: 2,
           }}
         >
-          <Typography variant="h2" gutterBottom textAlign="center">
+          <Typography
+            variant={isMobile ? "h5" : "h2"}
+            gutterBottom
+            textAlign="center"
+          >
             In the season (40 games)
           </Typography>
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(5, 1fr)',
+              gridAutoRows: 'min-content',
+              gap: 2
+            }}
+          >
+            <Box
+              sx={{
+                backgroundColor: globalTheme.palette.custom.overlay,
+                fontSize: 20,
+                padding: 1,
+                textAlign: 'center',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Typography sx={{ fontSize: 20, padding: 1, textAlign: 'center', color: globalTheme.palette.grey[400] }}>PPG:</Typography>
+              <Typography sx={{ fontSize: 20, padding: 1, textAlign: 'center', color: globalTheme.palette.primary.main, fontWeight: 'bold' }}>23.1</Typography>
+            </Box>
+            <Box sx={{ backgroundColor: globalTheme.palette.custom.overlay, fontSize: 20, padding: 1, textAlign: 'center' }}>APG:</Box>
+            <Box sx={{ backgroundColor: globalTheme.palette.custom.overlay, fontSize: 20, padding: 1, textAlign: 'center' }}>RPG:</Box>
+            <Box sx={{ backgroundColor: globalTheme.palette.custom.overlay, fontSize: 20, padding: 1, textAlign: 'center' }}>BPG:</Box>
+            <Box sx={{ backgroundColor: globalTheme.palette.custom.overlay, fontSize: 20, padding: 1, textAlign: 'center' }}>FT%:</Box>
+          </Box>
+          <Box
+            sx={{
+              backgroundColor: globalTheme.palette.custom.overlay,
+              padding: 2,
+              textAlign: 'center',
+              marginTop: 2,
+              fontSize: 20
+            }}
+          >
+            Total season points:
+          </Box>
         </Box>
         <Box
           sx={{
             width: 'auto',
             backgroundColor: 'rgba(0, 0, 0, 0.1)',
+            padding: 2,
+            borderRadius: 1,
           }}
         >
-          <Typography variant="h2" gutterBottom textAlign="center">
+          <Typography
+            variant={isMobile ? 'h5' : 'h2'}
+            gutterBottom
+            textAlign="center"
+            sx={{ marginBottom: isMobile ? 1 : 2 }}
+          >
             In the game
           </Typography>
+          <Box
+            sx={{
+              maxHeight: '300px',
+              overflowY: 'auto',
+              padding: 1,
+              borderRadius: 1,
+            }}
+          >
+            {[
+              'Points ',
+              'Assists ',
+              'Fouls ',
+              'Rebounds ',
+              'Blocks ',
+              'Turnovers ',
+              'FT Attempt ',
+              '2PT Attempt ',
+              '3PT Attempt ',
+              'FT% ',
+              '2PT% ',
+              '3PT% ',
+            ].map((item, index) => (
+              <Box
+                key={index}
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: '8px 16px',
+                  fontSize: isMobile ? '1.2rem' : '1.5rem',
+                  borderBottom:
+                    index < 11 ? `1px solid ${globalTheme.palette.primary.main}` : 'none',
+                }}
+              >
+                <Typography variant="h4" sx={{ fontWeight: 500 }}>
+                  {item}
+                </Typography>
+              </Box>
+            ))}
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </Box >
   );
 };
 

@@ -25,11 +25,11 @@ const GlobalLayout: React.FC<LayoutProps> = ({ children, breadcrumb }) => {
         flexDirection: 'column',
         minHeight: '100vh',
         backgroundColor: globalTheme.palette.background.default,
-        overflow: 'hidden',
+        overflow: 'hidden'
       }}
     >
       <CssBaseline />
-      <AppBar position="fixed" sx={{ backgroundColor: globalTheme.palette.secondary.main, padding: 0, border: 0 }}>
+      <AppBar position="fixed" sx={{ backgroundColor: globalTheme.palette.background.default, padding: 0, border: 0, height: isMobile ? 145 : 100 }}>
         <Toolbar sx={{ background: globalTheme.palette.background.default, display: 'flex', width: '100%' }}>
           <Box
             component="img"
@@ -64,8 +64,8 @@ const GlobalLayout: React.FC<LayoutProps> = ({ children, breadcrumb }) => {
           flexDirection: isMobile ? 'column' : 'row',
           flex: 1,
           width: '100%',
-          px: isMobile ? globalTheme.spacing(2) : globalTheme.spacing(4),
-          py: globalTheme.spacing(2),
+          px: isMobile ? globalTheme.spacing(0) : globalTheme.spacing(4),
+          py: isMobile ? globalTheme.spacing(12) : globalTheme.spacing(23),
         }}
       >
         <Container

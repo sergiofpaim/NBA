@@ -1,5 +1,19 @@
 import { createTheme } from '@mui/material/styles';
 
+declare module '@mui/material/styles' {
+  interface Palette {
+    custom: {
+      overlay: string;
+    };
+  }
+
+  interface PaletteOptions {
+    custom?: {
+      overlay?: string;
+    };
+  }
+}
+
 const globalTheme = createTheme({
   palette: {
     primary: {
@@ -14,6 +28,9 @@ const globalTheme = createTheme({
     text: {
       primary: '#ffffff',
       secondary: '#00438C',
+    },
+    custom: {
+      overlay: 'rgba(255, 255, 255, 0.1)',
     },
   },
   typography: {
