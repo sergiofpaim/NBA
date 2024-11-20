@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.Cosmos;
 
 namespace NBA.Infrastructure
 {
@@ -14,9 +13,9 @@ namespace NBA.Infrastructure
                     response.PayLoad
                 });
             else if (response.Code == 128)
-                return NotFound(response.Message);
+                return StatusCode(404, response.Message);
             else
-                return BadRequest(response.Message);
+                return StatusCode(500, response.Message);
         }
     }
 }

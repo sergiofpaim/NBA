@@ -11,9 +11,12 @@ class Api {
     private static instance: Api;
     private apiClient;
 
-    private constructor() {
+    constructor() {
+        const baseHost = window.location.hostname;
+        const basePort = 5000;
+
         this.apiClient = axios.create({
-            baseURL: 'http://localhost:5000',
+            baseURL: `http://${baseHost}:${basePort}`,
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -24,12 +27,12 @@ class Api {
         if (!Api.instance) {
             Api.instance = new Api();
         }
-        return Api.instance;
+        return Api.instance;    
     }
 
-    async get<T>(url: string, params?: Record<string, any>): Promise<Response<T>> {
+    async get<T>(url: string): Promise<Response<T>> {
         try {
-            const response: AxiosResponse<Response<T>> = await this.apiClient.get(url, { params });
+            const response: AxiosResponse<Response<T>> = await this.apiClient.get(url);
             return this.handleResponse(response);
         } catch (error) {
             return this.handleError(error);
@@ -64,7 +67,7 @@ class Api {
     }
 
     private handleResponse<T>(response: AxiosResponse<Response<T>>): Response<T> {
-        if (response.data.Code === 200) {
+        if (response.status === 200) {
             return { ...response.data, Success: true };
         } else {
             return { Success: false, Message: response.data.Message || 'An error occurred during the request.', Code: response.data.Code, PayLoad: null };

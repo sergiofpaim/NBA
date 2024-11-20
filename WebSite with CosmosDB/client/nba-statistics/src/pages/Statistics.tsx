@@ -167,7 +167,7 @@ const Statistics = () => {
                 textAlign: 'center',
                 display: 'flex',
                 justifyContent: 'center',
-                alignItems: 'center',
+                alignItems: 'center'
               }}
             >
               <Typography sx={{ fontSize: 20, padding: 1, textAlign: 'center', color: globalTheme.palette.grey[400] }}>PPG:</Typography>

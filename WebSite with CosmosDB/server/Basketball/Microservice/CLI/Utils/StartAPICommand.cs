@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Spectre.Console.Cli;
-using System.Diagnostics;
+using System.Net;
+using System.Net.Sockets;
 
 namespace NBA.CLI;
 
@@ -16,6 +18,14 @@ public class StartAPICommand : NBACommand<EmptyCommandSettings>
 
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+
+        var firstNetworkIp = GetFirstNetworkIp();
+
+        builder.WebHost.ConfigureKestrel(options =>
+        {
+            options.Listen(IPAddress.Parse(firstNetworkIp), 5000); 
+            options.Listen(IPAddress.Loopback, 5000);
+        });
 
         var app = builder.Build();
 
@@ -32,6 +42,10 @@ public class StartAPICommand : NBACommand<EmptyCommandSettings>
         app.UseAuthorization();
         app.MapControllers();
 
+        app.UseCors(policy => policy.AllowAnyOrigin()
+                                    .AllowAnyMethod()
+                                    .AllowAnyHeader());
+
         app.UseSwagger();
         app.UseSwaggerUI(c =>
         {
@@ -42,5 +56,18 @@ public class StartAPICommand : NBACommand<EmptyCommandSettings>
         app.Run();
 
         return 0;
+
+    }
+    string GetFirstNetworkIp()
+    {
+        var host = Dns.GetHostEntry(Dns.GetHostName());
+        foreach (var ip in host.AddressList)
+        {
+            if (ip.AddressFamily == AddressFamily.InterNetwork && !IPAddress.IsLoopback(ip))
+            {
+                return ip.ToString();
+            }
+        }
+        return "127.0.0.1";
     }
 }

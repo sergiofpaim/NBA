@@ -8,8 +8,6 @@ import globalTheme from './styles/GlobalTheme';
 import { ThemeProvider } from '@mui/material/styles';
 import { UtilProvider } from './utils/UtilContext';
 
-
-// Define breadcrumbs for each route
 const breadcrumbsMap = {
   '/': [{ title: 'Home', route: '/' }],
   '/statistics': [
@@ -19,10 +17,9 @@ const breadcrumbsMap = {
   '/record': [
     { title: 'Home', route: '/' },
     { title: 'Record', route: '/record' },
-  ],
+  ]
 };
 
-// BreadcrumbsController component to manage routing and breadcrumb passing
 const BreadcrumbsController: React.FC = () => {
   const location = useLocation();
   const breadcrumb = breadcrumbsMap[location.pathname as keyof typeof breadcrumbsMap] || breadcrumbsMap['/'];
