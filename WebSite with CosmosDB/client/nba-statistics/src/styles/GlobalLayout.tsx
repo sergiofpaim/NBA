@@ -29,7 +29,7 @@ const GlobalLayout: React.FC<LayoutProps> = ({ children, breadcrumb }) => {
       }}
     >
       <CssBaseline />
-      <AppBar position="fixed" sx={{ backgroundColor: globalTheme.palette.background.default, padding: 0, border: 0, height: isMobile ? 145 : 100 }}>
+      <AppBar sx={{ backgroundColor: globalTheme.palette.background.default, padding: 0, border: 0, height: 100 }}>
         <Toolbar sx={{ background: globalTheme.palette.background.default, display: 'flex', width: '100%' }}>
           <Box
             component="img"
@@ -38,7 +38,7 @@ const GlobalLayout: React.FC<LayoutProps> = ({ children, breadcrumb }) => {
             sx={{ width: 'auto', height: 100, padding: '8px 20px 8px 0px' }}
           />
           <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-            <Typography variant="h1" component="div" sx={{ ...globalTheme.typography.h1, flexGrow: 1, color: globalTheme.palette.primary.main, paddingTop: 2 }}>
+            <Typography component="div" sx={{ ...globalTheme.typography.h2, fontWeight: 'bold', flexGrow: 1, color: globalTheme.palette.primary.main, paddingTop: 2 }}>
               NBA Analytics
             </Typography>
             {breadcrumb && (
@@ -65,7 +65,7 @@ const GlobalLayout: React.FC<LayoutProps> = ({ children, breadcrumb }) => {
           flex: 1,
           width: '100%',
           px: isMobile ? globalTheme.spacing(0) : globalTheme.spacing(4),
-          py: isMobile ? globalTheme.spacing(12) : globalTheme.spacing(23),
+          py: isMobile ? globalTheme.spacing(20) : globalTheme.spacing(23),
         }}
       >
         <Container

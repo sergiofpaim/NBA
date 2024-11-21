@@ -4,7 +4,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { Button, colors, Divider, Typography, useMediaQuery } from '@mui/material';
+import { Button, Divider, IconButton, Typography, useMediaQuery } from '@mui/material';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import globalTheme from '../styles/GlobalTheme';
 
 const Statistics = () => {
@@ -25,6 +27,15 @@ const Statistics = () => {
   };
 
   const isMobile = useMediaQuery('(max-width: 600px)');
+
+  const stats = [
+    { label: 'PPG', value: '23.1' },
+    { label: 'APG', value: '7.8' },
+    { label: 'RPG', value: '10.5' },
+    { label: 'BPG', value: '1.2' },
+    { label: 'FT%', value: '88.3' },
+    { label: 'Total Points', value: '435' },
+  ];
 
   return (
     <Box
@@ -50,10 +61,12 @@ const Statistics = () => {
           display: 'flex',
           flexDirection: 'column',
           gap: 2,
-          marginTop: isMobile ? 14 : 0
+          marginTop: isMobile ? 12 : 0,
+          paddingRight: isMobile ? 2 : 0,
+          paddingLeft: isMobile ? 2 : 0
         }}
       >
-        <Typography variant="h1" gutterBottom sx={{ fontWeight: 'bold' }}>Pick a player</Typography>
+        <Typography gutterBottom sx={{ ...globalTheme.typography.h2 }}>Pick a player</Typography>
         <FormControl fullWidth>
           <InputLabel id="season-label" sx={{ color: globalTheme.palette.primary.main }}>Season</InputLabel>
           <Select
@@ -82,7 +95,6 @@ const Statistics = () => {
             <MenuItem value={30}>BOS vs LAL</MenuItem>
           </Select>
         </FormControl>
-
         <FormControl fullWidth>
           <InputLabel id="player-label" sx={{ color: globalTheme.palette.primary.main }}>Player</InputLabel>
           <Select
@@ -100,19 +112,21 @@ const Statistics = () => {
         <Button
           variant="contained"
           color="primary"
+          startIcon={<QueryStatsIcon />}
           sx={{
             width: '100%',
+            fontSize: globalTheme.typography.h3,
+            color: globalTheme.palette.background.default,
             height: 45,
             marginTop: 2,
             borderRadius: 4,
             backgroundColor: globalTheme.palette.primary.main,
-            textTransform: 'none',
             '&:hover': {
               backgroundColor: globalTheme.palette.primary.dark,
             },
           }}
         >
-          Retrieve
+          FILTER
         </Button>
       </Box>
       <Divider
@@ -129,11 +143,33 @@ const Statistics = () => {
           paddingLeft: isMobile ? 0 : 4,
           gap: 2,
           marginTop: isMobile ? 3 : 0,
-        }}
-      >
-        <Typography variant={isMobile ? "h4" : 'h2'} gutterBottom>
-          Performance
-        </Typography>
+        }}>
+        <Box sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
+          <Typography sx={{ fontSize: globalTheme.typography.h2 }} gutterBottom>
+            Performance
+          </Typography>
+          <Box sx={{
+            display: 'flex', // Enables flexbox
+            justifyContent: 'space-between', // Places the text on the left and the icon on the right
+            alignItems: 'center',
+            gap: 1
+          }}>
+            <IconButton aria-label="delete" sx={{
+              color: globalTheme.palette.background.default, backgroundColor: globalTheme.palette.primary.main,
+              '&:hover': {
+                backgroundColor: globalTheme.palette.primary.dark
+              }
+            }}>
+              <RefreshIcon />
+            </IconButton>
+            <Typography sx={{ fontSize: globalTheme.typography.h5 }}>Last updated <br /> 34s ago</Typography>
+          </Box>
+        </Box>
         <Box
           sx={{
             width: 'auto',
@@ -154,40 +190,44 @@ const Statistics = () => {
           <Box
             sx={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(5, 1fr)',
-              gridAutoRows: 'min-content',
-              gap: 2
+              gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+              gap: 2,
             }}
           >
-            <Box
-              sx={{
-                backgroundColor: globalTheme.palette.custom.overlay,
-                fontSize: 20,
-                padding: 1,
-                textAlign: 'center',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}
-            >
-              <Typography sx={{ fontSize: 20, padding: 1, textAlign: 'center', color: globalTheme.palette.grey[400] }}>PPG:</Typography>
-              <Typography sx={{ fontSize: 20, padding: 1, textAlign: 'center', color: globalTheme.palette.primary.main, fontWeight: 'bold' }}>23.1</Typography>
-            </Box>
-            <Box sx={{ backgroundColor: globalTheme.palette.custom.overlay, fontSize: 20, padding: 1, textAlign: 'center' }}>APG:</Box>
-            <Box sx={{ backgroundColor: globalTheme.palette.custom.overlay, fontSize: 20, padding: 1, textAlign: 'center' }}>RPG:</Box>
-            <Box sx={{ backgroundColor: globalTheme.palette.custom.overlay, fontSize: 20, padding: 1, textAlign: 'center' }}>BPG:</Box>
-            <Box sx={{ backgroundColor: globalTheme.palette.custom.overlay, fontSize: 20, padding: 1, textAlign: 'center' }}>FT%:</Box>
-          </Box>
-          <Box
-            sx={{
-              backgroundColor: globalTheme.palette.custom.overlay,
-              padding: 2,
-              textAlign: 'center',
-              marginTop: 2,
-              fontSize: 20
-            }}
-          >
-            Total season points:
+            {stats.map((stat, index) => (
+              <Box
+                key={index}
+                sx={{
+                  backgroundColor: globalTheme.palette.custom.overlay,
+                  fontSize: 20,
+                  padding: 1,
+                  textAlign: 'center',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: 1,
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: 20,
+                    color: globalTheme.palette.grey[400],
+                  }}
+                >
+                  {stat.label}:
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: 20,
+                    color: globalTheme.palette.primary.main,
+                    fontWeight: 'bold',
+                  }}
+                >
+                  {stat.value}
+                </Typography>
+              </Box>
+            ))}
           </Box>
         </Box>
         <Box
@@ -240,7 +280,7 @@ const Statistics = () => {
                     index < 11 ? `1px solid ${globalTheme.palette.primary.main}` : 'none',
                 }}
               >
-                <Typography variant="h4" sx={{ fontWeight: 500 }}>
+                <Typography variant="h5" sx={{ fontWeight: 500 }}>
                   {item}
                 </Typography>
               </Box>

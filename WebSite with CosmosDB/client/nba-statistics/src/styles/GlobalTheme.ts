@@ -43,6 +43,18 @@ const globalTheme = createTheme({
       fontSize: '2rem',
       fontWeight: 500
     },
+    h3: {
+      fontSize: '1.3rem',
+      fontWeight: 500
+    },
+    h4: {
+      fontSize: '1.2rem',
+      fontWeight: 500
+    },
+    h5: {
+      fontSize: '1.1rem',
+      fontWeight: 500
+    },
     body1: {
       fontSize: '1rem'
     },
