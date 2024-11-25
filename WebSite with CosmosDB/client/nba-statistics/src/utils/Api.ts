@@ -2,8 +2,8 @@ import axios, { AxiosResponse } from 'axios';
 
 export interface Response<T> {
     Code: number | null;
-    Message: string | null;
-    PayLoad: T | null;
+    Message: string;
+    PayLoad: T;
     Success: boolean | false;
 }
 
@@ -27,7 +27,7 @@ class Api {
         if (!Api.instance) {
             Api.instance = new Api();
         }
-        return Api.instance;    
+        return Api.instance;
     }
 
     async get<T>(url: string): Promise<Response<T>> {
@@ -70,15 +70,15 @@ class Api {
         if (response.status === 200) {
             return { ...response.data, Success: true };
         } else {
-            return { Success: false, Message: response.data.Message || 'An error occurred during the request.', Code: response.data.Code, PayLoad: null };
+            return { Success: false, Message: response.data.Message || 'An error occurred during the request.', Code: response.data.Code, PayLoad: {} as T };
         }
     }
 
     private handleError<T>(error: any): Response<T> {
         if (axios.isAxiosError(error)) {
-            return { Success: false, Message: error.response?.data.Message || error.message, Code: null, PayLoad: null };
+            return { Success: false, Message: error.response?.data.Message || error.message, Code: null, PayLoad: {} as T };
         }
-        return { Success: false, Message: 'An unknown error occurred.', Code: null, PayLoad: null };
+        return { Success: false, Message: 'An unknown error occurred.', Code: null, PayLoad: {} as T };
     }
 }
 

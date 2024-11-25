@@ -15,8 +15,8 @@ const HomePage = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        minHeight: '70vh',
         overflow: 'hidden',
+        marginTop: '50',
         padding: 0,
       }}
     >

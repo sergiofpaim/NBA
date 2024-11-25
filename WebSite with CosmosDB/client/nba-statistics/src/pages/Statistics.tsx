@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -7,15 +7,49 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { Button, Divider, IconButton, Typography, useMediaQuery } from '@mui/material';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, AppDispatch } from '../stores/Store';
+import { fetchSeasons, fetchGames, fetchPlayers } from '../stores/Selection';
 import globalTheme from '../styles/GlobalTheme';
 
-const Statistics = () => {
-  const [season, setSeason] = React.useState('');
-  const [game, setGame] = React.useState('');
-  const [player, setPlayer] = React.useState('');
+const stats = [
+  { label: 'PPG', value: '23.1' },
+  { label: 'APG', value: '7.8' },
+  { label: 'RPG', value: '10.5' },
+  { label: 'BPG', value: '1.2' },
+  { label: 'FT%', value: '88.3' },
+  { label: 'Total Points', value: '435' },
+];
+
+const Statistics: React.FC = () => {
+  const dispatch: AppDispatch = useDispatch();
+  const { seasons, loading: seasonsLoading, error: seasonsError } = useSelector((state: RootState) => state.seasons);
+  const { games, loading: gamesLoading, error: gamesError } = useSelector((state: RootState) => state.games);
+  const { players, loading: playersLoading, error: playersError } = useSelector((state: RootState) => state.players);
+
+  const [selectedSeason, setSeason] = useState<string>('');
+  const [selectedGame, setGame] = useState<string>('');
+  const [selectedPlayer, setPlayer] = useState<string>('');
+
+  useEffect(() => {
+    dispatch(fetchSeasons());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (selectedSeason) {
+      dispatch(fetchGames(selectedSeason));
+    }
+  }, [dispatch, selectedSeason]);
+
+  useEffect(() => {
+    if (selectedGame) {
+      dispatch(fetchPlayers(selectedGame));
+    }
+  }, [dispatch, selectedGame]);
 
   const handleSeasonChange = (event: SelectChangeEvent) => {
     setSeason(event.target.value as string);
+    setGame('');
   };
 
   const handleGameChange = (event: SelectChangeEvent) => {
@@ -27,15 +61,6 @@ const Statistics = () => {
   };
 
   const isMobile = useMediaQuery('(max-width: 600px)');
-
-  const stats = [
-    { label: 'PPG', value: '23.1' },
-    { label: 'APG', value: '7.8' },
-    { label: 'RPG', value: '10.5' },
-    { label: 'BPG', value: '1.2' },
-    { label: 'FT%', value: '88.3' },
-    { label: 'Total Points', value: '435' },
-  ];
 
   return (
     <Box
@@ -72,42 +97,54 @@ const Statistics = () => {
           <Select
             labelId="season-label"
             id="season-select"
-            value={season}
+            value={selectedSeason}
             label="Season"
             onChange={handleSeasonChange}
+            disabled={seasonsLoading}
           >
-            <MenuItem value={10}>24-25</MenuItem>
-            <MenuItem value={20}>23-24</MenuItem>
-            <MenuItem value={30}>22-23</MenuItem>
+            {seasons.map((season) => (
+              <MenuItem key={season.id} value={season.id}>
+                {season.id}
+              </MenuItem>
+            ))}
           </Select>
+          {seasonsError && <div>Error: {seasonsError}</div>}
         </FormControl>
         <FormControl fullWidth>
           <InputLabel id="game-label" sx={{ color: globalTheme.palette.primary.main }}>Game</InputLabel>
           <Select
             labelId="game-label"
             id="game-select"
-            value={game}
+            value={selectedGame}
             label="Game"
             onChange={handleGameChange}
+            disabled={!selectedSeason || gamesLoading}
           >
-            <MenuItem value={10}>LAL vs GSW</MenuItem>
-            <MenuItem value={20}>GSW vs BOS</MenuItem>
-            <MenuItem value={30}>BOS vs LAL</MenuItem>
+            {games.map((game) => (
+              <MenuItem key={game.id} value={game.id}>
+                {game.homeTeamName} vs {game.visitorTeamName}
+              </MenuItem>
+            ))}
           </Select>
+          {gamesError && <div>Error: {gamesError}</div>}
         </FormControl>
         <FormControl fullWidth>
           <InputLabel id="player-label" sx={{ color: globalTheme.palette.primary.main }}>Player</InputLabel>
           <Select
             labelId="player-label"
             id="player-select"
-            value={player}
+            value={selectedPlayer}
             label="Player"
             onChange={handlePlayerChange}
+            disabled={!selectedGame || playersLoading}
           >
-            <MenuItem value={10}>Lebron James</MenuItem>
-            <MenuItem value={20}>Jason Tatum</MenuItem>
-            <MenuItem value={30}>Stephen Curry</MenuItem>
+            {players.map((player) => (
+              <MenuItem key={player.id} value={player.id}>
+                {player.name}
+              </MenuItem>
+            ))}
           </Select>
+          {playersError && <div>Error: {playersError}</div>}
         </FormControl>
         <Button
           variant="contained"
@@ -154,12 +191,12 @@ const Statistics = () => {
             Performance
           </Typography>
           <Box sx={{
-            display: 'flex', // Enables flexbox
-            justifyContent: 'space-between', // Places the text on the left and the icon on the right
+            display: 'flex',
+            justifyContent: 'space-between',
             alignItems: 'center',
             gap: 1
           }}>
-            <IconButton aria-label="delete" sx={{
+            <IconButton aria-label="refresh" sx={{
               color: globalTheme.palette.background.default, backgroundColor: globalTheme.palette.primary.main,
               '&:hover': {
                 backgroundColor: globalTheme.palette.primary.dark

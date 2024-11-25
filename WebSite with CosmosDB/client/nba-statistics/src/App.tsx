@@ -6,7 +6,8 @@ import Record from './pages/Record';
 import GlobalLayout from './styles/GlobalLayout';
 import globalTheme from './styles/GlobalTheme';
 import { ThemeProvider } from '@mui/material/styles';
-import { UtilProvider } from './utils/UtilContext';
+import { Provider } from 'react-redux';
+import store from './stores/Store';
 
 const breadcrumbsMap = {
   '/': [{ title: 'Home', route: '/' }],
@@ -25,25 +26,25 @@ const BreadcrumbsController: React.FC = () => {
   const breadcrumb = breadcrumbsMap[location.pathname as keyof typeof breadcrumbsMap] || breadcrumbsMap['/'];
 
   return (
-    <UtilProvider>
-      <GlobalLayout breadcrumb={breadcrumb}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/statistics" element={<Statistics />} />
-          <Route path="/record" element={<Record />} />
-        </Routes>
-      </GlobalLayout>
-    </UtilProvider>
+    <GlobalLayout breadcrumb={breadcrumb}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/statistics" element={<Statistics />} />
+        <Route path="/record" element={<Record />} />
+      </Routes>
+    </GlobalLayout>
   );
 };
 
 function App() {
   return (
-    <ThemeProvider theme={globalTheme}>
-      <Router>
-        <BreadcrumbsController />
-      </Router>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={globalTheme}>
+        <Router>
+          <BreadcrumbsController />
+        </Router>
+      </ThemeProvider>
+    </Provider>
   );
 }
 
