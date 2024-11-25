@@ -54,7 +54,7 @@ const Statistics: React.FC = () => {
     const selectedSeasonId = event.target.value;
     const selectedSeason = seasons.find((season) => season.id === selectedSeasonId);
     setSeason(selectedSeason || null);
-    setGame(null); // Reset game when season changes
+    setGame(null);
   };
 
   const handleGameChange = (event: SelectChangeEvent<string>) => {
@@ -124,7 +124,7 @@ const Statistics: React.FC = () => {
           <Select
             labelId="game-label"
             id="game-select"
-            value={selectedGame?.id}
+            value={selectedGame?.id || ''}
             label="Game"
             onChange={handleGameChange}
             disabled={!selectedSeason || gamesLoading}
