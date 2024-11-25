@@ -11,6 +11,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../stores/Store';
 import { fetchSeasons, fetchGames, fetchPlayers } from '../stores/Selection';
 import globalTheme from '../styles/GlobalTheme';
+import { Season } from '../models/Season';
+import { Game } from '../models/Game';
+import { Participation } from '../models/Participation';
 
 const stats = [
   { label: 'PPG', value: '23.1' },
@@ -23,13 +26,13 @@ const stats = [
 
 const Statistics: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
-  const { seasons, loading: seasonsLoading, error: seasonsError } = useSelector((state: RootState) => state.seasons);
-  const { games, loading: gamesLoading, error: gamesError } = useSelector((state: RootState) => state.games);
-  const { players, loading: playersLoading, error: playersError } = useSelector((state: RootState) => state.players);
+  const { seasons = [], loading: seasonsLoading, error: seasonsError } = useSelector((state: RootState) => state.seasons);
+  const { games = [], loading: gamesLoading, error: gamesError } = useSelector((state: RootState) => state.games);
+  const { players = [], loading: playersLoading, error: playersError } = useSelector((state: RootState) => state.players);
 
-  const [selectedSeason, setSeason] = useState<string>('');
-  const [selectedGame, setGame] = useState<string>('');
-  const [selectedPlayer, setPlayer] = useState<string>('');
+  const [selectedSeason, setSeason] = useState<Season | null>(null);
+  const [selectedGame, setGame] = useState<Game | null>(null);
+  const [selectedPlayer, setPlayer] = useState<Participation | null>(null);
 
   useEffect(() => {
     dispatch(fetchSeasons());
@@ -37,27 +40,33 @@ const Statistics: React.FC = () => {
 
   useEffect(() => {
     if (selectedSeason) {
-      dispatch(fetchGames(selectedSeason));
+      dispatch(fetchGames(selectedSeason.id));
     }
   }, [dispatch, selectedSeason]);
 
   useEffect(() => {
     if (selectedGame) {
-      dispatch(fetchPlayers(selectedGame));
+      dispatch(fetchPlayers(selectedGame.id));
     }
   }, [dispatch, selectedGame]);
 
-  const handleSeasonChange = (event: SelectChangeEvent) => {
-    setSeason(event.target.value as string);
-    setGame('');
+  const handleSeasonChange = (event: SelectChangeEvent<string>) => {
+    const selectedSeasonId = event.target.value;
+    const selectedSeason = seasons.find((season) => season.id === selectedSeasonId);
+    setSeason(selectedSeason || null);
+    setGame(null); // Reset game when season changes
   };
 
-  const handleGameChange = (event: SelectChangeEvent) => {
-    setGame(event.target.value as string);
+  const handleGameChange = (event: SelectChangeEvent<string>) => {
+    const selectedGameId = event.target.value;
+    const selectedGame = games.find((game) => game.id === selectedGameId);
+    setGame(selectedGame || null);
   };
 
-  const handlePlayerChange = (event: SelectChangeEvent) => {
-    setPlayer(event.target.value as string);
+  const handlePlayerChange = (event: SelectChangeEvent<string>) => {
+    const selectedPlayerId = event.target.value;
+    const selectedPlayer = players.find((player) => player.id === selectedPlayerId);
+    setPlayer(selectedPlayer || null);
   };
 
   const isMobile = useMediaQuery('(max-width: 600px)');
@@ -97,7 +106,7 @@ const Statistics: React.FC = () => {
           <Select
             labelId="season-label"
             id="season-select"
-            value={selectedSeason}
+            value={selectedSeason?.id}
             label="Season"
             onChange={handleSeasonChange}
             disabled={seasonsLoading}
@@ -115,14 +124,14 @@ const Statistics: React.FC = () => {
           <Select
             labelId="game-label"
             id="game-select"
-            value={selectedGame}
+            value={selectedGame?.id}
             label="Game"
             onChange={handleGameChange}
             disabled={!selectedSeason || gamesLoading}
           >
             {games.map((game) => (
               <MenuItem key={game.id} value={game.id}>
-                {game.homeTeamName} vs {game.visitorTeamName}
+                {game.homeTeamId} vs {game.visitorTeamId}
               </MenuItem>
             ))}
           </Select>
@@ -133,7 +142,7 @@ const Statistics: React.FC = () => {
           <Select
             labelId="player-label"
             id="player-select"
-            value={selectedPlayer}
+            value={selectedPlayer?.id}
             label="Player"
             onChange={handlePlayerChange}
             disabled={!selectedGame || playersLoading}

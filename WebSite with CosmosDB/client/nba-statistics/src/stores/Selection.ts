@@ -6,7 +6,7 @@ import { Participation } from '../models/Participation';
 import { api } from '../utils/Api';  // Directly import the singleton api instance
 
 interface SeasonsState {
-  seasons: Array<Season>;
+  seasons: Season[];
   loading: boolean;
   error: string | null;
 }
@@ -129,13 +129,13 @@ export const fetchSeasons = (): ThunkAction<void, RootState, unknown, Action<str
     dispatch(fetchSeasonsRequest());
 
     const response = await api.get<Season[]>('/transaction/seasons');
-    if (response.Success) {
-      dispatch(fetchSeasonsSuccess(response.PayLoad));
+    if (response.success) {
+      dispatch(fetchSeasonsSuccess(response.payLoad));
       dispatch(resetGames());
       dispatch(resetPlayers());
     }
     else
-      dispatch(fetchSeasonsFailure(response.Message));
+      dispatch(fetchSeasonsFailure(response.message));
   };
 };
 
@@ -144,12 +144,12 @@ export const fetchGames = (seasonId: string): ThunkAction<void, RootState, unkno
     dispatch(fetchGamesRequest());
 
     const response = await api.get<Game[]>(`/transaction/seasons/${seasonId}/games`);
-    if (response.Success) {
-      dispatch(fetchGamesSuccess(response.PayLoad));
+    if (response.success) {
+      dispatch(fetchGamesSuccess(response.payLoad));
       dispatch(resetPlayers());
     }
     else
-      dispatch(fetchGamesFailure(response.Message));
+      dispatch(fetchGamesFailure(response.message));
   };
 };
 
@@ -158,10 +158,10 @@ export const fetchPlayers = (gameId: string): ThunkAction<void, RootState, unkno
     dispatch(fetchPlayersRequest());
 
     const response = await api.get<Participation[]>(`/transaction/games/${gameId}/players`);
-    if (response.Success)
-      dispatch(fetchPlayersSuccess(response.PayLoad));
+    if (response.success)
+      dispatch(fetchPlayersSuccess(response.payLoad));
     else
-      dispatch(fetchPlayersFailure(response.Message));
+      dispatch(fetchPlayersFailure(response.message));
   };
 };
 
