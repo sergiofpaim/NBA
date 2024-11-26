@@ -3,8 +3,7 @@ export class PlayerStatisticsInGame {
     count: number;
     points: number;
 
-
-    constructor(Type: string, Count: number, Points: number,) {
+    constructor(Type: string, Count: number, Points: number) {
         this.type = Type;
         this.count = Count;
         this.points = Points;

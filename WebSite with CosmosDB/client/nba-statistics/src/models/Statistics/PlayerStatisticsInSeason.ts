@@ -7,7 +7,6 @@ export class PlayerStatisticsInSeason {
     totalPoints: number;
     ftConversion: number;
 
-
     constructor(Participations: number, PPG: number, APG: number, RPG: number, BPG: number, TotalPoints: number, FTConversion: number) {
         this.participations = Participations;
         this.ppg = PPG;

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../stores/Store';
 import { fetchSeasons, fetchGames, fetchPlayers } from '../stores/Selection';
 import globalTheme from '../styles/GlobalTheme';
-import { fetchSeasonStatistics } from '../stores/Statistics';
+import { fetchGameStatistics, fetchSeasonStatistics } from '../stores/Statistics';
 import { PlayerStatisticsInSeason } from '../models/Statistics/PlayerStatisticsInSeason';
 import StatBox from '../components/StatsBox';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
@@ -14,6 +14,7 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import { Season } from '../models/Selection/Season';
 import { Game } from '../models/Selection/Game';
 import { Participation } from '../models/Selection/Participation';
+import { PlayerStatisticsInGame } from '../models/Statistics/PlayerStatisticsInGame';
 
 const Statistics: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -24,12 +25,16 @@ const Statistics: React.FC = () => {
   const { seasonStats, lastUpdated } = useSelector(
     (state: RootState) => state.seasonStats
   );
+  const { gameStats = [] } = useSelector(
+    (state: RootState) => state.gameStats
+  );
 
   const [selectedSeason, setSelectedSeason] = useState<Season | null>(null);
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
   const [selectedPlayer, setSelectedPlayer] = useState<Participation | null>(null);
 
-  const [stats, setStats] = useState<PlayerStatisticsInSeason | null>(null);
+  const [statsSeason, setSeasonStats] = useState<PlayerStatisticsInSeason | null>(null);
+  const [statsGame, setGameStats] = useState<PlayerStatisticsInGame[] | null>(null);
 
   const [timeElapsed, setTimeElapsed] = useState<number | null>(null);
 
@@ -55,7 +60,7 @@ const Statistics: React.FC = () => {
     setSelectedSeason(selectedSeason || null);
     setSelectedGame(null);
     setSelectedPlayer(null);
-    setStats(null);
+    setSeasonStats(null);
   };
 
   const handleGameChange = (event: SelectChangeEvent<string>) => {
@@ -63,27 +68,36 @@ const Statistics: React.FC = () => {
     const selectedGame = games.find((game) => game.id === selectedGameId);
     setSelectedGame(selectedGame || null);
     setSelectedPlayer(null);
-    setStats(null);
+    setSeasonStats(null);
   };
 
   const handlePlayerChange = (event: SelectChangeEvent<string>) => {
     const selectedPlayerId = event.target.value;
     const selectedPlayer = players.find((player) => player.id === selectedPlayerId);
     setSelectedPlayer(selectedPlayer || null);
-    setStats(null);
+    setSeasonStats(null);
   };
 
   const handleSeasonStats = () => {
-    if (selectedSeason && selectedPlayer) {
+    if (selectedSeason && selectedGame && selectedPlayer) {
       dispatch(fetchSeasonStatistics(selectedSeason.id, selectedPlayer.id));
+    }
+  };
+
+  const handleGameStats = () => {
+    if (selectedSeason && selectedGame && selectedPlayer) {
+      dispatch(fetchGameStatistics(selectedGame.id, selectedPlayer.id));
     }
   };
 
   useEffect(() => {
     if (seasonStats) {
-      setStats(seasonStats);
+      setSeasonStats(seasonStats);
     }
-  }, [seasonStats]);
+    if (gameStats) {
+      setGameStats(gameStats)
+    }
+  }, [seasonStats, gameStats]);
 
   useEffect(() => {
     if (lastUpdated) {
@@ -96,13 +110,12 @@ const Statistics: React.FC = () => {
     }
   }, [lastUpdated]);
 
-  const seconds = timeElapsed !== null ? timeElapsed % 60 : null;
-
   useEffect(() => {
-    if (seconds === 60 && selectedSeason && selectedGame && selectedPlayer) {
+    if (timeElapsed === null || timeElapsed >= 60) {
       handleSeasonStats();
+      handleGameStats();
     }
-  }, [seconds]);
+  }, [timeElapsed]);
 
   const isMobile = useMediaQuery('(max-width: 450px)');
 
@@ -194,7 +207,7 @@ const Statistics: React.FC = () => {
           variant="contained"
           color="primary"
           startIcon={<QueryStatsIcon />}
-          disabled={!!stats || (!selectedSeason || !selectedGame || !selectedPlayer)}
+          disabled={!!statsSeason || (!selectedSeason || !selectedGame || !selectedPlayer)}
           sx={{
             width: '100%',
             fontSize: globalTheme.typography.h3,
@@ -211,8 +224,10 @@ const Statistics: React.FC = () => {
               backgroundColor: globalTheme.palette.grey[700],
             }
           }}
-          onClick={handleSeasonStats}
-        >
+          onClick={() => {
+            handleSeasonStats();
+            handleGameStats();
+          }}>
           FILTER
         </Button>
       </Box>
@@ -232,7 +247,7 @@ const Statistics: React.FC = () => {
           gap: 2,
           marginTop: isMobile ? 3 : 0,
         }}>
-        {stats ? (
+        {statsSeason ? (
           <>
             <Box sx={{
               display: 'flex',
@@ -255,11 +270,13 @@ const Statistics: React.FC = () => {
                     backgroundColor: globalTheme.palette.primary.dark
                   }
                 }}
-                  onClick={handleSeasonStats}
-                >
+                  onClick={() => {
+                    handleSeasonStats();
+                    handleGameStats();
+                  }}                >
                   <RefreshIcon />
                 </IconButton>
-                <Typography sx={{ fontSize: globalTheme.typography.h5 }}>Updated <br />{timeElapsed !== null ? `${seconds}s ago` : "Never"}
+                <Typography sx={{ fontSize: globalTheme.typography.h5 }}>Updated <br />{timeElapsed !== null ? `${timeElapsed}s ago` : "Never"}
                 </Typography>
               </Box>
             </Box>
@@ -278,7 +295,7 @@ const Statistics: React.FC = () => {
                 gutterBottom
                 textAlign="center"
               >
-                In the season ({stats?.participations && stats.participations > 0 ? `${stats.participations} game${stats.participations > 1 ? 's' : ''}` : '0 games'})
+                In the season ({statsSeason?.participations && statsSeason.participations > 0 ? `${statsSeason.participations} game${statsSeason.participations > 1 ? 's' : ''}` : '0 games'})
               </Typography>
               <Box
                 sx={{
@@ -291,12 +308,12 @@ const Statistics: React.FC = () => {
                   },
                 }}
               >
-                <StatBox label="PPG" value={stats.ppg} />
-                <StatBox label="APG" value={stats.apg} />
-                <StatBox label="RPG" value={stats.rpg} />
-                <StatBox label="BPG" value={stats.bpg} />
-                <StatBox label="FT%" value={stats.ftConversion} />
-                <StatBox label="Total Points" value={stats.totalPoints} />
+                <StatBox label="PPG" value={statsSeason.ppg?.toFixed(1)} />
+                <StatBox label="APG" value={statsSeason.apg?.toFixed(1)} />
+                <StatBox label="RPG" value={statsSeason.rpg?.toFixed(1)} />
+                <StatBox label="BPG" value={statsSeason.bpg?.toFixed(1)} />
+                <StatBox label="FT%" value={statsSeason.ftConversion?.toFixed(1)} />
+                <StatBox label="Total Points" value={statsSeason.totalPoints} />
               </Box>
             </Box>
             <Box
@@ -326,12 +343,15 @@ const Statistics: React.FC = () => {
                   },
                 }}
               >
-                <StatBox label="PPG" value={stats.ppg} />
-                <StatBox label="APG" value={stats.apg} />
-                <StatBox label="RPG" value={stats.rpg} />
-                <StatBox label="BPG" value={stats.bpg} />
-                <StatBox label="FT%" value={stats.ftConversion} />
-                <StatBox label="Total Points" value={stats.totalPoints} />
+                <StatBox label="FT" value={`${statsGame?.find(t => t.type === 'FreeThrowHit')?.count ?? 0}-${statsGame?.filter(t => t.type === 'FreeThrowMiss' || t.type === 'FreeThrowHit')?.reduce((sum, t) => sum + t.count, 0) ?? 0}`} />
+                <StatBox label="2PT" value={`${statsGame?.find(t => t.type === 'TwoPointerHit')?.count ?? 0}-${statsGame?.filter(t => t.type === 'TwoPointerMiss' || t.type === 'TwoPointerHit')?.reduce((sum, t) => sum + t.count, 0) ?? 0}`} />
+                <StatBox label="3PT" value={`${statsGame?.find(t => t.type === 'ThreePointerHit')?.count ?? 0}-${statsGame?.filter(t => t.type === 'ThreePointerMiss' || t.type === 'ThreePointerHit')?.reduce((sum, t) => sum + t.count, 0) ?? 0}`} />
+                <StatBox label="Assist" value={statsGame?.find(t => t.type === "Assist")?.count ?? 0} />
+                <StatBox label="Rebound" value={statsGame?.find(t => t.type === "Rebound")?.count ?? 0} />
+                <StatBox label="Turnover" value={statsGame?.find(t => t.type === "Turnover")?.count ?? 0} />
+                <StatBox label="Block" value={statsGame?.find(t => t.type === "Block")?.count ?? 0} />
+                <StatBox label="Foul" value={statsGame?.find(t => t.type === "Foul")?.count ?? 0} />
+                <StatBox label="Total Points" value={statsGame?.reduce((total, t) => t.points ? total + t.points : total, 0) ?? 0} />
               </Box>
             </Box>
           </>

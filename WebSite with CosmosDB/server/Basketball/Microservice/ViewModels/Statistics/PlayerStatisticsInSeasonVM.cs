@@ -18,17 +18,17 @@ namespace NBA.ViewModels
             PlayerStatisticsInSeasonVM stats = new() 
             {
                 Participations = participations,
-                PPG = points / participations,
-                APG = plays.Count(p => p.Type == PlayType.Assist.ToString()) / participations,
-                RPG = plays.Count(p => p.Type == PlayType.Rebound.ToString()) / participations,
-                BPG = plays.Count(p => p.Type == PlayType.Block.ToString()) / participations,
+                PPG = (double) points / participations,
+                APG = (double) plays.Count(p => p.Type == PlayType.Assist.ToString()) / participations,
+                RPG = (double) plays.Count(p => p.Type == PlayType.Rebound.ToString()) / participations,
+                BPG = (double) plays.Count(p => p.Type == PlayType.Block.ToString()) / participations,
                 TotalPoints = points
             };
 
             var fth = plays.Count(p => p.Type == PlayType.FreeThrowHit.ToString());
             var ftm = plays.Count(p => p.Type == PlayType.FreeThrowMiss.ToString());
             if (fth > 0 || ftm > 0)
-                stats.FTConversion = fth / (fth + ftm);
+                stats.FTConversion = (double) fth / (fth + ftm) * 100;
            
             return stats;
         }

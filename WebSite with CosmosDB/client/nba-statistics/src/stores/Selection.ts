@@ -3,7 +3,7 @@ import { RootState } from './Root';
 import { Season } from '../models/Selection/Season';
 import { Game } from '../models/Selection/Game';
 import { Participation } from '../models/Selection/Participation';
-import { api } from '../utils/Api';  // Directly import the singleton api instance
+import { api } from '../utils/Api';
 
 interface SeasonsState {
   seasons: Season[];
