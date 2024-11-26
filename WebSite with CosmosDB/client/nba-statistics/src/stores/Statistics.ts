@@ -7,12 +7,14 @@ interface SeasonStatisticsState {
     seasonStats: PlayerStatisticsInSeason | null;
     loading: boolean;
     error: string | null;
+    lastUpdated: Date | null;
 }
 
 const initialSeasonsStatisticsState: SeasonStatisticsState = {
     seasonStats: null,
     loading: false,
     error: null,
+    lastUpdated: null
 };
 
 const seasonStatisticsSlice = createSlice({
@@ -26,6 +28,7 @@ const seasonStatisticsSlice = createSlice({
         fetchSeasonStatisticsSuccess(state, action: PayloadAction<PlayerStatisticsInSeason>) {
             state.loading = false;
             state.seasonStats = action.payload;
+            state.lastUpdated = new Date();
         },
         fetchSeasonStatisticsFailure(state, action: PayloadAction<string>) {
             state.loading = false;
