@@ -16,6 +16,7 @@ import { Game } from '../models/Selection/Game';
 import { Participation } from '../models/Selection/Participation';
 import { fetchSeasonStatistics } from '../stores/Statistics';
 import { PlayerStatisticsInSeason } from '../models/Statistics/PlayerStatisticsInSeason';
+import StatBox from '../components/StatsBox';
 
 const Statistics: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -83,12 +84,12 @@ const Statistics: React.FC = () => {
 
   const statsGrid = seasonStats
     ? [
-      { label: 'PPG', value: seasonStats.PPG },
-      { label: 'APG', value: seasonStats.APG },
-      { label: 'RPG', value: seasonStats.RPG },
-      { label: 'BPG', value: seasonStats.BPG },
-      { label: 'FT%', value: seasonStats.FTConversion },
-      { label: 'Total Points', value: seasonStats.TotalPoints },
+      { label: 'PPG', value: seasonStats.ppg },
+      { label: 'APG', value: seasonStats.apg },
+      { label: 'RPG', value: seasonStats.rpg },
+      { label: 'BPG', value: seasonStats.bpg },
+      { label: 'FT%', value: seasonStats.ftConversion },
+      { label: 'Total Points', value: seasonStats.totalPoints },
     ]
     : [];
 
@@ -255,7 +256,7 @@ const Statistics: React.FC = () => {
             gutterBottom
             textAlign="center"
           >
-            In the season (40 games)
+            In the season ({stats?.participations ? stats.participations : '0'} games)
           </Typography>
           <Box
             sx={{
@@ -263,43 +264,25 @@ const Statistics: React.FC = () => {
               gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
               gap: 2,
               marginTop: 2,
+              '@media (max-width: 400px)': {
+                gridTemplateColumns: '1fr',
+              },
             }}
           >
-            {statsGrid.map((stat, index) => (
-              <Box
-                key={index}
-                sx={{
-                  backgroundColor: globalTheme.palette.custom.overlay,
-                  fontSize: 20,
-                  padding: 1,
-                  textAlign: 'center',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  gap: 1,
-                }}
-              >
-                <Typography
-                  sx={{
-                    fontSize: 20,
-                    color: globalTheme.palette.grey[400],
-                  }}
-                >
-                  {stat.value}:
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: 20,
-                    color: globalTheme.palette.primary.main,
-                    fontWeight: 'bold',
-                  }}
-                >
-                  {stat.label}
-                </Typography>
-              </Box>
-            ))}
+            {seasonStats ? (
+              <>
+                <StatBox label="PPG" value={seasonStats.ppg} />
+                <StatBox label="APG" value={seasonStats.apg} />
+                <StatBox label="RPG" value={seasonStats.rpg} />
+                <StatBox label="BPG" value={seasonStats.bpg} />
+                <StatBox label="FT%" value={seasonStats.ftConversion} />
+                <StatBox label="Total Points" value={seasonStats.totalPoints} />
+              </>
+            ) : (
+              <div></div>
+            )}
           </Box>
+
         </Box>
         <Box
           sx={{

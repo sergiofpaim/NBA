@@ -1,20 +1,20 @@
 export class PlayerStatisticsInSeason {
-    Participations: number;
-    PPG: number;
-    APG: number;
-    RPG: number;
-    BPG: number;
-    TotalPoints: number;
-    FTConversion: number;
+    participations: number;
+    ppg: number;
+    apg: number;
+    rpg: number;
+    bpg: number;
+    totalPoints: number;
+    ftConversion: number;
 
 
     constructor(Participations: number, PPG: number, APG: number, RPG: number, BPG: number, TotalPoints: number, FTConversion: number) {
-        this.Participations = Participations;
-        this.PPG = PPG;
-        this.APG = APG;
-        this.RPG = RPG;
-        this.BPG = BPG;
-        this.TotalPoints = TotalPoints;
-        this.FTConversion = FTConversion;
+        this.participations = Participations;
+        this.ppg = PPG;
+        this.apg = APG;
+        this.rpg = RPG;
+        this.bpg = BPG;
+        this.totalPoints = TotalPoints;
+        this.ftConversion = FTConversion;
     }
 }

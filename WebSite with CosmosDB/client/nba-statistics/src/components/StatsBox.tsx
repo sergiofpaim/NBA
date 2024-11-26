@@ -6,14 +6,13 @@ import globalTheme from '../styles/GlobalTheme';
 interface StatBoxProps {
   label: string;
   value: string | number;
-  labelText: string;
 }
 
-const StatBox: React.FC<StatBoxProps> = ({ label, value, labelText }) => {
+const StatBox: React.FC<StatBoxProps> = ({ label, value }) => {
   return (
     <Box
       sx={{
-        backgroundColor: globalTheme.palette.custom.overlay,
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
         fontSize: 20,
         padding: 1,
         textAlign: 'center',
@@ -39,7 +38,7 @@ const StatBox: React.FC<StatBoxProps> = ({ label, value, labelText }) => {
           fontWeight: 'bold',
         }}
       >
-        {labelText}
+        {label}
       </Typography>
     </Box>
   );
