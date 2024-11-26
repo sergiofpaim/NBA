@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, InputLabel, MenuItem, FormControl, Select, Button, Divider, IconButton, Typography, useMediaQuery } from '@mui/material';
+import { format } from 'date-fns';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../stores/Store';
@@ -24,9 +25,9 @@ const Statistics: React.FC = () => {
     (state: RootState) => state.seasonStats
   );
 
-  const [selectedSeason, setSeason] = useState<Season | null>(null);
-  const [selectedGame, setGame] = useState<Game | null>(null);
-  const [selectedPlayer, setPlayer] = useState<Participation | null>(null);
+  const [selectedSeason, setSelectedSeason] = useState<Season | null>(null);
+  const [selectedGame, setSelectedGame] = useState<Game | null>(null);
+  const [selectedPlayer, setSelectedPlayer] = useState<Participation | null>(null);
 
   const [stats, setStats] = useState<PlayerStatisticsInSeason | null>(null);
 
@@ -51,22 +52,24 @@ const Statistics: React.FC = () => {
   const handleSeasonChange = (event: SelectChangeEvent<string>) => {
     const selectedSeasonId = event.target.value;
     const selectedSeason = seasons.find((season) => season.id === selectedSeasonId);
-    setSeason(selectedSeason || null);
-    setGame(null);
+    setSelectedSeason(selectedSeason || null);
+    setSelectedGame(null);
+    setSelectedPlayer(null);
     setStats(null);
   };
 
   const handleGameChange = (event: SelectChangeEvent<string>) => {
     const selectedGameId = event.target.value;
     const selectedGame = games.find((game) => game.id === selectedGameId);
-    setGame(selectedGame || null);
+    setSelectedGame(selectedGame || null);
+    setSelectedPlayer(null);
     setStats(null);
   };
 
   const handlePlayerChange = (event: SelectChangeEvent<string>) => {
     const selectedPlayerId = event.target.value;
     const selectedPlayer = players.find((player) => player.id === selectedPlayerId);
-    setPlayer(selectedPlayer || null);
+    setSelectedPlayer(selectedPlayer || null);
     setStats(null);
   };
 
@@ -93,10 +96,15 @@ const Statistics: React.FC = () => {
     }
   }, [lastUpdated]);
 
-  const minutes = timeElapsed !== null ? Math.floor(timeElapsed / 60) : null;
   const seconds = timeElapsed !== null ? timeElapsed % 60 : null;
 
-  const isMobile = useMediaQuery('(max-width: 600px)');
+  useEffect(() => {
+    if (seconds === 60 && selectedSeason && selectedGame && selectedPlayer) {
+      handleSeasonStats();
+    }
+  }, [seconds]);
+
+  const isMobile = useMediaQuery('(max-width: 450px)');
 
   return (
     <Box
@@ -158,7 +166,7 @@ const Statistics: React.FC = () => {
           >
             {games.map((game) => (
               <MenuItem key={game.id} value={game.id}>
-                {game.homeTeamId} vs {game.visitorTeamId}
+                {game.homeTeamId} vs {game.visitorTeamId}, {format(game.at, 'MMM dd')}
               </MenuItem>
             ))}
           </Select>
@@ -169,7 +177,7 @@ const Statistics: React.FC = () => {
           <Select
             labelId="player-label"
             id="player-select"
-            value={selectedPlayer?.id}
+            value={selectedPlayer?.id || ''}
             label="Player"
             onChange={handlePlayerChange}
             disabled={!selectedGame || playersLoading}
@@ -216,6 +224,7 @@ const Statistics: React.FC = () => {
       <Box
         sx={{
           width: isMobile ? '100%' : '75%',
+          height: '650',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'left',
@@ -223,141 +232,133 @@ const Statistics: React.FC = () => {
           gap: 2,
           marginTop: isMobile ? 3 : 0,
         }}>
-        <Box sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
-          <Typography sx={{ fontSize: globalTheme.typography.h2 }} gutterBottom>
-            Performance
-          </Typography>
-          <Box sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            gap: 1
-          }}>
-            <IconButton aria-label="refresh" sx={{
-              color: globalTheme.palette.background.default, backgroundColor: globalTheme.palette.primary.main,
-              '&:hover': {
-                backgroundColor: globalTheme.palette.primary.dark
-              }
+        {stats ? (
+          <>
+            <Box sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
             }}>
-              <RefreshIcon />
-            </IconButton>
-            <Typography sx={{ fontSize: globalTheme.typography.h5 }}>Last updated <br />{timeElapsed !== null ? `${minutes} minutes and ${seconds} seconds ago` : "Never"}
-            </Typography>
-          </Box>
-        </Box>
-        <Box
-          sx={{
-            width: 'auto',
-            backgroundColor: 'rgba(0, 0, 0, 0.1)',
-            padding: 2,
-            display: 'grid',
-            gridTemplateRows: '1fr auto',
-            gap: 2,
-          }}
-        >
-          <Typography
-            variant={isMobile ? "h5" : "h2"}
-            gutterBottom
-            textAlign="center"
-          >
-            In the season ({stats?.participations ? stats.participations : '0'} games)
-          </Typography>
-          <Box
-            sx={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
-              gap: 2,
-              marginTop: 2,
-              '@media (max-width: 400px)': {
-                gridTemplateColumns: '1fr',
-              },
-            }}
-          >
-            {stats ? (
-              <>
+              <Typography sx={{ fontSize: globalTheme.typography.h2 }} gutterBottom>
+                Performance
+              </Typography>
+              <Box sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                gap: 1
+              }}>
+                <IconButton aria-label="refresh" sx={{
+                  color: globalTheme.palette.background.default, backgroundColor: globalTheme.palette.primary.main,
+                  '&:hover': {
+                    backgroundColor: globalTheme.palette.primary.dark
+                  }
+                }}
+                  onClick={handleSeasonStats}
+                >
+                  <RefreshIcon />
+                </IconButton>
+                <Typography sx={{ fontSize: globalTheme.typography.h5 }}>Updated <br />{timeElapsed !== null ? `${seconds}s ago` : "Never"}
+                </Typography>
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                width: 'auto',
+                backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                padding: 2,
+                display: 'grid',
+                gridTemplateRows: '1fr auto',
+                gap: 2,
+              }}
+            >
+              <Typography
+                variant={isMobile ? "h5" : "h2"}
+                gutterBottom
+                textAlign="center"
+              >
+                In the season ({stats?.participations && stats.participations > 0 ? `${stats.participations} game${stats.participations > 1 ? 's' : ''}` : '0 games'})
+              </Typography>
+              <Box
+                sx={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+                  gap: 2,
+                  marginTop: 2,
+                  '@media (max-width: 400px)': {
+                    gridTemplateColumns: '1fr',
+                  },
+                }}
+              >
                 <StatBox label="PPG" value={stats.ppg} />
                 <StatBox label="APG" value={stats.apg} />
                 <StatBox label="RPG" value={stats.rpg} />
                 <StatBox label="BPG" value={stats.bpg} />
                 <StatBox label="FT%" value={stats.ftConversion} />
                 <StatBox label="Total Points" value={stats.totalPoints} />
-              </>
-            ) : (
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                width: 'auto',
+                backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                padding: 2,
+                borderRadius: 1,
+              }}
+            >
               <Typography
-                variant="h1"
-                align="center"
+                variant={isMobile ? 'h5' : 'h2'}
                 gutterBottom
+                textAlign="center"
+                sx={{ marginBottom: isMobile ? 1 : 2 }}
+              >
+                In the game
+              </Typography>
+              <Box
                 sx={{
-                  ...globalTheme.typography.h1,
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+                  gap: 2,
+                  marginTop: 2,
+                  '@media (max-width: 400px)': {
+                    gridTemplateColumns: '1fr',
+                  },
                 }}
               >
-                Fill the filtering fields to the left
-              </Typography>
-            )}
-          </Box>
-        </Box>
-        <Box
-          sx={{
-            width: 'auto',
-            backgroundColor: 'rgba(0, 0, 0, 0.1)',
-            padding: 2,
-            borderRadius: 1,
-          }}
-        >
-          <Typography
-            variant={isMobile ? 'h5' : 'h2'}
-            gutterBottom
-            textAlign="center"
-            sx={{ marginBottom: isMobile ? 1 : 2 }}
-          >
-            In the game
-          </Typography>
+                <StatBox label="PPG" value={stats.ppg} />
+                <StatBox label="APG" value={stats.apg} />
+                <StatBox label="RPG" value={stats.rpg} />
+                <StatBox label="BPG" value={stats.bpg} />
+                <StatBox label="FT%" value={stats.ftConversion} />
+                <StatBox label="Total Points" value={stats.totalPoints} />
+              </Box>
+            </Box>
+          </>
+        ) : (
           <Box
             sx={{
-              maxHeight: '300px',
-              overflowY: 'auto',
-              padding: 1,
+              height: isMobile ? '100' : '400px',
               borderRadius: 1,
+              backgroundColor: 'rgba(0, 0, 0, 0.1)',
+              justifyContent: 'center',
+              alignItems: 'center',
+              display: 'flex',
             }}
           >
-            {[
-              'Points ',
-              'Assists ',
-              'Fouls ',
-              'Rebounds ',
-              'Blocks ',
-              'Turnovers ',
-              'FT Attempt ',
-              '2PT Attempt ',
-              '3PT Attempt ',
-              'FT% ',
-              '2PT% ',
-              '3PT% ',
-            ].map((item, index) => (
-              <Box
-                key={index}
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  padding: '8px 16px',
-                  fontSize: isMobile ? '1.2rem' : '1.5rem',
-                  borderBottom:
-                    index < 11 ? `1px solid ${globalTheme.palette.primary.main}` : 'none',
-                }}
-              >
-                <Typography variant="h5" sx={{ fontWeight: 500 }}>
-                  {item}
-                </Typography>
-              </Box>
-            ))}
+            <Typography
+              variant="h1"
+              align="center"
+              gutterBottom
+              sx={{
+                ...globalTheme.typography.h2
+              }}
+            >
+              {isMobile ? 'Fill the filtering fields to the top' : 'Fill the filtering fields to the left'}
+            </Typography>
           </Box>
-        </Box>
+
+        )}
       </Box>
     </Box >
   );
