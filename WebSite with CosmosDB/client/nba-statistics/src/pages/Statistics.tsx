@@ -11,18 +11,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../stores/Store';
 import { fetchSeasons, fetchGames, fetchPlayers } from '../stores/Selection';
 import globalTheme from '../styles/GlobalTheme';
-import { Season } from '../models/Season';
-import { Game } from '../models/Game';
-import { Participation } from '../models/Participation';
-
-const stats = [
-  { label: 'PPG', value: '23.1' },
-  { label: 'APG', value: '7.8' },
-  { label: 'RPG', value: '10.5' },
-  { label: 'BPG', value: '1.2' },
-  { label: 'FT%', value: '88.3' },
-  { label: 'Total Points', value: '435' },
-];
+import { Season } from '../models/Selection/Season';
+import { Game } from '../models/Selection/Game';
+import { Participation } from '../models/Selection/Participation';
+import { fetchSeasonStatistics } from '../stores/Statistics';
+import { PlayerStatisticsInSeason } from '../models/Statistics/PlayerStatisticsInSeason';
 
 const Statistics: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -30,9 +23,15 @@ const Statistics: React.FC = () => {
   const { games = [], loading: gamesLoading, error: gamesError } = useSelector((state: RootState) => state.games);
   const { players = [], loading: playersLoading, error: playersError } = useSelector((state: RootState) => state.players);
 
+  const { seasonStats, loading: statsLoading, error: statsError } = useSelector(
+    (state: RootState) => state.seasonStats
+  );
+
   const [selectedSeason, setSeason] = useState<Season | null>(null);
   const [selectedGame, setGame] = useState<Game | null>(null);
   const [selectedPlayer, setPlayer] = useState<Participation | null>(null);
+
+  const [stats, setStats] = useState<PlayerStatisticsInSeason | null>(null);
 
   useEffect(() => {
     dispatch(fetchSeasons());
@@ -68,6 +67,30 @@ const Statistics: React.FC = () => {
     const selectedPlayer = players.find((player) => player.id === selectedPlayerId);
     setPlayer(selectedPlayer || null);
   };
+
+  const handleSeasonStats = () => {
+    if (selectedSeason && selectedPlayer) {
+      dispatch(fetchSeasonStatistics(selectedSeason.id, selectedPlayer.id));
+    }
+  };
+
+  useEffect(() => {
+    if (seasonStats) {
+      setStats(seasonStats);
+      console.log('Season Stats:', seasonStats);
+    }
+  }, [seasonStats]);
+
+  const statsGrid = seasonStats
+    ? [
+      { label: 'PPG', value: seasonStats.PPG },
+      { label: 'APG', value: seasonStats.APG },
+      { label: 'RPG', value: seasonStats.RPG },
+      { label: 'BPG', value: seasonStats.BPG },
+      { label: 'FT%', value: seasonStats.FTConversion },
+      { label: 'Total Points', value: seasonStats.TotalPoints },
+    ]
+    : [];
 
   const isMobile = useMediaQuery('(max-width: 600px)');
 
@@ -171,6 +194,7 @@ const Statistics: React.FC = () => {
               backgroundColor: globalTheme.palette.primary.dark,
             },
           }}
+          onClick={handleSeasonStats}
         >
           FILTER
         </Button>
@@ -238,9 +262,10 @@ const Statistics: React.FC = () => {
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
               gap: 2,
+              marginTop: 2,
             }}
           >
-            {stats.map((stat, index) => (
+            {statsGrid.map((stat, index) => (
               <Box
                 key={index}
                 sx={{
@@ -261,7 +286,7 @@ const Statistics: React.FC = () => {
                     color: globalTheme.palette.grey[400],
                   }}
                 >
-                  {stat.label}:
+                  {stat.value}:
                 </Typography>
                 <Typography
                   sx={{
@@ -270,7 +295,7 @@ const Statistics: React.FC = () => {
                     fontWeight: 'bold',
                   }}
                 >
-                  {stat.value}
+                  {stat.label}
                 </Typography>
               </Box>
             ))}
