@@ -1,22 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { Button, Divider, IconButton, Typography, useMediaQuery } from '@mui/material';
-import QueryStatsIcon from '@mui/icons-material/QueryStats';
-import RefreshIcon from '@mui/icons-material/Refresh';
+import { Box, InputLabel, MenuItem, FormControl, Select, Button, Divider, IconButton, Typography, useMediaQuery } from '@mui/material';
+import { SelectChangeEvent } from '@mui/material/Select';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../stores/Store';
 import { fetchSeasons, fetchGames, fetchPlayers } from '../stores/Selection';
 import globalTheme from '../styles/GlobalTheme';
-import { Season } from '../models/Selection/Season';
-import { Game } from '../models/Selection/Game';
-import { Participation } from '../models/Selection/Participation';
 import { fetchSeasonStatistics } from '../stores/Statistics';
 import { PlayerStatisticsInSeason } from '../models/Statistics/PlayerStatisticsInSeason';
 import StatBox from '../components/StatsBox';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import { Season } from '../models/Selection/Season';
+import { Game } from '../models/Selection/Game';
+import { Participation } from '../models/Selection/Participation';
 
 const Statistics: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();

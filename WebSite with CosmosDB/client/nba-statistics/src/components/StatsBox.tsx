@@ -2,7 +2,6 @@ import React from 'react';
 import { Box, Typography } from '@mui/material';
 import globalTheme from '../styles/GlobalTheme';
 
-// Define the StatBox component
 interface StatBoxProps {
   label: string;
   value: string | number;
@@ -29,7 +28,7 @@ const StatBox: React.FC<StatBoxProps> = ({ label, value }) => {
           color: globalTheme.palette.grey[400],
         }}
       >
-        {value}:
+        {label}:
       </Typography>
       <Typography
         sx={{
@@ -38,7 +37,7 @@ const StatBox: React.FC<StatBoxProps> = ({ label, value }) => {
           fontWeight: 'bold',
         }}
       >
-        {label}
+        {value}
       </Typography>
     </Box>
   );

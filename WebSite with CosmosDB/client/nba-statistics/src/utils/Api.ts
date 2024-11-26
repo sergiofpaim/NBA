@@ -11,7 +11,6 @@ class Api {
     private static instance: Api;
     private apiClient;
 
-    // Making the constructor private to prevent direct instantiation
     private constructor() {
         const baseHost = window.location.hostname;
         const basePort = 5000;
@@ -24,7 +23,6 @@ class Api {
         });
     }
 
-    // Singleton pattern: ensures only one instance of the Api class
     public static getInstance(): Api {
         if (!Api.instance) {
             Api.instance = new Api();
@@ -32,7 +30,6 @@ class Api {
         return Api.instance;
     }
 
-    // Generic GET request
     public async get<T>(url: string): Promise<Response<T>> {
         try {
             const response: AxiosResponse<Response<T>> = await this.apiClient.get(url);
@@ -42,7 +39,6 @@ class Api {
         }
     }
 
-    // Generic POST request
     public async post<T, U>(url: string, body: T): Promise<Response<U>> {
         try {
             const response: AxiosResponse<Response<U>> = await this.apiClient.post(url, body);
@@ -52,7 +48,6 @@ class Api {
         }
     }
 
-    // Generic PUT request
     public async put<T, U>(url: string, body: T): Promise<Response<U>> {
         try {
             const response: AxiosResponse<Response<U>> = await this.apiClient.put(url, body);
@@ -62,7 +57,6 @@ class Api {
         }
     }
 
-    // Generic DELETE request
     public async delete<T>(url: string): Promise<Response<T>> {
         try {
             const response: AxiosResponse<Response<T>> = await this.apiClient.delete(url);
@@ -72,7 +66,6 @@ class Api {
         }
     }
 
-    // Handle successful response
     private handleResponse<T>(response: AxiosResponse<Response<T>>): Response<T> {
         if (response.status === 200) {
             return { ...response.data, success: true };
@@ -81,7 +74,6 @@ class Api {
         }
     }
 
-    // Handle error from axios
     private handleError<T>(error: any): Response<T> {
         if (axios.isAxiosError(error)) {
             return { success: false, message: error.response?.data.Message || error.message, code: null, payLoad: {} as T };
@@ -90,5 +82,4 @@ class Api {
     }
 }
 
-// Exporting a single instance of the API class
 export const api = Api.getInstance();
