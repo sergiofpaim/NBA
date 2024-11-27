@@ -1,36 +1,82 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Box, InputLabel, MenuItem, FormControl, Select, Button, Divider, IconButton, Typography, useMediaQuery } from '@mui/material';
 import { format } from 'date-fns';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, AppDispatch } from '../stores/Store';
-import { fetchSeasons, fetchGames, fetchPlayers } from '../stores/Selection';
+import { createSelector } from 'reselect';
 import globalTheme from '../styles/GlobalTheme';
-import { fetchStatistics, resetStatistics } from '../stores/Statistics';
-import StatBox from '../components/StatsBox';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import { RootState, AppDispatch } from '../stores/Store';
+import { fetchSeasons, fetchGames, fetchPlayers } from '../stores/Selection';
+import { fetchStatistics, resetStatistics } from '../stores/Statistics';
 import { Season } from '../models/Selection/Season';
 import { Game } from '../models/Selection/Game';
 import { Participation } from '../models/Selection/Participation';
+import StatBox from '../components/StatsBox';
 
 const Statistics: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
 
-  const { seasons, games, players, statistics, error } = useSelector(
-    (state: RootState) => ({
-      seasons: state.seasons.seasons,
-      games: state.games.games,
-      players: state.players.players,
-      statistics: state.statistics,
-      error: state.statistics.error || state.seasons.error || state.games.error || state.players.error
+  const selectSeasons = (state: RootState) => state.seasons.seasons;
+  const selectGames = (state: RootState) => state.games.games;
+  const selectPlayers = (state: RootState) => state.players.players;
+  const selectStatistics = (state: RootState) => state.statistics;
+  const selectError = (state: RootState) => state.statistics.error || state.seasons.error || state.games.error || state.players.error;
+
+  const selectStatisticsData = createSelector(
+    [selectSeasons, selectGames, selectPlayers, selectStatistics, selectError],
+    (seasons, games, players, statistics, error) => ({
+      seasons,
+      games,
+      players,
+      statistics,
+      error
     })
   );
+
+  const { seasons, games, players, statistics, error } = useSelector((state: RootState) => selectStatisticsData(state));
 
   const [selectedSeason, setSelectedSeason] = useState<Season | null>(null);
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
   const [selectedPlayer, setSelectedPlayer] = useState<Participation | null>(null);
   const [timeElapsed, setTimeElapsed] = useState<number | null>(null);
+
+  const isMobile = useMediaQuery(globalTheme.breakpoints.down('sm'));
+
+  const handleSeasonChange = (event: SelectChangeEvent<string>) => {
+    const selectedSeasonId = event.target.value;
+    const selectedSeason = seasons.find((s) => s.id === selectedSeasonId);
+    setSelectedSeason(selectedSeason || null);
+    setSelectedGame(null);
+    setSelectedPlayer(null);
+    dispatch(resetStatistics());
+    setTimeElapsed(null);
+  };
+
+  const handleGameChange = (event: SelectChangeEvent<string>) => {
+    const selectedGameId = event.target.value;
+    const selectedGame = games.find((game) => game.id === selectedGameId);
+    setSelectedGame(selectedGame || null);
+    setSelectedPlayer(null);
+    dispatch(resetStatistics());
+    setTimeElapsed(null);
+  };
+
+  const handlePlayerChange = (event: SelectChangeEvent<string>) => {
+    const selectedPlayerId = event.target.value;
+    const selectedPlayer = players.find((player) => player.id === selectedPlayerId);
+    setSelectedPlayer(selectedPlayer || null);
+    dispatch(resetStatistics());
+    setTimeElapsed(null);
+  };
+
+  const handleStats = useCallback(() => {
+    if (selectedSeason && selectedGame && selectedPlayer) {
+      dispatch(fetchStatistics(selectedSeason.id, selectedGame.id, selectedPlayer.id));
+      setTimeElapsed(null);
+    }
+  }, [dispatch, selectedGame, selectedPlayer, selectedSeason]);
 
   useEffect(() => {
     dispatch(fetchSeasons());
@@ -58,9 +104,9 @@ const Statistics: React.FC = () => {
 
   useEffect(() => {
     if (statistics.lastUpdated) {
-      const lastUpdated = statistics.lastUpdated || null
+      const lastUpdatedDate = statistics.lastUpdated ? new Date(statistics.lastUpdated) : null;
       const intervalId = setInterval(() => {
-        const secondsElapsed = Math.floor((Date.now() - new Date(lastUpdated).getTime()) / 1000);
+        const secondsElapsed = Math.floor((Date.now() - (lastUpdatedDate?.getTime() || 0)) / 1000);
         setTimeElapsed(secondsElapsed);
       }, 1000);
 
@@ -69,39 +115,10 @@ const Statistics: React.FC = () => {
   }, [statistics.lastUpdated]);
 
   useEffect(() => {
-    if (timeElapsed === null || timeElapsed >= 60) {
+    if ((timeElapsed || 0) >= 60) {
       handleStats();
     }
-  }, [timeElapsed]);
-
-  const handleSeasonChange = (event: SelectChangeEvent<string>) => {
-    const selectedSeasonId = event.target.value;
-    const selectedSeason = seasons.find((s) => s.id === selectedSeasonId);
-    setSelectedSeason(selectedSeason || null);
-    setSelectedGame(null);
-    setSelectedPlayer(null);
-  };
-
-  const handleGameChange = (event: SelectChangeEvent<string>) => {
-    const selectedGameId = event.target.value;
-    const selectedGame = games.find((game) => game.id === selectedGameId);
-    setSelectedGame(selectedGame || null);
-    setSelectedPlayer(null);
-  };
-
-  const handlePlayerChange = (event: SelectChangeEvent<string>) => {
-    const selectedPlayerId = event.target.value;
-    const selectedPlayer = players.find((player) => player.id === selectedPlayerId);
-    setSelectedPlayer(selectedPlayer || null);
-  };
-
-  const handleStats = () => {
-    if (selectedSeason && selectedGame && selectedPlayer) {
-      dispatch(fetchStatistics(selectedSeason.id, selectedGame.id, selectedPlayer.id));
-    }
-  };
-
-  const isMobile = useMediaQuery('(max-width: 450px)');
+  }, [handleStats, timeElapsed]);
 
   return (
     <Box
@@ -141,12 +158,12 @@ const Statistics: React.FC = () => {
           <Select
             labelId="season-label"
             id="season-select"
-            value={selectedSeason?.id}
+            value={selectedSeason?.id || ''}
             label="Season"
             onChange={handleSeasonChange}
             disabled={statistics.loading}
           >
-            {seasons.map((season) => (
+            {seasons?.map((season) => (
               <MenuItem key={season.id} value={season.id}>
                 {season.id}
               </MenuItem>

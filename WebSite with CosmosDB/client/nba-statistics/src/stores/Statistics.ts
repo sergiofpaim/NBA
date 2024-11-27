@@ -9,7 +9,7 @@ interface StatisticsState {
     ofGame: PlayerStatisticsInGame[] | null;
     loading: boolean;
     error: string | null;
-    lastUpdated: Date | null;
+    lastUpdated: string | null;
 }
 
 const initialState: StatisticsState = {
@@ -38,7 +38,7 @@ const statisticsSlice = createSlice({
             state.loading = false;
             state.ofSeason = action.payload.ofSeason;
             state.ofGame = action.payload.ofGame;
-            state.lastUpdated = new Date();
+            state.lastUpdated = new Date().toISOString();
         },
         fetchStatisticsFailure(state, action: PayloadAction<string>) {
             state.loading = false;
