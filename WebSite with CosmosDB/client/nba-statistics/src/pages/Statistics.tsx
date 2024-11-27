@@ -6,40 +6,42 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../stores/Store';
 import { fetchSeasons, fetchGames, fetchPlayers } from '../stores/Selection';
 import globalTheme from '../styles/GlobalTheme';
-import { fetchGameStatistics, fetchSeasonStatistics } from '../stores/Statistics';
-import { PlayerStatisticsInSeason } from '../models/Statistics/PlayerStatisticsInSeason';
+import { fetchStatistics, resetStatistics } from '../stores/Statistics';
 import StatBox from '../components/StatsBox';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { Season } from '../models/Selection/Season';
 import { Game } from '../models/Selection/Game';
 import { Participation } from '../models/Selection/Participation';
-import { PlayerStatisticsInGame } from '../models/Statistics/PlayerStatisticsInGame';
 
 const Statistics: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
-  const { seasons = [], loading: seasonsLoading, error: seasonsError } = useSelector((state: RootState) => state.seasons);
-  const { games = [], loading: gamesLoading, error: gamesError } = useSelector((state: RootState) => state.games);
-  const { players = [], loading: playersLoading, error: playersError } = useSelector((state: RootState) => state.players);
 
-  const { seasonStats, lastUpdated } = useSelector(
-    (state: RootState) => state.seasonStats
-  );
-  const { gameStats = [] } = useSelector(
-    (state: RootState) => state.gameStats
+  const { seasons, games, players, statistics, error } = useSelector(
+    (state: RootState) => ({
+      seasons: state.seasons.seasons,
+      games: state.games.games,
+      players: state.players.players,
+      statistics: state.statistics,
+      error: state.statistics.error || state.seasons.error || state.games.error || state.players.error
+    })
   );
 
   const [selectedSeason, setSelectedSeason] = useState<Season | null>(null);
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
   const [selectedPlayer, setSelectedPlayer] = useState<Participation | null>(null);
-
-  const [statsSeason, setSeasonStats] = useState<PlayerStatisticsInSeason | null>(null);
-  const [statsGame, setGameStats] = useState<PlayerStatisticsInGame[] | null>(null);
-
   const [timeElapsed, setTimeElapsed] = useState<number | null>(null);
 
   useEffect(() => {
     dispatch(fetchSeasons());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(resetStatistics());
+    setSelectedSeason(null);
+    setSelectedGame(null);
+    setSelectedPlayer(null);
+    setTimeElapsed(null);
   }, [dispatch]);
 
   useEffect(() => {
@@ -54,53 +56,9 @@ const Statistics: React.FC = () => {
     }
   }, [dispatch, selectedGame]);
 
-  const handleSeasonChange = (event: SelectChangeEvent<string>) => {
-    const selectedSeasonId = event.target.value;
-    const selectedSeason = seasons.find((season) => season.id === selectedSeasonId);
-    setSelectedSeason(selectedSeason || null);
-    setSelectedGame(null);
-    setSelectedPlayer(null);
-    setSeasonStats(null);
-  };
-
-  const handleGameChange = (event: SelectChangeEvent<string>) => {
-    const selectedGameId = event.target.value;
-    const selectedGame = games.find((game) => game.id === selectedGameId);
-    setSelectedGame(selectedGame || null);
-    setSelectedPlayer(null);
-    setSeasonStats(null);
-  };
-
-  const handlePlayerChange = (event: SelectChangeEvent<string>) => {
-    const selectedPlayerId = event.target.value;
-    const selectedPlayer = players.find((player) => player.id === selectedPlayerId);
-    setSelectedPlayer(selectedPlayer || null);
-    setSeasonStats(null);
-  };
-
-  const handleSeasonStats = () => {
-    if (selectedSeason && selectedGame && selectedPlayer) {
-      dispatch(fetchSeasonStatistics(selectedSeason.id, selectedPlayer.id));
-    }
-  };
-
-  const handleGameStats = () => {
-    if (selectedSeason && selectedGame && selectedPlayer) {
-      dispatch(fetchGameStatistics(selectedGame.id, selectedPlayer.id));
-    }
-  };
-
   useEffect(() => {
-    if (seasonStats) {
-      setSeasonStats(seasonStats);
-    }
-    if (gameStats) {
-      setGameStats(gameStats)
-    }
-  }, [seasonStats, gameStats]);
-
-  useEffect(() => {
-    if (lastUpdated) {
+    if (statistics.lastUpdated) {
+      const lastUpdated = statistics.lastUpdated || null
       const intervalId = setInterval(() => {
         const secondsElapsed = Math.floor((Date.now() - new Date(lastUpdated).getTime()) / 1000);
         setTimeElapsed(secondsElapsed);
@@ -108,14 +66,40 @@ const Statistics: React.FC = () => {
 
       return () => clearInterval(intervalId);
     }
-  }, [lastUpdated]);
+  }, [statistics.lastUpdated]);
 
   useEffect(() => {
     if (timeElapsed === null || timeElapsed >= 60) {
-      handleSeasonStats();
-      handleGameStats();
+      handleStats();
     }
   }, [timeElapsed]);
+
+  const handleSeasonChange = (event: SelectChangeEvent<string>) => {
+    const selectedSeasonId = event.target.value;
+    const selectedSeason = seasons.find((s) => s.id === selectedSeasonId);
+    setSelectedSeason(selectedSeason || null);
+    setSelectedGame(null);
+    setSelectedPlayer(null);
+  };
+
+  const handleGameChange = (event: SelectChangeEvent<string>) => {
+    const selectedGameId = event.target.value;
+    const selectedGame = games.find((game) => game.id === selectedGameId);
+    setSelectedGame(selectedGame || null);
+    setSelectedPlayer(null);
+  };
+
+  const handlePlayerChange = (event: SelectChangeEvent<string>) => {
+    const selectedPlayerId = event.target.value;
+    const selectedPlayer = players.find((player) => player.id === selectedPlayerId);
+    setSelectedPlayer(selectedPlayer || null);
+  };
+
+  const handleStats = () => {
+    if (selectedSeason && selectedGame && selectedPlayer) {
+      dispatch(fetchStatistics(selectedSeason.id, selectedGame.id, selectedPlayer.id));
+    }
+  };
 
   const isMobile = useMediaQuery('(max-width: 450px)');
 
@@ -149,6 +133,9 @@ const Statistics: React.FC = () => {
         }}
       >
         <Typography gutterBottom sx={{ ...globalTheme.typography.h2 }}>Pick a player</Typography>
+        {error ? (
+          <Typography gutterBottom sx={{ ...globalTheme.typography.h2 }}>{error}</Typography>) : ('')
+        }
         <FormControl fullWidth>
           <InputLabel id="season-label" sx={{ color: globalTheme.palette.primary.main }}>Season</InputLabel>
           <Select
@@ -157,7 +144,7 @@ const Statistics: React.FC = () => {
             value={selectedSeason?.id}
             label="Season"
             onChange={handleSeasonChange}
-            disabled={seasonsLoading}
+            disabled={statistics.loading}
           >
             {seasons.map((season) => (
               <MenuItem key={season.id} value={season.id}>
@@ -165,7 +152,6 @@ const Statistics: React.FC = () => {
               </MenuItem>
             ))}
           </Select>
-          {seasonsError && <div>Error: {seasonsError}</div>}
         </FormControl>
         <FormControl fullWidth>
           <InputLabel id="game-label" sx={{ color: globalTheme.palette.primary.main }}>Game</InputLabel>
@@ -175,7 +161,7 @@ const Statistics: React.FC = () => {
             value={selectedGame?.id || ''}
             label="Game"
             onChange={handleGameChange}
-            disabled={!selectedSeason || gamesLoading}
+            disabled={!selectedSeason}
           >
             {games.map((game) => (
               <MenuItem key={game.id} value={game.id}>
@@ -183,7 +169,6 @@ const Statistics: React.FC = () => {
               </MenuItem>
             ))}
           </Select>
-          {gamesError && <div>Error: {gamesError}</div>}
         </FormControl>
         <FormControl fullWidth>
           <InputLabel id="player-label" sx={{ color: globalTheme.palette.primary.main }}>Player</InputLabel>
@@ -193,7 +178,7 @@ const Statistics: React.FC = () => {
             value={selectedPlayer?.id || ''}
             label="Player"
             onChange={handlePlayerChange}
-            disabled={!selectedGame || playersLoading}
+            disabled={!selectedGame}
           >
             {players.map((player) => (
               <MenuItem key={player.id} value={player.id}>
@@ -201,13 +186,12 @@ const Statistics: React.FC = () => {
               </MenuItem>
             ))}
           </Select>
-          {playersError && <div>Error: {playersError}</div>}
         </FormControl>
         <Button
           variant="contained"
           color="primary"
           startIcon={<QueryStatsIcon />}
-          disabled={!!statsSeason || (!selectedSeason || !selectedGame || !selectedPlayer)}
+          disabled={!!statistics.ofGame || (!selectedSeason || !selectedGame || !selectedPlayer)}
           sx={{
             width: '100%',
             fontSize: globalTheme.typography.h3,
@@ -224,10 +208,8 @@ const Statistics: React.FC = () => {
               backgroundColor: globalTheme.palette.grey[700],
             }
           }}
-          onClick={() => {
-            handleSeasonStats();
-            handleGameStats();
-          }}>
+          onClick={handleStats}
+        >
           FILTER
         </Button>
       </Box>
@@ -247,7 +229,7 @@ const Statistics: React.FC = () => {
           gap: 2,
           marginTop: isMobile ? 3 : 0,
         }}>
-        {statsSeason ? (
+        {statistics.ofGame || statistics.ofSeason ? (
           <>
             <Box sx={{
               display: 'flex',
@@ -270,13 +252,11 @@ const Statistics: React.FC = () => {
                     backgroundColor: globalTheme.palette.primary.dark
                   }
                 }}
-                  onClick={() => {
-                    handleSeasonStats();
-                    handleGameStats();
-                  }}                >
+                  onClick={handleStats}
+                >
                   <RefreshIcon />
                 </IconButton>
-                <Typography sx={{ fontSize: globalTheme.typography.h5 }}>Updated <br />{timeElapsed !== null ? `${timeElapsed}s ago` : "Never"}
+                <Typography sx={{ fontSize: globalTheme.typography.h5 }}>Updated <br />{timeElapsed !== null ? `${timeElapsed}s ago` : "now"}
                 </Typography>
               </Box>
             </Box>
@@ -295,7 +275,7 @@ const Statistics: React.FC = () => {
                 gutterBottom
                 textAlign="center"
               >
-                In the season ({statsSeason?.participations && statsSeason.participations > 0 ? `${statsSeason.participations} game${statsSeason.participations > 1 ? 's' : ''}` : '0 games'})
+                In the season ({statistics.ofSeason?.participations && statistics.ofSeason.participations > 0 ? `${statistics.ofSeason.participations} game${statistics.ofSeason.participations > 1 ? 's' : ''}` : '0 games'})
               </Typography>
               <Box
                 sx={{
@@ -308,12 +288,12 @@ const Statistics: React.FC = () => {
                   },
                 }}
               >
-                <StatBox label="PPG" value={statsSeason.ppg?.toFixed(1)} />
-                <StatBox label="APG" value={statsSeason.apg?.toFixed(1)} />
-                <StatBox label="RPG" value={statsSeason.rpg?.toFixed(1)} />
-                <StatBox label="BPG" value={statsSeason.bpg?.toFixed(1)} />
-                <StatBox label="FT%" value={statsSeason.ftConversion?.toFixed(1)} />
-                <StatBox label="Total Points" value={statsSeason.totalPoints} />
+                <StatBox label="PPG" value={statistics.ofSeason?.ppg?.toFixed(1) || ''} />
+                <StatBox label="APG" value={statistics.ofSeason?.apg?.toFixed(1) || ''} />
+                <StatBox label="RPG" value={statistics.ofSeason?.rpg?.toFixed(1) || ''} />
+                <StatBox label="BPG" value={statistics.ofSeason?.bpg?.toFixed(1) || ''} />
+                <StatBox label="FT%" value={statistics.ofSeason?.ftConversion?.toFixed(1) || ''} />
+                <StatBox label="Total Points" value={statistics.ofSeason?.totalPoints || ''} />
               </Box>
             </Box>
             <Box
@@ -342,14 +322,14 @@ const Statistics: React.FC = () => {
                   marginTop: 2,
                 }}
               >
-                <StatBox label="FT" value={`${statsGame?.find(t => t.type === 'FreeThrowHit')?.count ?? 0}-${statsGame?.filter(t => t.type === 'FreeThrowMiss' || t.type === 'FreeThrowHit')?.reduce((sum, t) => sum + t.count, 0) ?? 0}`} />
-                <StatBox label="2PT" value={`${statsGame?.find(t => t.type === 'TwoPointerHit')?.count ?? 0}-${statsGame?.filter(t => t.type === 'TwoPointerMiss' || t.type === 'TwoPointerHit')?.reduce((sum, t) => sum + t.count, 0) ?? 0}`} />
-                <StatBox label="3PT" value={`${statsGame?.find(t => t.type === 'ThreePointerHit')?.count ?? 0}-${statsGame?.filter(t => t.type === 'ThreePointerMiss' || t.type === 'ThreePointerHit')?.reduce((sum, t) => sum + t.count, 0) ?? 0}`} />
-                <StatBox label="Assist" value={statsGame?.find(t => t.type === "Assist")?.count ?? 0} />
-                <StatBox label="Rebound" value={statsGame?.find(t => t.type === "Rebound")?.count ?? 0} />
-                <StatBox label="Turnover" value={statsGame?.find(t => t.type === "Turnover")?.count ?? 0} />
-                <StatBox label="Block" value={statsGame?.find(t => t.type === "Block")?.count ?? 0} />
-                <StatBox label="Foul" value={statsGame?.find(t => t.type === "Foul")?.count ?? 0} />
+                <StatBox label="FT" value={`${statistics.ofGame?.find(t => t.type === 'FreeThrowHit')?.count ?? 0}-${statistics.ofGame?.filter(t => t.type === 'FreeThrowMiss' || t.type === 'FreeThrowHit')?.reduce((sum, t) => sum + t.count, 0) ?? 0}`} />
+                <StatBox label="2PT" value={`${statistics.ofGame?.find(t => t.type === 'TwoPointerHit')?.count ?? 0}-${statistics.ofGame?.filter(t => t.type === 'TwoPointerMiss' || t.type === 'TwoPointerHit')?.reduce((sum, t) => sum + t.count, 0) ?? 0}`} />
+                <StatBox label="3PT" value={`${statistics.ofGame?.find(t => t.type === 'ThreePointerHit')?.count ?? 0}-${statistics.ofGame?.filter(t => t.type === 'ThreePointerMiss' || t.type === 'ThreePointerHit')?.reduce((sum, t) => sum + t.count, 0) ?? 0}`} />
+                <StatBox label="Assist" value={statistics.ofGame?.find(t => t.type === "Assist")?.count ?? 0} />
+                <StatBox label="Rebound" value={statistics.ofGame?.find(t => t.type === "Rebound")?.count ?? 0} />
+                <StatBox label="Turnover" value={statistics.ofGame?.find(t => t.type === "Turnover")?.count ?? 0} />
+                <StatBox label="Block" value={statistics.ofGame?.find(t => t.type === "Block")?.count ?? 0} />
+                <StatBox label="Foul" value={statistics.ofGame?.find(t => t.type === "Foul")?.count ?? 0} />
                 <StatBox
                   position="center"
                   label="Total Points"
@@ -357,7 +337,7 @@ const Statistics: React.FC = () => {
                     gridColumn: isMobile ? 'auto' : 'span 8',
                     boxWidth: isMobile ? "auto" : "500px"
                   }}
-                  value={statsGame?.reduce((total, t) => t.points ? total + t.points : total, 0) ?? 0}
+                  value={statistics.ofGame?.reduce((total, t) => t.points ? total + t.points : total, 0) ?? 0}
                 />
               </Box>
             </Box>

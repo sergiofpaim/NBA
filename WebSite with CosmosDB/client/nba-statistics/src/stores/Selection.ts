@@ -7,37 +7,31 @@ import { api } from '../utils/Api';
 
 interface SeasonsState {
   seasons: Season[];
-  loading: boolean;
   error: string | null;
 }
 
 interface GamesState {
   games: Game[];
-  loading: boolean;
   error: string | null;
 }
 
 interface PlayersState {
   players: Participation[];
-  loading: boolean;
   error: string | null;
 }
 
 const initialSeasonsState: SeasonsState = {
   seasons: [],
-  loading: false,
   error: null,
 };
 
 const initialGamesState: GamesState = {
   games: [],
-  loading: false,
   error: null,
 };
 
 const initialPlayersState: PlayersState = {
   players: [],
-  loading: false,
   error: null,
 };
 
@@ -46,15 +40,12 @@ const seasonsSlice = createSlice({
   initialState: initialSeasonsState,
   reducers: {
     fetchSeasonsRequest(state) {
-      state.loading = true;
       state.error = null;
     },
     fetchSeasonsSuccess(state, action: PayloadAction<Season[]>) {
-      state.loading = false;
       state.seasons = action.payload;
     },
     fetchSeasonsFailure(state, action: PayloadAction<string>) {
-      state.loading = false;
       state.error = action.payload;
     },
   },
@@ -65,15 +56,12 @@ const gamesSlice = createSlice({
   initialState: initialGamesState,
   reducers: {
     fetchGamesRequest(state) {
-      state.loading = true;
       state.error = null;
     },
     fetchGamesSuccess(state, action: PayloadAction<Game[]>) {
-      state.loading = false;
       state.games = action.payload;
     },
     fetchGamesFailure(state, action: PayloadAction<string>) {
-      state.loading = false;
       state.error = action.payload;
     },
     resetGames(state) {
@@ -87,15 +75,12 @@ const playersSlice = createSlice({
   initialState: initialPlayersState,
   reducers: {
     fetchPlayersRequest(state) {
-      state.loading = true;
       state.error = null;
     },
     fetchPlayersSuccess(state, action: PayloadAction<Participation[]>) {
-      state.loading = false;
       state.players = action.payload;
     },
     fetchPlayersFailure(state, action: PayloadAction<string>) {
-      state.loading = false;
       state.error = action.payload;
     },
     resetPlayers(state) {

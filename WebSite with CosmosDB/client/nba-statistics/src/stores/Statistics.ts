@@ -4,107 +4,84 @@ import { api } from '../utils/Api';
 import { PlayerStatisticsInSeason } from '../models/Statistics/PlayerStatisticsInSeason';
 import { PlayerStatisticsInGame } from '../models/Statistics/PlayerStatisticsInGame';
 
-interface SeasonStatisticsState {
-    seasonStats: PlayerStatisticsInSeason | null;
+interface StatisticsState {
+    ofSeason: PlayerStatisticsInSeason | null;
+    ofGame: PlayerStatisticsInGame[] | null;
     loading: boolean;
     error: string | null;
     lastUpdated: Date | null;
 }
 
-const initialSeasonsStatisticsState: SeasonStatisticsState = {
-    seasonStats: null,
+const initialState: StatisticsState = {
+    ofSeason: null,
+    ofGame: null,
     loading: false,
     error: null,
-    lastUpdated: null
+    lastUpdated: null,
 };
 
-interface GameStatisticsState {
-    gameStats: PlayerStatisticsInGame[];
-    loading: boolean;
-    error: string | null;
-}
-
-const initialGameStatisticsState: GameStatisticsState = {
-    gameStats: [],
-    loading: false,
-    error: null
-};
-
-const seasonStatisticsSlice = createSlice({
-    name: 'seasonStatistics',
-    initialState: initialSeasonsStatisticsState,
+const statisticsSlice = createSlice({
+    name: 'statistics',
+    initialState: initialState,
     reducers: {
-        fetchSeasonStatisticsRequest(state) {
+        fetchStatisticsRequest(state) {
             state.loading = true;
             state.error = null;
         },
-        fetchSeasonStatisticsSuccess(state, action: PayloadAction<PlayerStatisticsInSeason>) {
+        fetchStatisticsSuccess(
+            state,
+            action: PayloadAction<{
+                ofSeason: PlayerStatisticsInSeason;
+                ofGame: PlayerStatisticsInGame[];
+            }>
+        ) {
             state.loading = false;
-            state.seasonStats = action.payload;
+            state.ofSeason = action.payload.ofSeason;
+            state.ofGame = action.payload.ofGame;
             state.lastUpdated = new Date();
         },
-        fetchSeasonStatisticsFailure(state, action: PayloadAction<string>) {
+        fetchStatisticsFailure(state, action: PayloadAction<string>) {
             state.loading = false;
             state.error = action.payload;
         },
-    },
-});
-
-const gameStatisticsSlice = createSlice({
-    name: 'gameStatistics',
-    initialState: initialGameStatisticsState,
-    reducers: {
-        fetchGameStatisticsRequest(state) {
-            state.loading = true;
-            state.error = null;
-        },
-        fetchGameStatisticsSuccess(state, action: PayloadAction<PlayerStatisticsInGame[]>) {
+        resetStatistics(state) {
             state.loading = false;
-            state.gameStats = action.payload;
-        },
-        fetchGameStatisticsFailure(state, action: PayloadAction<string>) {
-            state.loading = false;
-            state.error = action.payload;
+            state.ofSeason = null;
+            state.ofGame = null;
+            state.lastUpdated = null;
         },
     },
 });
 
 export const {
-    fetchSeasonStatisticsRequest,
-    fetchSeasonStatisticsSuccess,
-    fetchSeasonStatisticsFailure,
-} = seasonStatisticsSlice.actions;
+    fetchStatisticsRequest,
+    fetchStatisticsSuccess,
+    fetchStatisticsFailure,
+    resetStatistics
+} = statisticsSlice.actions;
 
-export const {
-    fetchGameStatisticsRequest,
-    fetchGameStatisticsSuccess,
-    fetchGameStatisticsFailure,
-} = gameStatisticsSlice.actions;
 
-export const fetchSeasonStatistics = (seasonId: string, playerId: string): ThunkAction<void, RootState, unknown, Action<string>> => {
+export const fetchStatistics = (seasonId: string, gameId: string, playerId: string): ThunkAction<void, RootState, unknown, Action<string>> => {
     return async (dispatch) => {
-        dispatch(fetchSeasonStatisticsRequest());
+        dispatch(fetchStatisticsRequest());
 
-        const response = await api.get<PlayerStatisticsInSeason>(`/statistics/seasons/${seasonId}/players/${playerId}`);
-        if (response.success)
-            dispatch(fetchSeasonStatisticsSuccess(response.payLoad));
-        else
-            dispatch(fetchSeasonStatisticsFailure(response.message));
+        const [seasonResponse, gameResponse] = await Promise.all([
+            api.get<PlayerStatisticsInSeason>(`/statistics/seasons/${seasonId}/players/${playerId}`),
+            api.get<PlayerStatisticsInGame[]>(`/statistics/games/${gameId}/players/${playerId}`),
+        ]);
+        if (seasonResponse.success && gameResponse.success) {
+            dispatch(
+                fetchStatisticsSuccess({
+                    ofSeason: seasonResponse.payLoad,
+                    ofGame: gameResponse.payLoad,
+                })
+            );
+        } else {
+            const errorMessage =
+                seasonResponse.message || gameResponse.message || 'Failed to fetch statistics';
+            dispatch(fetchStatisticsFailure(errorMessage));
+        }
     };
 };
 
-export const fetchGameStatistics = (gameId: string, playerId: string): ThunkAction<void, RootState, unknown, Action<string>> => {
-    return async (dispatch) => {
-        dispatch(fetchSeasonStatisticsRequest());
-
-        const response = await api.get<PlayerStatisticsInGame[]>(`/statistics/games/${gameId}/players/${playerId}`);
-        if (response.success)
-            dispatch(fetchGameStatisticsSuccess(response.payLoad));
-        else
-            dispatch(fetchGameStatisticsFailure(response.message));
-    };
-};
-
-
-export const seasonStatisticsReducer = seasonStatisticsSlice.reducer;
-export const gameStatisticsReducer = gameStatisticsSlice.reducer;
+export const statisticsReducer = statisticsSlice.reducer;
