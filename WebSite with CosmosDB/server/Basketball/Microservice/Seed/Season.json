@@ -63,6 +63,99 @@
             "jersey": 5
           }
         ]
+      },
+      {
+        "id": "BOS",
+        "teamName": "Boston Celtics",
+        "players": [
+          {
+            "playerId": "11",
+            "playerName": "Jayson Tatum",
+            "jersey": 0
+          },
+          {
+            "playerId": "12",
+            "playerName": "Jaylen Brown",
+            "jersey": 7
+          },
+          {
+            "playerId": "13",
+            "playerName": "Marcus Smart",
+            "jersey": 36
+          },
+          {
+            "playerId": "14",
+            "playerName": "Al Horford",
+            "jersey": 42
+          },
+          {
+            "playerId": "15",
+            "playerName": "Derrick White",
+            "jersey": 9
+          }
+        ]
+      },
+      {
+        "id": "MIA",
+        "teamName": "Miami Heat",
+        "players": [
+          {
+            "playerId": "16",
+            "playerName": "Jimmy Butler",
+            "jersey": 22
+          },
+          {
+            "playerId": "17",
+            "playerName": "Bam Adebayo",
+            "jersey": 13
+          },
+          {
+            "playerId": "18",
+            "playerName": "Tyler Herro",
+            "jersey": 14
+          },
+          {
+            "playerId": "19",
+            "playerName": "Kyle Lowry",
+            "jersey": 7
+          },
+          {
+            "playerId": "20",
+            "playerName": "Victor Oladipo",
+            "jersey": 4
+          }
+        ]
+      },
+      {
+        "id": "MIL",
+        "teamName": "Milwaukee Bucks",
+        "players": [
+          {
+            "playerId": "21",
+            "playerName": "Giannis Antetokounmpo",
+            "jersey": 34
+          },
+          {
+            "playerId": "22",
+            "playerName": "Jrue Holiday",
+            "jersey": 21
+          },
+          {
+            "playerId": "23",
+            "playerName": "Brook Lopez",
+            "jersey": 11
+          },
+          {
+            "playerId": "24",
+            "playerName": "Khris Middleton",
+            "jersey": 22
+          },
+          {
+            "playerId": "25",
+            "playerName": "Jevon Carter",
+            "jersey": 5
+          }
+        ]
       }
     ]
   },
@@ -127,6 +220,99 @@
           {
             "playerId": "10",
             "playerName": "Kevon Looney",
+            "jersey": 5
+          }
+        ]
+      },
+      {
+        "id": "BOS",
+        "teamName": "Boston Celtics",
+        "players": [
+          {
+            "playerId": "11",
+            "playerName": "Jayson Tatum",
+            "jersey": 0
+          },
+          {
+            "playerId": "12",
+            "playerName": "Jaylen Brown",
+            "jersey": 7
+          },
+          {
+            "playerId": "13",
+            "playerName": "Marcus Smart",
+            "jersey": 36
+          },
+          {
+            "playerId": "14",
+            "playerName": "Al Horford",
+            "jersey": 42
+          },
+          {
+            "playerId": "15",
+            "playerName": "Derrick White",
+            "jersey": 9
+          }
+        ]
+      },
+      {
+        "id": "MIA",
+        "teamName": "Miami Heat",
+        "players": [
+          {
+            "playerId": "16",
+            "playerName": "Jimmy Butler",
+            "jersey": 22
+          },
+          {
+            "playerId": "17",
+            "playerName": "Bam Adebayo",
+            "jersey": 13
+          },
+          {
+            "playerId": "18",
+            "playerName": "Tyler Herro",
+            "jersey": 14
+          },
+          {
+            "playerId": "19",
+            "playerName": "Kyle Lowry",
+            "jersey": 7
+          },
+          {
+            "playerId": "20",
+            "playerName": "Victor Oladipo",
+            "jersey": 4
+          }
+        ]
+      },
+      {
+        "id": "MIL",
+        "teamName": "Milwaukee Bucks",
+        "players": [
+          {
+            "playerId": "21",
+            "playerName": "Giannis Antetokounmpo",
+            "jersey": 34
+          },
+          {
+            "playerId": "22",
+            "playerName": "Jrue Holiday",
+            "jersey": 21
+          },
+          {
+            "playerId": "23",
+            "playerName": "Brook Lopez",
+            "jersey": 11
+          },
+          {
+            "playerId": "24",
+            "playerName": "Khris Middleton",
+            "jersey": 22
+          },
+          {
+            "playerId": "25",
+            "playerName": "Jevon Carter",
             "jersey": 5
           }
         ]
