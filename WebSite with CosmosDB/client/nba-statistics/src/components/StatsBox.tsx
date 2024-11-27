@@ -1,13 +1,17 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
+import { SxProps, Theme } from '@mui/system';
 import globalTheme from '../styles/GlobalTheme';
 
 interface StatBoxProps {
   label: string;
   value: string | number;
+  boxWidth?: string | number;
+  position?: string;
+  sx?: SxProps<Theme>;
 }
 
-const StatBox: React.FC<StatBoxProps> = ({ label, value }) => {
+const StatBox: React.FC<StatBoxProps> = ({ label, value, boxWidth, position, sx }) => {
   return (
     <Box
       sx={{
@@ -20,6 +24,8 @@ const StatBox: React.FC<StatBoxProps> = ({ label, value }) => {
         justifyContent: 'center',
         alignItems: 'center',
         gap: 1,
+        width: boxWidth || 'auto',
+        ...sx,
       }}
     >
       <Typography

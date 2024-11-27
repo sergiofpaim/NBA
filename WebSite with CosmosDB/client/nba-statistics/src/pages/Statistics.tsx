@@ -328,19 +328,18 @@ const Statistics: React.FC = () => {
                 variant={isMobile ? 'h5' : 'h2'}
                 gutterBottom
                 textAlign="center"
-                sx={{ marginBottom: isMobile ? 1 : 2 }}
+                sx={{
+                  marginBottom: isMobile ? 1 : 2, gridTemplateColumns: isMobile ? '1fr' : 'repeat(8, 1fr)',
+                }}
               >
                 In the game
               </Typography>
               <Box
                 sx={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+                  gridTemplateColumns: isMobile ? '1fr' : 'repeat(8, 1fr)',
                   gap: 2,
                   marginTop: 2,
-                  '@media (max-width: 400px)': {
-                    gridTemplateColumns: '1fr',
-                  },
                 }}
               >
                 <StatBox label="FT" value={`${statsGame?.find(t => t.type === 'FreeThrowHit')?.count ?? 0}-${statsGame?.filter(t => t.type === 'FreeThrowMiss' || t.type === 'FreeThrowHit')?.reduce((sum, t) => sum + t.count, 0) ?? 0}`} />
@@ -351,14 +350,22 @@ const Statistics: React.FC = () => {
                 <StatBox label="Turnover" value={statsGame?.find(t => t.type === "Turnover")?.count ?? 0} />
                 <StatBox label="Block" value={statsGame?.find(t => t.type === "Block")?.count ?? 0} />
                 <StatBox label="Foul" value={statsGame?.find(t => t.type === "Foul")?.count ?? 0} />
-                <StatBox label="Total Points" value={statsGame?.reduce((total, t) => t.points ? total + t.points : total, 0) ?? 0} />
+                <StatBox
+                  position="center"
+                  label="Total Points"
+                  sx={{
+                    gridColumn: isMobile ? 'auto' : 'span 8',
+                    boxWidth: isMobile ? "auto" : "500px"
+                  }}
+                  value={statsGame?.reduce((total, t) => t.points ? total + t.points : total, 0) ?? 0}
+                />
               </Box>
             </Box>
           </>
         ) : (
           <Box
             sx={{
-              height: isMobile ? '100' : '400px',
+              height: isMobile ? '100' : '550px',
               borderRadius: 1,
               backgroundColor: 'rgba(0, 0, 0, 0.1)',
               justifyContent: 'center',
