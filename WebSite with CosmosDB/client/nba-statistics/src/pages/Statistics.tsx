@@ -50,8 +50,8 @@ const Statistics: React.FC = () => {
     setSelectedSeason(selectedSeason || null);
     setSelectedGame(null);
     setSelectedPlayer(null);
-    dispatch(resetStatistics());
     setTimeElapsed(null);
+    dispatch(resetStatistics());
   };
 
   const handleGameChange = (event: SelectChangeEvent<string>) => {
@@ -59,16 +59,16 @@ const Statistics: React.FC = () => {
     const selectedGame = games.find((game) => game.id === selectedGameId);
     setSelectedGame(selectedGame || null);
     setSelectedPlayer(null);
-    dispatch(resetStatistics());
     setTimeElapsed(null);
+    dispatch(resetStatistics());
   };
 
   const handlePlayerChange = (event: SelectChangeEvent<string>) => {
     const selectedPlayerId = event.target.value;
     const selectedPlayer = players.find((player) => player.id === selectedPlayerId);
     setSelectedPlayer(selectedPlayer || null);
-    dispatch(resetStatistics());
     setTimeElapsed(null);
+    dispatch(resetStatistics());
   };
 
   const handleStats = useCallback(() => {
@@ -309,7 +309,7 @@ const Statistics: React.FC = () => {
                 <StatBox label="APG" value={statistics.ofSeason?.apg?.toFixed(1) || ''} />
                 <StatBox label="RPG" value={statistics.ofSeason?.rpg?.toFixed(1) || ''} />
                 <StatBox label="BPG" value={statistics.ofSeason?.bpg?.toFixed(1) || ''} />
-                <StatBox label="FT%" value={statistics.ofSeason?.ftConversion?.toFixed(1) || ''} />
+                <StatBox label="FT%" value={statistics.ofSeason?.ftConversion?.toFixed(1) || '--'} />
                 <StatBox label="Total Points" value={statistics.ofSeason?.totalPoints || ''} />
               </Box>
             </Box>
