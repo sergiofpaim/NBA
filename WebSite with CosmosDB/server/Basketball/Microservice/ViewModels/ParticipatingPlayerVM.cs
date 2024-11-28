@@ -1,13 +1,19 @@
-﻿using NBA.Models;
+﻿using NBA.Infrastructure;
+using NBA.Models;
 
 namespace NBA.ViewModels
 {
-    public class ParticipatingPlayerVM
+    public class ParticipatingPlayerVM : BasketballViewModel
     {
         public string Id { get; set; }
         public string Name { get; set; }
         public string ParticipationId { get; set; }
         public string TeamName { get; set; }
+
+        public override (bool Success, string Message) Validate()
+        {
+            return (false, "this viewModel cannot be used for write operations");
+        }
 
         internal static ParticipatingPlayerVM FactorFrom(Participation model)
         {

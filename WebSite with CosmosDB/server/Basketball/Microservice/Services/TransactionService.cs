@@ -49,7 +49,7 @@ namespace NBA.Services
             var newPlay = GamePlay.FactoryFrom(quarter, type, game.At);
 
             Participation saved = default;
-            if (participation == null)
+            if (participation is null)
             {
                 if (isHomePlayer.Value)
                     participation = Participation.FactoryFrom(game,
@@ -97,7 +97,7 @@ namespace NBA.Services
         {
             var player = Basketball.Repo.GetById<Player>(playerId);
 
-            if (player == null)
+            if (player is null)
                 return NotFound<Player>("Player not found.");
             else
                 return Success(player);
@@ -107,7 +107,7 @@ namespace NBA.Services
         {
             var game = Basketball.Repo.GetById<Game>(gameId);
 
-            if (game == null)
+            if (game is null)
                 return NotFound<Game>("Game not found.");
             else
                 return Success(game);

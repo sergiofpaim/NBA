@@ -1,8 +1,9 @@
-﻿using NBA.Models;
+﻿using NBA.Infrastructure;
+using NBA.Models;
 
 namespace NBA.ViewModels
 {
-    internal class PlayerStatisticsInSeasonVM
+    internal class PlayerStatisticsInSeasonVM : BasketballViewModel
     {
         public int Participations { get; set; }
         public double PPG { get; set; }
@@ -11,6 +12,11 @@ namespace NBA.ViewModels
         public double BPG { get; set; }
         public int TotalPoints { get; set; }
         public double? FTConversion { get; set; }
+
+        public override (bool Success, string Message) Validate()
+        {
+            return (false, "this viewModel cannot be used for write operations");
+        }
 
         internal static PlayerStatisticsInSeasonVM FactorFrom(int participations, List<GamePlay> plays)
         {

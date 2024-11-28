@@ -10,19 +10,16 @@
       {
         "quarter": 1,
         "type": "FreeThrowMiss",
-        "points": 0,
         "at": "00:08:48.6421693"
       },
       {
         "quarter": 1,
         "type": "TwoPointerMiss",
-        "points": 0,
         "at": "00:08:47.0857598"
       },
       {
         "quarter": 1,
         "type": "ThreePointerMiss",
-        "points": 0,
         "at": "00:08:45.2297892"
       },
       {
@@ -55,7 +52,7 @@
     "playerName": "D'Angelo Russell",
     "plays": [
       {
-        "quarter": 0,
+        "quarter": 1,
         "type": "ThreePointerHit",
         "points": 3,
         "at": "00:10:53.3510090"

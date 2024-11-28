@@ -41,6 +41,9 @@ namespace NBA.Controllers
         [ProducesResponseType(typeof(BasketballResponse<Game>), 200)]
         public async Task<IActionResult> AddGameAsync([FromBody] AddGameVM request)
         {
+            if (IsInvalid(request))
+                return BadRequest(ValidationError);
+
             var gameResult = await TransactionService.AddGameAsync(request.HomeTeamId, request.VisitorTeamId, request.At);
 
             return Result(gameResult);
@@ -68,9 +71,14 @@ namespace NBA.Controllers
         [ProducesResponseType(typeof(BasketballResponse<Participation>), 200)]
         public async Task<IActionResult> AddPlayAsync([FromBody] AddPlayVM request)
         {
+            if (IsInvalid(request))
+                return BadRequest(ValidationError);
+
             const int PLAYS_TO_TAKE = 5;
 
-            var playResult = await TransactionService.AddPlayAsync(request.PlayerId, request.GameId, request.Quarter, request.PlayType, PLAYS_TO_TAKE);
+            var playType = Enum.Parse<PlayType>(request.Type);
+
+            var playResult = await TransactionService.AddPlayAsync(request.PlayerId, request.GameId, request.Quarter, playType, PLAYS_TO_TAKE);
 
             return Result(playResult);
         }

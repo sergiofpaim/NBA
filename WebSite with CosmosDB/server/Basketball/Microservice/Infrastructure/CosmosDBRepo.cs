@@ -52,6 +52,10 @@ namespace NBA.Infrastructure
 
         public async Task<T> CreateAsync<T>(T entity) where T : BasketballModel
         {
+            var (Success, Message) = entity.Validate();
+            if (!Success)
+                throw new ArgumentException($"Invalid model '{typeof(T).Name}': {Message}");
+
             try
             {
                 var result = await GetContainer<T>().CreateItemAsync(entity, new PartitionKey(entity.Id));
@@ -66,6 +70,10 @@ namespace NBA.Infrastructure
 
         public async Task<T> UpdateAsync<T>(T entity) where T : BasketballModel
         {
+            var (Success, Message) = entity.Validate();
+            if (!Success)
+                throw new ArgumentException($"Invalid model '{typeof(T).Name}': {Message}");
+
             try
             {
                 var result = await GetContainer<T>().UpsertItemAsync(entity, new PartitionKey(entity.Id));
@@ -81,7 +89,7 @@ namespace NBA.Infrastructure
         public T GetById<T>(string id) where T : BasketballModel
         {
             var query = GetContainer<T>().GetItemLinqQueryable<T>()
-                                          .Where(i => i.Id == id);
+                                         .Where(i => i.Id == id);
 
             var iterator = query.ToFeedIterator();
 
@@ -92,9 +100,8 @@ namespace NBA.Infrastructure
 
         public IEnumerable<T> Get<T>(Expression<Func<T, bool>> where, Expression<Func<T, object>> order = null, int? take = null ) where T : BasketballModel
         {
-            var query = GetContainer<T>()
-                .GetItemLinqQueryable<T>()
-                .Where(where);
+            var query = GetContainer<T>().GetItemLinqQueryable<T>()
+                                         .Where(where);
 
             if (order != null)
                 query = query.OrderBy(order);
@@ -120,6 +127,7 @@ namespace NBA.Infrastructure
 
         private static void Reseed<T>() where T : BasketballModel
         {
+
             var modelsToClean = GetContainer<T>().GetItemQueryIterator<T>();
 
             while (modelsToClean.HasMoreResults)
@@ -131,10 +139,16 @@ namespace NBA.Infrastructure
             }
 
             var modelJson = File.ReadAllText($"./Seed/{typeof(T).Name}.json");
-            var model = JsonSerializer.Deserialize<List<T>>(modelJson, options);
+            var entities = JsonSerializer.Deserialize<List<T>>(modelJson, options);
 
-            foreach (var player in model)
-                GetContainer<T>().UpsertItemAsync(player);
+            foreach (var entity in entities)
+            {
+                var (Success, Message) = entity.Validate();
+                if (!Success)
+                    throw new ArgumentException($"Invalid model '{typeof(T).Name}' of Id '{entity.Id}': {Message}");
+
+                GetContainer<T>().UpsertItemAsync(entity);
+            }
         }
     }
 }
