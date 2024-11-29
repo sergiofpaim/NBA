@@ -98,13 +98,18 @@ namespace NBA.Infrastructure
             return response.FirstOrDefault();
         }
 
-        public IEnumerable<T> Get<T>(Expression<Func<T, bool>> where, Expression<Func<T, object>> order = null, int? take = null ) where T : BasketballModel
+        public IEnumerable<T> Get<T>(Expression<Func<T, bool>> where, Expression<Func<T, object>> order = null, bool descending = false, int? take = null ) where T : BasketballModel
         {
             var query = GetContainer<T>().GetItemLinqQueryable<T>()
                                          .Where(where);
 
             if (order != null)
-                query = query.OrderBy(order);
+            {
+                if (descending)
+                    query = query.OrderByDescending(order);
+                else
+                    query = query.OrderBy(order);
+            }
 
             if (take.HasValue)
                 query = query.Take(take.Value);

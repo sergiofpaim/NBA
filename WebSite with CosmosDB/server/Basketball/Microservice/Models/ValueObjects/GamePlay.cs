@@ -73,7 +73,7 @@ namespace NBA.Models
                 Quarter = quarter,
                 Type = type.ToString(),
                 Points = points,
-                At = TimeSpan.FromMinutes((DateTime.Now - gameAt).TotalMinutes % 15)
+                At = TimeSpan.FromMinutes((DateTime.UtcNow - gameAt).TotalMinutes % 15)
             };
         }
     }

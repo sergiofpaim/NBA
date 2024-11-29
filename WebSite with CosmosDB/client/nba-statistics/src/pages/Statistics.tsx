@@ -78,6 +78,18 @@ const Statistics: React.FC = () => {
     }
   }, [dispatch, selectedGame, selectedPlayer, selectedSeason]);
 
+  const IsTodaysGame = useCallback(() => {
+    if (!selectedGame?.at)
+      return false;
+
+    const now = new Date();
+    const gameDate = new Date(selectedGame.at);
+
+    return gameDate.getUTCFullYear() === now.getUTCFullYear() &&
+      gameDate.getUTCMonth() === now.getUTCMonth() &&
+      gameDate.getUTCDay() === now.getUTCDay();
+  }, [selectedGame]);
+
   useEffect(() => {
     dispatch(fetchSeasons());
   }, [dispatch]);
@@ -115,10 +127,11 @@ const Statistics: React.FC = () => {
   }, [statistics.lastUpdated]);
 
   useEffect(() => {
-    if ((timeElapsed || 0) >= 60) {
+    if (IsTodaysGame() &&
+      (timeElapsed || 0) >= 60) {
       handleStats();
     }
-  }, [handleStats, timeElapsed]);
+  }, [handleStats, timeElapsed, IsTodaysGame]);
 
   return (
     <Box
@@ -151,7 +164,7 @@ const Statistics: React.FC = () => {
       >
         <Typography gutterBottom sx={{ ...globalTheme.typography.h2 }}>Pick a player</Typography>
         {error ? (
-          <Typography gutterBottom sx={{ ...globalTheme.typography.h2 }}>{error}</Typography>) : ('')
+          <Typography gutterBottom sx={{ ...globalTheme.typography.h3, color: globalTheme.palette.secondary.main }}>{error}</Typography>) : ('')
         }
         <FormControl fullWidth>
           <InputLabel id="season-label" sx={{ color: globalTheme.palette.primary.main }}>Season</InputLabel>
@@ -263,18 +276,22 @@ const Statistics: React.FC = () => {
                 alignItems: 'center',
                 gap: 1
               }}>
-                <IconButton aria-label="refresh" sx={{
-                  color: globalTheme.palette.background.default, backgroundColor: globalTheme.palette.primary.main,
-                  '&:hover': {
-                    backgroundColor: globalTheme.palette.primary.dark
-                  }
-                }}
-                  onClick={handleStats}
-                >
-                  <RefreshIcon />
-                </IconButton>
-                <Typography sx={{ fontSize: globalTheme.typography.h5 }}>Updated <br />{timeElapsed !== null ? `${timeElapsed}s ago` : "now"}
-                </Typography>
+                {IsTodaysGame() ? (
+                  <>
+                    <IconButton aria-label="refresh" sx={{
+                      color: globalTheme.palette.background.default, backgroundColor: globalTheme.palette.primary.main,
+                      '&:hover': {
+                        backgroundColor: globalTheme.palette.primary.dark
+                      }
+                    }}
+                      onClick={handleStats}
+                    >
+                      <RefreshIcon />
+                    </IconButton>
+                    <Typography sx={{ fontSize: globalTheme.typography.h5 }}>Updated <br />{timeElapsed !== null ? `${timeElapsed}s ago` : "now"}
+                    </Typography>
+                  </>
+                ) : null}
               </Box>
             </Box>
             <Box

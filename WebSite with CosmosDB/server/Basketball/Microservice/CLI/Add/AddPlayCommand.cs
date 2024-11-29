@@ -117,7 +117,7 @@ public class AddPlayCommand : NBACommand<AddPlayCommand.PlayParms>
         if (result.Code != 0)
             PrintResult(result.Message, result.Code);
         else
-            AnsiConsole.MarkupLine($"Game Id: {gameId}\nCurrent Time: {DateTime.Now}\nQuarter: {quarter}\nPlayer: {result.PayLoad.Name}");
+            AnsiConsole.MarkupLine($"Game Id: {gameId}\nCurrent Time: {DateTime.UtcNow}\nQuarter: {quarter}\nPlayer: {result.PayLoad.Name}");
     }
 
     private static void ShowLastPlays(Participation participation, int quarter)

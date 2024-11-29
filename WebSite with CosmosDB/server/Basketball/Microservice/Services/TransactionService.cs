@@ -1,6 +1,8 @@
 ﻿using NBA.Infrastructure;
 using NBA.Models;
 using NBA.ViewModels;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace NBA.Services
 {
@@ -8,7 +10,7 @@ namespace NBA.Services
     {
         public static async Task<BasketballResponse<Game>> AddGameAsync(string homeTeamId, string visitorTeamId, DateTime at)
         {
-            var lastSeason = Basketball.Repo.Get<Season>(season => true, season => season.Id, 1).FirstOrDefault();
+            var lastSeason = Basketball.Repo.Get<Season>(season => true, season => season.Id, true, 1).FirstOrDefault();
             if (lastSeason is null)
                 return Error<Game>("There is no season registered yet.");
 
