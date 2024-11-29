@@ -128,7 +128,7 @@ namespace NBA.Services
 
         internal static BasketballResponse<object> Reseed()
         {
-            Basketball.Repo.Reseed();
+            Basketball.Repo.ReseedAsync();
             return Success<object>(null, "Reseed completed.");
         }
 

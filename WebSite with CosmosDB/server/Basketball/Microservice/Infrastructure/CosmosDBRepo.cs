@@ -1,10 +1,8 @@
 ﻿using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Linq;
-using Microsoft.Azure.Cosmos.Serialization.HybridRow;
 using NBA.Models;
 using System.Linq.Expressions;
 using System.Text.Json;
-
 
 namespace NBA.Infrastructure
 {
@@ -121,17 +119,19 @@ namespace NBA.Infrastructure
             return response;
         }
 
-        public void Reseed()
+        public async Task ReseedAsync()
         {
-            Reseed<Player>();
-            Reseed<Game>();
-            Reseed<Season>();
-            Reseed<Team>();
-            Reseed<Participation>();
+            await ReseedAsync<Player>();
+            await ReseedAsync<Game>();
+            await ReseedAsync<Season>();
+            await ReseedAsync<Team>();
+            await ReseedAsync<Participation>();
         }
 
-        private static void Reseed<T>() where T : BasketballModel
+        private static async Task ReseedAsync<T>() where T : BasketballModel
         {
+            int removed = 0;
+            int seeded = 0;
 
             var modelsToClean = GetContainer<T>().GetItemQueryIterator<T>();
 
@@ -140,7 +140,10 @@ namespace NBA.Infrastructure
                 var response = modelsToClean.ReadNextAsync().Result;
 
                 foreach (var toClean in response)
-                    GetContainer<T>().DeleteItemAsync<T>(toClean.Id, new(toClean.Id));
+                {
+                    removed++;
+                    await GetContainer<T>().DeleteItemAsync<T>(toClean.Id, new(toClean.Id));
+                }
             }
 
             var modelJson = File.ReadAllText($"./Seed/{typeof(T).Name}.json");
@@ -152,8 +155,11 @@ namespace NBA.Infrastructure
                 if (!Success)
                     throw new ArgumentException($"Invalid model '{typeof(T).Name}' of Id '{entity.Id}': {Message}");
 
-                GetContainer<T>().UpsertItemAsync(entity);
+                await GetContainer<T>().UpsertItemAsync(entity);
+                seeded++;
             }
+
+            Console.WriteLine($"Seeding {typeof(T).Name}: removed {removed} and seeded {seeded} from {entities.Count}");
         }
     }
 }
