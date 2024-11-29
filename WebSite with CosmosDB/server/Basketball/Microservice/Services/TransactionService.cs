@@ -1,8 +1,6 @@
 ﻿using NBA.Infrastructure;
 using NBA.Models;
 using NBA.ViewModels;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace NBA.Services
 {
@@ -74,16 +72,37 @@ namespace NBA.Services
                 saved = await Basketball.Repo.UpdateAsync(participation);
             }
 
-            //Only cuts the participation after updating the database
-            if (participation.Plays.Count > playsToTake)
-                participation.Plays.RemoveRange(playsToTake, participation.Plays.Count - playsToTake);
+            participation.TrimPlays(playsToTake);
 
             if (saved is null)
                 return Error<Participation>("Failed to add the play to the database.");
 
             else
-
                 return Success(participation, "Play added to the database.");
+        }
+
+        internal static async Task<BasketballResponse<Participation>> DeletePlayAsync(string participationId, TimeSpan at, int playsToTake)
+        {
+            var toUpdate = Basketball.Repo.GetById<Participation>(participationId);
+
+            if (toUpdate is null)
+                return NotFound<Participation>("Participation not found.");
+
+            var toRemove = toUpdate.Plays.FirstOrDefault(p => p.At == at);
+
+            if (toRemove is null)
+                return NotFound<Participation>("Play not found.");
+
+            toUpdate.Plays.Remove(toRemove);
+
+            var saved = await Basketball.Repo.UpdateAsync(toUpdate);
+
+            saved.TrimPlays(playsToTake);
+
+            if (saved is null)
+                return Error<Participation>("Failed to remove the play from the database.");
+            else
+                return Success(saved, "Play removed from the database.");
         }
 
         internal static BasketballResponse<Participation> GetParticipation(string gameId, string playerId)

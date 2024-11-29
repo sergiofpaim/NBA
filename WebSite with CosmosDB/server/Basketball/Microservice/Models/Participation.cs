@@ -71,5 +71,11 @@ namespace NBA.Models
         {
             Plays.Insert(0, newPlay);
         }
+
+        public void TrimPlays(int playsToTake)
+        {
+            if (Plays.Count > playsToTake)
+                Plays.RemoveRange(playsToTake, Plays.Count - playsToTake);
+        }
     }
 }

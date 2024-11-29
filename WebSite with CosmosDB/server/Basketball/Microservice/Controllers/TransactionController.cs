@@ -10,6 +10,8 @@ namespace NBA.Controllers
     [Route("transaction")]
     public class TransactionController : BasketballController
     {
+        const int PLAYS_TO_TAKE = 5;
+
         [HttpGet("seasons")]
         [ProducesResponseType(typeof(BasketballResponse<List<SeasonVM>>), 200)]
         public IActionResult GetSeasons()
@@ -74,11 +76,18 @@ namespace NBA.Controllers
             if (IsInvalid(request))
                 return BadRequest(ValidationError);
 
-            const int PLAYS_TO_TAKE = 5;
-
             var playType = Enum.Parse<PlayType>(request.Type);
 
             var playResult = await TransactionService.AddPlayAsync(request.PlayerId, request.GameId, request.Quarter, playType, PLAYS_TO_TAKE);
+
+            return Result(playResult);
+        }
+
+        [HttpDelete("plays/participation/{participationId}")]
+        [ProducesResponseType(typeof(BasketballResponse<Participation>), 200)]
+        public async Task<IActionResult> DeletePlayAsync(string participationId, TimeSpan at)
+        {
+            var playResult = await TransactionService.DeletePlayAsync(participationId, at, PLAYS_TO_TAKE);
 
             return Result(playResult);
         }
