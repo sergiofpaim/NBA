@@ -144,15 +144,16 @@ namespace NBA.Services
             return Success(games.OrderByDescending(g => g.At).Select(GameVM.FactorFrom).ToList());
         }
 
+        internal static BasketballResponse<List<GameVM>> GetLastSeasonGames()
+        {
+            var season = Basketball.Repo.Get<Season>(season => true, season => season.Id, true, 1).FirstOrDefault();
+            return GetSeasonGames(season.Id);
+        }
+
         internal static BasketballResponse<List<ParticipatingPlayerVM>> GetGamePlayers(string gameId)
         {
             var participations = Basketball.Repo.Get<Participation>(p => p.GameId == gameId);
             return Success(participations.OrderBy(p => p.PlayerName).Select(ParticipatingPlayerVM.FactorFrom).ToList());
-        }
-
-        internal static BasketballResponse<object> GetLastSeasonGames()
-        {
-            throw new NotImplementedException();
         }
     }
 }
