@@ -38,6 +38,15 @@ namespace NBA.Controllers
 
             return Result(seasonResult);
         }
+        
+        [HttpGet("seasons/{seasonId}/teams")]
+        [ProducesResponseType(typeof(BasketballResponse<List<TeamScalationVM>>), 200)]
+        public IActionResult GetSeasonTeams(string seasonId)
+        {
+            var seasonResult = TransactionService.GetSeasonTeams(seasonId);
+
+            return Result(seasonResult);
+        }
 
         [HttpPost("games")]
         [ProducesResponseType(typeof(BasketballResponse<Game>), 200)]
@@ -51,7 +60,7 @@ namespace NBA.Controllers
             return Result(gameResult);
         }
 
-        [HttpGet("games/{gameId}/players/participating")]
+        [HttpGet("games/{gameId}/players")]
         [ProducesResponseType(typeof(BasketballResponse<List<ParticipatingPlayerVM>>), 200)]
         public IActionResult GetParticipatingPlayers(string gameId)
         {

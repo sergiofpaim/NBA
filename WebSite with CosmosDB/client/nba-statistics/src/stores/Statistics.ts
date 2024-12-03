@@ -61,13 +61,13 @@ export const {
 } = statisticsSlice.actions;
 
 
-export const fetchStatistics = (seasonId: string, gameId: string, playerId: string): ThunkAction<void, RootState, unknown, Action<string>> => {
+export const fetchStatistics = (payload: { seasonId: string, gameId: string, playerId: string }): ThunkAction<void, RootState, unknown, Action<string>> => {
     return async (dispatch) => {
         dispatch(fetchStatisticsRequest());
 
         const [seasonResponse, gameResponse] = await Promise.all([
-            api.get<PlayerStatisticsInSeason>(`/statistics/seasons/${seasonId}/players/${playerId}`),
-            api.get<PlayerStatisticsInGame[]>(`/statistics/games/${gameId}/players/${playerId}`),
+            api.get<PlayerStatisticsInSeason>(`/statistics/seasons/${payload.seasonId}/players/${payload.playerId}`),
+            api.get<PlayerStatisticsInGame[]>(`/statistics/games/${payload.gameId}/players/${payload.playerId}`),
         ]);
         if (seasonResponse.success && gameResponse.success) {
             dispatch(

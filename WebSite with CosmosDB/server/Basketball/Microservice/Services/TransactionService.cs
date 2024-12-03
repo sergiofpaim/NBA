@@ -162,6 +162,11 @@ namespace NBA.Services
             var games = Basketball.Repo.Get<Game>(g => g.SeasonId == seasonId);
             return Success(games.OrderByDescending(g => g.At).Select(GameVM.FactorFrom).ToList());
         }
+        internal static BasketballResponse<List<TeamScalationVM>> GetSeasonTeams(string seasonId)
+        {
+            var season = Basketball.Repo.GetById<Season>(seasonId);
+            return Success(season.Teams.Select(TeamScalationVM.FactorFrom).ToList());
+        }
 
         internal static BasketballResponse<List<GameVM>> GetLastSeasonGames()
         {

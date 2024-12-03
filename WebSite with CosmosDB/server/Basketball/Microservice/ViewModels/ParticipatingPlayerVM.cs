@@ -8,6 +8,7 @@ namespace NBA.ViewModels
         public string Id { get; set; }
         public string Name { get; set; }
         public string ParticipationId { get; set; }
+        public string TeamId { get; set; }
         public string TeamName { get; set; }
 
         public override (bool Success, string Message) Validate()
@@ -22,6 +23,7 @@ namespace NBA.ViewModels
                 Id = model.PlayerId,
                 Name = model.PlayerName,
                 ParticipationId = model.Id,
+                TeamId = model.TeamId,
                 TeamName = model.TeamName
             };
         }

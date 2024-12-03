@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
 import Statistics from './pages/Statistics';
-import Record from './pages/LastGames';
+import Record from './pages/Record';
 import GlobalLayout from './styles/GlobalLayout';
 import globalTheme from './styles/GlobalTheme';
 import { ThemeProvider } from '@mui/material/styles';

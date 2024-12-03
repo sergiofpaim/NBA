@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
-import { Box, Divider, IconButton, Typography, useMediaQuery } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, Divider, Typography, useMediaQuery, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button as MuiButton } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import globalTheme from '../styles/GlobalTheme';
-import RefreshIcon from '@mui/icons-material/Refresh';
 import { AppDispatch, RootState } from '../stores/Store';
 import { fetchGames, setCurrentGame } from '../stores/Transaction';
 import List from '../components/ItemsList';
 import { Game } from '../models/Game';
+import Button from '../components/Button';
 
 const Record: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -14,14 +14,16 @@ const Record: React.FC = () => {
   const games = useSelector((state: RootState) => state.games.games);
   const isMobile = useMediaQuery(globalTheme.breakpoints.down('sm'));
 
+  const [openDialog, setOpenDialog] = useState(false);
+  const [gameDetails, setGameDetails] = useState({
+    homeTeamId: '',
+    visitorTeamId: '',
+    at: '',
+  });
+
   useEffect(() => {
     dispatch(fetchGames());
   }, [dispatch]);
-
-  const handleGameClick = (game: Game) => {
-    dispatch(setCurrentGame(game));
-    console.log(`Current game set to:`, game);
-  };
 
   const renderGame = (game: any) => {
     return (
@@ -38,6 +40,32 @@ const Record: React.FC = () => {
         </Box>
       </>
     );
+  };
+
+  const handleCreateGame = (): void => {
+    setOpenDialog(true);
+  };
+
+  const handleGameClick = (game: Game) => {
+    dispatch(setCurrentGame(game));
+    console.log(`Current game set to:`, game);
+  };
+
+  const handleDialogClose = () => {
+    setOpenDialog(false);
+  };
+
+  const handleSubmit = () => {
+    console.log('Creating game with details:', gameDetails);
+    setOpenDialog(false);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setGameDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: value,
+    }));
   };
 
   return (
@@ -93,23 +121,16 @@ const Record: React.FC = () => {
           alignItems: 'left',
           paddingLeft: isMobile ? 0 : 4,
           gap: 2,
-          marginTop: isMobile ? 3 : 0,
+          marginTop: 0,
           overflowY: 'auto',
         }}
       >
         <Box sx={{
           display: 'flex',
-          flexDirection: 'row',
+          justifyContent: 'flex-end',
           alignItems: 'center',
-          justifyContent: 'space-between',
         }}>
-          <Box sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            gap: 1
-          }}>
-          </Box>
+          <Button text="Create Game" onClick={handleCreateGame} />
         </Box>
         <List
           items={games}
@@ -119,6 +140,45 @@ const Record: React.FC = () => {
           label2="At"
         />
       </Box>
+
+      {/* Dialog for creating a game */}
+      <Dialog
+        open={openDialog}
+        onClose={handleDialogClose}
+      >
+        <DialogTitle sx={{ color: 'black' }}>Create Game</DialogTitle>
+        <DialogContent>
+          <TextField
+            label="Home Team"
+            fullWidth
+            margin="normal"
+            name="homeTeamId"
+            value={gameDetails.homeTeamId}
+            onChange={handleInputChange}
+          />
+          <TextField
+            label="Visitor Team"
+            fullWidth
+            margin="normal"
+            name="visitorTeamId"
+            value={gameDetails.visitorTeamId}
+            onChange={handleInputChange}
+          />
+          <TextField
+            label="Date"
+            fullWidth
+            margin="normal"
+            name="at"
+            value={gameDetails.at}
+            onChange={handleInputChange}
+            type="datetime-local"
+          />
+        </DialogContent>
+        <DialogActions>
+          <MuiButton onClick={handleDialogClose} color="secondary">Cancel</MuiButton>
+          <MuiButton onClick={handleSubmit} color="primary">Create</MuiButton>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

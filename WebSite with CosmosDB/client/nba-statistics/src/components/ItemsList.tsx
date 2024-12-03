@@ -1,12 +1,6 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 
-interface ListItemProps<T> {
-    item: T;
-    handleItemClick: (item: T) => void;
-    renderItem: (item: T) => React.ReactNode;
-}
-
 interface ListProps<T> {
     items: T[];
     label1: string;

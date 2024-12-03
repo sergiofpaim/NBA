@@ -73,7 +73,7 @@ const Statistics: React.FC = () => {
 
   const handleStats = useCallback(() => {
     if (selectedSeason && selectedGame && selectedPlayer) {
-      dispatch(fetchStatistics(selectedSeason.id, selectedGame.id, selectedPlayer.id));
+      dispatch(fetchStatistics({ seasonId: selectedSeason.id, gameId: selectedGame.id, playerId: selectedPlayer.id }));
       setTimeElapsed(null);
     }
   }, [dispatch, selectedGame, selectedPlayer, selectedSeason]);
@@ -104,13 +104,13 @@ const Statistics: React.FC = () => {
 
   useEffect(() => {
     if (selectedSeason) {
-      dispatch(fetchGames(selectedSeason.id));
+      dispatch(fetchGames({ seasonId: selectedSeason.id }));
     }
   }, [dispatch, selectedSeason]);
 
   useEffect(() => {
     if (selectedGame) {
-      dispatch(fetchPlayers(selectedGame.id));
+      dispatch(fetchPlayers({ gameId: selectedGame.id }));
     }
   }, [dispatch, selectedGame]);
 

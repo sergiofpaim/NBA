@@ -124,11 +124,11 @@ export const fetchSeasons = (): ThunkAction<void, RootState, unknown, Action<str
   };
 };
 
-export const fetchGames = (seasonId: string): ThunkAction<void, RootState, unknown, Action<string>> => {
+export const fetchGames = (payload: { seasonId: string }): ThunkAction<void, RootState, unknown, Action<string>> => {
   return async (dispatch) => {
     dispatch(fetchGamesRequest());
 
-    const response = await api.get<Game[]>(`/transaction/seasons/${seasonId}/games`);
+    const response = await api.get<Game[]>(`/transaction/seasons/${payload.seasonId}/games`);
     if (response.success) {
       dispatch(fetchGamesSuccess(response.payLoad));
       dispatch(resetPlayers());
@@ -138,11 +138,11 @@ export const fetchGames = (seasonId: string): ThunkAction<void, RootState, unkno
   };
 };
 
-export const fetchPlayers = (gameId: string): ThunkAction<void, RootState, unknown, Action<string>> => {
+export const fetchPlayers = (payload: { gameId: string }): ThunkAction<void, RootState, unknown, Action<string>> => {
   return async (dispatch) => {
     dispatch(fetchPlayersRequest());
 
-    const response = await api.get<Participation[]>(`/transaction/games/${gameId}/players`);
+    const response = await api.get<Participation[]>(`/transaction/games/${payload.gameId}/players`);
     if (response.success)
       dispatch(fetchPlayersSuccess(response.payLoad));
     else
