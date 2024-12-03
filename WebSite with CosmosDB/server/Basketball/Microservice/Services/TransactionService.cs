@@ -169,7 +169,7 @@ namespace NBA.Services
             return GetSeasonGames(season.Id);
         }
 
-        internal static BasketballResponse<List<ParticipatingPlayerVM>> GetGamePlayers(string gameId)
+        internal static BasketballResponse<List<ParticipatingPlayerVM>> GetParticipatingPlayers(string gameId)
         {
             var participations = Basketball.Repo.Get<Participation>(p => p.GameId == gameId);
             return Success(participations.OrderBy(p => p.PlayerName).Select(ParticipatingPlayerVM.FactorFrom).ToList());

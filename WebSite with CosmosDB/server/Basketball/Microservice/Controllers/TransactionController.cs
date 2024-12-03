@@ -51,11 +51,11 @@ namespace NBA.Controllers
             return Result(gameResult);
         }
 
-        [HttpGet("games/{gameId}/players")]
+        [HttpGet("games/{gameId}/players/participating")]
         [ProducesResponseType(typeof(BasketballResponse<List<ParticipatingPlayerVM>>), 200)]
-        public IActionResult GetGamePlayers(string gameId)
+        public IActionResult GetParticipatingPlayers(string gameId)
         {
-            var seasonResult = TransactionService.GetGamePlayers(gameId);
+            var seasonResult = TransactionService.GetParticipatingPlayers(gameId);
 
             return Result(seasonResult);
         }

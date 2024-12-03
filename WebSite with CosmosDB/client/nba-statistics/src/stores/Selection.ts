@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction, ThunkAction, Action } from '@reduxjs/toolkit';
 import { RootState } from './Root';
-import { Season } from '../models/Selection/Season';
-import { Game } from '../models/Selection/Game';
-import { Participation } from '../models/Selection/Participation';
+import { Season } from '../models/Season';
+import { Game } from '../models/Game';
+import { Participation } from '../models/Participation';
 import { api } from '../utils/Api';
 
 interface SeasonsState {

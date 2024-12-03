@@ -10,9 +10,9 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import { RootState, AppDispatch } from '../stores/Store';
 import { fetchSeasons, fetchGames, fetchPlayers } from '../stores/Selection';
 import { fetchStatistics, resetStatistics } from '../stores/Statistics';
-import { Season } from '../models/Selection/Season';
-import { Game } from '../models/Selection/Game';
-import { Participation } from '../models/Selection/Participation';
+import { Season } from '../models/Season';
+import { Game } from '../models/Game';
+import { Participation } from '../models/Participation';
 import StatBox from '../components/StatsBox';
 
 const Statistics: React.FC = () => {
