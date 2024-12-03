@@ -225,11 +225,11 @@ const Statistics: React.FC = () => {
           sx={{
             width: '100%',
             fontSize: globalTheme.typography.h3,
-            color: globalTheme.palette.background.default,
+            color: globalTheme.palette.primary.main,
             height: 45,
             marginTop: 2,
             borderRadius: 4,
-            backgroundColor: globalTheme.palette.primary.main,
+            backgroundColor: globalTheme.palette.secondary.main,
             '&:hover': {
               backgroundColor: globalTheme.palette.primary.dark
             },
@@ -279,9 +279,10 @@ const Statistics: React.FC = () => {
                 {IsTodaysGame() ? (
                   <>
                     <IconButton aria-label="refresh" sx={{
-                      color: globalTheme.palette.background.default, backgroundColor: globalTheme.palette.primary.main,
+                      color: globalTheme.palette.primary.main, backgroundColor: globalTheme.palette.secondary.main,
                       '&:hover': {
-                        backgroundColor: globalTheme.palette.primary.dark
+                        color: globalTheme.palette.background.default,
+                        backgroundColor: globalTheme.palette.secondary.main
                       }
                     }}
                       onClick={handleStats}

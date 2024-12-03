@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button as MUIButton } from '@mui/material';
 import globalTheme from '../styles/GlobalTheme';
 
 interface ButtonProps {
@@ -10,32 +11,31 @@ interface ButtonProps {
 const Button: React.FC<ButtonProps> = ({ text, onClick, className = '' }) => {
     const buttonStyle = {
         width: '200px',
-        height: '50px',
+        height: 45,
         borderRadius: '12px',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         border: 'none',
         backgroundColor: globalTheme.palette.secondary.main,
-        color: 'white',
-        fontSize: '16px',
+        color: globalTheme.palette.primary.main,
+        fontSize: globalTheme.typography.h3,
         cursor: 'pointer',
     };
 
-    const buttonHoverStyle = {
-        backgroundColor: '#0056b3',
-    };
-
     return (
-        <button
+        <MUIButton
             onClick={onClick}
             className={`btn ${className}`}
-            style={buttonStyle}
-            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = buttonHoverStyle.backgroundColor)}
-            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = buttonStyle.backgroundColor)}
+            sx={{
+                ...buttonStyle,
+                '&:hover': {
+                    color: globalTheme.palette.background.default
+                },
+            }}
         >
             {text}
-        </button>
+        </MUIButton>
     );
 };
 

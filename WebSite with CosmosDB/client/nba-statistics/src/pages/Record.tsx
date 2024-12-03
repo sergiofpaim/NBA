@@ -146,7 +146,7 @@ const Record: React.FC = () => {
         open={openDialog}
         onClose={handleDialogClose}
       >
-        <DialogTitle sx={{ color: 'black' }}>Create Game</DialogTitle>
+        <DialogTitle sx={{ color: 'black' }}>CREATE GAME</DialogTitle>
         <DialogContent>
           <TextField
             label="Home Team"
