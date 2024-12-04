@@ -11,9 +11,11 @@ import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Dayjs } from 'dayjs';
 import { fetchSeasons } from '../stores/Selection';
+import { useNavigate } from 'react-router-dom';
 
 const Record: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
+  const navigate = useNavigate();
 
   const seasons = useSelector((state: RootState) => state.seasons.seasons);
   const games = useSelector((state: RootState) => state.transactionGames.games);
@@ -49,8 +51,9 @@ const Record: React.FC = () => {
 
   const handleGameClick = (game: Game) => {
     dispatch(setCurrentGame(game));
-    console.log(`Current game set to:`, game);
+    navigate(`/record/participations/${game.id}`);
   };
+
 
   const handleDialogClose = () => {
     setOpenDialog(false);

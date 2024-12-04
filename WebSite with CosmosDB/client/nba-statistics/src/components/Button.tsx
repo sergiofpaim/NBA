@@ -24,7 +24,7 @@ const Button: React.FC<ButtonProps> = ({
     height = '45px',
     width = '200px',
     icon = <AddCircleOutlineIcon />,
-    disabled = false, // Default disabled to false
+    disabled = false
 }) => {
 
     const buttonStyle = {
@@ -37,7 +37,7 @@ const Button: React.FC<ButtonProps> = ({
         fontSize: globalTheme.typography.h4,
         cursor: 'pointer',
         alignItems: 'center',
-        opacity: disabled ? 0.6 : 1,
+        opacity: disabled ? 0.6 : 1
     };
 
     return (
