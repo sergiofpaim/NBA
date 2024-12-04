@@ -7,13 +7,15 @@ import { createGame, fetchGames, fetchTeams, setCurrentGame } from '../stores/Tr
 import List from '../components/ItemsList';
 import { Game } from '../models/Game';
 import Button from '../components/Button';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Dayjs } from 'dayjs';
+import { fetchSeasons } from '../stores/Selection';
 
 const Record: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
 
+  const seasons = useSelector((state: RootState) => state.seasons.seasons);
   const games = useSelector((state: RootState) => state.transactionGames.games);
   const teams = useSelector((state: RootState) => state.transactionTeams.teams);
 
@@ -21,21 +23,28 @@ const Record: React.FC = () => {
 
   const [openDialog, setOpenDialog] = useState(false);
 
-  const [gameDetails, setGameDetails] = useState({
-    homeTeamId: '',
-    visitorTeamId: '',
-    at: new Date(),
+  type GameDetails = {
+    homeTeamId: string | null;
+    visitorTeamId: string | null;
+    at: Date | null;
+  };
+
+  const [gameDetails, setGameDetails] = useState<GameDetails>({
+    homeTeamId: null,
+    visitorTeamId: null,
+    at: null,
   });
 
   const [gameDate, setGameDate] = useState<Dayjs | null>(null);
 
   useEffect(() => {
+    dispatch(fetchSeasons());
     dispatch(fetchGames());
   }, [dispatch]);
 
   const handleCreateGame = (): void => {
     setOpenDialog(true);
-    dispatch(fetchTeams({ seasonId: '23-24' }));
+    dispatch(fetchTeams({ seasonId: seasons[seasons.length - 1].id }));
   };
 
   const handleGameClick = (game: Game) => {
@@ -49,10 +58,18 @@ const Record: React.FC = () => {
 
   const handleTeamSelect = (event: SelectChangeEvent<unknown>, teamType: 'home' | 'visitor') => {
     const { value } = event.target;
-    setGameDetails((prevDetails) => ({
-      ...prevDetails,
-      [`${teamType}TeamId`]: value as string,
-    }));
+    setGameDetails((prevDetails) => {
+      const updatedDetails = {
+        ...prevDetails,
+        [`${teamType}TeamId`]: value as string,
+      };
+      if (teamType === 'home' && updatedDetails.visitorTeamId === value)
+        updatedDetails.visitorTeamId = '';
+      else if (teamType === 'visitor' && updatedDetails.homeTeamId === value)
+        updatedDetails.homeTeamId = '';
+
+      return updatedDetails;
+    });
   };
 
   const handleDateSelect = (newDate: Dayjs | null) => {
@@ -66,11 +83,13 @@ const Record: React.FC = () => {
   };
 
   const handleSubmit = () => {
-    dispatch(createGame({
-      homeTeamId: gameDetails.homeTeamId,
-      visitorTeamId: gameDetails.visitorTeamId,
-      at: gameDetails.at,
-    }));
+    if (gameDetails.homeTeamId && gameDetails.visitorTeamId && gameDetails.at) {
+      dispatch(createGame({
+        homeTeamId: gameDetails.homeTeamId,
+        visitorTeamId: gameDetails.visitorTeamId,
+        at: gameDetails.at,
+      }));
+    }
     setOpenDialog(false);
   };
 
@@ -137,167 +156,81 @@ const Record: React.FC = () => {
             </Box>
             <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2 }}>
-                {new Date(game.at).toLocaleDateString()}
+                {new Date(game.at).toLocaleString()}
               </Typography>
             </Box>
           </>
         )} label1="Home vs Visitor" label2="At" />
       </Box>
-      <Dialog
-        open={openDialog}
-        onClose={handleDialogClose}
-        sx={{
-          '& .MuiDialog-paper': {
-            width: '500px',
-            maxWidth: '500px',
-            height: 'auto',
-            maxHeight: '90vh',
-            borderRadius: 2,
-            boxShadow: 3,
-            display: 'flex',
-            flexDirection: 'column',
-            backgroundColor: globalTheme.palette.background.default
-          }
-        }}
-      >
-        <DialogTitle
-          sx={{
-            color: globalTheme.palette.primary.main,
-            marginBottom: 0,
-            fontWeight: 600,
-            fontSize: '1.25rem',
-            textAlign: 'center'
-          }}
-        >
+      <Dialog open={openDialog} onClose={handleDialogClose} sx={{
+        '& .MuiDialog-paper': {
+          width: '500px', maxWidth: '500px', height: 'auto', maxHeight: '90vh', borderRadius: 2, boxShadow: 3,
+          display: 'flex', flexDirection: 'column', backgroundColor: globalTheme.palette.background.default
+        }
+      }}>
+        <DialogTitle sx={{
+          color: globalTheme.palette.primary.main, marginBottom: 0, fontWeight: 600, fontSize: '1.25rem', textAlign: 'center'
+        }}>
           NEW GAME
         </DialogTitle>
-
         <DialogContent sx={{ paddingTop: 2 }}>
           <FormControl fullWidth sx={{ marginTop: 3 }}>
-            <InputLabel
-              id="home-team-label"
-              sx={{
-                color: globalTheme.palette.primary.main
-              }}
-            >
+            <InputLabel id="home-team-label" sx={{ color: globalTheme.palette.primary.main }}>
               Home Team
             </InputLabel>
-            <Select
-              labelId="home-team-label"
-              value={gameDetails.homeTeamId}
-              onChange={(e) => handleTeamSelect(e, 'home')}
-              label="Home Team"
-              sx={{
-                color: globalTheme.palette.primary.main,
-                borderColor: globalTheme.palette.secondary.main,
-                height: '56px'
-              }}
-            >
+            <Select labelId="home-team-label" value={gameDetails.homeTeamId} onChange={(e) => handleTeamSelect(e, 'home')} label="Home Team" sx={{
+              color: globalTheme.palette.primary.main, borderColor: globalTheme.palette.secondary.main, height: '56px'
+            }}>
               {teams.map((team) => (
-                <MenuItem key={team.teamId} value={team.teamId}>
-                  {team.teamName}
-                </MenuItem>
+                <MenuItem key={team.teamId} value={team.teamId}>{team.teamName}</MenuItem>
               ))}
             </Select>
           </FormControl>
           <FormControl fullWidth sx={{ marginTop: 3 }}>
-            <InputLabel
-              id="visitor-team-label"
-              sx={{
-                color: globalTheme.palette.primary.main
-              }}
-            >
+            <InputLabel id="visitor-team-label" sx={{ color: globalTheme.palette.primary.main }}>
               Visitor Team
             </InputLabel>
-            <Select
-              labelId="visitor-team-label"
-              value={gameDetails.visitorTeamId}
-              onChange={(e) => handleTeamSelect(e, 'visitor')}
-              label="Visitor Team"
-              sx={{
-                color: globalTheme.palette.primary.main,
-                borderColor: globalTheme.palette.secondary.main,
-                height: '56px'
-              }}
-            >
+            <Select labelId="visitor-team-label" value={gameDetails.visitorTeamId} onChange={(e) => handleTeamSelect(e, 'visitor')} label="Visitor Team" sx={{
+              color: globalTheme.palette.primary.main, borderColor: globalTheme.palette.secondary.main, height: '56px'
+            }}>
               {teams.map((team) => (
-                <MenuItem key={team.teamId} value={team.teamId}>
-                  {team.teamName}
-                </MenuItem>
+                <MenuItem key={team.teamId} value={team.teamId}>{team.teamName}</MenuItem>
               ))}
             </Select>
           </FormControl>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              label="Game Date"
-              value={gameDate}
-              onChange={(newDate) => handleDateSelect(newDate)}
-              slotProps={{
-                textField: {
-                  fullWidth: true,
-                  sx: {
-                    marginTop: 3,
-                    borderColor: globalTheme.palette.secondary.main,
-                    height: '56px',
-                    color: globalTheme.palette.primary.main
-                  },
-                  InputLabelProps: {
-                    sx: {
-                      color: 'white'
-                    },
-                  },
-                },
-                yearButton: {
-                  sx: {
-                    color: globalTheme.palette.background.default
-                  }
-                },
-                calendarHeader: {
-                  sx: {
-                    color: globalTheme.palette.background.default
-                  }
-                },
-                day: {
-                  sx: {
-                    color: globalTheme.palette.background.default,
-                    '&:hover': {
-                      backgroundColor: globalTheme.palette.primary.dark
-                    },
-                  },
-                },
-                openPickerIcon: {
-                  sx: {
-                    color: 'white',
-                  },
-                },
-              }}
-            />
+            <DateTimePicker label="Game Date" value={gameDate} onChange={(newDate) => handleDateSelect(newDate)} slotProps={{
+              textField: {
+                fullWidth: true, sx: {
+                  marginTop: 3, borderColor: globalTheme.palette.secondary.main, height: '56px', color: globalTheme.palette.primary.main
+                }, InputLabelProps: { sx: { color: 'white' } }
+              },
+              yearButton: { sx: { color: globalTheme.palette.background.default } },
+              calendarHeader: { sx: { color: globalTheme.palette.background.default } },
+              day: {
+                sx: {
+                  color: globalTheme.palette.background.default, '&:hover': { backgroundColor: globalTheme.palette.primary.dark }
+                }
+              },
+              openPickerIcon: { sx: { color: 'white' } }
+            }} />
           </LocalizationProvider>
         </DialogContent>
         <DialogActions sx={{ justifyContent: 'flex-end', paddingBottom: 2 }}>
-          <MuiButton
-            onClick={handleDialogClose}
-            sx={{
-              borderRadius: 1,
-              fontWeight: 800,
-              marginRight: 2,
-              color: globalTheme.palette.secondary.main
-            }}
-          >
+          <MuiButton onClick={handleDialogClose} sx={{
+            borderRadius: 1, fontWeight: 800, marginRight: 2, color: globalTheme.palette.secondary.main
+          }}>
             Cancel
           </MuiButton>
-          <MuiButton
-            onClick={handleSubmit}
-            sx={{
-              borderRadius: 1,
-              fontWeight: 800,
-              color: globalTheme.palette.primary.main
-            }}
-          >
+          <MuiButton disabled={(!gameDetails.homeTeamId || !gameDetails.visitorTeamId || !gameDetails.at)}
+            onClick={handleSubmit} sx={{
+              borderRadius: 1, fontWeight: 800, color: globalTheme.palette.primary.main
+            }}>
             Create
           </MuiButton>
         </DialogActions>
       </Dialog>
+
     </Box>
   );
 };

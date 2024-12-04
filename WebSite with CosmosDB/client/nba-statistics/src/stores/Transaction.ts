@@ -43,7 +43,7 @@ const gamesSlice = createSlice({
             state.error = null;
         },
         addGameSuccess(state, action: PayloadAction<Game>) {
-            state.games.push(action.payload);
+            state.games.unshift(action.payload);
         },
         addGameFailure(state, action: PayloadAction<string>) {
             state.error = action.payload;
