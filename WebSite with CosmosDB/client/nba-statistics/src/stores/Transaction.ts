@@ -114,7 +114,7 @@ export const fetchTeams = (payload: { seasonId: string }): ThunkAction<void, Roo
     return async (dispatch) => {
         dispatch(fetchTeamsRequest());
 
-        const response = await api.get<TeamScalation[]>(`/seasons/${payload.seasonId}/teams`);
+        const response = await api.get<TeamScalation[]>(`transaction/seasons/${payload.seasonId}/teams`);
         if (response.success)
             dispatch(fetchTeamsSuccess(response.payLoad));
         else

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button as MUIButton } from '@mui/material';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import globalTheme from '../styles/GlobalTheme';
 
 interface ButtonProps {
@@ -15,12 +16,12 @@ const Button: React.FC<ButtonProps> = ({ text, onClick, className = '' }) => {
         borderRadius: '12px',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center',
         border: 'none',
         backgroundColor: globalTheme.palette.secondary.main,
         color: globalTheme.palette.primary.main,
-        fontSize: globalTheme.typography.h3,
+        fontSize: globalTheme.typography.h4,
         cursor: 'pointer',
+        alignItems: 'center'
     };
 
     return (
@@ -33,6 +34,7 @@ const Button: React.FC<ButtonProps> = ({ text, onClick, className = '' }) => {
                     color: globalTheme.palette.background.default
                 },
             }}
+            startIcon={<AddCircleOutlineIcon />}
         >
             {text}
         </MUIButton>
