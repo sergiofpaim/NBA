@@ -3,6 +3,7 @@ import { RootState } from './Root';
 import { Game } from '../models/Game';
 import { TeamScalation } from '../models/TeamScalation';
 import { api } from '../utils/Api';
+import { ParticipatingPlayer } from '../models/ParticipatingPlayer';
 
 interface GamesOfCurrentSeasonState {
     games: Game[];
@@ -15,6 +16,12 @@ interface TeamsOfCurrentSeasonState {
     error: string | null;
 }
 
+interface ParticipatingPlayersOfGameState {
+    participations: ParticipatingPlayer[];
+    currentParticipation: ParticipatingPlayer | null;
+    error: string | null;
+}
+
 const initialGamesState: GamesOfCurrentSeasonState = {
     games: [],
     currentGame: null,
@@ -23,6 +30,12 @@ const initialGamesState: GamesOfCurrentSeasonState = {
 
 const initialTeamsState: TeamsOfCurrentSeasonState = {
     teams: [],
+    error: null,
+};
+
+const initialParticipationsState: ParticipatingPlayersOfGameState = {
+    participations: [],
+    currentParticipation: null,
     error: null,
 };
 
@@ -70,6 +83,25 @@ const teamSlice = createSlice({
     }
 });
 
+const playersSlice = createSlice({
+    name: 'players',
+    initialState: initialParticipationsState,
+    reducers: {
+        fetchParticipationsRequest(state) {
+            state.error = null;
+        },
+        fetchParticipationsSuccess(state, action: PayloadAction<ParticipatingPlayer[]>) {
+            state.participations = action.payload;
+        },
+        fetchParticipationsFailure(state, action: PayloadAction<string>) {
+            state.error = action.payload;
+        },
+        setCurrentParticipation(state, action: PayloadAction<any>) {
+            state.currentParticipation = action.payload;
+        }
+    }
+});
+
 export const {
     fetchGamesRequest,
     fetchGamesSuccess,
@@ -85,6 +117,13 @@ export const {
     fetchTeamsSuccess,
     fetchTeamsFailure
 } = teamSlice.actions;
+
+export const {
+    fetchParticipationsRequest,
+    fetchParticipationsSuccess,
+    fetchParticipationsFailure,
+    setCurrentParticipation
+} = playersSlice.actions;
 
 export const fetchGames = (): ThunkAction<void, RootState, unknown, Action<string>> => {
     return async (dispatch) => {
@@ -122,5 +161,18 @@ export const fetchTeams = (payload: { seasonId: string }): ThunkAction<void, Roo
     };
 };
 
+export const fetchParticipations = (payload: { gameId: string }): ThunkAction<void, RootState, unknown, Action<string>> => {
+    return async (dispatch) => {
+        dispatch(fetchParticipationsRequest());
+
+        const response = await api.get<ParticipatingPlayer[]>(`/transaction/games/${payload.gameId}/players`);
+        if (response.success)
+            dispatch(fetchParticipationsSuccess(response.payLoad));
+        else
+            dispatch(fetchParticipationsFailure(response.message));
+    };
+};
+
 export const gameTransactionReducer = gamesSlice.reducer;
 export const teamTransactionReducer = teamSlice.reducer;
+export const playerTransactionReducer = playersSlice.reducer;

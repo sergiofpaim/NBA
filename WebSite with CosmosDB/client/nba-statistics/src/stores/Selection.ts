@@ -2,7 +2,7 @@ import { createSlice, PayloadAction, ThunkAction, Action } from '@reduxjs/toolki
 import { RootState } from './Root';
 import { Season } from '../models/Season';
 import { Game } from '../models/Game';
-import { Participation } from '../models/Participation';
+import { ParticipatingPlayer } from '../models/ParticipatingPlayer';
 import { api } from '../utils/Api';
 
 interface SeasonsState {
@@ -16,7 +16,7 @@ interface GamesState {
 }
 
 interface PlayersState {
-  players: Participation[];
+  players: ParticipatingPlayer[];
   error: string | null;
 }
 
@@ -77,7 +77,7 @@ const playersSlice = createSlice({
     fetchPlayersRequest(state) {
       state.error = null;
     },
-    fetchPlayersSuccess(state, action: PayloadAction<Participation[]>) {
+    fetchPlayersSuccess(state, action: PayloadAction<ParticipatingPlayer[]>) {
       state.players = action.payload;
     },
     fetchPlayersFailure(state, action: PayloadAction<string>) {
@@ -142,7 +142,7 @@ export const fetchPlayers = (payload: { gameId: string }): ThunkAction<void, Roo
   return async (dispatch) => {
     dispatch(fetchPlayersRequest());
 
-    const response = await api.get<Participation[]>(`/transaction/games/${payload.gameId}/players`);
+    const response = await api.get<ParticipatingPlayer[]>(`/transaction/games/${payload.gameId}/players`);
     if (response.success)
       dispatch(fetchPlayersSuccess(response.payLoad));
     else

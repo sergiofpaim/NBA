@@ -13,6 +13,7 @@ interface ButtonProps {
     width?: string;
     icon?: React.ReactNode;
     disabled?: boolean;
+    textSize?: string;  // Make textSize optional
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -24,7 +25,8 @@ const Button: React.FC<ButtonProps> = ({
     height = '45px',
     width = '200px',
     icon = <AddCircleOutlineIcon />,
-    disabled = false
+    disabled = false,
+    textSize = globalTheme.typography.h4,  // Default value if textSize is not provided
 }) => {
 
     const buttonStyle = {
@@ -34,7 +36,7 @@ const Button: React.FC<ButtonProps> = ({
         border: 'none',
         color: globalTheme.palette[color].main,
         backgroundColor: globalTheme.palette[backgroundColor].main,
-        fontSize: globalTheme.typography.h4,
+        fontSize: textSize,  // Use the provided textSize
         cursor: 'pointer',
         alignItems: 'center',
         opacity: disabled ? 0.6 : 1

@@ -12,7 +12,7 @@ import { fetchSeasons, fetchGames, fetchPlayers } from '../stores/Selection';
 import { fetchStatistics, resetStatistics } from '../stores/Statistics';
 import { Season } from '../models/Season';
 import { Game } from '../models/Game';
-import { Participation } from '../models/Participation';
+import { ParticipatingPlayer } from '../models/ParticipatingPlayer';
 import StatBox from '../components/StatsBox';
 
 const Statistics: React.FC = () => {
@@ -39,7 +39,7 @@ const Statistics: React.FC = () => {
 
   const [selectedSeason, setSelectedSeason] = useState<Season | null>(null);
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
-  const [selectedPlayer, setSelectedPlayer] = useState<Participation | null>(null);
+  const [selectedPlayer, setSelectedPlayer] = useState<ParticipatingPlayer | null>(null);
   const [timeElapsed, setTimeElapsed] = useState<number | null>(null);
 
   const isMobile = useMediaQuery(globalTheme.breakpoints.down('sm'));

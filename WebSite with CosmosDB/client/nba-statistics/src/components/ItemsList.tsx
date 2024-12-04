@@ -4,7 +4,7 @@ import { Box, Typography } from '@mui/material';
 interface ListProps<T> {
     items: T[];
     label1: string;
-    label2: string;
+    label2?: string;
     handleItemClick: (item: T) => void;
     renderItem: (item: T) => React.ReactNode;
 }
@@ -25,7 +25,7 @@ const List: React.FC<ListProps<any>> = ({ items, handleItemClick, renderItem, la
         <Box
             sx={{
                 display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
+                gridTemplateColumns: label2 ? '1fr 1fr' : '1fr',
                 gap: 2,
                 padding: '8px',
                 position: 'sticky',
@@ -36,7 +36,7 @@ const List: React.FC<ListProps<any>> = ({ items, handleItemClick, renderItem, la
             <Typography
                 sx={{
                     paddingLeft: '1rem',
-                    textAlign: 'left',
+                    textAlign: label2 ? 'left' : 'center',
                     fontSize: '1.5rem',
                     '@media (max-width: 400px)': {
                         fontSize: '1rem'
@@ -45,18 +45,20 @@ const List: React.FC<ListProps<any>> = ({ items, handleItemClick, renderItem, la
             >
                 {label1}
             </Typography>
-            <Typography
-                sx={{
-                    paddingRight: '1rem',
-                    textAlign: 'right',
-                    fontSize: '1.5rem',
-                    '@media (max-width: 400px)': {
-                        fontSize: '1rem'
-                    },
-                }}
-            >
-                {label2}
-            </Typography>
+            {label2 && (
+                <Typography
+                    sx={{
+                        paddingRight: '1rem',
+                        textAlign: 'right',
+                        fontSize: '1.5rem',
+                        '@media (max-width: 400px)': {
+                            fontSize: '1rem'
+                        },
+                    }}
+                >
+                    {label2}
+                </Typography>
+            )}
         </Box>
 
         <Box
