@@ -145,7 +145,7 @@ const Record: React.FC = () => {
           justifyContent: 'flex-end',
           alignItems: 'center',
         }}>
-          <Button text="Create Game" onClick={handleCreateGame} />
+          <Button text="Create Game" height='200px' width='45' onClick={handleCreateGame} />
         </Box>
         <List items={games} handleItemClick={(game: Game) => handleGameClick(game)} renderItem={(game: Game) => (
           <>
@@ -217,17 +217,13 @@ const Record: React.FC = () => {
           </LocalizationProvider>
         </DialogContent>
         <DialogActions sx={{ justifyContent: 'flex-end', paddingBottom: 2 }}>
-          <MuiButton onClick={handleDialogClose} sx={{
-            borderRadius: 1, fontWeight: 800, marginRight: 2, color: globalTheme.palette.secondary.main
-          }}>
-            Cancel
-          </MuiButton>
-          <MuiButton disabled={(!gameDetails.homeTeamId || !gameDetails.visitorTeamId || !gameDetails.at)}
-            onClick={handleSubmit} sx={{
-              borderRadius: 1, fontWeight: 800, color: globalTheme.palette.primary.main
-            }}>
-            Create
-          </MuiButton>
+          <Button text="Cancel" onClick={handleDialogClose} color="secondary" backgroundColor="primary" height='25' width='40' icon='' />
+          <Button
+            text="Create"
+            onClick={handleSubmit}
+            disabled={!gameDetails.homeTeamId || !gameDetails.visitorTeamId || !gameDetails.at}
+            color="primary" backgroundColor="secondary" height='25' width='40' icon=''
+          />
         </DialogActions>
       </Dialog>
 

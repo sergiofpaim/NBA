@@ -7,21 +7,37 @@ interface ButtonProps {
     text: string;
     onClick: () => void;
     className?: string;
+    color?: 'primary' | 'secondary';
+    backgroundColor?: 'primary' | 'secondary';
+    height?: string;
+    width?: string;
+    icon?: React.ReactNode;
+    disabled?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ text, onClick, className = '' }) => {
+const Button: React.FC<ButtonProps> = ({
+    text,
+    onClick,
+    className = '',
+    color = 'primary',
+    backgroundColor = 'secondary',
+    height = '45px',
+    width = '200px',
+    icon = <AddCircleOutlineIcon />,
+    disabled = false, // Default disabled to false
+}) => {
+
     const buttonStyle = {
-        width: '200px',
-        height: 45,
         borderRadius: '12px',
         display: 'flex',
         justifyContent: 'center',
         border: 'none',
-        backgroundColor: globalTheme.palette.secondary.main,
-        color: globalTheme.palette.primary.main,
+        color: globalTheme.palette[color].main,
+        backgroundColor: globalTheme.palette[backgroundColor].main,
         fontSize: globalTheme.typography.h4,
         cursor: 'pointer',
-        alignItems: 'center'
+        alignItems: 'center',
+        opacity: disabled ? 0.6 : 1,
     };
 
     return (
@@ -30,11 +46,14 @@ const Button: React.FC<ButtonProps> = ({ text, onClick, className = '' }) => {
             className={`btn ${className}`}
             sx={{
                 ...buttonStyle,
+                width: height,
+                height: width,
                 '&:hover': {
-                    color: globalTheme.palette.background.default
+                    color: globalTheme.palette.background.default,
                 },
             }}
-            startIcon={<AddCircleOutlineIcon />}
+            startIcon={icon}
+            disabled={disabled}
         >
             {text}
         </MUIButton>
