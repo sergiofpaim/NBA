@@ -1,22 +1,16 @@
 
 import React, { useEffect, useState } from 'react';
-import { Box, Divider, Typography, useMediaQuery, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button as MuiButton, MenuItem, FormControl, InputLabel, Select, SelectChangeEvent } from '@mui/material';
+import { Box, Divider, Typography, useMediaQuery, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, FormControl, InputLabel, Select, SelectChangeEvent } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import globalTheme from '../styles/GlobalTheme';
 import { AppDispatch, RootState } from '../stores/Store';
 import List from '../components/ItemsList';
-import { Game } from '../models/Game';
 import Button from '../components/Button';
-import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { Dayjs } from 'dayjs';
-import { fetchGames, fetchParticipations, fetchTeams, setCurrentGame } from '../stores/Transaction';
-import { useNavigate, useParams } from 'react-router-dom';
+import { fetchParticipations, fetchTeams, setCurrentGame } from '../stores/Transaction';
+import { useParams } from 'react-router-dom';
 import { ParticipatingPlayer } from '../models/ParticipatingPlayer';
 import { setCurrentParticipation } from '../stores/Transaction';
-import { fetchSeasons } from '../stores/Selection';
 import { PlayerSelection } from '../models/PlayerSelection';
-
 
 const Participations: React.FC = () => {
 
@@ -34,20 +28,26 @@ const Participations: React.FC = () => {
   const [openDialog, setOpenDialog] = useState(false);
 
   const [playersNotInCurrentGame, setPlayersNotInCurrentGame] = useState<PlayerSelection[]>([]);
+  const [currentPlayer, setCurrentPlayer] = useState<PlayerSelection | null>(null);
 
   useEffect(() => {
-    if (gameId) {
-      dispatch(fetchSeasons());
-      dispatch(fetchTeams({ seasonId: seasons[seasons.length - 1].id }));
-      dispatch(fetchGames());
+    if (games.length > 0 && gameId) {
       dispatch(setCurrentGame(games.find(game => game.id === gameId)));
       dispatch(fetchParticipations({ gameId }));
     }
-  }, [dispatch, gameId, games, seasons]);
+  }, [dispatch, games, gameId]);
 
+  useEffect(() => {
+    if (seasons.length > 0) {
+      dispatch(fetchTeams({ seasonId: seasons[seasons.length - 1].id }));
+    }
+  }, [dispatch, seasons]);
 
   function handleParticipationClick(participation: ParticipatingPlayer): void {
-    dispatch(setCurrentParticipation(participation));
+    setCurrentPlayer(playersNotInCurrentGame.find(player => player.playerId === participation.id) || null);
+    dispatch(setCurrentParticipation(currentPlayer));
+
+    console.log('Submitting player:', participation);
   }
 
   function handleCreateParticipation(): void {
@@ -74,12 +74,16 @@ const Participations: React.FC = () => {
     setOpenDialog(false);
   };
 
-  function handleSubmit(): void {
-    throw new Error('Function not implemented.');
+  function handleParticipationSelect(event: SelectChangeEvent): void {
+    const selectedPlayerId = event.target.value;
+    const selectedPlayer = playersNotInCurrentGame.find(player => player.playerId === selectedPlayerId);
+    setCurrentPlayer(selectedPlayer || null);
   }
 
-  function handleTeamSelect(e: SelectChangeEvent<ParticipatingPlayer[]>, arg1: string): void {
-    throw new Error('Function not implemented.');
+  function handleSubmit(): void {
+    if (currentPlayer)
+      dispatch(setCurrentParticipation(currentPlayer));
+    console.log('Submitting player:', currentPlayer);
   }
 
   return (
@@ -167,11 +171,19 @@ const Participations: React.FC = () => {
             <InputLabel id="home-team-label" sx={{ color: globalTheme.palette.primary.main }}>
               Player Name
             </InputLabel>
-            <Select labelId="home-team-label" value={participations} onChange={(e) => handleTeamSelect(e, 'home')} label="Home Team" sx={{
-              color: globalTheme.palette.primary.main, borderColor: globalTheme.palette.secondary.main, height: '56px'
-            }}>
+            <Select
+              labelId="home-team-label"
+              value={currentPlayer?.playerId || ''}
+              onChange={handleParticipationSelect}
+              label="Home Team"
+              sx={{
+                color: globalTheme.palette.primary.main,
+                borderColor: globalTheme.palette.secondary.main,
+                height: '56px'
+              }}
+            >
               {playersNotInCurrentGame.map((player) => (
-                <MenuItem key={player.playerId} value={player.playerName}>{player.playerName}</MenuItem>
+                <MenuItem key={player.playerId} value={player.playerId}>{player.playerName}</MenuItem>
               ))}
             </Select>
           </FormControl>
@@ -181,6 +193,7 @@ const Participations: React.FC = () => {
           <Button
             text="Create"
             onClick={handleSubmit}
+            disabled={!currentPlayer}
             color="primary" backgroundColor="secondary" height='25' width='40' icon=''
           />
         </DialogActions>
