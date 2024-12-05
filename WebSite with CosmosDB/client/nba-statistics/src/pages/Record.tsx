@@ -229,7 +229,6 @@ const Record: React.FC = () => {
           />
         </DialogActions>
       </Dialog>
-
     </Box>
   );
 };
