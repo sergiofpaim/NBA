@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Divider, Typography, useMediaQuery, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button as MuiButton, MenuItem, FormControl, InputLabel, Select, SelectChangeEvent } from '@mui/material';
+import { Box, Divider, Typography, useMediaQuery, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, FormControl, InputLabel, Select, SelectChangeEvent } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import globalTheme from '../styles/GlobalTheme';
 import { AppDispatch, RootState } from '../stores/Store';
@@ -94,6 +94,7 @@ const Record: React.FC = () => {
       }));
     }
     setOpenDialog(false);
+    navigate(`/record/participations/${games?.[games.length - 1]?.id}`);
   };
 
   return (
