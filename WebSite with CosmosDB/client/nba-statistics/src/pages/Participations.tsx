@@ -35,6 +35,22 @@ const Participations: React.FC = () => {
     if (games.length > 0 && gameId) {
       dispatch(setCurrentGame(games.find(game => game.id === gameId)));
       dispatch(fetchParticipations({ gameId }));
+
+      if (currentGame) {
+        const homeTeam = teams.find(team => team.teamId === currentGame.homeTeamId);
+        const visitorTeam = teams.find(team => team.teamId === currentGame.visitorTeamId);
+
+        const playersOfTheCurrentGame = [
+          ...(homeTeam?.players || []),
+          ...(visitorTeam?.players || [])
+        ];
+
+        const filteredPlayers = playersOfTheCurrentGame.filter(player => {
+          return !participations.some(participation => participation.id === player.playerId);
+        });
+
+        setPlayersNotInCurrentGame(filteredPlayers);
+      }
     }
   }, [dispatch, games, gameId]);
 
@@ -47,29 +63,10 @@ const Participations: React.FC = () => {
   function handleParticipationClick(participation: ParticipatingPlayer): void {
     setCurrentPlayer(playersNotInCurrentGame.find(player => player.playerId === participation.id) || null);
     dispatch(setCurrentParticipation(currentPlayer));
-
-    console.log('Submitting player:', participation);
-    if (currentGame)
-      navigate(`/record/game/${currentGame.id}/participations/${currentPlayer?.playerId}/tracking`);
+    GoToTrackingPage()
   }
 
   function handleCreateParticipation(): void {
-    if (currentGame) {
-      const homeTeam = teams.find(team => team.teamId === currentGame.homeTeamId);
-      const visitorTeam = teams.find(team => team.teamId === currentGame.visitorTeamId);
-
-      const playersOfTheCurrentGame = [
-        ...(homeTeam?.players || []),
-        ...(visitorTeam?.players || [])
-      ];
-
-      const filteredPlayers = playersOfTheCurrentGame.filter(player => {
-        return !participations.some(participation => participation.id === player.playerId);
-      });
-
-      setPlayersNotInCurrentGame(filteredPlayers);
-    }
-
     setOpenDialog(true);
   }
 
@@ -86,9 +83,13 @@ const Participations: React.FC = () => {
   function handleSubmit(): void {
     if (currentPlayer && currentGame) {
       dispatch(setCurrentParticipation(currentPlayer));
-      console.log('Submitting player:', currentPlayer);
-      navigate(`/record/game/${currentGame.id}/participations/${currentPlayer?.playerId}/tracking`);
+      GoToTrackingPage();
     }
+  }
+
+  function GoToTrackingPage() {
+    if (currentGame && currentPlayer)
+      navigate(`/record/game/${currentGame.id}/participations/${currentPlayer?.playerId}/tracking`);
   }
 
   return (

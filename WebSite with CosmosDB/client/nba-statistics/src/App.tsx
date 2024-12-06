@@ -11,7 +11,6 @@ import { Provider } from 'react-redux';
 import store from './stores/Store';
 import Tracking from './pages/Tracking';
 
-// Define breadcrumb titles and route templates
 const breadcrumbsMap = {
   '/': [{ title: 'Home', route: '/' }],
   '/statistics': [
@@ -35,7 +34,6 @@ const breadcrumbsMap = {
   ],
 };
 
-// Helper to generate dynamic breadcrumbs
 const generateDynamicBreadcrumbs = (pathname: string) => {
   if (pathname.startsWith('/record/game/') && pathname.includes('/participations/') && pathname.includes('/tracking')) {
     const [, , , gameId, , participationId] = pathname.split('/');
