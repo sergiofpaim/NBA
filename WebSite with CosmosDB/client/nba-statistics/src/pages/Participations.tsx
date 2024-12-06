@@ -7,7 +7,7 @@ import { AppDispatch, RootState } from '../stores/Store';
 import List from '../components/ItemsList';
 import Button from '../components/Button';
 import { fetchParticipations, fetchTeams, setCurrentGame } from '../stores/Transaction';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ParticipatingPlayer } from '../models/ParticipatingPlayer';
 import { setCurrentParticipation } from '../stores/Transaction';
 import { PlayerSelection } from '../models/PlayerSelection';
@@ -15,6 +15,7 @@ import { PlayerSelection } from '../models/PlayerSelection';
 const Participations: React.FC = () => {
 
   const dispatch: AppDispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { gameId } = useParams<{ gameId: string }>();
 
@@ -48,6 +49,8 @@ const Participations: React.FC = () => {
     dispatch(setCurrentParticipation(currentPlayer));
 
     console.log('Submitting player:', participation);
+    if (currentGame)
+      navigate(`/record/game/${currentGame.id}/participations/${currentPlayer?.playerId}/tracking`);
   }
 
   function handleCreateParticipation(): void {
@@ -81,9 +84,11 @@ const Participations: React.FC = () => {
   }
 
   function handleSubmit(): void {
-    if (currentPlayer)
+    if (currentPlayer && currentGame) {
       dispatch(setCurrentParticipation(currentPlayer));
-    console.log('Submitting player:', currentPlayer);
+      console.log('Submitting player:', currentPlayer);
+      navigate(`/record/game/${currentGame.id}/participations/${currentPlayer?.playerId}/tracking`);
+    }
   }
 
   return (

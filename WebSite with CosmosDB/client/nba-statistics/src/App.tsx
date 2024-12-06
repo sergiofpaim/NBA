@@ -9,7 +9,9 @@ import globalTheme from './styles/GlobalTheme';
 import { ThemeProvider } from '@mui/material/styles';
 import { Provider } from 'react-redux';
 import store from './stores/Store';
+import Tracking from './pages/Tracking';
 
+// Define breadcrumb titles and route templates
 const breadcrumbsMap = {
   '/': [{ title: 'Home', route: '/' }],
   '/statistics': [
@@ -20,22 +22,41 @@ const breadcrumbsMap = {
     { title: 'Home', route: '/' },
     { title: 'Record', route: '/record' },
   ],
-  '/record/participations/:gameId': [
+  '/record/gameId/:gameId/participations': [
     { title: 'Home', route: '/' },
     { title: 'Record', route: '/record' },
-    { title: 'Participations', route: '/record/participations' },
+    { title: 'Participations', route: '/record/gameId/:gameId/participations' },
   ],
+  '/record/game/:gameId/participations/:participationId/tracking': [
+    { title: 'Home', route: '/' },
+    { title: 'Record', route: '/record' },
+    { title: 'Participations', route: '/record/gameId/:gameId/participations' },
+    { title: 'Tracking', route: '/record/game/:gameId/participations/:participationId/tracking' },
+  ],
+};
+
+// Helper to generate dynamic breadcrumbs
+const generateDynamicBreadcrumbs = (pathname: string) => {
+  if (pathname.startsWith('/record/game/') && pathname.includes('/participations/') && pathname.includes('/tracking')) {
+    const [, , , gameId, , participationId] = pathname.split('/');
+    return [
+      { title: 'Home', route: '/' },
+      { title: 'Record', route: '/record' },
+      { title: 'Participations', route: `/record/gameId/${gameId}/participations` },
+      { title: `Tracking`, route: `/record/game/${gameId}/participations/${participationId}/tracking` },
+    ];
+  }
+
+  if (pathname.startsWith('/record/gameId/')) {
+    return breadcrumbsMap['/record/gameId/:gameId/participations'];
+  }
+
+  return breadcrumbsMap[pathname as keyof typeof breadcrumbsMap] || breadcrumbsMap['/'];
 };
 
 const BreadcrumbsController: React.FC = () => {
   const location = useLocation();
-  let breadcrumb = breadcrumbsMap[location.pathname as keyof typeof breadcrumbsMap];
-
-  if (location.pathname.startsWith('/record/participations/')) {
-    breadcrumb = breadcrumbsMap['/record/participations/:gameId'];
-  } else {
-    breadcrumb = breadcrumbsMap[location.pathname as keyof typeof breadcrumbsMap] || breadcrumbsMap['/'];
-  }
+  const breadcrumb = generateDynamicBreadcrumbs(location.pathname);
 
   return (
     <GlobalLayout breadcrumb={breadcrumb}>
@@ -43,7 +64,9 @@ const BreadcrumbsController: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/statistics" element={<Statistics />} />
         <Route path="/record" element={<Record />} />
-        <Route path="/record/participations/:gameId" element={<Participations />} />
+        <Route path="/record/gameId/:gameId/participations" element={<Participations />} />
+        <Route path="/record/game/:gameId/participations/:participationId/tracking" element={<Tracking />}
+        />
       </Routes>
     </GlobalLayout>
   );

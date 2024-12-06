@@ -51,7 +51,7 @@ const Record: React.FC = () => {
 
   const handleGameClick = (game: Game) => {
     dispatch(setCurrentGame(game));
-    navigate(`/record/participations/${game.id}`);
+    navigate(`/record/gameId/${game.id}/participations`);
   };
 
 
@@ -94,7 +94,7 @@ const Record: React.FC = () => {
       }));
     }
     setOpenDialog(false);
-    navigate(`/record/participations/${games?.[games.length - 1]?.id}`);
+    navigate(`/record/gameId/${games?.[games.length - 1]?.id}/participations`);
   };
 
   return (
