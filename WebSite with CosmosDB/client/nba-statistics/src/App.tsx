@@ -26,17 +26,17 @@ const breadcrumbsMap = {
     { title: 'Record', route: '/record' },
     { title: 'Participations', route: '/record/gameId/:gameId/participations' },
   ],
-  '/record/gameId/:gameId/participations/playerId/:participationId/tracking': [
+  '/record/gameId/:gameId/participations/playerId/:playerId/tracking': [
     { title: 'Home', route: '/' },
     { title: 'Record', route: '/record' },
     { title: 'Participations', route: '/record/gameId/:gameId/participations' },
-    { title: 'Tracking', route: '/record/gameId/:gameId/participations/playerId/:participationId/tracking' },
+    { title: 'Tracking', route: '/record/gameId/:gameId/participations/playerId/:playerId/tracking' },
   ],
 };
 
 const generateDynamicBreadcrumbs = (pathname: string) => {
   if (pathname.startsWith('/record/gameId/') && pathname.includes('/participations/playerId/') && pathname.includes('/tracking')) {
-    const [, , , gameId, , playerId, , participationId] = pathname.split('/');
+    const [, , , gameId, , playerId, ,] = pathname.split('/');
     return [
       { title: 'Home', route: '/' },
       { title: 'Record', route: '/record' },
@@ -46,10 +46,10 @@ const generateDynamicBreadcrumbs = (pathname: string) => {
   }
 
   if (pathname.startsWith('/record/gameId/')) {
-    const gameId = pathname.split('/')[3]; // Extracting gameId from the URL
+    const gameId = pathname.split('/')[3];
     return breadcrumbsMap['/record/gameId/:gameId/participations'].map(breadcrumb => ({
       ...breadcrumb,
-      route: breadcrumb.route.replace(':gameId', gameId), // Replacing the dynamic part with the actual gameId
+      route: breadcrumb.route.replace(':gameId', gameId),
     }));
   }
 
@@ -67,7 +67,7 @@ const BreadcrumbsController: React.FC = () => {
         <Route path="/statistics" element={<Statistics />} />
         <Route path="/record" element={<Record />} />
         <Route path="/record/gameId/:gameId/participations" element={<Participations />} />
-        <Route path="/record/gameId/:gameId/participations/playerId/:participationId/tracking" element={<Tracking />} />
+        <Route path="/record/gameId/:gameId/participations/playerId/:playerId/tracking" element={<Tracking />} />
       </Routes>
     </GlobalLayout>
   );

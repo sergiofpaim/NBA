@@ -27,6 +27,7 @@ const Participations: React.FC = () => {
   const participations = useSelector((state: RootState) => state.transactionPlayers.participations);
 
   const isMobile = useMediaQuery(globalTheme.breakpoints.down('sm'));
+
   const [openDialog, setOpenDialog] = useState(false);
 
   const [currentPlayer, setCurrentPlayer] = useState<PlayerSelection | ParticipatingPlayer | null>(null);

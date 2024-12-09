@@ -163,9 +163,6 @@ const Statistics: React.FC = () => {
         }}
       >
         <Typography gutterBottom sx={{ ...globalTheme.typography.h2 }}>Pick a player</Typography>
-        {error ? (
-          <Typography gutterBottom sx={{ ...globalTheme.typography.h3, color: globalTheme.palette.secondary.main }}>{error}</Typography>) : ('')
-        }
         <FormControl fullWidth>
           <InputLabel id="season-label" sx={{ color: globalTheme.palette.primary.main }}>Season</InputLabel>
           <Select
