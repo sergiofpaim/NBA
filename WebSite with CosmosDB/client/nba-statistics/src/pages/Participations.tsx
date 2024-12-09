@@ -60,7 +60,7 @@ const Participations: React.FC = () => {
 
   const GoToTrackingPage = useCallback(() => {
     if (currentPlayer) {
-      navigate(`/record/game/${gameId}/participations/${currentPlayer?.playerId}/tracking`);
+      navigate(`/record/gameId/${gameId}/participations/playerId/${currentPlayer?.playerId}/tracking`);
     }
   }, [currentPlayer, gameId, navigate]);
 

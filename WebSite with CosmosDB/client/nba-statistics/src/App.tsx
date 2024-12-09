@@ -26,27 +26,31 @@ const breadcrumbsMap = {
     { title: 'Record', route: '/record' },
     { title: 'Participations', route: '/record/gameId/:gameId/participations' },
   ],
-  '/record/game/:gameId/participations/:participationId/tracking': [
+  '/record/gameId/:gameId/participations/playerId/:participationId/tracking': [
     { title: 'Home', route: '/' },
     { title: 'Record', route: '/record' },
     { title: 'Participations', route: '/record/gameId/:gameId/participations' },
-    { title: 'Tracking', route: '/record/game/:gameId/participations/:participationId/tracking' },
+    { title: 'Tracking', route: '/record/gameId/:gameId/participations/playerId/:participationId/tracking' },
   ],
 };
 
 const generateDynamicBreadcrumbs = (pathname: string) => {
-  if (pathname.startsWith('/record/game/') && pathname.includes('/participations/') && pathname.includes('/tracking')) {
-    const [, , , gameId, , participationId] = pathname.split('/');
+  if (pathname.startsWith('/record/gameId/') && pathname.includes('/participations/playerId/') && pathname.includes('/tracking')) {
+    const [, , , gameId, , playerId, , participationId] = pathname.split('/');
     return [
       { title: 'Home', route: '/' },
       { title: 'Record', route: '/record' },
       { title: 'Participations', route: `/record/gameId/${gameId}/participations` },
-      { title: `Tracking`, route: `/record/game/${gameId}/participations/${participationId}/tracking` },
+      { title: 'Tracking', route: `/record/gameId/${gameId}/participations/playerId/${playerId}/tracking` },
     ];
   }
 
   if (pathname.startsWith('/record/gameId/')) {
-    return breadcrumbsMap['/record/gameId/:gameId/participations'];
+    const gameId = pathname.split('/')[3]; // Extracting gameId from the URL
+    return breadcrumbsMap['/record/gameId/:gameId/participations'].map(breadcrumb => ({
+      ...breadcrumb,
+      route: breadcrumb.route.replace(':gameId', gameId), // Replacing the dynamic part with the actual gameId
+    }));
   }
 
   return breadcrumbsMap[pathname as keyof typeof breadcrumbsMap] || breadcrumbsMap['/'];
@@ -63,8 +67,7 @@ const BreadcrumbsController: React.FC = () => {
         <Route path="/statistics" element={<Statistics />} />
         <Route path="/record" element={<Record />} />
         <Route path="/record/gameId/:gameId/participations" element={<Participations />} />
-        <Route path="/record/game/:gameId/participations/:participationId/tracking" element={<Tracking />}
-        />
+        <Route path="/record/gameId/:gameId/participations/playerId/:participationId/tracking" element={<Tracking />} />
       </Routes>
     </GlobalLayout>
   );
