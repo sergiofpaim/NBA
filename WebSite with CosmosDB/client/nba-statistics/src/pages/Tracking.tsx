@@ -5,9 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import globalTheme from '../styles/GlobalTheme';
 import { AppDispatch, RootState } from '../stores/Store';
 import Button from '../components/Button';
-import { fetchGames, fetchTeams, setCurrentGame, setCurrentParticipation } from '../stores/Transaction';
+import { fetchGames, fetchPlayerParticipation, fetchTeams, setCurrentGame, setCurrentParticipation } from '../stores/Transaction';
 import { useParams } from 'react-router-dom';
 import { fetchSeasons } from '../stores/Selection';
+import List from '../components/ItemsList';
+import { ParticipatingPlayer } from '../models/ParticipatingPlayer';
+import { Participation } from '../models/Participation';
 
 const TrackingPage: React.FC = () => {
 
@@ -20,6 +23,7 @@ const TrackingPage: React.FC = () => {
     const games = useSelector((state: RootState) => state.transactionGames.games);
     const teams = useSelector((state: RootState) => state.transactionTeams.teams);
     const currentParticipation = useSelector((state: RootState) => state.transactionPlayers.currentParticipation);
+    const participatingPlayer = useSelector((state: RootState) => state.transactionParticipation.participation);
     const currentGame = useSelector((state: RootState) => state.transactionGames.currentGame);
 
     const isMobile = useMediaQuery(globalTheme.breakpoints.down('sm'));
@@ -28,6 +32,12 @@ const TrackingPage: React.FC = () => {
         dispatch(fetchSeasons());
         dispatch(fetchGames());
     }, [dispatch, gameId]);
+
+    useEffect(() => {
+        if (gameId && playerId) {
+            dispatch(fetchPlayerParticipation({ gameId, playerId }))
+        }
+    }, [dispatch, gameId, playerId])
 
 
     useEffect(() => {
@@ -55,6 +65,11 @@ const TrackingPage: React.FC = () => {
             }
         }
     }, [dispatch, teams, currentGame, playerId]);
+
+    useEffect(() => {
+        console.log('Participation:', participatingPlayer?.playerName);  // Log the participation object
+        console.log('Plays:', participatingPlayer?.plays || '');    // Log the plays array
+    }, [dispatch, participatingPlayer]);
 
     return (
         <Box sx={{
@@ -148,10 +163,18 @@ const TrackingPage: React.FC = () => {
                     alignItems: 'center',
                 }}>
                 </Box>
+                <List
+                    items={participatingPlayer?.plays || []}
+                    label1="Plays"
+                    handleItemClick={(play) => console.log(play)}
+                    renderItem={(play) => (
+                        <>
+                            Quarter: {play.quarter} Type: {play.type} Points: {play.points ?? 'N/A'} At: {new Date(play.at).toLocaleString()}
+                        </>
+                    )}
+                />
             </Box>
         </Box>
-
-
     );
 };
 
