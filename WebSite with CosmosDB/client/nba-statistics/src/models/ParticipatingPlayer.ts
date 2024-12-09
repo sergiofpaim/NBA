@@ -1,13 +1,13 @@
 export class ParticipatingPlayer {
-    id: string;
-    name: string;
+    playerId: string;
+    playerName: string;
     participationId: string;
     teamId: string;
     teamname: string;
 
-    constructor(id: string, name: string, participationid: string, teamId: string, teamname: string) {
-        this.id = id;
-        this.name = name;
+    constructor(playerId: string, playerName: string, participationid: string, teamId: string, teamname: string) {
+        this.playerId = playerId;
+        this.playerName = playerName;
         this.participationId = participationid;
         this.teamId = teamId;
         this.teamname = teamname;

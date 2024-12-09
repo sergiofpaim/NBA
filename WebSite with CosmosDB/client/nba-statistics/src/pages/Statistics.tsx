@@ -65,7 +65,7 @@ const Statistics: React.FC = () => {
 
   const handlePlayerChange = (event: SelectChangeEvent<string>) => {
     const selectedPlayerId = event.target.value;
-    const selectedPlayer = players.find((player) => player.id === selectedPlayerId);
+    const selectedPlayer = players.find((player) => player.playerId === selectedPlayerId);
     setSelectedPlayer(selectedPlayer || null);
     setTimeElapsed(null);
     dispatch(resetStatistics());
@@ -73,7 +73,7 @@ const Statistics: React.FC = () => {
 
   const handleStats = useCallback(() => {
     if (selectedSeason && selectedGame && selectedPlayer) {
-      dispatch(fetchStatistics({ seasonId: selectedSeason.id, gameId: selectedGame.id, playerId: selectedPlayer.id }));
+      dispatch(fetchStatistics({ seasonId: selectedSeason.id, gameId: selectedGame.id, playerId: selectedPlayer.playerId }));
       setTimeElapsed(null);
     }
   }, [dispatch, selectedGame, selectedPlayer, selectedSeason]);
@@ -205,14 +205,14 @@ const Statistics: React.FC = () => {
           <Select
             labelId="player-label"
             id="player-select"
-            value={selectedPlayer?.id || ''}
+            value={selectedPlayer?.playerId || ''}
             label="Player"
             onChange={handlePlayerChange}
             disabled={!selectedGame}
           >
             {players.map((player) => (
-              <MenuItem key={player.id} value={player.id}>
-                {player.name}
+              <MenuItem key={player.playerId} value={player.playerId}>
+                {player.playerName}
               </MenuItem>
             ))}
           </Select>

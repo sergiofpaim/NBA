@@ -5,8 +5,8 @@ namespace NBA.ViewModels
 {
     public class ParticipatingPlayerVM : BasketballViewModel
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
+        public string PlayerId { get; set; }
+        public string PlayerName { get; set; }
         public string ParticipationId { get; set; }
         public string TeamId { get; set; }
         public string TeamName { get; set; }
@@ -20,8 +20,8 @@ namespace NBA.ViewModels
         {
             return new()
             {
-                Id = model.PlayerId,
-                Name = model.PlayerName,
+                PlayerId = model.PlayerId,
+                PlayerName = model.PlayerName,
                 ParticipationId = model.Id,
                 TeamId = model.TeamId,
                 TeamName = model.TeamName

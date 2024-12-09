@@ -1,16 +1,17 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Box, Divider, Typography, useMediaQuery, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, FormControl, InputLabel, Select, SelectChangeEvent } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import globalTheme from '../styles/GlobalTheme';
 import { AppDispatch, RootState } from '../stores/Store';
 import List from '../components/ItemsList';
 import Button from '../components/Button';
-import { fetchParticipations, fetchTeams, setCurrentGame } from '../stores/Transaction';
+import { fetchGames, fetchParticipations, fetchTeams, setCurrentGame } from '../stores/Transaction';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ParticipatingPlayer } from '../models/ParticipatingPlayer';
 import { setCurrentParticipation } from '../stores/Transaction';
 import { PlayerSelection } from '../models/PlayerSelection';
+import { fetchSeasons } from '../stores/Selection';
 
 const Participations: React.FC = () => {
 
@@ -28,42 +29,13 @@ const Participations: React.FC = () => {
   const isMobile = useMediaQuery(globalTheme.breakpoints.down('sm'));
   const [openDialog, setOpenDialog] = useState(false);
 
+  const [currentPlayer, setCurrentPlayer] = useState<PlayerSelection | ParticipatingPlayer | null>(null);
+  const [selectedPlayer, setSelectedPlayer] = useState<PlayerSelection | ParticipatingPlayer | null>(null);
   const [playersNotInCurrentGame, setPlayersNotInCurrentGame] = useState<PlayerSelection[]>([]);
-  const [currentPlayer, setCurrentPlayer] = useState<PlayerSelection | null>(null);
 
-  useEffect(() => {
-    if (games.length > 0 && gameId) {
-      dispatch(setCurrentGame(games.find(game => game.id === gameId)));
-      dispatch(fetchParticipations({ gameId }));
-
-      if (currentGame) {
-        const homeTeam = teams.find(team => team.teamId === currentGame.homeTeamId);
-        const visitorTeam = teams.find(team => team.teamId === currentGame.visitorTeamId);
-
-        const playersOfTheCurrentGame = [
-          ...(homeTeam?.players || []),
-          ...(visitorTeam?.players || [])
-        ];
-
-        const filteredPlayers = playersOfTheCurrentGame.filter(player => {
-          return !participations.some(participation => participation.id === player.playerId);
-        });
-
-        setPlayersNotInCurrentGame(filteredPlayers);
-      }
-    }
-  }, [dispatch, games, gameId]);
-
-  useEffect(() => {
-    if (seasons.length > 0) {
-      dispatch(fetchTeams({ seasonId: seasons[seasons.length - 1].id }));
-    }
-  }, [dispatch, seasons]);
 
   function handleParticipationClick(participation: ParticipatingPlayer): void {
-    setCurrentPlayer(playersNotInCurrentGame.find(player => player.playerId === participation.id) || null);
-    dispatch(setCurrentParticipation(currentPlayer));
-    GoToTrackingPage()
+    setCurrentPlayer(participation);
   }
 
   function handleCreateParticipation(): void {
@@ -77,20 +49,64 @@ const Participations: React.FC = () => {
   function handleParticipationSelect(event: SelectChangeEvent): void {
     const selectedPlayerId = event.target.value;
     const selectedPlayer = playersNotInCurrentGame.find(player => player.playerId === selectedPlayerId);
-    setCurrentPlayer(selectedPlayer || null);
+    setSelectedPlayer(selectedPlayer || null);
   }
 
   function handleSubmit(): void {
-    if (currentPlayer && currentGame) {
-      dispatch(setCurrentParticipation(currentPlayer));
-      GoToTrackingPage();
+    if (selectedPlayer) {
+      setCurrentPlayer(selectedPlayer);
     }
   }
 
-  function GoToTrackingPage() {
-    if (currentGame && currentPlayer)
-      navigate(`/record/game/${currentGame.id}/participations/${currentPlayer?.playerId}/tracking`);
-  }
+  const GoToTrackingPage = useCallback(() => {
+    if (currentPlayer) {
+      navigate(`/record/game/${gameId}/participations/${currentPlayer?.playerId}/tracking`);
+    }
+  }, [currentPlayer, gameId, navigate]);
+
+  useEffect(() => {
+    dispatch(fetchSeasons());
+    dispatch(fetchGames());
+    dispatch(fetchParticipations({ gameId: gameId ?? "" }));
+  }, [dispatch, gameId]);
+
+  useEffect(() => {
+    if (seasons.length > 0) {
+      dispatch(fetchTeams({ seasonId: seasons[seasons.length - 1].id }));
+    }
+  }, [dispatch, seasons]);
+
+  useEffect(() => {
+    if (games && gameId) {
+      dispatch(setCurrentGame(games.find(game => game.id === gameId)));
+    }
+  }, [dispatch, games, gameId]);
+
+  useEffect(() => {
+    if (currentGame && teams.length > 0) {
+      const homeTeam = teams.find(team => team.teamId === currentGame.homeTeamId);
+      const visitorTeam = teams.find(team => team.teamId === currentGame.visitorTeamId);
+      if (homeTeam && visitorTeam) {
+        const playersOfTheCurrentGame = [
+          ...(homeTeam.players || []),
+          ...(visitorTeam.players || []),
+        ];
+
+        const filteredPlayers = playersOfTheCurrentGame.filter(player => {
+          return !participations.some(participation => participation.playerId === player.playerId);
+        });
+
+        setPlayersNotInCurrentGame(filteredPlayers);
+      }
+    }
+  }, [currentGame, teams, participations]);
+
+  useEffect(() => {
+    if (currentPlayer) {
+      dispatch(setCurrentParticipation(currentPlayer));
+      GoToTrackingPage();
+    }
+  }, [GoToTrackingPage, currentPlayer, dispatch]);
 
   return (
     <Box sx={{
@@ -150,7 +166,7 @@ const Participations: React.FC = () => {
           <>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
               <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2 }}>
-                {participations.name}
+                {participations.playerName}
               </Typography>
             </Box>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -179,7 +195,7 @@ const Participations: React.FC = () => {
             </InputLabel>
             <Select
               labelId="home-team-label"
-              value={currentPlayer?.playerId || ''}
+              value={selectedPlayer?.playerId || ''}
               onChange={handleParticipationSelect}
               label="Home Team"
               sx={{
@@ -199,7 +215,7 @@ const Participations: React.FC = () => {
           <Button
             text="Create"
             onClick={handleSubmit}
-            disabled={!currentPlayer}
+            disabled={!selectedPlayer}
             color="primary" backgroundColor="secondary" height='25' width='40' icon=''
           />
         </DialogActions>

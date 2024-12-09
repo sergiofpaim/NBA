@@ -39,11 +39,6 @@ const Record: React.FC = () => {
 
   const [gameDate, setGameDate] = useState<Dayjs | null>(null);
 
-  useEffect(() => {
-    dispatch(fetchSeasons());
-    dispatch(fetchGames());
-  }, [dispatch]);
-
   const handleCreateGame = (): void => {
     setOpenDialog(true);
     dispatch(fetchTeams({ seasonId: seasons[seasons.length - 1].id }));
@@ -53,7 +48,6 @@ const Record: React.FC = () => {
     dispatch(setCurrentGame(game));
     navigate(`/record/gameId/${game.id}/participations`);
   };
-
 
   const handleDialogClose = () => {
     setOpenDialog(false);
@@ -96,6 +90,11 @@ const Record: React.FC = () => {
     setOpenDialog(false);
     navigate(`/record/gameId/${games?.[games.length - 1]?.id}/participations`);
   };
+
+  useEffect(() => {
+    dispatch(fetchSeasons());
+    dispatch(fetchGames());
+  }, [dispatch]);
 
   return (
     <Box sx={{
