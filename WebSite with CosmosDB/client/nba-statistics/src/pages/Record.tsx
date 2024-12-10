@@ -149,7 +149,7 @@ const Record: React.FC = () => {
           justifyContent: 'flex-end',
           alignItems: 'center',
         }}>
-          <Button icon={<AddCircleOutlineIcon />} text="Create Game" height='200px' width='45' textSize='15px' onClick={handleCreateGame} />
+          <Button icon={<AddCircleOutlineIcon />} text="Create Game" width='200px' height='45' textSize='15px' onClick={handleCreateGame} />
         </Box>
         <List items={games} handleItemClick={(game: Game) => handleGameClick(game)} renderItem={(game: Game) => (
           <>
@@ -221,13 +221,13 @@ const Record: React.FC = () => {
           </LocalizationProvider>
         </DialogContent>
         <DialogActions sx={{ justifyContent: 'flex-end', paddingBottom: 2 }}>
-          <Button text="Cancel" textSize='15px' onClick={handleDialogClose} color="secondary" backgroundColor="primary" height='25' width='40' icon='' />
+          <Button text="Cancel" textSize='15px' onClick={handleDialogClose} color={globalTheme.palette.secondary.main} backgroundColor={globalTheme.palette.primary.main} width='25' height='40' icon='' />
           <Button
             text="Create"
             textSize='15px'
             onClick={handleSubmit}
             disabled={!gameDetails.homeTeamId || !gameDetails.visitorTeamId || !gameDetails.at}
-            color="primary" backgroundColor="secondary" height='25' width='40' icon=''
+            color={globalTheme.palette.primary.main} backgroundColor={globalTheme.palette.secondary.main} width='25' height='40' icon=''
           />
         </DialogActions>
       </Dialog>

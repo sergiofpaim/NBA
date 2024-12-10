@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { Box, Divider, Typography, useMediaQuery } from '@mui/material';
+import { Box, Dialog, DialogContent, DialogTitle, Divider, FormControl, InputLabel, Typography, useMediaQuery } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import globalTheme from '../styles/GlobalTheme';
 import { AppDispatch, RootState } from '../stores/Store';
@@ -9,8 +9,16 @@ import { addPlay, deletePlay, fetchParticipation, fetchPlayers, fetchTeams, setC
 import { useParams } from 'react-router-dom';
 import List from '../components/ItemsList';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Tooltip from '@mui/material/Tooltip';
 import { fetchGames } from '../stores/Transaction';
 import { fetchSeasons } from '../stores/Selection';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import BlockIcon from '@mui/icons-material/Block';
+import ErrorIcon from '@mui/icons-material/Error';
+import ReplayIcon from '@mui/icons-material/Replay';
+
 
 const TrackingPage: React.FC = () => {
 
@@ -31,6 +39,17 @@ const TrackingPage: React.FC = () => {
     const [playerName, setPlayerName] = useState<string>('');
     const [quarter, setQuarter] = useState(1);
 
+    const [openDialog, setOpenDialog] = useState(false);
+
+    function handleChangeQuarter(): void {
+        setOpenDialog(true);
+    }
+
+    const handleDialogClose = () => {
+        setOpenDialog(false);
+    };
+
+
     const handleDeletePlay = (at: Date) => {
         if (participation && at)
             dispatch(deletePlay({ participationId: participation?.participationId, at: at }));
@@ -38,6 +57,7 @@ const TrackingPage: React.FC = () => {
 
     const handleIncreaseQuarter = () => {
         setQuarter(prevQuarter => prevQuarter + 1);
+        setOpenDialog(false);
     };
 
     const isMobile = useMediaQuery(globalTheme.breakpoints.down('sm'));
@@ -72,6 +92,38 @@ const TrackingPage: React.FC = () => {
         'Block',
         'Foul',
     ];
+
+    const playTypeIcons: { [key: string]: React.ReactNode } = {
+        FreeThrowHit: <SportsBasketballIcon sx={{ color: 'green' }} />,
+        TwoPointerHit: <SportsBasketballIcon sx={{ color: 'green' }} />,
+        ThreePointerHit: <SportsBasketballIcon sx={{ color: 'green' }} />,
+        FreeThrowMiss: <SportsBasketballIcon sx={{ color: globalTheme.palette.secondary.main }} />,
+        TwoPointerMiss: <SportsBasketballIcon sx={{ color: globalTheme.palette.secondary.main }} />,
+        ThreePointerMiss: <SportsBasketballIcon sx={{ color: globalTheme.palette.secondary.main }} />,
+        Assist: <AddCircleIcon color="primary" />,
+        Rebound: <ReplayIcon color="primary" />,
+        Turnover: <ErrorIcon color="primary" />,
+        Block: <BlockIcon color="primary" />,
+        Foul: <ErrorIcon sx={{ color: globalTheme.palette.secondary.main }} />,
+    };
+
+    const getButtonColor = (type: string) =>
+        ['Miss', 'Hit', 'Foul'].some(keyword => type.includes(keyword))
+            ? globalTheme.palette.background.default
+            : '#ffc34d';
+
+    const getPlayText = (type: string) =>
+        type.includes('FreeThrow') ? '1' :
+            type.includes('TwoPointer') ? '2' :
+                type.includes('ThreePointer') ? '3' :
+                    type;
+
+    const getPlayTextColor = (type: string) =>
+        type.includes('Hit') ? 'green' :
+            ['Miss', 'Foul'].some(keyword => type.includes(keyword))
+                ? globalTheme.palette.secondary.main
+                : type;
+
 
     useEffect(() => {
         dispatch(fetchSeasons());
@@ -218,26 +270,86 @@ const TrackingPage: React.FC = () => {
                     label1="Last Plays"
                     handleItemClick={(play) => console.log(play)}
                     height="320px"
+                    itemSize="4px"
                     renderItem={(play) =>
-                        participation?.plays?.length ? (
+                        participation?.plays ? (
                             <>
-                                <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2 }}>
-                                    Type: {play.type}
-                                </Typography>
-                                <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2 }}>
-                                    Quarter: {play.quarter}
-                                </Typography>
-                                <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2 }}>
-                                    {play.at}
-                                </Typography>
-                                <Button
-                                    icon={<DeleteIcon />}
-                                    onClick={() => handleDeletePlay(play.at)}
-                                    color="primary"
-                                    backgroundColor="secondary"
-                                    height="25"
-                                    width="25"
-                                />
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                    <Tooltip
+                                        title={(() => {
+                                            if (play.type.includes('FreeThrowMiss')) {
+                                                return 'Free-Throw Miss';
+                                            } else if (play.type.includes('TwoPointerMiss')) {
+                                                return 'Two-Pointer Miss';
+                                            } else if (play.type.includes('ThreePointerMiss')) {
+                                                return 'Three-Pointer Miss';
+                                            } else if (play.type.includes('FreeThrowHit')) {
+                                                return 'Free-Throw Hit';
+                                            } else if (play.type.includes('TwoPointerHit')) {
+                                                return 'Two-Pointer Hit';
+                                            } else if (play.type.includes('ThreePointerHit')) {
+                                                return 'Three-Pointer Hit';
+                                            } else if (play.type.includes('Assist')) {
+                                                return 'Assist';
+                                            } else if (play.type.includes('Rebound')) {
+                                                return 'Rebound';
+                                            } else if (play.type.includes('Turnover')) {
+                                                return 'Turnover';
+                                            } else if (play.type.includes('Block')) {
+                                                return 'Block';
+                                            } else if (play.type.includes('Foul')) {
+                                                return 'Foul';
+                                            } else {
+                                                return 'Unknown Play';
+                                            }
+                                        })()}
+                                        arrow
+                                    >
+                                        <span>{playTypeIcons[play.type] || <ErrorIcon color="disabled" />}</span>
+                                    </Tooltip>
+                                    <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2 }}>
+                                        {(() => {
+                                            if (play.type.includes('Free')) {
+                                                return '1';
+                                            } else if (play.type.includes('Two')) {
+                                                return '2';
+                                            } else if (play.type.includes('Three')) {
+                                                return '3';
+                                            } else if (play.type.includes('Assist')) {
+                                                return 'A';
+                                            } else if (play.type.includes('Rebound')) {
+                                                return 'R';
+                                            } else if (play.type.includes('Turnover')) {
+                                                return 'T';
+                                            } else if (play.type.includes('Block')) {
+                                                return 'B';
+                                            } else if (play.type.includes('Foul')) {
+                                                return 'F';
+                                            } else {
+                                                return '';
+                                            }
+                                        })()}
+                                    </Typography>
+                                </Box>
+                                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                                    <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2 }}>
+                                        Q{play.quarter}
+                                    </Typography>
+                                </Box>
+                                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                                    <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2 }}>
+                                        {play.at.split('.')[0]}
+                                    </Typography>
+                                </Box>
+                                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                                    <Button
+                                        icon={<DeleteIcon />}
+                                        onClick={() => handleDeletePlay(play.at)}
+                                        backgroundColor={globalTheme.palette.secondary.main}
+                                        height="25"
+                                        width="25"
+                                    />
+                                </Box>
                             </>
                         ) : (
                             <Box
@@ -250,54 +362,120 @@ const TrackingPage: React.FC = () => {
                                     backgroundColor: '#f5f5f5',
                                 }}
                             >
-                                <Typography>No plays available</Typography>
+                                <Typography sx={{ color: globalTheme.palette.primary.main }}>No plays available</Typography>
                             </Box>
                         )
                     }
                 />
-                <Typography>Quarter: {quarter}</Typography>
-
-                <Button
-                    text="+"
-                    icon=""
-                    onClick={handleIncreaseQuarter}
-                    color="primary"
-                    backgroundColor="secondary"
-                    height="25"
-                    width="25"
-                />
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: 2,
-                        padding: 2,
-                    }}
-                >
-                    <Divider sx={{ marginY: 2 }} />
+                <Box sx={{ backgroundColor: 'rgba(0, 0, 0, 0.1)', padding: 2 }}>
                     <Box
                         sx={{
                             display: 'flex',
-                            flexWrap: 'wrap',
-                            gap: 2,
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            paddingBottom: 2,
                         }}
                     >
-                        {playTypes.map((type) => (
+                        <Box
+                            sx={{
+                                flex: 1,
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Typography sx={{ fontSize: '30px', fontWeight: 'bold' }}>Register</Typography>
+                        </Box>
+                        <Box
+                            sx={{
+                                flex: 1,
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Typography sx={{ fontSize: '20px', fontWeight: 'bold', marginRight: 1 }}>
+                                Quarter: {quarter}
+                            </Typography>
                             <Button
-                                text={type}
-                                icon={""}
-                                color="primary"
-                                backgroundColor="secondary"
-                                height="25"
-                                width="25"
-                                key={type}
-                                onClick={() => handleAddPlay(type)}
+                                icon={<AddCircleOutlineIcon />}
+                                onClick={handleChangeQuarter}
+                                backgroundColor={globalTheme.palette.secondary.main}
+                                height="40px"
+                                width="40px"
                             />
-                        ))}
+                        </Box>
+                    </Box>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
+                            {playTypes.slice(0, 6).map((type) => (
+                                <Button
+                                    text={getPlayText(type)}
+                                    icon={playTypeIcons[type]}
+                                    color={getPlayTextColor(type)}
+                                    backgroundColor={getButtonColor(type)}
+                                    height="25"
+                                    width="25"
+                                    key={type}
+                                    onClick={() => handleAddPlay(type)}
+                                    hoverColor={globalTheme.palette.primary.main}
+                                />
+                            ))}
+                        </Box>
+                        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
+                            {playTypes.slice(6, 10).map((type) => (
+                                <Button
+                                    text={getPlayText(type)}
+                                    icon={playTypeIcons[type]}
+                                    color={getPlayTextColor(type)}
+                                    backgroundColor={getButtonColor(type)}
+                                    height="25"
+                                    width="25"
+                                    key={type}
+                                    onClick={() => handleAddPlay(type)}
+                                />
+                            ))}
+                        </Box>
+                        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
+                            {playTypes.slice(10).map((type) => (
+                                <Button
+                                    text={getPlayText(type)}
+                                    icon={playTypeIcons[type]}
+                                    color={getPlayTextColor(type)}
+                                    backgroundColor={getButtonColor(type)}
+                                    height="25"
+                                    width="25"
+                                    key={type}
+                                    onClick={() => handleAddPlay(type)}
+                                    hoverColor={globalTheme.palette.primary.main}
+                                />
+                            ))}
+                        </Box>
                     </Box>
                 </Box>
             </Box>
-        </Box>
+            <Dialog open={openDialog} onClose={handleDialogClose} sx={{
+                '& .MuiDialog-paper': {
+                    width: '500px', maxWidth: '500px', height: 'auto', maxHeight: '90vh', borderRadius: 2, boxShadow: 3,
+                    display: 'flex', flexDirection: 'column', backgroundColor: globalTheme.palette.background.default
+                }
+            }}>
+                <DialogTitle sx={{
+                    color: globalTheme.palette.primary.main, marginBottom: 0, fontWeight: 600, fontSize: '1.25rem', textAlign: 'center'
+                }}>
+                    CHANGE QUARTER
+                </DialogTitle>
+                <DialogContent sx={{ paddingTop: 2 }}>
+                    <Typography sx={{ textAlign: 'center' }}>
+                        Are you sure you want to change the quarter? This action is irreversible.
+                    </ Typography>
+                    <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 10 }}>
+                        <Button text="Cancel" textSize="15px" onClick={handleDialogClose} color={globalTheme.palette.secondary.main} backgroundColor={globalTheme.palette.primary.main} height="25" width="40" icon="" />
+                        <Button text="Change" textSize="15px" onClick={handleIncreaseQuarter} color={globalTheme.palette.primary.main} backgroundColor={globalTheme.palette.secondary.main} height="25" width="40" icon="" />
+                    </Box>
+                </DialogContent>
+            </Dialog>
+        </Box >
     );
 };
 

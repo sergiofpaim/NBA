@@ -1,45 +1,46 @@
 import React from 'react';
 import { Button as MUIButton } from '@mui/material';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import globalTheme from '../styles/GlobalTheme';
 
 interface ButtonProps {
     text?: string;
     onClick: () => void;
     className?: string;
-    color?: 'primary' | 'secondary';
-    backgroundColor?: 'primary' | 'secondary';
+    color?: string;
+    backgroundColor?: string;
     height?: string;
     width?: string;
     icon?: React.ReactNode;
     disabled?: boolean;
     textSize?: string;
+    hoverColor?: string; // Optional hover color
 }
 
 const Button: React.FC<ButtonProps> = ({
     text,
     onClick,
     className = '',
-    color = 'primary',
-    backgroundColor = 'secondary',
+    color = globalTheme.palette.primary.main,
+    backgroundColor = globalTheme.palette.secondary.main,
     height = '45px',
     width = '200px',
     icon = '',
     disabled = false,
     textSize = globalTheme.typography.h4,
+    hoverColor = globalTheme.palette.background.default, // Default hover color
 }) => {
 
     const buttonStyle = {
         borderRadius: '12px',
         display: 'flex',
         justifyContent: 'center',
+        alignItems: 'center',
         border: 'none',
-        color: globalTheme.palette[color].main,
-        backgroundColor: globalTheme.palette[backgroundColor].main,
+        color: color,
+        backgroundColor: backgroundColor,
         fontSize: textSize,
         cursor: 'pointer',
-        alignItems: 'center',
-        opacity: disabled ? 0.6 : 1
+        opacity: disabled ? 0.6 : 1,
     };
 
     return (
@@ -48,17 +49,16 @@ const Button: React.FC<ButtonProps> = ({
             className={`btn ${className}`}
             sx={{
                 ...buttonStyle,
-                width: height,
-                height: width,
-                alignItems: 'center',
+                width: width,
+                height: height,
                 '&:hover': {
-                    color: globalTheme.palette.background.default,
+                    color: hoverColor,
                 },
             }}
-            startIcon={icon}
             disabled={disabled}
+            startIcon={text ? icon : undefined}
         >
-            {text}
+            {text ? text : <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>{icon}</div>}
         </MUIButton>
     );
 };

@@ -7,10 +7,19 @@ interface ListProps<T> {
     label2?: string;
     handleItemClick: (item: T) => void;
     renderItem: (item: T) => React.ReactNode;
-    height?: string; // Optional height prop
+    height?: string;
+    itemSize?: string;
 }
 
-const List: React.FC<ListProps<any>> = ({ items, handleItemClick, renderItem, label1, label2, height }) => (
+const List: React.FC<ListProps<any>> = ({
+    items,
+    handleItemClick,
+    renderItem,
+    label1,
+    label2,
+    height,
+    itemSize
+}) => (
     <Box
         sx={{
             width: '100%',
@@ -19,7 +28,7 @@ const List: React.FC<ListProps<any>> = ({ items, handleItemClick, renderItem, la
             padding: 2,
             display: 'flex',
             flexDirection: 'column',
-            maxHeight: height || '600px', // Use the height prop if provided, otherwise fallback to 600px
+            maxHeight: height || '600px',
             overflow: 'hidden',
         }}
     >
@@ -77,7 +86,7 @@ const List: React.FC<ListProps<any>> = ({ items, handleItemClick, renderItem, la
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
-                        padding: '1rem',
+                        padding: itemSize || '1rem',
                         backgroundColor: 'rgba(0, 0, 0, 0.1)',
                         borderRadius: '4px',
                         cursor: 'pointer',
@@ -88,7 +97,7 @@ const List: React.FC<ListProps<any>> = ({ items, handleItemClick, renderItem, la
                         '@media (max-width: 400px)': {
                             flexDirection: 'column',
                             textAlign: 'left',
-                            fontSize: '1rem',
+                            fontSize: itemSize || '1rem',
                         },
                     }}
                     onClick={() => handleItemClick(item)}

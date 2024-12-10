@@ -162,7 +162,7 @@ const Participations: React.FC = () => {
           justifyContent: 'flex-end',
           alignItems: 'center',
         }}>
-          <Button icon={<AddCircleOutlineIcon />} text="Create Participation" height='200px' width='45' textSize='15px' onClick={handleCreateParticipation} />
+          <Button icon={<AddCircleOutlineIcon />} text="Create Participation" width='200px' height='45' textSize='15px' onClick={handleCreateParticipation} />
         </Box>
         <List items={participations} handleItemClick={(participation: ParticipatingPlayer) => handleParticipationClick(participation)} renderItem={(participations: ParticipatingPlayer) => (
           <>
@@ -213,13 +213,13 @@ const Participations: React.FC = () => {
           </FormControl>
         </DialogContent>
         <DialogActions sx={{ justifyContent: 'flex-end', paddingBottom: 2 }}>
-          <Button text="Cancel" textSize='15px' onClick={handleDialogClose} color="secondary" backgroundColor="primary" height='25' width='40' icon='' />
+          <Button text="Cancel" textSize='15px' onClick={handleDialogClose} color={globalTheme.palette.secondary.main} backgroundColor={globalTheme.palette.primary.main} width='25' height='40' icon='' />
           <Button
             text="Create"
             textSize='15px'
             onClick={handleSubmit}
             disabled={!selectedPlayer}
-            color="primary" backgroundColor="secondary" height='25' width='40' icon=''
+            color={globalTheme.palette.primary.main} backgroundColor={globalTheme.palette.secondary.main} width='25' height='40' icon=''
           />
         </DialogActions>
       </Dialog>
