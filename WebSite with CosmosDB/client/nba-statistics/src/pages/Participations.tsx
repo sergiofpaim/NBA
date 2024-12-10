@@ -12,6 +12,7 @@ import { ParticipatingPlayer } from '../models/ParticipatingPlayer';
 import { setCurrentPlayerOfGame } from '../stores/Transaction';
 import { PlayerSelection } from '../models/PlayerSelection';
 import { fetchSeasons } from '../stores/Selection';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 const Participations: React.FC = () => {
 
@@ -161,7 +162,7 @@ const Participations: React.FC = () => {
           justifyContent: 'flex-end',
           alignItems: 'center',
         }}>
-          <Button text="Create Participation" height='200px' width='45' textSize='15px' onClick={handleCreateParticipation} />
+          <Button icon={<AddCircleOutlineIcon />} text="Create Participation" height='200px' width='45' textSize='15px' onClick={handleCreateParticipation} />
         </Box>
         <List items={participations} handleItemClick={(participation: ParticipatingPlayer) => handleParticipationClick(participation)} renderItem={(participations: ParticipatingPlayer) => (
           <>
@@ -212,9 +213,10 @@ const Participations: React.FC = () => {
           </FormControl>
         </DialogContent>
         <DialogActions sx={{ justifyContent: 'flex-end', paddingBottom: 2 }}>
-          <Button text="Cancel" onClick={handleDialogClose} color="secondary" backgroundColor="primary" height='25' width='40' icon='' />
+          <Button text="Cancel" textSize='15px' onClick={handleDialogClose} color="secondary" backgroundColor="primary" height='25' width='40' icon='' />
           <Button
             text="Create"
+            textSize='15px'
             onClick={handleSubmit}
             disabled={!selectedPlayer}
             color="primary" backgroundColor="secondary" height='25' width='40' icon=''

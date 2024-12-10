@@ -92,7 +92,7 @@ namespace NBA.Controllers
             return Result(playResult);
         }
 
-        [HttpDelete("plays/participation/{participationId}")]
+        [HttpDelete("plays/participation/{participationId}/at/{at}")]
         [ProducesResponseType(typeof(BasketballResponse<ParticipationVM>), 200)]
         public async Task<IActionResult> DeletePlayAsync(string participationId, TimeSpan at)
         {

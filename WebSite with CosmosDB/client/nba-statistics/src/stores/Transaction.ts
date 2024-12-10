@@ -126,6 +126,9 @@ const participationSlice = createSlice({
         fetchParticipationFailure(state, action: PayloadAction<string>) {
             state.error = action.payload;
         },
+        setParticipation(state, action: PayloadAction<any>) {
+            state.participation = action.payload;
+        },
         addPlayRequest(state) {
             state.error = null;
         },
@@ -133,6 +136,15 @@ const participationSlice = createSlice({
             state.participation = action.payload;
         },
         addPlayFailure(state, action: PayloadAction<string>) {
+            state.error = action.payload;
+        },
+        deletePlayRequest(state) {
+            state.error = null;
+        },
+        deletePlaySuccess(state, action: PayloadAction<Participation>) {
+            state.participation = action.payload;
+        },
+        deletePlayFailure(state, action: PayloadAction<string>) {
             state.error = action.payload;
         },
     }
@@ -165,9 +177,13 @@ export const {
     fetchParticipationRequest,
     fetchParticipationSuccess,
     fetchParticipationFailure,
+    setParticipation,
     addPlayRequest,
     addPlaySuccess,
-    addPlayFailure
+    addPlayFailure,
+    deletePlayRequest,
+    deletePlaySuccess,
+    deletePlayFailure
 } = participationSlice.actions;
 
 export const fetchGames = (): ThunkAction<void, RootState, unknown, Action<string>> => {
@@ -239,6 +255,17 @@ export const addPlay = (payload: { gameId: string; playerId: string; quarter: nu
             dispatch(addPlaySuccess(response.payLoad as Participation));
         else
             dispatch(addPlayFailure(response.message));
+    };
+};
+
+export const deletePlay = (payload: { participationId: string; at: Date }): ThunkAction<void, RootState, unknown, Action<string>> => {
+    return async (dispatch) => {
+        dispatch(deletePlayRequest());
+        const response = await api.delete(`/transaction/plays/participation/${payload.participationId}/at/${payload.at}`);
+        if (response.success)
+            dispatch(deletePlaySuccess(response.payLoad as Participation));
+        else
+            dispatch(deletePlayFailure(response.message));
     };
 };
 

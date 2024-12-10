@@ -1,5 +1,6 @@
 ﻿using NBA.Models;
 using NBA.Services;
+using NBA.ViewModels;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
@@ -34,14 +35,13 @@ public class ListPlayCommand : NBACommand<ListPlayCommand.GameParms>
         return ShowAllPlays(participationResult.PayLoad, game.PayLoad);
     }
 
-    private static int ShowAllPlays(Participation participation, Game game)
+    private static int ShowAllPlays(ParticipationVM participation, Game game)
     {
         Table tableOptions = new()
         {
-            Title = new TableTitle($"\n\n{participation.PlayerName}'s plays in the" +
-                                            $" '{game.HomeTeamName} vs" +
-                                            $" {game.VisitorTeamName}' game" +
-                                            $" on: {game.At}")
+            Title = new TableTitle($"\n\n {game.HomeTeamName} vs" +
+                                   $" {game.VisitorTeamName}' game" +
+                                   $" on: {game.At}")
         };
         tableOptions.AddColumn("Points");
         tableOptions.AddColumn("Type");

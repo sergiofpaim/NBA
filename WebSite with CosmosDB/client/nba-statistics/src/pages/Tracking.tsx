@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import globalTheme from '../styles/GlobalTheme';
 import { AppDispatch, RootState } from '../stores/Store';
 import Button from '../components/Button';
-import { addPlay, fetchParticipation, fetchPlayers, fetchTeams, setCurrentGame, setCurrentPlayerOfGame } from '../stores/Transaction';
+import { addPlay, deletePlay, fetchParticipation, fetchPlayers, fetchTeams, setCurrentGame, setCurrentPlayerOfGame, setParticipation } from '../stores/Transaction';
 import { useParams } from 'react-router-dom';
 import List from '../components/ItemsList';
-import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { fetchGames } from '../stores/Transaction';
 import { fetchSeasons } from '../stores/Selection';
 
@@ -31,8 +31,9 @@ const TrackingPage: React.FC = () => {
     const [playerName, setPlayerName] = useState<string>('');
     const [quarter, setQuarter] = useState(1);
 
-    function handleEditPlay(): void {
-        throw new Error('Function not implemented.');
+    const handleDeletePlay = (at: Date) => {
+        if (participation && at)
+            dispatch(deletePlay({ participationId: participation?.participationId, at: at }));
     }
 
     const handleIncreaseQuarter = () => {
@@ -75,6 +76,7 @@ const TrackingPage: React.FC = () => {
     useEffect(() => {
         dispatch(fetchSeasons());
         dispatch(fetchGames());
+        dispatch(setParticipation(null))
     }, [dispatch, gameId]);
 
     useEffect(() => {
@@ -229,9 +231,8 @@ const TrackingPage: React.FC = () => {
                                     {play.at}
                                 </Typography>
                                 <Button
-                                    text=""
-                                    icon={<ModeEditOutlineIcon />}
-                                    onClick={handleEditPlay}
+                                    icon={<DeleteIcon />}
+                                    onClick={() => handleDeletePlay(play.at)}
                                     color="primary"
                                     backgroundColor="secondary"
                                     height="25"

@@ -4,7 +4,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import globalTheme from '../styles/GlobalTheme';
 
 interface ButtonProps {
-    text: string;
+    text?: string;
     onClick: () => void;
     className?: string;
     color?: 'primary' | 'secondary';
@@ -24,7 +24,7 @@ const Button: React.FC<ButtonProps> = ({
     backgroundColor = 'secondary',
     height = '45px',
     width = '200px',
-    icon = <AddCircleOutlineIcon />,
+    icon = '',
     disabled = false,
     textSize = globalTheme.typography.h4,
 }) => {
@@ -50,6 +50,7 @@ const Button: React.FC<ButtonProps> = ({
                 ...buttonStyle,
                 width: height,
                 height: width,
+                alignItems: 'center',
                 '&:hover': {
                     color: globalTheme.palette.background.default,
                 },

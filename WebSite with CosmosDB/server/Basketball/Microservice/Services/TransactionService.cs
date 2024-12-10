@@ -105,13 +105,13 @@ namespace NBA.Services
                 return Success(ParticipationVM.FactorFrom(saved), "Play removed from the database.");
         }
 
-        internal static BasketballResponse<Participation> GetParticipation(string gameId, string playerId)
+        internal static BasketballResponse<ParticipationVM> GetParticipation(string gameId, string playerId)
         {
             var participation = Basketball.Repo.Get<Participation>(p => p.GameId == gameId && p.PlayerId == playerId).FirstOrDefault();
             if (participation is null)
-                return NotFound<Participation>("Player does not participate in the game.");
+                return NotFound<ParticipationVM>("Player does not participate in the game.");
             else
-                return Success(participation);
+                return Success(ParticipationVM.FactorFrom(participation));
         }
 
         internal static BasketballResponse<Player> GetPlayer(string playerId)

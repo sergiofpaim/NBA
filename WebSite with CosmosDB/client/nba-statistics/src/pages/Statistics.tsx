@@ -35,7 +35,7 @@ const Statistics: React.FC = () => {
     })
   );
 
-  const { seasons, games, players, statistics, error } = useSelector((state: RootState) => selectStatisticsData(state));
+  const { seasons, games, players, statistics } = useSelector((state: RootState) => selectStatisticsData(state));
 
   const [selectedSeason, setSelectedSeason] = useState<Season | null>(null);
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
