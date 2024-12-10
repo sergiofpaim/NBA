@@ -1,7 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import { seasonsReducer, gamesReducer, playersReducer } from './Selection';
 import { statisticsReducer } from './Statistics';
-import { gameTransactionReducer, participationTransactionReducer, playerTransactionReducer, teamTransactionReducer } from './Transaction';
+import { gameTransactionReducer, playerTransactionReducer, teamTransactionReducer } from './Transaction';
 
 const rootReducer = combineReducers({
     seasons: seasonsReducer,
@@ -11,7 +11,6 @@ const rootReducer = combineReducers({
     transactionGames: gameTransactionReducer,
     transactionTeams: teamTransactionReducer,
     transactionPlayers: playerTransactionReducer,
-    transactionParticipation: participationTransactionReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

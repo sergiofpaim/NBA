@@ -10,6 +10,7 @@ namespace NBA.ViewModels
         public string ParticipationId { get; set; }
         public string TeamId { get; set; }
         public string TeamName { get; set; }
+        public List<GamePlay> Plays { get; set; } = [];
 
         public override (bool Success, string Message) Validate()
         {
@@ -24,7 +25,8 @@ namespace NBA.ViewModels
                 PlayerName = model.PlayerName,
                 ParticipationId = model.Id,
                 TeamId = model.TeamId,
-                TeamName = model.TeamName
+                TeamName = model.TeamName,
+                Plays = model.Plays
             };
         }
     }

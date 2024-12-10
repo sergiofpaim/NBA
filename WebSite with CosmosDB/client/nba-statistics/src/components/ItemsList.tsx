@@ -7,9 +7,10 @@ interface ListProps<T> {
     label2?: string;
     handleItemClick: (item: T) => void;
     renderItem: (item: T) => React.ReactNode;
+    height?: string; // Optional height prop
 }
 
-const List: React.FC<ListProps<any>> = ({ items, handleItemClick, renderItem, label1, label2 }) => (
+const List: React.FC<ListProps<any>> = ({ items, handleItemClick, renderItem, label1, label2, height }) => (
     <Box
         sx={{
             width: '100%',
@@ -18,7 +19,7 @@ const List: React.FC<ListProps<any>> = ({ items, handleItemClick, renderItem, la
             padding: 2,
             display: 'flex',
             flexDirection: 'column',
-            maxHeight: '600px',
+            maxHeight: height || '600px', // Use the height prop if provided, otherwise fallback to 600px
             overflow: 'hidden',
         }}
     >
@@ -39,7 +40,7 @@ const List: React.FC<ListProps<any>> = ({ items, handleItemClick, renderItem, la
                     textAlign: label2 ? 'left' : 'center',
                     fontSize: '1.5rem',
                     '@media (max-width: 400px)': {
-                        fontSize: '1rem'
+                        fontSize: '1rem',
                     },
                 }}
             >
@@ -52,7 +53,7 @@ const List: React.FC<ListProps<any>> = ({ items, handleItemClick, renderItem, la
                         textAlign: 'right',
                         fontSize: '1.5rem',
                         '@media (max-width: 400px)': {
-                            fontSize: '1rem'
+                            fontSize: '1rem',
                         },
                     }}
                 >

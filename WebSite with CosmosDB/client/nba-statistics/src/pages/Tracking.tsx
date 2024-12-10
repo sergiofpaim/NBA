@@ -1,16 +1,17 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Divider, Typography, useMediaQuery } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import globalTheme from '../styles/GlobalTheme';
 import { AppDispatch, RootState } from '../stores/Store';
 import Button from '../components/Button';
-import { fetchGames, fetchPlayerParticipation, fetchTeams, setCurrentGame, setCurrentParticipation } from '../stores/Transaction';
+import { fetchParticipations, fetchTeams, setCurrentGame, setCurrentParticipation } from '../stores/Transaction';
 import { useParams } from 'react-router-dom';
-import { fetchSeasons } from '../stores/Selection';
 import List from '../components/ItemsList';
+import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
+import { fetchGames } from '../stores/Transaction';
+import { fetchSeasons } from '../stores/Selection';
 import { ParticipatingPlayer } from '../models/ParticipatingPlayer';
-import { Participation } from '../models/Participation';
 
 const TrackingPage: React.FC = () => {
 
@@ -22,9 +23,12 @@ const TrackingPage: React.FC = () => {
     const seasons = useSelector((state: RootState) => state.seasons.seasons);
     const games = useSelector((state: RootState) => state.transactionGames.games);
     const teams = useSelector((state: RootState) => state.transactionTeams.teams);
+    const participations = useSelector((state: RootState) => state.transactionPlayers.participations);
+
     const currentParticipation = useSelector((state: RootState) => state.transactionPlayers.currentParticipation);
-    const participatingPlayer = useSelector((state: RootState) => state.transactionParticipation.participation);
     const currentGame = useSelector((state: RootState) => state.transactionGames.currentGame);
+
+    const [playerName, setPlayerName] = useState<string>('');
 
     const isMobile = useMediaQuery(globalTheme.breakpoints.down('sm'));
 
@@ -34,23 +38,30 @@ const TrackingPage: React.FC = () => {
     }, [dispatch, gameId]);
 
     useEffect(() => {
-        if (gameId && playerId) {
-            dispatch(fetchPlayerParticipation({ gameId, playerId }))
+        if (games && gameId) {
+            dispatch(setCurrentGame(games.find(game => game.id === gameId)));
         }
-    }, [dispatch, gameId, playerId])
+    }, [dispatch, games, gameId]);
 
+    useEffect(() => {
+        dispatch(fetchParticipations({ gameId: gameId ?? "" }));
+    }, [dispatch, gameId]);
+
+    useEffect(() => {
+        if (participations)
+            dispatch(setCurrentParticipation(participations.find(p => p.playerId === playerId)));
+    }, [dispatch, participations, playerId]);
+
+    useEffect(() => {
+
+        dispatch(setCurrentParticipation(participations.find(p => p.playerId === playerId)));
+    }, [dispatch, currentParticipation, participations, playerId]);
 
     useEffect(() => {
         if (seasons.length > 0) {
             dispatch(fetchTeams({ seasonId: seasons[seasons.length - 1].id }));
         }
     }, [dispatch, seasons]);
-
-    useEffect(() => {
-        if (games && gameId) {
-            dispatch(setCurrentGame(games.find(game => game.id === gameId)));
-        }
-    }, [dispatch, games, gameId]);
 
     useEffect(() => {
         if (currentGame && teams.length > 0) {
@@ -61,15 +72,37 @@ const TrackingPage: React.FC = () => {
                     ...(homeTeam.players || []),
                     ...(visitorTeam.players || []),
                 ];
-                dispatch(setCurrentParticipation(playersOfTheCurrentGame.find(p => p.playerId === playerId)));
+                const player = playersOfTheCurrentGame.find(p => p.playerId === playerId);
+                if (player) {
+                    setPlayerName(player.playerName || '');
+                }
             }
         }
-    }, [dispatch, teams, currentGame, playerId]);
+    }, [teams, currentGame, playerId]);
+
+
+
+    const formatPlayTime = (timeString: any) => {
+        const [hours, minutes, seconds] = timeString.split(':');
+        const [secs, milliseconds] = seconds.split('.');
+
+        const time = new Date();
+        time.setHours(parseInt(hours, 10));
+        time.setMinutes(parseInt(minutes, 10));
+        time.setSeconds(parseInt(secs, 10));
+        time.setMilliseconds(parseInt(milliseconds.slice(0, 3), 10));
+
+        return time.toLocaleString();
+    };
 
     useEffect(() => {
-        console.log('Participation:', participatingPlayer?.playerName);  // Log the participation object
-        console.log('Plays:', participatingPlayer?.plays || '');    // Log the plays array
-    }, [dispatch, participatingPlayer]);
+        console.log('Participation:', currentParticipation?.playerName);
+        console.log('Plays:', currentParticipation?.plays || '');
+    }, [dispatch, currentParticipation]);
+
+    function handlePlay(): void {
+        throw new Error('Function not implemented.');
+    }
 
     return (
         <Box sx={{
@@ -121,7 +154,7 @@ const TrackingPage: React.FC = () => {
                         maxWidth: '100%',
                         alignItems: isMobile ? 'center' : 'flex-start',
                     }}>
-                        <Typography variant="h6" sx={{ textAlign: isMobile ? 'center' : 'left' }}>{currentParticipation?.playerName}</Typography>
+                        <Typography variant="h6" sx={{ textAlign: isMobile ? 'center' : 'left' }}>{playerName}</Typography>
                     </Box>
                     <Typography variant="h4" sx={{ fontWeight: 'bold', textAlign: isMobile ? 'center' : 'left' }}>Game: </Typography>
                     <Box sx={{
@@ -152,26 +185,53 @@ const TrackingPage: React.FC = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'left',
-                paddingLeft: isMobile ? 0 : 4,
+                paddingLeft: isMobile ? 0 : 10,
                 gap: 2,
                 marginTop: 0,
                 overflowY: 'auto',
             }}>
-                <Box sx={{
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    alignItems: 'center',
-                }}>
-                </Box>
                 <List
-                    items={participatingPlayer?.plays || []}
-                    label1="Plays"
+                    items={currentParticipation?.plays || []}
+                    label1="Last Plays"
                     handleItemClick={(play) => console.log(play)}
-                    renderItem={(play) => (
-                        <>
-                            Quarter: {play.quarter} Type: {play.type} Points: {play.points ?? 'N/A'} At: {new Date(play.at).toLocaleString()}
-                        </>
-                    )}
+                    height="320px"
+                    renderItem={(play) =>
+                        currentParticipation?.plays?.length ? (
+                            <>
+                                <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2 }}>
+                                    Type: {play.type}
+                                </Typography>
+                                <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2 }}>
+                                    Quarter: {play.quarter}
+                                </Typography>
+                                <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2 }}>
+                                    {formatPlayTime(play.at)}
+                                </Typography>
+                                <Button
+                                    text=""
+                                    icon={<ModeEditOutlineIcon />}
+                                    onClick={handlePlay}
+                                    color="primary"
+                                    backgroundColor="secondary"
+                                    height="25"
+                                    width="25"
+                                />
+                            </>
+                        ) : (
+                            <Box
+                                sx={{
+                                    height: '320px',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    border: '1px dashed grey',
+                                    backgroundColor: '#f5f5f5',
+                                }}
+                            >
+                                <Typography>No plays available</Typography>
+                            </Box>
+                        )
+                    }
                 />
             </Box>
         </Box>
