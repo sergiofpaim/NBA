@@ -54,6 +54,10 @@ const Button: React.FC<ButtonProps> = ({
                 '&:hover': {
                     color: hoverColor,
                 },
+                '&.Mui-disabled': {
+                    color: 'black',
+                    backgroundColor: globalTheme.palette.grey[700],
+                }
             }}
             disabled={disabled}
             startIcon={text ? icon : undefined}

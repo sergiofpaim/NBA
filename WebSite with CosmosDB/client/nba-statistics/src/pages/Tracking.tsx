@@ -253,205 +253,223 @@ const TrackingPage: React.FC = () => {
                 borderWidth: 2,
                 marginTop: isMobile ? 4 : 0
             }} />
-
             <Box sx={{
-                width: isMobile ? '100%' : '75%',
-                height: '650px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'left',
-                paddingLeft: isMobile ? 0 : 10,
+                flexDirection: isMobile ? 'column' : 'row',
                 gap: 2,
-                marginTop: 0,
-                overflowY: 'auto',
+                width: '100%',
+                alignItems: 'center',
+                paddingLeft: isMobile ? 0 : 30
             }}>
-                <List
-                    items={participation?.plays || []}
-                    label1="Last Plays"
-                    handleItemClick={(play) => console.log(play)}
-                    height="320px"
-                    itemSize="4px"
-                    renderItem={(play) =>
-                        participation?.plays ? (
-                            <>
-                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                    <Tooltip
-                                        title={(() => {
-                                            if (play.type.includes('FreeThrowMiss')) {
-                                                return 'Free-Throw Miss';
-                                            } else if (play.type.includes('TwoPointerMiss')) {
-                                                return 'Two-Pointer Miss';
-                                            } else if (play.type.includes('ThreePointerMiss')) {
-                                                return 'Three-Pointer Miss';
-                                            } else if (play.type.includes('FreeThrowHit')) {
-                                                return 'Free-Throw Hit';
-                                            } else if (play.type.includes('TwoPointerHit')) {
-                                                return 'Two-Pointer Hit';
-                                            } else if (play.type.includes('ThreePointerHit')) {
-                                                return 'Three-Pointer Hit';
-                                            } else if (play.type.includes('Assist')) {
-                                                return 'Assist';
-                                            } else if (play.type.includes('Rebound')) {
-                                                return 'Rebound';
-                                            } else if (play.type.includes('Turnover')) {
-                                                return 'Turnover';
-                                            } else if (play.type.includes('Block')) {
-                                                return 'Block';
-                                            } else if (play.type.includes('Foul')) {
-                                                return 'Foul';
-                                            } else {
-                                                return 'Unknown Play';
-                                            }
-                                        })()}
-                                        arrow
-                                    >
-                                        <span>{playTypeIcons[play.type] || <ErrorIcon color="disabled" />}</span>
-                                    </Tooltip>
-                                    <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2 }}>
-                                        {(() => {
-                                            if (play.type.includes('Free')) {
-                                                return '1';
-                                            } else if (play.type.includes('Two')) {
-                                                return '2';
-                                            } else if (play.type.includes('Three')) {
-                                                return '3';
-                                            } else if (play.type.includes('Assist')) {
-                                                return 'A';
-                                            } else if (play.type.includes('Rebound')) {
-                                                return 'R';
-                                            } else if (play.type.includes('Turnover')) {
-                                                return 'T';
-                                            } else if (play.type.includes('Block')) {
-                                                return 'B';
-                                            } else if (play.type.includes('Foul')) {
-                                                return 'F';
-                                            } else {
-                                                return '';
-                                            }
-                                        })()}
-                                    </Typography>
+                <Box sx={{
+                    width: isMobile ? '100%' : '75%',
+                    height: '650px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    paddingLeft: isMobile ? 0 : 10,
+                    gap: 2,
+                    marginTop: 0,
+                    overflowY: 'auto',
+                }}>
+                    <List
+                        items={participation?.plays || []}
+                        label1="Last Plays"
+                        handleItemClick={(play) => console.log(play)}
+                        height="320px"
+                        itemSize="4px"
+                        renderItem={(play) =>
+                            participation?.plays ? (
+                                <>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                        <Tooltip
+                                            title={(() => {
+                                                if (play.type.includes('FreeThrowMiss')) {
+                                                    return 'Free-Throw Miss';
+                                                } else if (play.type.includes('TwoPointerMiss')) {
+                                                    return 'Two-Pointer Miss';
+                                                } else if (play.type.includes('ThreePointerMiss')) {
+                                                    return 'Three-Pointer Miss';
+                                                } else if (play.type.includes('FreeThrowHit')) {
+                                                    return 'Free-Throw Hit';
+                                                } else if (play.type.includes('TwoPointerHit')) {
+                                                    return 'Two-Pointer Hit';
+                                                } else if (play.type.includes('ThreePointerHit')) {
+                                                    return 'Three-Pointer Hit';
+                                                } else if (play.type.includes('Assist')) {
+                                                    return 'Assist';
+                                                } else if (play.type.includes('Rebound')) {
+                                                    return 'Rebound';
+                                                } else if (play.type.includes('Turnover')) {
+                                                    return 'Turnover';
+                                                } else if (play.type.includes('Block')) {
+                                                    return 'Block';
+                                                } else if (play.type.includes('Foul')) {
+                                                    return 'Foul';
+                                                } else {
+                                                    return 'Unknown Play';
+                                                }
+                                            })()}
+                                            arrow
+                                        >
+                                            <span>{playTypeIcons[play.type] || <ErrorIcon color="disabled" />}</span>
+                                        </Tooltip>
+                                        <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2 }}>
+                                            {(() => {
+                                                if (play.type.includes('Free')) {
+                                                    return '1';
+                                                } else if (play.type.includes('Two')) {
+                                                    return '2';
+                                                } else if (play.type.includes('Three')) {
+                                                    return '3';
+                                                } else if (play.type.includes('Assist')) {
+                                                    return 'A';
+                                                } else if (play.type.includes('Rebound')) {
+                                                    return 'R';
+                                                } else if (play.type.includes('Turnover')) {
+                                                    return 'T';
+                                                } else if (play.type.includes('Block')) {
+                                                    return 'B';
+                                                } else if (play.type.includes('Foul')) {
+                                                    return 'F';
+                                                } else {
+                                                    return '';
+                                                }
+                                            })()}
+                                        </Typography>
+                                    </Box>
+                                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                                        <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2 }}>
+                                            Q{play.quarter}
+                                        </Typography>
+                                    </Box>
+                                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                                        <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2 }}>
+                                            {play.at.split('.')[0]}
+                                        </Typography>
+                                    </Box>
+                                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                                        <Button
+                                            icon={<DeleteIcon />}
+                                            onClick={() => handleDeletePlay(play.at)}
+                                            backgroundColor={globalTheme.palette.secondary.main}
+                                            height="25"
+                                            width="25"
+                                        />
+                                    </Box>
+                                </>
+                            ) : (
+                                <Box
+                                    sx={{
+                                        height: '320px',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        border: '1px dashed grey',
+                                        backgroundColor: '#f5f5f5',
+                                    }}
+                                >
+                                    <Typography sx={{ color: globalTheme.palette.primary.main }}>No plays available</Typography>
                                 </Box>
-                                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                                    <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2 }}>
-                                        Q{play.quarter}
-                                    </Typography>
-                                </Box>
-                                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                                    <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2 }}>
-                                        {play.at.split('.')[0]}
-                                    </Typography>
-                                </Box>
-                                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                                    <Button
-                                        icon={<DeleteIcon />}
-                                        onClick={() => handleDeletePlay(play.at)}
-                                        backgroundColor={globalTheme.palette.secondary.main}
-                                        height="25"
-                                        width="25"
-                                    />
-                                </Box>
-                            </>
-                        ) : (
+                            )
+                        }
+                    />
+                    <Box sx={{ backgroundColor: 'rgba(0, 0, 0, 0.1)', padding: 2 }}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: { xs: 'column', sm: 'row' },
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                paddingBottom: 2,
+                            }}
+                        >
                             <Box
                                 sx={{
-                                    height: '320px',
+                                    flex: 1,
                                     display: 'flex',
                                     justifyContent: 'center',
                                     alignItems: 'center',
-                                    border: '1px dashed grey',
-                                    backgroundColor: '#f5f5f5',
+                                    marginBottom: { xs: 1, sm: 0 },
                                 }}
                             >
-                                <Typography sx={{ color: globalTheme.palette.primary.main }}>No plays available</Typography>
+                                <Typography sx={{ fontSize: { xs: '24px', sm: '30px' }, fontWeight: 'bold' }}>Register</Typography>
                             </Box>
-                        )
-                    }
-                />
-                <Box sx={{ backgroundColor: 'rgba(0, 0, 0, 0.1)', padding: 2 }}>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            paddingBottom: 2,
-                        }}
-                    >
-                        <Box
-                            sx={{
-                                flex: 1,
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <Typography sx={{ fontSize: '30px', fontWeight: 'bold' }}>Register</Typography>
+                            <Box
+                                sx={{
+                                    flex: 1,
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    marginBottom: { xs: 1, sm: 0 },
+                                    flexDirection: { xs: 'column', sm: 'row' },
+                                    gap: 1,
+                                }}
+                            >
+                                <Typography sx={{ fontSize: '16px', fontWeight: 'bold' }}>
+                                    Quarter: {quarter}
+                                </Typography>
+                                <Button
+                                    icon={<AddCircleOutlineIcon />}
+                                    onClick={handleChangeQuarter}
+                                    backgroundColor={globalTheme.palette.secondary.main}
+                                    height="40px"
+                                    width="40px"
+                                />
+                            </Box>
                         </Box>
-                        <Box
-                            sx={{
-                                flex: 1,
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <Typography sx={{ fontSize: '20px', fontWeight: 'bold', marginRight: 1 }}>
-                                Quarter: {quarter}
-                            </Typography>
-                            <Button
-                                icon={<AddCircleOutlineIcon />}
-                                onClick={handleChangeQuarter}
-                                backgroundColor={globalTheme.palette.secondary.main}
-                                height="40px"
-                                width="40px"
-                            />
+
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                            {/* First row of buttons */}
+                            <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 2 }}>
+                                {playTypes.slice(0, 6).map((type) => (
+                                    <Button
+                                        text={getPlayText(type)}
+                                        icon={playTypeIcons[type]}
+                                        color={getPlayTextColor(type)}
+                                        backgroundColor={getButtonColor(type)}
+                                        height="25"
+                                        width="25"
+                                        key={type}
+                                        onClick={() => handleAddPlay(type)}
+                                        hoverColor={globalTheme.palette.primary.main}
+                                    />
+                                ))}
+                            </Box>
+
+                            {/* Second row of buttons */}
+                            <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 2 }}>
+                                {playTypes.slice(6, 10).map((type) => (
+                                    <Button
+                                        text={getPlayText(type)}
+                                        icon={playTypeIcons[type]}
+                                        color={getPlayTextColor(type)}
+                                        backgroundColor={getButtonColor(type)}
+                                        height="25"
+                                        width="25"
+                                        key={type}
+                                        onClick={() => handleAddPlay(type)}
+                                    />
+                                ))}
+                            </Box>
+
+                            {/* Third row of buttons */}
+                            <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 2 }}>
+                                {playTypes.slice(10).map((type) => (
+                                    <Button
+                                        text={getPlayText(type)}
+                                        icon={playTypeIcons[type]}
+                                        color={getPlayTextColor(type)}
+                                        backgroundColor={getButtonColor(type)}
+                                        height="25"
+                                        width="25"
+                                        key={type}
+                                        onClick={() => handleAddPlay(type)}
+                                        hoverColor={globalTheme.palette.primary.main}
+                                    />
+                                ))}
+                            </Box>
                         </Box>
                     </Box>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
-                            {playTypes.slice(0, 6).map((type) => (
-                                <Button
-                                    text={getPlayText(type)}
-                                    icon={playTypeIcons[type]}
-                                    color={getPlayTextColor(type)}
-                                    backgroundColor={getButtonColor(type)}
-                                    height="25"
-                                    width="25"
-                                    key={type}
-                                    onClick={() => handleAddPlay(type)}
-                                    hoverColor={globalTheme.palette.primary.main}
-                                />
-                            ))}
-                        </Box>
-                        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
-                            {playTypes.slice(6, 10).map((type) => (
-                                <Button
-                                    text={getPlayText(type)}
-                                    icon={playTypeIcons[type]}
-                                    color={getPlayTextColor(type)}
-                                    backgroundColor={getButtonColor(type)}
-                                    height="25"
-                                    width="25"
-                                    key={type}
-                                    onClick={() => handleAddPlay(type)}
-                                />
-                            ))}
-                        </Box>
-                        <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
-                            {playTypes.slice(10).map((type) => (
-                                <Button
-                                    text={getPlayText(type)}
-                                    icon={playTypeIcons[type]}
-                                    color={getPlayTextColor(type)}
-                                    backgroundColor={getButtonColor(type)}
-                                    height="25"
-                                    width="25"
-                                    key={type}
-                                    onClick={() => handleAddPlay(type)}
-                                    hoverColor={globalTheme.palette.primary.main}
-                                />
-                            ))}
-                        </Box>
-                    </Box>
+
                 </Box>
             </Box>
             <Dialog open={openDialog} onClose={handleDialogClose} sx={{

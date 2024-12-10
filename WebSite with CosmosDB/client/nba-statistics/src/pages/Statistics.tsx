@@ -396,7 +396,6 @@ const Statistics: React.FC = () => {
               {isMobile ? 'Fill the filtering fields to the top' : 'Fill the filtering fields to the left'}
             </Typography>
           </Box>
-
         )}
       </Box>
     </Box >
