@@ -4,6 +4,7 @@ import { Game } from '../models/Game';
 import { TeamScalation } from '../models/TeamScalation';
 import { api } from '../utils/Api';
 import { ParticipatingPlayer } from '../models/ParticipatingPlayer';
+import { Participation } from '../models/Participation';
 
 interface GamesOfCurrentSeasonState {
     games: Game[];
@@ -16,9 +17,14 @@ interface TeamsOfCurrentSeasonState {
     error: string | null;
 }
 
-interface ParticipatingPlayersOfGameState {
-    participations: ParticipatingPlayer[];
-    currentParticipation: ParticipatingPlayer | null;
+interface PlayersOfGameState {
+    players: ParticipatingPlayer[];
+    currentPlayer: ParticipatingPlayer | null;
+    error: string | null;
+}
+
+interface ParticipationOfGameState {
+    participation: Participation | null;
     error: string | null;
 }
 
@@ -33,9 +39,14 @@ const initialTeamsState: TeamsOfCurrentSeasonState = {
     error: null,
 };
 
-const initialParticiatingPlayersState: ParticipatingPlayersOfGameState = {
-    participations: [],
-    currentParticipation: null,
+const initialPlayersOfGameState: PlayersOfGameState = {
+    players: [],
+    currentPlayer: null,
+    error: null,
+};
+
+const initialParticipationOfGameState: ParticipationOfGameState = {
+    participation: null,
     error: null,
 };
 
@@ -85,20 +96,45 @@ const teamSlice = createSlice({
 
 const playersSlice = createSlice({
     name: 'players',
-    initialState: initialParticiatingPlayersState,
+    initialState: initialPlayersOfGameState,
     reducers: {
-        fetchParticipationsRequest(state) {
+        fetchPlayersRequest(state) {
             state.error = null;
         },
-        fetchParticipationsSuccess(state, action: PayloadAction<ParticipatingPlayer[]>) {
-            state.participations = action.payload;
+        fetchPlayersSuccess(state, action: PayloadAction<ParticipatingPlayer[]>) {
+            state.players = action.payload;
         },
-        fetchParticipationsFailure(state, action: PayloadAction<string>) {
+        fetchPlayersFailure(state, action: PayloadAction<string>) {
             state.error = action.payload;
         },
-        setCurrentParticipation(state, action: PayloadAction<any>) {
-            state.currentParticipation = action.payload;
+        setCurrentPlayerOfGame(state, action: PayloadAction<any>) {
+            state.currentPlayer = action.payload;
         }
+    }
+});
+
+const participationSlice = createSlice({
+    name: 'participation',
+    initialState: initialParticipationOfGameState,
+    reducers: {
+        fetchParticipationRequest(state) {
+            state.error = null;
+        },
+        fetchParticipationSuccess(state, action: PayloadAction<Participation>) {
+            state.participation = action.payload;
+        },
+        fetchParticipationFailure(state, action: PayloadAction<string>) {
+            state.error = action.payload;
+        },
+        addPlayRequest(state) {
+            state.error = null;
+        },
+        addPlaySuccess(state, action: PayloadAction<Participation>) {
+            state.participation = action.payload;
+        },
+        addPlayFailure(state, action: PayloadAction<string>) {
+            state.error = action.payload;
+        },
     }
 });
 
@@ -119,11 +155,20 @@ export const {
 } = teamSlice.actions;
 
 export const {
-    fetchParticipationsRequest,
-    fetchParticipationsSuccess,
-    fetchParticipationsFailure,
-    setCurrentParticipation
+    fetchPlayersRequest,
+    fetchPlayersSuccess,
+    fetchPlayersFailure,
+    setCurrentPlayerOfGame
 } = playersSlice.actions;
+
+export const {
+    fetchParticipationRequest,
+    fetchParticipationSuccess,
+    fetchParticipationFailure,
+    addPlayRequest,
+    addPlaySuccess,
+    addPlayFailure
+} = participationSlice.actions;
 
 export const fetchGames = (): ThunkAction<void, RootState, unknown, Action<string>> => {
     return async (dispatch) => {
@@ -161,18 +206,43 @@ export const fetchTeams = (payload: { seasonId: string }): ThunkAction<void, Roo
     };
 };
 
-export const fetchParticipations = (payload: { gameId: string }): ThunkAction<void, RootState, unknown, Action<string>> => {
+export const fetchPlayers = (payload: { gameId: string }): ThunkAction<void, RootState, unknown, Action<string>> => {
     return async (dispatch) => {
-        dispatch(fetchParticipationsRequest());
+        dispatch(fetchPlayersRequest());
 
         const response = await api.get<ParticipatingPlayer[]>(`/transaction/games/${payload.gameId}/players`);
         if (response.success)
-            dispatch(fetchParticipationsSuccess(response.payLoad));
+            dispatch(fetchPlayersSuccess(response.payLoad));
         else
-            dispatch(fetchParticipationsFailure(response.message));
+            dispatch(fetchPlayersFailure(response.message));
+    };
+};
+
+export const fetchParticipation = (payload: { gameId: string; playerId: string }): ThunkAction<void, RootState, unknown, Action<string>> => {
+    return async (dispatch) => {
+        dispatch(fetchParticipationRequest());
+
+        const response = await api.get<Participation>(`/transaction/games/${payload.gameId}/players/${payload.playerId}/participation`);
+        if (response.success)
+            dispatch(fetchParticipationSuccess(response.payLoad));
+        else
+            dispatch(fetchParticipationFailure(response.message));
+    };
+};
+
+export const addPlay = (payload: { gameId: string; playerId: string; quarter: number; type: string }): ThunkAction<void, RootState, unknown, Action<string>> => {
+    return async (dispatch) => {
+        dispatch(addPlayRequest());
+
+        const response = await api.post(`/transaction/plays`, payload);
+        if (response.success)
+            dispatch(addPlaySuccess(response.payLoad as Participation));
+        else
+            dispatch(addPlayFailure(response.message));
     };
 };
 
 export const gameTransactionReducer = gamesSlice.reducer;
 export const teamTransactionReducer = teamSlice.reducer;
 export const playerTransactionReducer = playersSlice.reducer;
+export const participationTransactionReducer = participationSlice.reducer;

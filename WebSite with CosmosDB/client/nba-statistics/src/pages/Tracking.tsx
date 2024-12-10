@@ -5,13 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import globalTheme from '../styles/GlobalTheme';
 import { AppDispatch, RootState } from '../stores/Store';
 import Button from '../components/Button';
-import { fetchParticipations, fetchTeams, setCurrentGame, setCurrentParticipation } from '../stores/Transaction';
+import { addPlay, fetchParticipation, fetchPlayers, fetchTeams, setCurrentGame, setCurrentPlayerOfGame } from '../stores/Transaction';
 import { useParams } from 'react-router-dom';
 import List from '../components/ItemsList';
 import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
 import { fetchGames } from '../stores/Transaction';
 import { fetchSeasons } from '../stores/Selection';
-import { ParticipatingPlayer } from '../models/ParticipatingPlayer';
 
 const TrackingPage: React.FC = () => {
 
@@ -23,19 +22,66 @@ const TrackingPage: React.FC = () => {
     const seasons = useSelector((state: RootState) => state.seasons.seasons);
     const games = useSelector((state: RootState) => state.transactionGames.games);
     const teams = useSelector((state: RootState) => state.transactionTeams.teams);
-    const participations = useSelector((state: RootState) => state.transactionPlayers.participations);
+    const playersParticipating = useSelector((state: RootState) => state.transactionPlayers.players);
+    const participation = useSelector((state: RootState) => state.transactionParticipation.participation);
 
-    const currentParticipation = useSelector((state: RootState) => state.transactionPlayers.currentParticipation);
+    const currentParticipation = useSelector((state: RootState) => state.transactionPlayers.currentPlayer);
     const currentGame = useSelector((state: RootState) => state.transactionGames.currentGame);
 
     const [playerName, setPlayerName] = useState<string>('');
+    const [quarter, setQuarter] = useState(1);
+
+    function handleEditPlay(): void {
+        throw new Error('Function not implemented.');
+    }
+
+    const handleIncreaseQuarter = () => {
+        setQuarter(prevQuarter => prevQuarter + 1);
+    };
 
     const isMobile = useMediaQuery(globalTheme.breakpoints.down('sm'));
+
+    const handleAddPlay = (type: string) => {
+        if (!gameId || !playerId) return;
+
+        const payload = {
+            gameId,
+            playerId,
+            quarter: quarter,
+            type,
+        };
+
+        dispatch(addPlay(payload));
+
+        setTimeout(() => {
+            dispatch(fetchPlayers({ gameId }));
+        }, 500);
+    };
+
+    const playTypes = [
+        'FreeThrowHit',
+        'TwoPointerHit',
+        'ThreePointerHit',
+        'FreeThrowMiss',
+        'TwoPointerMiss',
+        'ThreePointerMiss',
+        'Assist',
+        'Rebound',
+        'Turnover',
+        'Block',
+        'Foul',
+    ];
 
     useEffect(() => {
         dispatch(fetchSeasons());
         dispatch(fetchGames());
     }, [dispatch, gameId]);
+
+    useEffect(() => {
+        if (seasons.length > 0) {
+            dispatch(fetchTeams({ seasonId: seasons[seasons.length - 1].id }));
+        }
+    }, [dispatch, seasons]);
 
     useEffect(() => {
         if (games && gameId) {
@@ -44,24 +90,18 @@ const TrackingPage: React.FC = () => {
     }, [dispatch, games, gameId]);
 
     useEffect(() => {
-        dispatch(fetchParticipations({ gameId: gameId ?? "" }));
+        dispatch(fetchPlayers({ gameId: gameId ?? "" }));
     }, [dispatch, gameId]);
 
     useEffect(() => {
-        if (participations)
-            dispatch(setCurrentParticipation(participations.find(p => p.playerId === playerId)));
-    }, [dispatch, participations, playerId]);
+        if (playersParticipating)
+            dispatch(setCurrentPlayerOfGame(playersParticipating.find(p => p.playerId === playerId)));
+    }, [dispatch, playersParticipating, playerId]);
 
     useEffect(() => {
-
-        dispatch(setCurrentParticipation(participations.find(p => p.playerId === playerId)));
-    }, [dispatch, currentParticipation, participations, playerId]);
-
-    useEffect(() => {
-        if (seasons.length > 0) {
-            dispatch(fetchTeams({ seasonId: seasons[seasons.length - 1].id }));
-        }
-    }, [dispatch, seasons]);
+        if (gameId && playerId)
+            dispatch(fetchParticipation({ gameId: gameId, playerId: playerId }));
+    }, [dispatch, playerId, gameId]);
 
     useEffect(() => {
         if (currentGame && teams.length > 0) {
@@ -80,29 +120,10 @@ const TrackingPage: React.FC = () => {
         }
     }, [teams, currentGame, playerId]);
 
-
-
-    const formatPlayTime = (timeString: any) => {
-        const [hours, minutes, seconds] = timeString.split(':');
-        const [secs, milliseconds] = seconds.split('.');
-
-        const time = new Date();
-        time.setHours(parseInt(hours, 10));
-        time.setMinutes(parseInt(minutes, 10));
-        time.setSeconds(parseInt(secs, 10));
-        time.setMilliseconds(parseInt(milliseconds.slice(0, 3), 10));
-
-        return time.toLocaleString();
-    };
-
     useEffect(() => {
         console.log('Participation:', currentParticipation?.playerName);
         console.log('Plays:', currentParticipation?.plays || '');
     }, [dispatch, currentParticipation]);
-
-    function handlePlay(): void {
-        throw new Error('Function not implemented.');
-    }
 
     return (
         <Box sx={{
@@ -191,12 +212,12 @@ const TrackingPage: React.FC = () => {
                 overflowY: 'auto',
             }}>
                 <List
-                    items={currentParticipation?.plays || []}
+                    items={participation?.plays || []}
                     label1="Last Plays"
                     handleItemClick={(play) => console.log(play)}
                     height="320px"
                     renderItem={(play) =>
-                        currentParticipation?.plays?.length ? (
+                        participation?.plays?.length ? (
                             <>
                                 <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2 }}>
                                     Type: {play.type}
@@ -205,12 +226,12 @@ const TrackingPage: React.FC = () => {
                                     Quarter: {play.quarter}
                                 </Typography>
                                 <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2 }}>
-                                    {formatPlayTime(play.at)}
+                                    {play.at}
                                 </Typography>
                                 <Button
                                     text=""
                                     icon={<ModeEditOutlineIcon />}
-                                    onClick={handlePlay}
+                                    onClick={handleEditPlay}
                                     color="primary"
                                     backgroundColor="secondary"
                                     height="25"
@@ -233,6 +254,47 @@ const TrackingPage: React.FC = () => {
                         )
                     }
                 />
+                <Typography>Quarter: {quarter}</Typography>
+
+                <Button
+                    text="+"
+                    icon=""
+                    onClick={handleIncreaseQuarter}
+                    color="primary"
+                    backgroundColor="secondary"
+                    height="25"
+                    width="25"
+                />
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 2,
+                        padding: 2,
+                    }}
+                >
+                    <Divider sx={{ marginY: 2 }} />
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            gap: 2,
+                        }}
+                    >
+                        {playTypes.map((type) => (
+                            <Button
+                                text={type}
+                                icon={""}
+                                color="primary"
+                                backgroundColor="secondary"
+                                height="25"
+                                width="25"
+                                key={type}
+                                onClick={() => handleAddPlay(type)}
+                            />
+                        ))}
+                    </Box>
+                </Box>
             </Box>
         </Box>
     );

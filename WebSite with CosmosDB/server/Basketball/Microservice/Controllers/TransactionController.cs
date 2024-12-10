@@ -70,7 +70,7 @@ namespace NBA.Controllers
         }
 
         [HttpGet("games/{gameId}/players/{playerId}/participation")]
-        [ProducesResponseType(typeof(BasketballResponse<Participation>), 200)]
+        [ProducesResponseType(typeof(BasketballResponse<ParticipationVM>), 200)]
         public IActionResult GetParticipation(string gameId, string playerId)
         {
             var participationResult = TransactionService.GetParticipation(gameId, playerId);
@@ -79,7 +79,7 @@ namespace NBA.Controllers
         }
 
         [HttpPost("plays")]
-        [ProducesResponseType(typeof(BasketballResponse<Participation>), 200)]
+        [ProducesResponseType(typeof(BasketballResponse<ParticipationVM>), 200)]
         public async Task<IActionResult> AddPlayAsync([FromBody] AddPlayVM request)
         {
             if (IsInvalid(request))
@@ -93,7 +93,7 @@ namespace NBA.Controllers
         }
 
         [HttpDelete("plays/participation/{participationId}")]
-        [ProducesResponseType(typeof(BasketballResponse<Participation>), 200)]
+        [ProducesResponseType(typeof(BasketballResponse<ParticipationVM>), 200)]
         public async Task<IActionResult> DeletePlayAsync(string participationId, TimeSpan at)
         {
             var playResult = await TransactionService.DeletePlayAsync(participationId, at, PLAYS_TO_TAKE);

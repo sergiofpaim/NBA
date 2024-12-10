@@ -1,6 +1,7 @@
 ﻿using NBA.Infrastructure;
 using NBA.Models;
 using NBA.Services;
+using NBA.ViewModels;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
@@ -120,7 +121,7 @@ public class AddPlayCommand : NBACommand<AddPlayCommand.PlayParms>
             AnsiConsole.MarkupLine($"Game Id: {gameId}\nCurrent Time: {DateTime.UtcNow}\nQuarter: {quarter}\nPlayer: {result.PayLoad.Name}");
     }
 
-    private static void ShowLastPlays(Participation participation, int quarter)
+    private static void ShowLastPlays(ParticipationVM participation, int quarter)
     {
         var plays = participation.Plays.Where(p => p.Quarter == quarter)
                                        .ToList();

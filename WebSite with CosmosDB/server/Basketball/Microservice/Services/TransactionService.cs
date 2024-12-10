@@ -30,19 +30,19 @@ namespace NBA.Services
             return Success(game, $"Game added to the database with Id: {game.Id}");
         }
 
-        public static async Task<BasketballResponse<Participation>> AddPlayAsync(string playerId, string gameId, int quarter, PlayType type, int playsToTake)
+        public static async Task<BasketballResponse<ParticipationVM>> AddPlayAsync(string playerId, string gameId, int quarter, PlayType type, int playsToTake)
         {
             var game = Basketball.Repo.GetById<Game>(gameId);
             if (game is null)
-                return NotFound<Participation>("Game not found.");
+                return NotFound<ParticipationVM>("Game not found.");
 
             var isHomePlayer = IsPartOfHomeTeam(game, playerId);
             if (isHomePlayer is null)
-                return NotFound<Participation>("Player does not participate in the game.");
+                return NotFound<ParticipationVM>("Player does not participate in the game.");
 
             var player = Basketball.Repo.GetById<Player>(playerId);
             if (player is null)
-                return NotFound<Participation>("Player not found.");
+                return NotFound<ParticipationVM>("Player not found.");
 
             var participation = Basketball.Repo.Get<Participation>(p => p.GameId == game.Id && p.PlayerId == playerId).FirstOrDefault();
 
@@ -75,23 +75,23 @@ namespace NBA.Services
             participation.TrimPlays(playsToTake);
 
             if (saved is null)
-                return Error<Participation>("Failed to add the play to the database.");
+                return Error<ParticipationVM>("Failed to add the play to the database.");
 
             else
-                return Success(participation, "Play added to the database.");
+                return Success(ParticipationVM.FactorFrom(participation), "Play added to the database.");
         }
 
-        internal static async Task<BasketballResponse<Participation>> DeletePlayAsync(string participationId, TimeSpan at, int playsToTake)
+        internal static async Task<BasketballResponse<ParticipationVM>> DeletePlayAsync(string participationId, TimeSpan at, int playsToTake)
         {
             var toUpdate = Basketball.Repo.GetById<Participation>(participationId);
 
             if (toUpdate is null)
-                return NotFound<Participation>("Participation not found.");
+                return NotFound<ParticipationVM>("Participation not found.");
 
             var toRemove = toUpdate.Plays.FirstOrDefault(p => p.At == at);
 
             if (toRemove is null)
-                return NotFound<Participation>("Play not found.");
+                return NotFound<ParticipationVM>("Play not found.");
 
             toUpdate.Plays.Remove(toRemove);
 
@@ -100,9 +100,9 @@ namespace NBA.Services
             saved.TrimPlays(playsToTake);
 
             if (saved is null)
-                return Error<Participation>("Failed to remove the play from the database.");
+                return Error<ParticipationVM>("Failed to remove the play from the database.");
             else
-                return Success(saved, "Play removed from the database.");
+                return Success(ParticipationVM.FactorFrom(saved), "Play removed from the database.");
         }
 
         internal static BasketballResponse<Participation> GetParticipation(string gameId, string playerId)

@@ -6,10 +6,10 @@ import globalTheme from '../styles/GlobalTheme';
 import { AppDispatch, RootState } from '../stores/Store';
 import List from '../components/ItemsList';
 import Button from '../components/Button';
-import { fetchGames, fetchParticipations, fetchTeams, setCurrentGame } from '../stores/Transaction';
+import { fetchGames, fetchPlayers, fetchTeams, setCurrentGame } from '../stores/Transaction';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ParticipatingPlayer } from '../models/ParticipatingPlayer';
-import { setCurrentParticipation } from '../stores/Transaction';
+import { setCurrentPlayerOfGame } from '../stores/Transaction';
 import { PlayerSelection } from '../models/PlayerSelection';
 import { fetchSeasons } from '../stores/Selection';
 
@@ -24,7 +24,7 @@ const Participations: React.FC = () => {
   const teams = useSelector((state: RootState) => state.transactionTeams.teams);
   const games = useSelector((state: RootState) => state.transactionGames.games);
   const currentGame = useSelector((state: RootState) => state.transactionGames.currentGame);
-  const participations = useSelector((state: RootState) => state.transactionPlayers.participations);
+  const participations = useSelector((state: RootState) => state.transactionPlayers.players);
 
   const isMobile = useMediaQuery(globalTheme.breakpoints.down('sm'));
 
@@ -68,7 +68,7 @@ const Participations: React.FC = () => {
   useEffect(() => {
     dispatch(fetchSeasons());
     dispatch(fetchGames());
-    dispatch(fetchParticipations({ gameId: gameId ?? "" }));
+    dispatch(fetchPlayers({ gameId: gameId ?? "" }));
   }, [dispatch, gameId]);
 
   useEffect(() => {
@@ -104,7 +104,7 @@ const Participations: React.FC = () => {
 
   useEffect(() => {
     if (currentPlayer) {
-      dispatch(setCurrentParticipation(currentPlayer));
+      dispatch(setCurrentPlayerOfGame(currentPlayer));
       GoToTrackingPage();
     }
   }, [GoToTrackingPage, currentPlayer, dispatch]);
