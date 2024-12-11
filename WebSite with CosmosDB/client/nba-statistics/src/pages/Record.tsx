@@ -135,7 +135,7 @@ const Record: React.FC = () => {
 
       <Box sx={{
         width: isMobile ? '100%' : '75%',
-        height: '650px',
+        height: 'calc(100vh - 250px)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'left',

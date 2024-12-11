@@ -137,18 +137,17 @@ const Participations: React.FC = () => {
       }}>
         <Typography gutterBottom sx={{ ...globalTheme.typography.h1 }}>Details</Typography>
       </Box>
-
       <Divider orientation={isMobile ? 'vertical' : 'horizontal'} flexItem sx={{
         marginLeft: isMobile ? 0 : 2,
         marginRight: isMobile ? 0 : 2,
         borderColor: globalTheme.palette.primary.main,
         borderWidth: 2,
-        marginTop: isMobile ? 4 : 0
+        marginTop: isMobile ? 0 : 0
       }} />
 
       <Box sx={{
         width: isMobile ? '100%' : '75%',
-        height: '650px',
+        height: 'calc(100vh - 250px)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'left',

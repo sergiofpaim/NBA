@@ -28,7 +28,7 @@ const HomePage = () => {
         gap={isMobile ? 4 : 5}
         sx={{
           width: '100%',
-          paddingX: isMobile ? 0 : 4,
+          paddingX: isMobile ? 0 : 4
         }}
       >
         <Button

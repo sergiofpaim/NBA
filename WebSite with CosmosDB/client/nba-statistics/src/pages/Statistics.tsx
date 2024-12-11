@@ -148,7 +148,7 @@ const Statistics: React.FC = () => {
         paddingTop: isMobile ? '80px' : '120px',
         paddingBottom: isMobile ? '50px' : '120px',
         overflowY: 'auto',
-        maxHeight: '100vh',
+        maxHeight: '100vh'
       }}
     >
       <Box
@@ -159,7 +159,8 @@ const Statistics: React.FC = () => {
           gap: 2,
           marginTop: isMobile ? 12 : 0,
           paddingRight: isMobile ? 2 : 0,
-          paddingLeft: isMobile ? 2 : 0
+          paddingLeft: isMobile ? 2 : 0,
+          height: 'calc(100vh - 240px)'
         }}
       >
         <Typography gutterBottom sx={{ ...globalTheme.typography.h2 }}>Pick a player</Typography>
@@ -248,7 +249,7 @@ const Statistics: React.FC = () => {
       <Box
         sx={{
           width: isMobile ? '100%' : '75%',
-          height: '650',
+          height: '650px',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'left',
@@ -377,7 +378,7 @@ const Statistics: React.FC = () => {
         ) : (
           <Box
             sx={{
-              height: isMobile ? '100' : '550px',
+              height: isMobile ? '100' : 'calc(100vh - 240px)',
               borderRadius: 1,
               backgroundColor: 'rgba(0, 0, 0, 0.1)',
               justifyContent: 'center',
