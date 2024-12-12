@@ -14,6 +14,7 @@ import GlobalLayout from './styles/GlobalLayout';
 import { setCurrentGame, fetchGames, fetchTeams, fetchPlayers, setCurrentPlayerOfGame, fetchParticipation, setParticipation } from './stores/Transaction';
 import { RootState } from './stores/Store';
 import { useNavigate } from 'react-router-dom';
+import { Game } from './models/Game';
 
 const breadcrumbsMap = {
   '/': [{ title: 'Home', route: '/' }],
@@ -25,43 +26,41 @@ const breadcrumbsMap = {
     { title: 'Home', route: '/' },
     { title: 'Record', route: '/record' },
   ],
-  '/record/gameId/:gameId/participations': [
+  '/record/:gameId/participations': [
     { title: 'Home', route: '/' },
     { title: 'Record', route: '/record' },
-    { title: 'Participations', route: '/record/gameId/:gameId/participations' },
+    { title: 'Participations', route: '/record/:gameId/participations' },
   ],
-  '/record/gameId/:gameId/participations/playerId/:playerId/tracking': [
+  '/record/:gameId/participations/:playerId/tracking': [
     { title: 'Home', route: '/' },
     { title: 'Record', route: '/record' },
-    { title: 'Participations', route: '/record/gameId/:gameId/participations' },
-    { title: 'Tracking', route: '/record/gameId/:gameId/participations/playerId/:playerId/tracking' },
+    { title: 'Participations', route: '/record/:gameId/participations' },
+    { title: 'Tracking', route: '/record/:gameId/participations/:playerId/tracking' },
   ],
 };
 
-const generateDynamicBreadcrumbs = (pathname: string, currentGame: any, currentPlayer: string) => {
-  const gameId = pathname.split('/')[3];
-  const playerId = pathname.split('/')[6];
+const generateDynamicBreadcrumbs = (pathname: string, currentGame: Game | null, playerId: string, playerName: string) => {
 
-  const gameTitle = currentGame
+  const gameTitle = currentGame && currentGame.id
     ? `${currentGame.homeTeamId} vs ${currentGame.visitorTeamId}`
-    : `Game ${gameId}`;
+    : `Game ${currentGame?.id || ""}`;
 
-  const playerName = currentPlayer || `Player ${playerId}`;
+  const playerTitle = playerName || `Player ${playerId}`;
 
-  if (pathname.startsWith('/record/gameId/') && pathname.includes('/participations/playerId/') && pathname.includes('/tracking')) {
+  if (pathname.startsWith('/record/') && pathname.includes('/participations/') && pathname.includes('/tracking')) {
     return [
       { title: 'Home', route: '/' },
       { title: 'Record', route: '/record' },
-      { title: gameTitle, route: `/record/gameId/${gameId}/participations` },
-      { title: playerName, route: `/record/gameId/${gameId}/participations/playerId/${playerId}/tracking` },
+      { title: gameTitle, route: `/record/${currentGame?.id || ""}/participations` },
+      { title: playerTitle, route: `/record/${currentGame?.id || ""}/participations/${playerId}/tracking` },
     ];
   }
 
-  if (pathname.startsWith('/record/gameId/')) {
+  if (pathname.startsWith('/record/')) {
     return [
       { title: 'Home', route: '/' },
       { title: 'Record', route: '/record' },
-      { title: gameTitle, route: `/record/gameId/${gameId}/participations` },
+      { title: gameTitle, route: `/record/${currentGame?.id || ""}/participations` },
     ];
   }
 
@@ -73,8 +72,9 @@ const BreadcrumbsController: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
 
-  const gameId = location.pathname.split('/')[3];
-  const playerId = location.pathname.split('/')[6];
+  const splits = location.pathname.split('/');
+  const gameId = splits[2];
+  const playerId = splits[4];
 
   const games = useSelector((state: RootState) => state.transactionGames.games);
   const teams = useSelector((state: RootState) => state.transactionTeams.teams);
@@ -99,14 +99,14 @@ const BreadcrumbsController: React.FC = () => {
 
   useEffect(() => {
     if (currentGame?.id && currentGame?.id !== prevGameRef.current?.id) {
-      navigate(`/record/gameId/${currentGame.id}/participations`);
+      navigate(`/record/${currentGame.id}/participations`);
       prevGameRef.current = currentGame;
     }
   }, [currentGame, navigate]);
 
   useEffect(() => {
     if (currentPlayer?.playerId && currentPlayer?.playerId !== prevPlayerRef.current) {
-      navigate(`/record/gameId/${currentGame?.id}/participations/playerId/${currentPlayer?.playerId}/tracking`);
+      navigate(`/record/${currentGame?.id}/participations/${currentPlayer?.playerId}/tracking`);
       prevPlayerRef.current = currentPlayer?.playerId;
     }
   }, [currentPlayer, currentGame, navigate]);
@@ -156,10 +156,9 @@ const BreadcrumbsController: React.FC = () => {
   }, [gameId, games, playerId, teams]);
 
   useEffect(() => {
-    if (playerName || !playerId) {
-      const newBreadcrumb = generateDynamicBreadcrumbs(location.pathname, currentGame, playerName);
-      setBreadcrumb(newBreadcrumb);
-    }
+    const newBreadcrumb = generateDynamicBreadcrumbs(location.pathname, currentGame, playerId, playerName);
+    setBreadcrumb(newBreadcrumb);
+
   }, [playerName, location.pathname, currentGame, playerId]);
 
   return (
@@ -168,8 +167,8 @@ const BreadcrumbsController: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/statistics" element={<Statistics />} />
         <Route path="/record" element={<Record />} />
-        <Route path="/record/gameId/:gameId/participations" element={<Participations />} />
-        <Route path="/record/gameId/:gameId/participations/playerId/:playerId/tracking" element={<Tracking />} />
+        <Route path="/record/:gameId/participations" element={<Participations />} />
+        <Route path="/record/:gameId/participations/:playerId/tracking" element={<Tracking />} />
       </Routes>
     </GlobalLayout>
   );

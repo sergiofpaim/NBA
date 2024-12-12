@@ -32,6 +32,9 @@ namespace NBA.Models
             if (HomeTeamId is null)
                 return (false, "homeTeamId cannot be null");
 
+            if (HomeTeamId == VisitorTeamId)
+                return (false, "The teams cannot be the same");
+
             if (HomeTeamName is null)
                 return (false, "homeTeamName cannot be null");
 

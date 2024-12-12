@@ -25,6 +25,9 @@ public class AddGameCommand : NBACommand<AddGameCommand.GameParms>
 
     public override int Execute(CommandContext context, GameParms settings)
     {
+        if (settings.HomeTeamId == settings.VisitorTeamId)
+            return PrintResult("The teams cannot be the same", 1);
+
         var result = TransactionService.AddGameAsync(settings.HomeTeamId, settings.VisitorTeamId, settings.At).Result;
         return PrintResult(result.Message, result.Code);
     }

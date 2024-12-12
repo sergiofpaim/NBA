@@ -17,6 +17,9 @@ namespace NBA.ViewModels
             if (VisitorTeamId is null)
                 return (false, "visitorTeamId cannot be null");
 
+            if (HomeTeamId == VisitorTeamId)
+                return (false, "The teams cannot be the same");
+
             if (At == DateTime.MinValue)
                 return (false, "at cannot be empty");
 
