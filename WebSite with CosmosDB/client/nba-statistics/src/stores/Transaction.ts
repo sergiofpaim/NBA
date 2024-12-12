@@ -72,7 +72,7 @@ const gamesSlice = createSlice({
         addGameFailure(state, action: PayloadAction<string>) {
             state.error = action.payload;
         },
-        setCurrentGame(state, action: PayloadAction<any>) {
+        setCurrentGame(state, action: PayloadAction<Game | null>) {
             state.currentGame = action.payload;
         }
     }
@@ -203,18 +203,20 @@ export const createGame = (payload: { homeTeamId: string; visitorTeamId: string;
         dispatch(fetchGamesRequest());
 
         const response = await api.post(`/transaction/games`, payload);
-        if (response.success)
+        if (response.success) {
             dispatch(addGameSuccess(response.payLoad as Game));
+            dispatch(setCurrentGame(response.payLoad as Game));
+        }
         else
             dispatch(addGameFailure(response.message));
     };
 };
 
-export const fetchTeams = (payload: { seasonId: string }): ThunkAction<void, RootState, unknown, Action<string>> => {
+export const fetchTeams = (): ThunkAction<void, RootState, unknown, Action<string>> => {
     return async (dispatch) => {
         dispatch(fetchTeamsRequest());
 
-        const response = await api.get<TeamScalation[]>(`transaction/seasons/${payload.seasonId}/teams`);
+        const response = await api.get<TeamScalation[]>(`transaction/seasons/last/teams`);
         if (response.success)
             dispatch(fetchTeamsSuccess(response.payLoad));
         else

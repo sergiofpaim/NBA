@@ -39,11 +39,11 @@ namespace NBA.Controllers
             return Result(seasonResult);
         }
         
-        [HttpGet("seasons/{seasonId}/teams")]
+        [HttpGet("seasons/last/teams")]
         [ProducesResponseType(typeof(BasketballResponse<List<TeamScalationVM>>), 200)]
-        public IActionResult GetSeasonTeams(string seasonId)
+        public IActionResult GetLastSeasonTeams()
         {
-            var seasonResult = TransactionService.GetSeasonTeams(seasonId);
+            var seasonResult = TransactionService.GetLastSeasonTeams();
 
             return Result(seasonResult);
         }

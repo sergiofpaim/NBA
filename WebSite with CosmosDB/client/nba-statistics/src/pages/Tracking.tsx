@@ -1,17 +1,15 @@
 
 import React, { useEffect, useState } from 'react';
-import { Box, Dialog, DialogContent, DialogTitle, Divider, FormControl, InputLabel, Typography, useMediaQuery } from '@mui/material';
+import { Box, Dialog, DialogContent, DialogTitle, Divider, Typography, useMediaQuery } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import globalTheme from '../styles/GlobalTheme';
 import { AppDispatch, RootState } from '../stores/Store';
 import Button from '../components/Button';
-import { addPlay, deletePlay, fetchParticipation, fetchPlayers, fetchTeams, setCurrentGame, setCurrentPlayerOfGame, setParticipation } from '../stores/Transaction';
+import { addPlay, deletePlay, fetchPlayers, setParticipation } from '../stores/Transaction';
 import { useParams } from 'react-router-dom';
 import List from '../components/ItemsList';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Tooltip from '@mui/material/Tooltip';
-import { fetchGames } from '../stores/Transaction';
-import { fetchSeasons } from '../stores/Selection';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -21,19 +19,14 @@ import ReplayIcon from '@mui/icons-material/Replay';
 
 
 const TrackingPage: React.FC = () => {
-
     const dispatch: AppDispatch = useDispatch();
 
     const { gameId } = useParams<{ gameId: string }>();
     const { playerId } = useParams<{ playerId: string }>();
 
-    const seasons = useSelector((state: RootState) => state.seasons.seasons);
-    const games = useSelector((state: RootState) => state.transactionGames.games);
     const teams = useSelector((state: RootState) => state.transactionTeams.teams);
-    const playersParticipating = useSelector((state: RootState) => state.transactionPlayers.players);
     const participation = useSelector((state: RootState) => state.transactionParticipation.participation);
 
-    const currentParticipation = useSelector((state: RootState) => state.transactionPlayers.currentPlayer);
     const currentGame = useSelector((state: RootState) => state.transactionGames.currentGame);
 
     const [playerName, setPlayerName] = useState<string>('');
@@ -126,38 +119,9 @@ const TrackingPage: React.FC = () => {
                     ? "#ffc34d"
                     : type;
 
-
     useEffect(() => {
-        dispatch(fetchSeasons());
-        dispatch(fetchGames());
         dispatch(setParticipation(null))
-    }, [dispatch, gameId]);
-
-    useEffect(() => {
-        if (seasons.length > 0) {
-            dispatch(fetchTeams({ seasonId: seasons[seasons.length - 1].id }));
-        }
-    }, [dispatch, seasons]);
-
-    useEffect(() => {
-        if (games && gameId) {
-            dispatch(setCurrentGame(games.find(game => game.id === gameId)));
-        }
-    }, [dispatch, games, gameId]);
-
-    useEffect(() => {
-        dispatch(fetchPlayers({ gameId: gameId ?? "" }));
-    }, [dispatch, gameId]);
-
-    useEffect(() => {
-        if (playersParticipating)
-            dispatch(setCurrentPlayerOfGame(playersParticipating.find(p => p.playerId === playerId)));
-    }, [dispatch, playersParticipating, playerId]);
-
-    useEffect(() => {
-        if (gameId && playerId)
-            dispatch(fetchParticipation({ gameId: gameId, playerId: playerId }));
-    }, [dispatch, playerId, gameId]);
+    }, [dispatch]);
 
     useEffect(() => {
         if (currentGame && teams.length > 0) {
@@ -175,11 +139,6 @@ const TrackingPage: React.FC = () => {
             }
         }
     }, [teams, currentGame, playerId]);
-
-    useEffect(() => {
-        console.log('Participation:', currentParticipation?.playerName);
-        console.log('Plays:', currentParticipation?.plays || '');
-    }, [dispatch, currentParticipation]);
 
     useEffect(() => {
         document.body.style.overflow = "hidden";

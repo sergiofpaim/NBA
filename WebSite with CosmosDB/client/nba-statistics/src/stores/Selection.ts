@@ -52,19 +52,19 @@ const seasonsSlice = createSlice({
 });
 
 const gamesSlice = createSlice({
-  name: 'games',
+  name: 'selectionGames',
   initialState: initialGamesState,
   reducers: {
-    fetchGamesRequest(state) {
+    fetchSelectionGamesRequest(state) {
       state.error = null;
     },
-    fetchGamesSuccess(state, action: PayloadAction<Game[]>) {
+    fetchSelectionGamesSuccess(state, action: PayloadAction<Game[]>) {
       state.games = action.payload;
     },
-    fetchGamesFailure(state, action: PayloadAction<string>) {
+    fetchSelectionGamesFailure(state, action: PayloadAction<string>) {
       state.error = action.payload;
     },
-    resetGames(state) {
+    resetSelectionGames(state) {
       state.games = [];
     },
   },
@@ -96,10 +96,10 @@ export const {
 } = seasonsSlice.actions;
 
 export const {
-  fetchGamesRequest,
-  fetchGamesSuccess,
-  fetchGamesFailure,
-  resetGames,
+  fetchSelectionGamesRequest,
+  fetchSelectionGamesSuccess,
+  fetchSelectionGamesFailure,
+  resetSelectionGames,
 } = gamesSlice.actions;
 
 export const {
@@ -116,7 +116,7 @@ export const fetchSeasons = (): ThunkAction<void, RootState, unknown, Action<str
     const response = await api.get<Season[]>('/transaction/seasons');
     if (response.success) {
       dispatch(fetchSeasonsSuccess(response.payLoad));
-      dispatch(resetGames());
+      dispatch(resetSelectionGames());
       dispatch(resetPlayers());
     }
     else
@@ -124,17 +124,17 @@ export const fetchSeasons = (): ThunkAction<void, RootState, unknown, Action<str
   };
 };
 
-export const fetchGames = (payload: { seasonId: string }): ThunkAction<void, RootState, unknown, Action<string>> => {
+export const fetchSelectionGames = (payload: { seasonId: string }): ThunkAction<void, RootState, unknown, Action<string>> => {
   return async (dispatch) => {
-    dispatch(fetchGamesRequest());
+    dispatch(fetchSelectionGamesRequest());
 
     const response = await api.get<Game[]>(`/transaction/seasons/${payload.seasonId}/games`);
     if (response.success) {
-      dispatch(fetchGamesSuccess(response.payLoad));
+      dispatch(fetchSelectionGamesSuccess(response.payLoad));
       dispatch(resetPlayers());
     }
     else
-      dispatch(fetchGamesFailure(response.message));
+      dispatch(fetchSelectionGamesFailure(response.message));
   };
 };
 

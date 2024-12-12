@@ -8,7 +8,7 @@ import globalTheme from '../styles/GlobalTheme';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { RootState, AppDispatch } from '../stores/Store';
-import { fetchSeasons, fetchGames, fetchPlayers } from '../stores/Selection';
+import { fetchSeasons, fetchSelectionGames, fetchPlayers } from '../stores/Selection';
 import { fetchStatistics, resetStatistics } from '../stores/Statistics';
 import { Season } from '../models/Season';
 import { Game } from '../models/Game';
@@ -26,13 +26,7 @@ const Statistics: React.FC = () => {
 
   const selectStatisticsData = createSelector(
     [selectSeasons, selectGames, selectPlayers, selectStatistics, selectError],
-    (seasons, games, players, statistics, error) => ({
-      seasons,
-      games,
-      players,
-      statistics,
-      error
-    })
+    (seasons, games, players, statistics, error) => ({ seasons, games, players, statistics, error })
   );
 
   const { seasons, games, players, statistics } = useSelector((state: RootState) => selectStatisticsData(state));
@@ -104,7 +98,7 @@ const Statistics: React.FC = () => {
 
   useEffect(() => {
     if (selectedSeason) {
-      dispatch(fetchGames({ seasonId: selectedSeason.id }));
+      dispatch(fetchSelectionGames({ seasonId: selectedSeason.id }));
     }
   }, [dispatch, selectedSeason]);
 

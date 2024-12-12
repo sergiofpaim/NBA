@@ -162,11 +162,6 @@ namespace NBA.Services
             var games = Basketball.Repo.Get<Game>(g => g.SeasonId == seasonId);
             return Success(games.OrderByDescending(g => g.At).Select(GameVM.FactorFrom).ToList());
         }
-        internal static BasketballResponse<List<TeamScalationVM>> GetSeasonTeams(string seasonId)
-        {
-            var season = Basketball.Repo.GetById<Season>(seasonId);
-            return Success(season.Teams.Select(TeamScalationVM.FactorFrom).ToList());
-        }
 
         internal static BasketballResponse<List<GameVM>> GetLastSeasonGames()
         {
@@ -178,6 +173,18 @@ namespace NBA.Services
         {
             var participations = Basketball.Repo.Get<Participation>(p => p.GameId == gameId);
             return Success(participations.OrderBy(p => p.PlayerName).Select(ParticipatingPlayerVM.FactorFrom).ToList());
+        }
+
+        internal static BasketballResponse<List<TeamScalationVM>> GetSeasonTeams(string seasonId)
+        {
+            var season = Basketball.Repo.GetById<Season>(seasonId);
+            return Success(season.Teams.Select(TeamScalationVM.FactorFrom).ToList());
+        }
+
+        internal static BasketballResponse<List<TeamScalationVM>> GetLastSeasonTeams()
+        {
+            var season = Basketball.Repo.Get<Season>(season => true, season => season.Id, true, 1).FirstOrDefault();
+            return GetSeasonTeams(season.Id);
         }
     }
 }

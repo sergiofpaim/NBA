@@ -6,12 +6,10 @@ import globalTheme from '../styles/GlobalTheme';
 import { AppDispatch, RootState } from '../stores/Store';
 import List from '../components/ItemsList';
 import Button from '../components/Button';
-import { fetchGames, fetchPlayers, fetchTeams, setCurrentGame } from '../stores/Transaction';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ParticipatingPlayer } from '../models/ParticipatingPlayer';
 import { setCurrentPlayerOfGame } from '../stores/Transaction';
 import { PlayerSelection } from '../models/PlayerSelection';
-import { fetchSeasons } from '../stores/Selection';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 const Participations: React.FC = () => {
@@ -21,9 +19,7 @@ const Participations: React.FC = () => {
 
   const { gameId } = useParams<{ gameId: string }>();
 
-  const seasons = useSelector((state: RootState) => state.seasons.seasons);
   const teams = useSelector((state: RootState) => state.transactionTeams.teams);
-  const games = useSelector((state: RootState) => state.transactionGames.games);
   const currentGame = useSelector((state: RootState) => state.transactionGames.currentGame);
   const participations = useSelector((state: RootState) => state.transactionPlayers.players);
 
@@ -60,30 +56,6 @@ const Participations: React.FC = () => {
     }
   }
 
-  const GoToTrackingPage = useCallback(() => {
-    if (currentPlayer) {
-      navigate(`/record/gameId/${gameId}/participations/playerId/${currentPlayer?.playerId}/tracking`);
-    }
-  }, [currentPlayer, gameId, navigate]);
-
-  useEffect(() => {
-    dispatch(fetchSeasons());
-    dispatch(fetchGames());
-    dispatch(fetchPlayers({ gameId: gameId ?? "" }));
-  }, [dispatch, gameId]);
-
-  useEffect(() => {
-    if (seasons.length > 0) {
-      dispatch(fetchTeams({ seasonId: seasons[seasons.length - 1].id }));
-    }
-  }, [dispatch, seasons]);
-
-  useEffect(() => {
-    if (games && gameId) {
-      dispatch(setCurrentGame(games.find(game => game.id === gameId)));
-    }
-  }, [dispatch, games, gameId]);
-
   useEffect(() => {
     if (currentGame && teams.length > 0) {
       const homeTeam = teams.find(team => team.teamId === currentGame.homeTeamId);
@@ -102,6 +74,12 @@ const Participations: React.FC = () => {
       }
     }
   }, [currentGame, teams, participations]);
+
+  const GoToTrackingPage = useCallback(() => {
+    if (currentPlayer) {
+      navigate(`/record/gameId/${gameId}/participations/playerId/${currentPlayer?.playerId}/tracking`);
+    }
+  }, [currentPlayer, gameId, navigate]);
 
   useEffect(() => {
     if (currentPlayer) {

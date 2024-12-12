@@ -1,30 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Divider, Typography, useMediaQuery, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, FormControl, InputLabel, Select, SelectChangeEvent } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import globalTheme from '../styles/GlobalTheme';
 import { AppDispatch, RootState } from '../stores/Store';
-import { createGame, fetchGames, fetchTeams, setCurrentGame } from '../stores/Transaction';
+import { createGame, setCurrentGame } from '../stores/Transaction';
 import List from '../components/ItemsList';
 import { Game } from '../models/Game';
 import Button from '../components/Button';
 import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Dayjs } from 'dayjs';
-import { fetchSeasons } from '../stores/Selection';
-import { useNavigate } from 'react-router-dom';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { useNavigate } from 'react-router-dom';
 
 const Record: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
 
-  const seasons = useSelector((state: RootState) => state.seasons.seasons);
   const games = useSelector((state: RootState) => state.transactionGames.games);
   const teams = useSelector((state: RootState) => state.transactionTeams.teams);
 
   const isMobile = useMediaQuery(globalTheme.breakpoints.down('sm'));
 
   const [openDialog, setOpenDialog] = useState(false);
+
 
   type GameDetails = {
     homeTeamId: string | null;
@@ -42,7 +41,6 @@ const Record: React.FC = () => {
 
   const handleCreateGame = (): void => {
     setOpenDialog(true);
-    dispatch(fetchTeams({ seasonId: seasons[seasons.length - 1].id }));
   };
 
   const handleGameClick = (game: Game) => {
@@ -80,22 +78,16 @@ const Record: React.FC = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (gameDetails.homeTeamId && gameDetails.visitorTeamId && gameDetails.at) {
-      dispatch(createGame({
+      await dispatch(createGame({
         homeTeamId: gameDetails.homeTeamId,
         visitorTeamId: gameDetails.visitorTeamId,
         at: gameDetails.at,
       }));
+      setOpenDialog(false);
     }
-    setOpenDialog(false);
-    navigate(`/record/gameId/${games?.[games.length - 1]?.id}/participations`);
   };
-
-  useEffect(() => {
-    dispatch(fetchSeasons());
-    dispatch(fetchGames());
-  }, [dispatch]);
 
   return (
     <Box sx={{
