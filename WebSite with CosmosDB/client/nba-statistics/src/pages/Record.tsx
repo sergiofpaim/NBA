@@ -22,7 +22,8 @@ const Record: React.FC = () => {
 
   const isMobile = useMediaQuery(globalTheme.breakpoints.down('sm'));
 
-  const [openDialog, setOpenDialog] = useState(false);
+  const [openCreateGameDialog, setOpenCreateGameDialog] = useState(false);
+  const [openMessageDialog, setMessageDialog] = useState(false);
 
 
   type GameDetails = {
@@ -40,16 +41,21 @@ const Record: React.FC = () => {
   const [gameDate, setGameDate] = useState<Dayjs | null>(null);
 
   const handleCreateGame = (): void => {
-    setOpenDialog(true);
+    setOpenCreateGameDialog(true);
   };
 
   const handleGameClick = (game: Game) => {
-    dispatch(setCurrentGame(game));
-    navigate(`/record/${game.id}/participations`);
+    if (new Date(game.at) <= new Date()) {
+      dispatch(setCurrentGame(game));
+      navigate(`/record/${game.id}/participations`);
+    }
+    else
+      setMessageDialog(true);
   };
 
   const handleDialogClose = () => {
-    setOpenDialog(false);
+    setOpenCreateGameDialog(false);
+    setMessageDialog(false);
   };
 
   const handleTeamSelect = (event: SelectChangeEvent<unknown>, teamType: 'home' | 'visitor') => {
@@ -85,7 +91,7 @@ const Record: React.FC = () => {
         visitorTeamId: gameDetails.visitorTeamId,
         at: gameDetails.at,
       }));
-      setOpenDialog(false);
+      setOpenCreateGameDialog(false);
     }
   };
 
@@ -158,7 +164,7 @@ const Record: React.FC = () => {
           </>
         )} label1="Home vs Visitor" label2="At" />
       </Box>
-      <Dialog open={openDialog} onClose={handleDialogClose} sx={{
+      <Dialog open={openCreateGameDialog} onClose={handleDialogClose} sx={{
         '& .MuiDialog-paper': {
           width: '500px', maxWidth: '500px', height: 'auto', maxHeight: '90vh', borderRadius: 2, boxShadow: 3,
           display: 'flex', flexDirection: 'column', backgroundColor: globalTheme.palette.background.default
@@ -223,7 +229,35 @@ const Record: React.FC = () => {
           />
         </DialogActions>
       </Dialog>
-    </Box>
+      <Dialog open={openMessageDialog} onClose={handleDialogClose} sx={{
+        '& .MuiDialog-paper': {
+          width: '500px', maxWidth: '500px', height: 'auto', maxHeight: '90vh', borderRadius: 2, boxShadow: 3,
+          display: 'flex', flexDirection: 'column', backgroundColor: globalTheme.palette.background.default
+        }
+      }}>
+        <DialogTitle sx={{
+          color: globalTheme.palette.primary.main, marginBottom: 0, fontWeight: 600, fontSize: '1.25rem', textAlign: 'center'
+        }}>
+          NEW GAME
+        </DialogTitle>
+        <DialogContent sx={{
+          paddingTop: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <Typography> You are not allowed to track a game that is not happening. </Typography>
+          <Button
+            text="Got it!"
+            textSize='15px'
+            onClick={handleDialogClose}
+            color={globalTheme.palette.primary.main} backgroundColor={globalTheme.palette.secondary.main} width='25' height='40' icon=''
+            sx={{ marginTop: 2 }}
+          />
+        </DialogContent>
+      </Dialog >
+    </Box >
   );
 };
 

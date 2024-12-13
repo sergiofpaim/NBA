@@ -98,7 +98,7 @@ const BreadcrumbsController: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (currentGame?.id && currentGame?.id !== prevGameRef.current?.id) {
+    if (currentGame?.id && currentGame?.id !== prevGameRef.current?.id && (new Date(currentGame.at) <= new Date())) {
       navigate(`/record/${currentGame.id}/participations`);
       prevGameRef.current = currentGame;
     }

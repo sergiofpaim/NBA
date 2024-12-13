@@ -9,6 +9,7 @@ interface ListProps<T> {
     renderItem: (item: T) => React.ReactNode;
     height?: string;
     itemSize?: string;
+    isItemDisabled?: (item: T) => boolean;
 }
 
 const List: React.FC<ListProps<any>> = ({
@@ -18,7 +19,8 @@ const List: React.FC<ListProps<any>> = ({
     label1,
     label2,
     height,
-    itemSize
+    itemSize,
+    isItemDisabled = () => false
 }) => (
     <Box
         sx={{
