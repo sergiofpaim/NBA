@@ -44,7 +44,7 @@ const Button: React.FC<ButtonProps> = ({
         fontSize: textSize as unknown as string, // Ensure valid type
         cursor: 'pointer',
         opacity: disabled ? 0.6 : 1,
-        width: width,
+        minWidth: width,  // Use minWidth instead of width
         height: height,
         '&:hover': {
             color: hoverColor,

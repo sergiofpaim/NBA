@@ -10,6 +10,7 @@ interface ListProps<T> {
     height?: string;
     itemSize?: string;
     isItemDisabled?: (item: T) => boolean;
+    sx?: object; // New sx prop for custom styles
 }
 
 const List: React.FC<ListProps<any>> = ({
@@ -20,7 +21,8 @@ const List: React.FC<ListProps<any>> = ({
     label2,
     height,
     itemSize,
-    isItemDisabled = () => false
+    isItemDisabled = () => false,
+    sx, // Destructure the sx prop
 }) => (
     <Box
         sx={{
@@ -32,6 +34,7 @@ const List: React.FC<ListProps<any>> = ({
             flexDirection: 'column',
             maxHeight: height || '600px',
             overflow: 'hidden',
+            ...sx, // Apply the passed sx styles
         }}
     >
         <Box
@@ -88,6 +91,7 @@ const List: React.FC<ListProps<any>> = ({
                         justifyContent: 'space-between',
                         alignItems: 'center',
                         padding: itemSize || '1rem',
+                        height: itemSize,
                         backgroundColor: 'rgba(0, 0, 0, 0.1)',
                         borderRadius: '4px',
                         cursor: 'pointer',
@@ -98,7 +102,6 @@ const List: React.FC<ListProps<any>> = ({
                         '@media (max-width: 400px)': {
                             flexDirection: 'column',
                             textAlign: 'left',
-                            fontSize: itemSize || '1rem',
                         },
                     }}
                     onClick={() => handleItemClick(item)}

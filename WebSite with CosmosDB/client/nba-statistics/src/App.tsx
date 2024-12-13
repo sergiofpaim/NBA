@@ -79,7 +79,6 @@ const BreadcrumbsController: React.FC = () => {
   const games = useSelector((state: RootState) => state.transactionGames.games);
   const teams = useSelector((state: RootState) => state.transactionTeams.teams);
   const currentGame = useSelector((state: RootState) => state.transactionGames.currentGame);
-  const currentPlayer = useSelector((state: RootState) => state.transactionPlayers.currentPlayer);
 
   const playersParticipating = useSelector((state: RootState) => state.transactionPlayers.players);
 

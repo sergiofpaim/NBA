@@ -238,7 +238,7 @@ const Record: React.FC = () => {
         <DialogTitle sx={{
           color: globalTheme.palette.primary.main, marginBottom: 0, fontWeight: 600, fontSize: '1.25rem', textAlign: 'center'
         }}>
-          NEW GAME
+          THE GAME HAS NOT STARTED YET
         </DialogTitle>
         <DialogContent sx={{
           paddingTop: 2,
@@ -247,7 +247,7 @@ const Record: React.FC = () => {
           alignItems: 'center',
           justifyContent: 'center'
         }}>
-          <Typography> You are not allowed to track a game that is not happening. </Typography>
+          <Typography> You are not allowed to track a game that has not started. </Typography>
           <Button
             text="Got it!"
             textSize='15px'

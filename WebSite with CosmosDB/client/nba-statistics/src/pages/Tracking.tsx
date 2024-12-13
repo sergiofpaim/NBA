@@ -231,15 +231,15 @@ const TrackingPage: React.FC = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 paddingLeft: isMobile ? 0 : 10,
-                gap: 2,
-                paddingTop: isMobile ? 10 : 0
+                paddingTop: isMobile ? 10 : 0,
+                gap: 2
             }}>
                 <List
                     items={participation?.plays || []}
                     label1="Last Plays"
                     handleItemClick={(play) => console.log(play)}
-                    height={isMobile ? '22%' : '320px'}
-                    itemSize={isMobile ? "auto" : "0.1px"}
+                    height={isMobile ? 'auto' : '600px'}
+                    itemSize={isMobile ? "15px" : "20px"}
                     renderItem={(play) =>
                         participation?.plays ? (
                             <>
@@ -253,10 +253,10 @@ const TrackingPage: React.FC = () => {
                                 }}>
                                     <Box sx={{
                                         display: 'flex',
-                                        flexDirection: 'column',
+                                        flexDirection: 'row',
                                         alignItems: 'center',
                                         width: '25%',
-                                        paddingTop: isMobile ? 0 : 2,
+                                        paddingTop: 2,
                                     }}>
                                         <Tooltip
                                             title={(() => {
@@ -277,18 +277,8 @@ const TrackingPage: React.FC = () => {
                                         >
                                             <span>{playTypeIcons[play.type] || <ErrorIcon color="disabled" />}</span>
                                         </Tooltip>
-                                        <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2 }}>
-                                            {(() => {
-                                                if (play.type.includes('Free')) return '1';
-                                                if (play.type.includes('Two')) return '2';
-                                                if (play.type.includes('Three')) return '3';
-                                                if (play.type.includes('Assist')) return 'A';
-                                                if (play.type.includes('Rebound')) return 'R';
-                                                if (play.type.includes('Turnover')) return 'T';
-                                                if (play.type.includes('Block')) return 'B';
-                                                if (play.type.includes('Foul')) return 'F';
-                                                return '';
-                                            })()}
+                                        <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2, marginBottom: 1 }}>
+                                            {getPlayText(play.type)}
                                         </Typography>
                                     </Box>
                                     <Box sx={{
@@ -317,13 +307,13 @@ const TrackingPage: React.FC = () => {
                                         display: 'flex',
                                         flexDirection: 'column',
                                         alignItems: 'flex-end',
-                                        width: '25%',
                                     }}>
                                         <Button
-                                            icon={<DeleteIcon />}
+                                            icon={<DeleteIcon style={{ fontSize: '20px' }} />}
                                             onClick={() => handleDeletePlayDialog(play)}
                                             backgroundColor={globalTheme.palette.secondary.main}
-                                            width="10px"
+                                            sx={{ minWidth: 0.2 }}
+                                            height={isMobile ? "20px" : "35px"}
                                         />
                                     </Box>
                                 </Box>
@@ -344,14 +334,14 @@ const TrackingPage: React.FC = () => {
                         )
                     }
                 />
-                <Box sx={{ backgroundColor: 'rgba(0, 0, 0, 0.1)', padding: 2 }}>
+                <Box sx={{ backgroundColor: 'rgba(0, 0, 0, 0.1)', padding: 1 }}>
                     <Box
                         sx={{
                             display: 'flex',
                             flexDirection: 'row',
                             justifyContent: 'space-between',
                             alignItems: 'center',
-                            marginBottom: 0,
+                            marginBottom: 5,
                         }}
                     >
                         <Box
@@ -360,7 +350,7 @@ const TrackingPage: React.FC = () => {
                                 display: 'flex',
                                 justifyContent: 'center',
                                 alignItems: 'center',
-                                marginBottom: { xs: 1, sm: 0 },
+                                marginBottom: { xs: 0, sm: 0 },
                             }}
                         >
                             <Typography sx={{ fontSize: { xs: '24px', sm: '30px' }, fontWeight: 'bold' }}>Register</Typography>
@@ -394,7 +384,7 @@ const TrackingPage: React.FC = () => {
                                 display: 'grid',
                                 gap: 2,
                                 gridTemplateColumns: {
-                                    xs: 'repeat(3, 1fr)',
+                                    xs: 'repeat(5, 1fr)',
                                     sm: 'repeat(5, 1fr)',
                                     md: 'repeat(6, 1fr)',
                                 },
@@ -406,8 +396,8 @@ const TrackingPage: React.FC = () => {
                                     icon={playTypeIcons[type]}
                                     color={getPlayTextColor(type)}
                                     backgroundColor={globalTheme.palette.background.default}
-                                    height={isMobile ? "45px " : "60px"}
-                                    width={isMobile ? "45px " : "60px"}
+                                    height={isMobile ? "30px " : "60px"}
+                                    width={isMobile ? "30px " : "60px"}
                                     key={type}
                                     onClick={() => handleAddPlay(type)}
                                     hoverColor={globalTheme.palette.primary.main}
