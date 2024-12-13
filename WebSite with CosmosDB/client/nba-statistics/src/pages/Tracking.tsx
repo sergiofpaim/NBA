@@ -16,6 +16,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import BlockIcon from '@mui/icons-material/Block';
 import ErrorIcon from '@mui/icons-material/Error';
 import ReplayIcon from '@mui/icons-material/Replay';
+import { GamePlay } from '../models/GamePlay';
 
 
 const TrackingPage: React.FC = () => {
@@ -31,26 +32,30 @@ const TrackingPage: React.FC = () => {
 
     const [playerName, setPlayerName] = useState<string>('');
     const [quarter, setQuarter] = useState(1);
+    const [currentPlay, setCurrentPlay] = useState<GamePlay | null>(null);
 
-    const [openDialog, setOpenDialog] = useState(false);
-
-    function handleChangeQuarter(): void {
-        setOpenDialog(true);
-    }
+    const [openChangeQuarterDialog, setOpenChangeQuarterDialog] = useState(false);
+    const [openDeletePlayDialog, setOpenDeletePlayDialog] = useState(false);
 
     const handleDialogClose = () => {
-        setOpenDialog(false);
+        setOpenChangeQuarterDialog(false);
+        setOpenDeletePlayDialog(false);
     };
 
+    const handleDeletePlayDialog = (play: GamePlay) => {
+        setCurrentPlay(play);
+        setOpenDeletePlayDialog(true);
+    }
 
-    const handleDeletePlay = (at: Date) => {
-        if (participation && at)
-            dispatch(deletePlay({ participationId: participation?.participationId, at: at }));
+    const handleDeletePlay = () => {
+        if (participation && currentPlay)
+            dispatch(deletePlay({ participationId: participation?.participationId, at: currentPlay.at }));
+        setOpenDeletePlayDialog(false);
     }
 
     const handleIncreaseQuarter = () => {
         setQuarter(prevQuarter => prevQuarter + 1);
-        setOpenDialog(false);
+        setOpenChangeQuarterDialog(false);
     };
 
     const isMobile = useMediaQuery(globalTheme.breakpoints.down('sm'));
@@ -58,12 +63,7 @@ const TrackingPage: React.FC = () => {
     const handleAddPlay = (type: string) => {
         if (!gameId || !playerId) return;
 
-        const payload = {
-            gameId,
-            playerId,
-            quarter: quarter,
-            type,
-        };
+        const payload = { gameId, playerId, quarter: quarter, type };
 
         dispatch(addPlay(payload));
 
@@ -321,7 +321,7 @@ const TrackingPage: React.FC = () => {
                                     }}>
                                         <Button
                                             icon={<DeleteIcon />}
-                                            onClick={() => handleDeletePlay(play.at)}
+                                            onClick={() => handleDeletePlayDialog(play)}
                                             backgroundColor={globalTheme.palette.secondary.main}
                                             width="10px"
                                         />
@@ -381,7 +381,7 @@ const TrackingPage: React.FC = () => {
                             </Typography>
                             <Button
                                 icon={<AddCircleOutlineIcon />}
-                                onClick={handleChangeQuarter}
+                                onClick={() => setOpenChangeQuarterDialog(true)}
                                 backgroundColor={globalTheme.palette.secondary.main}
                                 height="40px"
                                 width="40px"
@@ -417,7 +417,7 @@ const TrackingPage: React.FC = () => {
                     </Box>
                 </Box>
             </Box>
-            <Dialog open={openDialog} onClose={handleDialogClose} sx={{
+            <Dialog open={openChangeQuarterDialog} onClose={handleDialogClose} sx={{
                 '& .MuiDialog-paper': {
                     width: '500px', maxWidth: '500px', height: 'auto', maxHeight: '90vh', borderRadius: 2, boxShadow: 3,
                     display: 'flex', flexDirection: 'column', backgroundColor: globalTheme.palette.background.default
@@ -435,6 +435,27 @@ const TrackingPage: React.FC = () => {
                     <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 10 }}>
                         <Button text="Cancel" textSize="15px" onClick={handleDialogClose} color={globalTheme.palette.secondary.main} backgroundColor={globalTheme.palette.primary.main} height="25" width="40" icon="" />
                         <Button text="Change" textSize="15px" onClick={handleIncreaseQuarter} color={globalTheme.palette.primary.main} backgroundColor={globalTheme.palette.secondary.main} height="25" width="40" icon="" />
+                    </Box>
+                </DialogContent>
+            </Dialog>
+            <Dialog open={openDeletePlayDialog} onClose={handleDialogClose} sx={{
+                '& .MuiDialog-paper': {
+                    width: '500px', maxWidth: '500px', height: 'auto', maxHeight: '90vh', borderRadius: 2, boxShadow: 3,
+                    display: 'flex', flexDirection: 'column', backgroundColor: globalTheme.palette.background.default
+                }
+            }}>
+                <DialogTitle sx={{
+                    color: globalTheme.palette.primary.main, marginBottom: 0, fontWeight: 600, fontSize: '1.25rem', textAlign: 'center'
+                }}>
+                    DELETE PLAY
+                </DialogTitle>
+                <DialogContent sx={{ paddingTop: 2 }}>
+                    <Typography sx={{ textAlign: 'center' }}>
+                        Are you sure you want to delete this play? This action is irreversible.
+                    </ Typography>
+                    <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 10 }}>
+                        <Button text="Cancel" textSize="15px" onClick={handleDialogClose} color={globalTheme.palette.secondary.main} backgroundColor={globalTheme.palette.primary.main} height="25" width="40" icon="" />
+                        <Button text="Delete" textSize="15px" onClick={() => handleDeletePlay()} color={globalTheme.palette.primary.main} backgroundColor={globalTheme.palette.secondary.main} height="25" width="40" icon="" />
                     </Box>
                 </DialogContent>
             </Dialog>

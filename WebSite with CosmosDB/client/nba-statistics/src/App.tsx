@@ -87,7 +87,6 @@ const BreadcrumbsController: React.FC = () => {
   const [breadcrumb, setBreadcrumb] = useState<any[]>([]);
 
   const prevGameRef = useRef<any>();
-  const prevPlayerRef = useRef<string>();
 
   useEffect(() => {
     dispatch(fetchGames());
@@ -98,18 +97,12 @@ const BreadcrumbsController: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (currentGame?.id && currentGame?.id !== prevGameRef.current?.id && (new Date(currentGame.at) <= new Date())) {
+    if (currentGame?.id && currentGame?.id !== prevGameRef.current?.id &&
+      (new Date(currentGame.at) <= new Date()) && !location.pathname.includes("tracking")) {
       navigate(`/record/${currentGame.id}/participations`);
       prevGameRef.current = currentGame;
     }
-  }, [currentGame, navigate]);
-
-  useEffect(() => {
-    if (currentPlayer?.playerId && currentPlayer?.playerId !== prevPlayerRef.current) {
-      navigate(`/record/${currentGame?.id}/participations/${currentPlayer?.playerId}/tracking`);
-      prevPlayerRef.current = currentPlayer?.playerId;
-    }
-  }, [currentPlayer, currentGame, navigate]);
+  }, [currentGame, location.pathname, navigate]);
 
   useEffect(() => {
     if (gameId) {
