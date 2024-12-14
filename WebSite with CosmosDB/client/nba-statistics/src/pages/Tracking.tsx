@@ -239,12 +239,13 @@ const TrackingPage: React.FC = () => {
                     items={participation?.plays || []}
                     label="Last Plays"
                     handleItemClick={(play) => console.log(play)}
-                    height={isMobile ? 'auto' : '600px'}
+                    height={isMobile ? 'auto' : 'calc(100vh - 100px)'}
                     isItemDisabled={() => false}
                     renderItem={(play) => [
                         <TableCell
                             key="Play-Type"
                             sx={{
+                                height: '40px',
                                 borderBottomWidth: "10px",
                                 borderBottomColor: globalTheme.palette.background.default,
                                 display: "flex",
@@ -291,7 +292,8 @@ const TrackingPage: React.FC = () => {
                                 borderBottomColor: globalTheme.palette.background.default,
                                 display: "flex",
                                 justifyContent: "center",
-                                alignItems: "center"
+                                alignItems: "center",
+                                height: '40px'
                             }}
                         >
                             <Typography
@@ -310,7 +312,8 @@ const TrackingPage: React.FC = () => {
                                 borderBottomColor: globalTheme.palette.background.default,
                                 display: "flex",
                                 justifyContent: "center",
-                                alignItems: "center"
+                                alignItems: "center",
+                                height: '40px'
                             }}
                         >
                             <Typography
@@ -325,12 +328,13 @@ const TrackingPage: React.FC = () => {
                         <TableCell
                             key="Play-Quarter"
                             sx={{
-                                marginTop: isMobile ? 0 : 3.5,
+                                marginTop: 0,
                                 borderBottomWidth: "10px",
                                 display: "flex",
                                 justifyContent: "flex-end",
                                 alignItems: "center",
-                                borderBottomColor: globalTheme.palette.background.default
+                                borderBottomColor: globalTheme.palette.background.default,
+                                height: '40px'
                             }}
                         >
                             <Button
@@ -338,21 +342,25 @@ const TrackingPage: React.FC = () => {
                                 onClick={() => handleDeletePlayDialog(play)}
                                 backgroundColor={globalTheme.palette.secondary.main}
                                 sx={{
-                                    minWidth: 0.2
+                                    minWidth: 0.2,
+                                    marginTop: isMobile ? 2 : 0
                                 }}
                                 height={isMobile ? '20px' : '35px'}
                             />
                         </TableCell>
                     ]}
                 />
-                <Box sx={{ backgroundColor: 'rgba(0, 0, 0, 0.1)', padding: 1 }}>
+                <Box sx={{
+                    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                    padding: { xs: 1, sm: 2, md: 1 }
+                }}>
                     <Box
                         sx={{
                             display: 'flex',
                             flexDirection: 'row',
                             justifyContent: 'space-between',
                             alignItems: 'center',
-                            marginBottom: 5,
+                            marginBottom: { xs: 3, sm: 4, md: 1 },
                         }}
                     >
                         <Box
@@ -364,7 +372,14 @@ const TrackingPage: React.FC = () => {
                                 marginBottom: { xs: 0, sm: 0 },
                             }}
                         >
-                            <Typography sx={{ fontSize: { xs: '24px', sm: '30px' }, fontWeight: 'bold' }}>Register</Typography>
+                            <Typography sx={{
+                                fontSize: {
+                                    xs: '0.8rem',
+                                    sm: '1rem',
+                                    md: '1.1rem',
+                                    lg: '1.2rem',
+                                },
+                            }}>Register</Typography>
                         </Box>
                         <Box
                             sx={{
@@ -377,15 +392,13 @@ const TrackingPage: React.FC = () => {
                                 gap: 1,
                             }}
                         >
-                            <Typography sx={{ fontSize: '16px', fontWeight: 'bold' }}>
-                                Quarter: {quarter}
-                            </Typography>
+                            <Typography sx={{ fontSize: '14px', fontWeight: 'bold' }}>Quarter: {quarter}</Typography>
                             <Button
                                 icon={<AddCircleOutlineIcon />}
                                 onClick={() => setOpenChangeQuarterDialog(true)}
                                 backgroundColor={globalTheme.palette.secondary.main}
-                                height="40px"
-                                minWidth="40px"
+                                height="30px"
+                                minWidth="30px"
                             />
                         </Box>
                     </Box>
@@ -393,11 +406,11 @@ const TrackingPage: React.FC = () => {
                         <Box
                             sx={{
                                 display: 'grid',
-                                gap: 2,
+                                gap: 1,
                                 gridTemplateColumns: {
-                                    xs: 'repeat(5, 1fr)',
-                                    sm: 'repeat(5, 1fr)',
-                                    md: 'repeat(6, 1fr)',
+                                    xs: 'repeat(6, 1fr)',
+                                    sm: 'repeat(4, 1fr)',
+                                    md: 'repeat(6, 1fr)'
                                 },
                             }}
                         >
@@ -407,8 +420,18 @@ const TrackingPage: React.FC = () => {
                                     icon={playTypeIcons[type]}
                                     color={getPlayTextColor(type)}
                                     backgroundColor={globalTheme.palette.background.default}
-                                    height={isMobile ? "30px " : "60px"}
-                                    minWidth={isMobile ? "30px " : "60px"}
+                                    sx={{
+                                        height: {
+                                            xs: '20px',  // For extra small screens
+                                            sm: '40px',  // For small screens
+                                            md: '40px',  // For medium screens
+                                        },
+                                        minWidth: {
+                                            xs: '30px',  // For extra small screens
+                                            sm: '40px',  // For small screens
+                                            md: '40px',  // For medium screens
+                                        },
+                                    }}
                                     key={type}
                                     onClick={() => handleAddPlay(type)}
                                     hoverColor={globalTheme.palette.primary.main}
