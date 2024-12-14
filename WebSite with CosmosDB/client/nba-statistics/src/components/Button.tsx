@@ -10,7 +10,7 @@ interface ButtonProps {
     color?: string;
     backgroundColor?: string;
     height?: string;
-    width?: string;
+    minWidth?: string;
     icon?: React.ReactNode;
     disabled?: boolean;
     textSize?: string;
@@ -25,14 +25,13 @@ const Button: React.FC<ButtonProps> = ({
     color = globalTheme.palette.primary.main,
     backgroundColor = globalTheme.palette.secondary.main,
     height = '45px',
-    width = '200px',
+    minWidth: width = '200px',
     icon = '',
     disabled = false,
     textSize = globalTheme.typography.h4,
-    hoverColor = globalTheme.palette.background.default, // Default hover color
-    sx = {}, // Default empty object
+    hoverColor = globalTheme.palette.background.default,
+    sx = {},
 }) => {
-    // Ensure all styles are type-safe for Material-UI's sx
     const buttonStyle: SxProps<Theme> = {
         borderRadius: '12px',
         display: 'flex',
@@ -41,10 +40,10 @@ const Button: React.FC<ButtonProps> = ({
         border: 'none',
         color: color,
         backgroundColor: backgroundColor,
-        fontSize: textSize as unknown as string, // Ensure valid type
+        fontSize: textSize as unknown as string,
         cursor: 'pointer',
         opacity: disabled ? 0.6 : 1,
-        minWidth: width,  // Use minWidth instead of width
+        minWidth: width,
         height: height,
         '&:hover': {
             color: hoverColor,
@@ -59,7 +58,7 @@ const Button: React.FC<ButtonProps> = ({
         <MUIButton
             onClick={onClick}
             className={`btn ${className}`}
-            sx={{ ...buttonStyle, ...sx }} // Merge custom sx styles
+            sx={{ ...buttonStyle, ...sx }}
             disabled={disabled}
             startIcon={text ? icon : undefined}
         >

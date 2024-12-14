@@ -1,16 +1,17 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
-import { Box, Divider, Typography, useMediaQuery, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, FormControl, InputLabel, Select, SelectChangeEvent } from '@mui/material';
+import { Box, Divider, Typography, useMediaQuery, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, FormControl, InputLabel, Select, SelectChangeEvent, TableCell } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import globalTheme from '../styles/GlobalTheme';
 import { AppDispatch, RootState } from '../stores/Store';
-import List from '../components/ItemsList';
+import List from '../components/TableComponent';
 import Button from '../components/Button';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ParticipatingPlayer } from '../models/ParticipatingPlayer';
 import { setCurrentPlayerOfGame } from '../stores/Transaction';
 import { PlayerSelection } from '../models/PlayerSelection';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import TableComponent from '../components/TableComponent';
 
 const Participations: React.FC = () => {
 
@@ -139,22 +140,37 @@ const Participations: React.FC = () => {
           justifyContent: 'flex-end',
           alignItems: 'center',
         }}>
-          <Button icon={<AddCircleOutlineIcon />} text="Create Participation" width='200px' height='45' textSize='15px' onClick={handleCreateParticipation} />
+          <Button icon={<AddCircleOutlineIcon />} text="Create" minWidth='100px' height='45' textSize='15px' onClick={handleCreateParticipation} />
         </Box>
-        <List items={participations} handleItemClick={(participation: ParticipatingPlayer) => handleParticipationClick(participation)} renderItem={(participations: ParticipatingPlayer) => (
-          <>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2 }}>
-                {participations.playerName}
+        <TableComponent
+          items={participations}
+          handleItemClick={(participation: ParticipatingPlayer) => handleParticipationClick(participation)}
+          renderItem={(participation: ParticipatingPlayer) => [
+            <TableCell key="playerName" sx={{
+              borderBottomWidth: "10px",
+              borderBottomColor: globalTheme.palette.background.default,
+              display: "flex",
+              justifyContent: "flex-start",
+              alignItems: "center"
+            }}>
+              <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2, textAlign: "center" }}>
+                {participation.playerName}
               </Typography>
-            </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2 }}>
-                {participations.teamId}
+            </TableCell>,
+            <TableCell key="teamId" sx={{
+              borderBottomWidth: "10px",
+              borderBottomColor: globalTheme.palette.background.default,
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center"
+            }}>
+              <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2, textAlign: "center" }}>
+                {participation.teamId}
               </Typography>
-            </Box>
-          </>
-        )} label1="Participations" />
+            </TableCell>,
+          ]}
+          label="Participations"
+        />
       </Box>
       <Dialog open={openDialog} onClose={handleDialogClose} sx={{
         '& .MuiDialog-paper': {
@@ -190,13 +206,13 @@ const Participations: React.FC = () => {
           </FormControl>
         </DialogContent>
         <DialogActions sx={{ justifyContent: 'flex-end', paddingBottom: 2 }}>
-          <Button text="Cancel" textSize='15px' onClick={handleDialogClose} color={globalTheme.palette.secondary.main} backgroundColor={globalTheme.palette.primary.main} width='25' height='40' icon='' />
+          <Button text="Cancel" textSize='15px' onClick={handleDialogClose} color={globalTheme.palette.secondary.main} backgroundColor={globalTheme.palette.primary.main} minWidth='25' height='40' icon='' />
           <Button
             text="Create"
             textSize='15px'
             onClick={handleSubmit}
             disabled={!selectedPlayer}
-            color={globalTheme.palette.primary.main} backgroundColor={globalTheme.palette.secondary.main} width='25' height='40' icon=''
+            color={globalTheme.palette.primary.main} backgroundColor={globalTheme.palette.secondary.main} minWidth='25' height='40' icon=''
           />
         </DialogActions>
       </Dialog>

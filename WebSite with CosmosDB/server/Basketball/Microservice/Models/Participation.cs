@@ -76,6 +76,8 @@ namespace NBA.Models
         {
             if (Plays.Count > playsToTake)
                 Plays.RemoveRange(playsToTake, Plays.Count - playsToTake);
+
+            Plays = Plays.OrderBy(p => p.At).ToList();
         }
     }
 }

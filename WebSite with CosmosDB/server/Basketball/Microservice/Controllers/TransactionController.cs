@@ -73,7 +73,7 @@ namespace NBA.Controllers
         [ProducesResponseType(typeof(BasketballResponse<ParticipationVM>), 200)]
         public IActionResult GetParticipation(string gameId, string playerId)
         {
-            var participationResult = TransactionService.GetParticipation(gameId, playerId);
+            var participationResult = TransactionService.GetParticipation(gameId, playerId, PLAYS_TO_TAKE);
 
             return Result(participationResult);
         }

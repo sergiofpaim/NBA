@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Divider, Typography, useMediaQuery, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, FormControl, InputLabel, Select, SelectChangeEvent } from '@mui/material';
+import { Box, Divider, Typography, useMediaQuery, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, FormControl, InputLabel, Select, SelectChangeEvent, TableCell } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import globalTheme from '../styles/GlobalTheme';
 import { AppDispatch, RootState } from '../stores/Store';
 import { createGame, setCurrentGame } from '../stores/Transaction';
-import List from '../components/ItemsList';
+import List from '../components/TableComponent';
 import { Game } from '../models/Game';
 import Button from '../components/Button';
 import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
@@ -12,6 +12,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Dayjs } from 'dayjs';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { useNavigate } from 'react-router-dom';
+import TableComponent from '../components/TableComponent';
 
 const Record: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -122,7 +123,6 @@ const Record: React.FC = () => {
       }}>
         <Typography gutterBottom sx={{ ...globalTheme.typography.h1 }}>Last Games</Typography>
       </Box>
-
       <Divider orientation={isMobile ? 'vertical' : 'horizontal'} flexItem sx={{
         marginLeft: isMobile ? 0 : 2,
         marginRight: isMobile ? 0 : 2,
@@ -147,22 +147,43 @@ const Record: React.FC = () => {
           justifyContent: 'flex-end',
           alignItems: 'center',
         }}>
-          <Button icon={<AddCircleOutlineIcon />} text="Create Game" width='200px' height='45' textSize='15px' onClick={handleCreateGame} />
+          <Button icon={<AddCircleOutlineIcon />} text="Create" minWidth='100px' height='45' textSize='15px' onClick={handleCreateGame} />
         </Box>
-        <List items={games} handleItemClick={(game: Game) => handleGameClick(game)} renderItem={(game: Game) => (
-          <>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2 }}>
+        <TableComponent
+          items={games}
+          handleItemClick={(game: Game) => handleGameClick(game)}
+          renderItem={(game: Game) => [
+            <TableCell
+              key="homeVisitor"
+              sx={{
+                borderBottomWidth: "10px",
+                borderBottomColor: globalTheme.palette.background.default,
+                display: "flex",
+                justifyContent: "flex-start",
+                alignItems: "center"
+              }}
+            >
+              <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2, textAlign: "center" }}>
                 {game.homeTeamId} vs {game.visitorTeamId}
               </Typography>
-            </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-              <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2 }}>
+            </TableCell>,
+            <TableCell
+              key="at"
+              sx={{
+                borderBottomWidth: "10px",
+                borderBottomColor: globalTheme.palette.background.default,
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "center"
+              }}
+            >
+              <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2, textAlign: "center" }}>
                 {new Date(game.at).toLocaleString()}
               </Typography>
-            </Box>
-          </>
-        )} label1="Home vs Visitor" label2="At" />
+            </TableCell>,
+          ]}
+          label={'Details'}
+        />
       </Box>
       <Dialog open={openCreateGameDialog} onClose={handleDialogClose} sx={{
         '& .MuiDialog-paper': {
@@ -219,13 +240,13 @@ const Record: React.FC = () => {
           </LocalizationProvider>
         </DialogContent>
         <DialogActions sx={{ justifyContent: 'flex-end', paddingBottom: 2 }}>
-          <Button text="Cancel" textSize='15px' onClick={handleDialogClose} color={globalTheme.palette.secondary.main} backgroundColor={globalTheme.palette.primary.main} width='25' height='40' icon='' />
+          <Button text="Cancel" textSize='15px' onClick={handleDialogClose} color={globalTheme.palette.secondary.main} backgroundColor={globalTheme.palette.primary.main} minWidth='25' height='40' icon='' />
           <Button
             text="Create"
             textSize='15px'
             onClick={handleSubmit}
             disabled={!gameDetails.homeTeamId || !gameDetails.visitorTeamId || !gameDetails.at}
-            color={globalTheme.palette.primary.main} backgroundColor={globalTheme.palette.secondary.main} width='25' height='40' icon=''
+            color={globalTheme.palette.primary.main} backgroundColor={globalTheme.palette.secondary.main} minWidth='25' height='40' icon=''
           />
         </DialogActions>
       </Dialog>
@@ -247,12 +268,12 @@ const Record: React.FC = () => {
           alignItems: 'center',
           justifyContent: 'center'
         }}>
-          <Typography> You are not allowed to track a game that has not started. </Typography>
+          <Typography textAlign="center"> You are not allowed to track a game that has not started. </Typography>
           <Button
-            text="Got it!"
+            text="Ok"
             textSize='15px'
             onClick={handleDialogClose}
-            color={globalTheme.palette.primary.main} backgroundColor={globalTheme.palette.secondary.main} width='25' height='40' icon=''
+            color={globalTheme.palette.primary.main} backgroundColor={globalTheme.palette.secondary.main} minWidth='25' height='40' icon=''
             sx={{ marginTop: 2 }}
           />
         </DialogContent>

@@ -11,6 +11,8 @@ namespace NBA.CLI;
 
 public class ListPlayCommand : NBACommand<ListPlayCommand.GameParms>
 {
+    const int PLAYS_TO_TAKE = 5;
+
     public sealed class GameParms : CommandSettings
     {
         [CommandOption("-g|--game <GAMEID>")]
@@ -26,7 +28,7 @@ public class ListPlayCommand : NBACommand<ListPlayCommand.GameParms>
     }
     public override int Execute(CommandContext context, GameParms settings)
     {
-        var participationResult = TransactionService.GetParticipation(settings.GameId, settings.PlayerId);
+        var participationResult = TransactionService.GetParticipation(settings.GameId, settings.PlayerId, PLAYS_TO_TAKE);
         if (participationResult.Code != 0)
             return PrintResult(participationResult.Message, participationResult.Code);
 

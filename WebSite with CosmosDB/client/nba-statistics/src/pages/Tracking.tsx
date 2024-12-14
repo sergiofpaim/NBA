@@ -1,13 +1,13 @@
 
 import React, { useEffect, useState } from 'react';
-import { Box, Dialog, DialogContent, DialogTitle, Divider, Typography, useMediaQuery } from '@mui/material';
+import { Box, Dialog, DialogContent, DialogTitle, Divider, TableCell, Typography, useMediaQuery } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import globalTheme from '../styles/GlobalTheme';
 import { AppDispatch, RootState } from '../stores/Store';
 import Button from '../components/Button';
 import { addPlay, deletePlay, fetchPlayers, setParticipation } from '../stores/Transaction';
 import { useParams } from 'react-router-dom';
-import List from '../components/ItemsList';
+import List from '../components/TableComponent';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Tooltip from '@mui/material/Tooltip';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -17,6 +17,7 @@ import BlockIcon from '@mui/icons-material/Block';
 import ErrorIcon from '@mui/icons-material/Error';
 import ReplayIcon from '@mui/icons-material/Replay';
 import { GamePlay } from '../models/GamePlay';
+import TableComponent from '../components/TableComponent';
 
 
 const TrackingPage: React.FC = () => {
@@ -94,10 +95,10 @@ const TrackingPage: React.FC = () => {
         TwoPointerMiss: <SportsBasketballIcon sx={{ color: globalTheme.palette.secondary.main }} />,
         ThreePointerMiss: <SportsBasketballIcon sx={{ color: globalTheme.palette.secondary.main }} />,
         Assist: <AddCircleIcon color="primary" />,
-        Rebound: <ReplayIcon color="primary" />,
         Turnover: <ErrorIcon color="primary" />,
         Block: <BlockIcon color="primary" />,
         Foul: <ErrorIcon sx={{ color: globalTheme.palette.secondary.main }} />,
+        Rebound: <ReplayIcon sx={{ color: "#ffc34d" }} />,
     };
 
     const getPlayText = (type: string) =>
@@ -140,13 +141,6 @@ const TrackingPage: React.FC = () => {
         }
     }, [teams, currentGame, playerId]);
 
-    useEffect(() => {
-        document.body.style.overflow = "hidden";
-        return () => {
-            document.body.style.overflow = "";
-        };
-    }, []);
-
     return (
         <Box sx={{
             display: 'flex',
@@ -161,6 +155,7 @@ const TrackingPage: React.FC = () => {
             paddingTop: isMobile ? '80px' : '120px',
             paddingBottom: isMobile ? '50px' : '120px',
             maxHeight: '100vh',
+            overflowY: 'auto'
         }}>
             {!isMobile && (
                 <Box sx={{
@@ -234,105 +229,115 @@ const TrackingPage: React.FC = () => {
                 paddingTop: isMobile ? 10 : 0,
                 gap: 2
             }}>
-                <List
+                <TableComponent
                     items={participation?.plays || []}
-                    label1="Last Plays"
+                    label="Last Plays"
                     handleItemClick={(play) => console.log(play)}
                     height={isMobile ? 'auto' : '600px'}
-                    itemSize={isMobile ? "15px" : "20px"}
-                    renderItem={(play) =>
-                        participation?.plays ? (
-                            <>
-                                <Box sx={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: isMobile ? 0 : 20,
-                                    paddingLeft: 2,
-                                    width: '100%',
-                                    justifyContent: 'space-between',
-                                }}>
-                                    <Box sx={{
-                                        display: 'flex',
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                        width: '25%',
-                                        paddingTop: 2,
-                                    }}>
-                                        <Tooltip
-                                            title={(() => {
-                                                if (play.type.includes('FreeThrowMiss')) return 'Free-Throw Miss';
-                                                if (play.type.includes('TwoPointerMiss')) return 'Two-Pointer Miss';
-                                                if (play.type.includes('ThreePointerMiss')) return 'Three-Pointer Miss';
-                                                if (play.type.includes('FreeThrowHit')) return 'Free-Throw Hit';
-                                                if (play.type.includes('TwoPointerHit')) return 'Two-Pointer Hit';
-                                                if (play.type.includes('ThreePointerHit')) return 'Three-Pointer Hit';
-                                                if (play.type.includes('Assist')) return 'Assist';
-                                                if (play.type.includes('Rebound')) return 'Rebound';
-                                                if (play.type.includes('Turnover')) return 'Turnover';
-                                                if (play.type.includes('Block')) return 'Block';
-                                                if (play.type.includes('Foul')) return 'Foul';
-                                                return 'Unknown Play';
-                                            })()}
-                                            arrow
-                                        >
-                                            <span>{playTypeIcons[play.type] || <ErrorIcon color="disabled" />}</span>
-                                        </Tooltip>
-                                        <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2, marginBottom: 1 }}>
-                                            {getPlayText(play.type)}
-                                        </Typography>
-                                    </Box>
-                                    <Box sx={{
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        alignItems: 'center',
-                                        width: '25%',
-                                    }}>
-                                        <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2 }}>
-                                            Q{play.quarter}
-                                        </Typography>
-                                    </Box>
-
-                                    <Box sx={{
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        alignItems: 'center',
-                                        width: '25%',
-                                    }}>
-                                        <Typography sx={{ fontSize: isMobile ? '14px' : '20px', padding: isMobile ? 1 : 2 }}>
-                                            {play.at.split('.')[0]}
-                                        </Typography>
-                                    </Box>
-
-                                    <Box sx={{
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        alignItems: 'flex-end',
-                                    }}>
-                                        <Button
-                                            icon={<DeleteIcon style={{ fontSize: '20px' }} />}
-                                            onClick={() => handleDeletePlayDialog(play)}
-                                            backgroundColor={globalTheme.palette.secondary.main}
-                                            sx={{ minWidth: 0.2 }}
-                                            height={isMobile ? "20px" : "35px"}
-                                        />
-                                    </Box>
-                                </Box>
-                            </>
-                        ) : (
-                            <Box
+                    isItemDisabled={() => false}
+                    renderItem={(play) => [
+                        <TableCell
+                            key="Play-Type"
+                            sx={{
+                                borderBottomWidth: "10px",
+                                borderBottomColor: globalTheme.palette.background.default,
+                                display: "flex",
+                                justifyContent: "flex-start",
+                                alignItems: "center",
+                                '&:hover': {
+                                    borderBottomColor: globalTheme.palette.background.default
+                                }
+                            }}
+                        >
+                            <Tooltip
+                                title={(() => {
+                                    if (play.type.includes('FreeThrowMiss')) return 'Free-Throw Miss';
+                                    if (play.type.includes('TwoPointerMiss')) return 'Two-Pointer Miss';
+                                    if (play.type.includes('ThreePointerMiss')) return 'Three-Pointer Miss';
+                                    if (play.type.includes('FreeThrowHit')) return 'Free-Throw Hit';
+                                    if (play.type.includes('TwoPointerHit')) return 'Two-Pointer Hit';
+                                    if (play.type.includes('ThreePointerHit')) return 'Three-Pointer Hit';
+                                    if (play.type.includes('Assist')) return 'Assist';
+                                    if (play.type.includes('Rebound')) return 'Rebound';
+                                    if (play.type.includes('Turnover')) return 'Turnover';
+                                    if (play.type.includes('Block')) return 'Block';
+                                    if (play.type.includes('Foul')) return 'Foul';
+                                    return 'Unknown Play';
+                                })()}
+                                arrow
+                            >
+                                <span>{playTypeIcons[play.type] || <ErrorIcon color="disabled" />}</span>
+                            </Tooltip>
+                            <Typography
                                 sx={{
-                                    height: '320px',
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    border: '1px dashed grey',
-                                    backgroundColor: '#f5f5f5',
+                                    fontSize: isMobile ? '14px' : '20px',
+                                    padding: isMobile ? 1 : 2,
+                                    color: getPlayTextColor(play.type)
                                 }}
                             >
-                                <Typography sx={{ color: globalTheme.palette.primary.main }}>No plays available</Typography>
-                            </Box>
-                        )
-                    }
+                                {getPlayText(play.type)}
+                            </Typography>
+                        </TableCell>,
+                        <TableCell
+                            key="Play-Quarter"
+                            sx={{
+                                borderBottomWidth: "10px",
+                                borderBottomColor: globalTheme.palette.background.default,
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center"
+                            }}
+                        >
+                            <Typography
+                                sx={{
+                                    fontSize: isMobile ? '14px' : '20px',
+                                    padding: isMobile ? 1 : 2,
+                                }}
+                            >
+                                Q{play.quarter}
+                            </Typography>
+                        </TableCell>,
+                        <TableCell
+                            key="Play-At"
+                            sx={{
+                                borderBottomWidth: "10px",
+                                borderBottomColor: globalTheme.palette.background.default,
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center"
+                            }}
+                        >
+                            <Typography
+                                sx={{
+                                    fontSize: isMobile ? '14px' : '20px',
+                                    padding: isMobile ? 1 : 2,
+                                }}
+                            >
+                                {play.at.split('.')[0]}
+                            </Typography>
+                        </TableCell>,
+                        <TableCell
+                            key="Play-Quarter"
+                            sx={{
+                                marginTop: isMobile ? 0 : 3.5,
+                                borderBottomWidth: "10px",
+                                display: "flex",
+                                justifyContent: "flex-end",
+                                alignItems: "center",
+                                borderBottomColor: globalTheme.palette.background.default
+                            }}
+                        >
+                            <Button
+                                icon={<DeleteIcon style={{ fontSize: '20px' }} />}
+                                onClick={() => handleDeletePlayDialog(play)}
+                                backgroundColor={globalTheme.palette.secondary.main}
+                                sx={{
+                                    minWidth: 0.2
+                                }}
+                                height={isMobile ? '20px' : '35px'}
+                            />
+                        </TableCell>
+                    ]}
                 />
                 <Box sx={{ backgroundColor: 'rgba(0, 0, 0, 0.1)', padding: 1 }}>
                     <Box
@@ -374,7 +379,7 @@ const TrackingPage: React.FC = () => {
                                 onClick={() => setOpenChangeQuarterDialog(true)}
                                 backgroundColor={globalTheme.palette.secondary.main}
                                 height="40px"
-                                width="40px"
+                                minWidth="40px"
                             />
                         </Box>
                     </Box>
@@ -397,7 +402,7 @@ const TrackingPage: React.FC = () => {
                                     color={getPlayTextColor(type)}
                                     backgroundColor={globalTheme.palette.background.default}
                                     height={isMobile ? "30px " : "60px"}
-                                    width={isMobile ? "30px " : "60px"}
+                                    minWidth={isMobile ? "30px " : "60px"}
                                     key={type}
                                     onClick={() => handleAddPlay(type)}
                                     hoverColor={globalTheme.palette.primary.main}
@@ -423,8 +428,8 @@ const TrackingPage: React.FC = () => {
                         Are you sure you want to change the quarter? This action is irreversible.
                     </ Typography>
                     <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 10 }}>
-                        <Button text="Cancel" textSize="15px" onClick={handleDialogClose} color={globalTheme.palette.secondary.main} backgroundColor={globalTheme.palette.primary.main} height="25" width="40" icon="" />
-                        <Button text="Change" textSize="15px" onClick={handleIncreaseQuarter} color={globalTheme.palette.primary.main} backgroundColor={globalTheme.palette.secondary.main} height="25" width="40" icon="" />
+                        <Button text="Cancel" textSize="15px" onClick={handleDialogClose} color={globalTheme.palette.secondary.main} backgroundColor={globalTheme.palette.primary.main} height="25" minWidth="40" icon="" />
+                        <Button text="Change" textSize="15px" onClick={handleIncreaseQuarter} color={globalTheme.palette.primary.main} backgroundColor={globalTheme.palette.secondary.main} height="25" minWidth="40" icon="" />
                     </Box>
                 </DialogContent>
             </Dialog>
@@ -444,8 +449,8 @@ const TrackingPage: React.FC = () => {
                         Are you sure you want to delete this play? This action is irreversible.
                     </ Typography>
                     <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 10 }}>
-                        <Button text="Cancel" textSize="15px" onClick={handleDialogClose} color={globalTheme.palette.secondary.main} backgroundColor={globalTheme.palette.primary.main} height="25" width="40" icon="" />
-                        <Button text="Delete" textSize="15px" onClick={() => handleDeletePlay()} color={globalTheme.palette.primary.main} backgroundColor={globalTheme.palette.secondary.main} height="25" width="40" icon="" />
+                        <Button text="Cancel" textSize="15px" onClick={handleDialogClose} color={globalTheme.palette.secondary.main} backgroundColor={globalTheme.palette.primary.main} height="25" minWidth="40" icon="" />
+                        <Button text="Delete" textSize="15px" onClick={() => handleDeletePlay()} color={globalTheme.palette.primary.main} backgroundColor={globalTheme.palette.secondary.main} height="25" minWidth="40" icon="" />
                     </Box>
                 </DialogContent>
             </Dialog>
