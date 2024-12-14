@@ -7,7 +7,6 @@ import { AppDispatch, RootState } from '../stores/Store';
 import Button from '../components/Button';
 import { addPlay, deletePlay, fetchPlayers, setParticipation } from '../stores/Transaction';
 import { useParams } from 'react-router-dom';
-import List from '../components/TableComponent';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Tooltip from '@mui/material/Tooltip';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -123,6 +122,13 @@ const TrackingPage: React.FC = () => {
     useEffect(() => {
         dispatch(setParticipation(null))
     }, [dispatch]);
+
+    useEffect(() => {
+        if (participation?.plays && participation.plays.length > 0) {
+            const highestQuarter = Math.max(...participation.plays.map(play => play.quarter));
+            setQuarter(highestQuarter);
+        }
+    }, [participation]);
 
     useEffect(() => {
         if (currentGame && teams.length > 0) {

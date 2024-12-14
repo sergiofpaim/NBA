@@ -4,7 +4,6 @@ import { Box, Divider, Typography, useMediaQuery, Dialog, DialogActions, DialogC
 import { useDispatch, useSelector } from 'react-redux';
 import globalTheme from '../styles/GlobalTheme';
 import { AppDispatch, RootState } from '../stores/Store';
-import List from '../components/TableComponent';
 import Button from '../components/Button';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ParticipatingPlayer } from '../models/ParticipatingPlayer';

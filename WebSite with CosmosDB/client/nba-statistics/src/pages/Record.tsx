@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import globalTheme from '../styles/GlobalTheme';
 import { AppDispatch, RootState } from '../stores/Store';
 import { createGame, setCurrentGame } from '../stores/Transaction';
-import List from '../components/TableComponent';
 import { Game } from '../models/Game';
 import Button from '../components/Button';
 import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
