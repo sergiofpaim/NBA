@@ -422,14 +422,14 @@ const TrackingPage: React.FC = () => {
                                     backgroundColor={globalTheme.palette.background.default}
                                     sx={{
                                         height: {
-                                            xs: '20px',  // For extra small screens
-                                            sm: '40px',  // For small screens
-                                            md: '40px',  // For medium screens
+                                            xs: '20px',
+                                            sm: '40px',
+                                            md: '40px'
                                         },
                                         minWidth: {
-                                            xs: '30px',  // For extra small screens
-                                            sm: '40px',  // For small screens
-                                            md: '40px',  // For medium screens
+                                            xs: '30px',
+                                            sm: '40px',
+                                            md: '40px'
                                         },
                                     }}
                                     key={type}

@@ -14,8 +14,8 @@ interface ButtonProps {
     icon?: React.ReactNode;
     disabled?: boolean;
     textSize?: string;
-    hoverColor?: string; // Optional hover color
-    sx?: SxProps<Theme>; // Add sx prop for custom styles
+    hoverColor?: string;
+    sx?: SxProps<Theme>;
 }
 
 const Button: React.FC<ButtonProps> = ({
