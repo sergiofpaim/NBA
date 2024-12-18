@@ -23,7 +23,7 @@ const breadcrumbsMap = {
     ],
 };
 
-export class BreadcrumbService {
+export class Breadcrumb {
     static generateDynamicBreadcrumbs(
         pathname: string,
         currentGame: Game | null,

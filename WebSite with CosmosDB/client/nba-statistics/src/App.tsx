@@ -4,14 +4,14 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from '@mui/material/styles';
 import store from './stores/Store';
 import globalTheme from './styles/GlobalTheme';
-import BreadcrumbsController from './components/BreadcrumbsController';
+import Breadcrumbs from './components/Breadcrumb';
 
 const App: React.FC = () => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={globalTheme}>
         <Router>
-          <BreadcrumbsController />
+          <Breadcrumbs />
         </Router>
       </ThemeProvider>
     </Provider>

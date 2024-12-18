@@ -11,9 +11,9 @@ import Statistics from '../pages/Statistics';
 import Record from '../pages/Record';
 import Participations from '../pages/Participations';
 import Tracking from '../pages/Tracking';
-import { BreadcrumbService } from '../services/BreadCrumbService';
+import { Breadcrumb } from '../services/Breadcrumb';
 
-const BreadcrumbsController: React.FC = () => {
+const Breadcrumbs: React.FC = () => {
     const location = useLocation();
     const dispatch: AppDispatch = useDispatch();
     const navigate = useNavigate();
@@ -94,7 +94,7 @@ const BreadcrumbsController: React.FC = () => {
     }, [currentGame, location.pathname, navigate]);
 
     useEffect(() => {
-        const newBreadcrumb = BreadcrumbService.generateDynamicBreadcrumbs(location.pathname, currentGame, playerId, playerName);
+        const newBreadcrumb = Breadcrumb.generateDynamicBreadcrumbs(location.pathname, currentGame, playerId, playerName);
         setBreadcrumb(newBreadcrumb);
     }, [playerName, location.pathname, currentGame, playerId]);
 
@@ -111,4 +111,4 @@ const BreadcrumbsController: React.FC = () => {
     );
 };
 
-export default BreadcrumbsController;
+export default Breadcrumbs;
