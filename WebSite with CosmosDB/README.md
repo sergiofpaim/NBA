@@ -30,6 +30,10 @@ The business architecture diagram outlines how the business components are struc
 
 My next goal is to explore how to integrate **Next.js** into the web application.
 
+<img src="resource/Swagger_Screen.png" alt="Swagger Screen" width="600"/>
+
+The backend, besides the CLI exposes, an API with the following endpoints.
+
 ## Learnings
 
 #### **Database Languages and Operations**
