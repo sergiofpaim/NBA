@@ -10,6 +10,14 @@ This project focuses on managing the statistics of an NBA season, addressing two
     
 2. **Reporters**: Querying the statistics to provide live insights about teams, players, and the ongoing game for their audience.
 
+![Statistics Screen](resource/Statistics_Screen.png)
+
+The Statistics Screen on Desktop
+
+![Record Screen](resource/Record_Screen.png)
+
+The Record Screen on Mobile
+
 ### **Technical Domain (Solution)**
 
 To provide an intuitive and seamless experience, a **Graphical User Interface (GUI)** was selected to facilitate data input and querying, supporting real-time game narration.

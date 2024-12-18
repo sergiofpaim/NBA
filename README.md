@@ -10,6 +10,7 @@ This project focuses on managing the statistics of an NBA season, addressing two
     
 2. **Reporters**: Querying the statistics to provide live insights about teams, players, and the ongoing game for their audience.
 
+<<<<<<< HEAD
 ### **Technical Domain (Solution)**
 
 To provide an intuitive and seamless experience, a **Graphical User Interface (GUI)** was selected to facilitate data input and querying, supporting real-time game narration.
@@ -108,3 +109,6 @@ Through the development of my React project, I gained significant knowledge in *
     - **Purpose**: Node.js is the runtime environment for executing JavaScript, and npm is the package manager for managing dependencies in JavaScript projects.
     - **Installation**: Ensure Node.js and npm are installed. Download and install the latest stable version from:
         [Download Node.js](https://nodejs.org/)
+=======
+- **[WebSite and RESTful API with CosmosDB](WebSite%20with%20CosmosDB)**: The goal of this project was to manipulate a NoSQL database, specifically CosmosDB. I created a GUI interface and a RESTful API using the Microsoft Azure Cosmos library. At the end of the backend development, a repository was set up for database manipulation, and all methods were adjusted to work with generics.
+>>>>>>> a9ab9b5d3e2d8aed3cd9da2bf4cffb2e278961ae
