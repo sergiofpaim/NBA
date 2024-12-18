@@ -8,7 +8,7 @@ public class ReseedCommand : NBACommand<EmptyCommandSettings>
     public override int Execute(CommandContext context, EmptyCommandSettings settings)
     {
         PrintResult("Reseed started", 0);
-        var result = NBAService.Reseed();
+        var result = TransactionService.Reseed();
         PrintResult(result.Message, result.Code);
 
         return result.Code;

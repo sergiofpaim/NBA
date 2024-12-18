@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.Cosmos;
 
 namespace NBA.Infrastructure
 {
     public class BasketballController : ControllerBase
     {
+        protected string ValidationError { get; private set; } = null;
+
         protected ObjectResult Result<T>(BasketballResponse<T> response)
         {
             if (response.Code == 0)
@@ -14,9 +15,17 @@ namespace NBA.Infrastructure
                     response.PayLoad
                 });
             else if (response.Code == 128)
-                return NotFound(response.Message);
+                return StatusCode(404, response.Message);
             else
-                return BadRequest(response.Message);
+                return StatusCode(500, response.Message);
+        }
+
+        protected bool IsInvalid(BasketballViewModel request)
+        {
+            var (Success, Message) = request.Validate();
+            ValidationError = Message;
+
+            return !Success;
         }
     }
 }

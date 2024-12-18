@@ -1,6 +1,6 @@
-﻿using NBA.Infrastructure;
-using NBA.Models;
+﻿using NBA.Models;
 using NBA.Services;
+using NBA.ViewModels;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
@@ -103,24 +103,24 @@ public class AddPlayCommand : NBACommand<AddPlayCommand.PlayParms>
                     continue;
             }
 
-            var playResult = NBAService.AddPlayAsync(settings.PlayerId, settings.GameId, settings.Quarter, type, PLAYS_TO_TAKE).Result;
+            var playResult = TransactionService.AddPlayAsync(settings.PlayerId, settings.GameId, settings.Quarter, type, PLAYS_TO_TAKE).Result;
             if (playResult.Code != 0)
                 return PrintResult(playResult.Message, playResult.Code);
 
-            ShowLastPlays(playResult.PayLoad, settings.GameId, settings.PlayerId, settings.Quarter);
+            ShowLastPlays(playResult.PayLoad, settings.Quarter);
         }
     }
 
     private static void ShowData(string gameId, int quarter, string playerId)
     {
-        var result = NBAService.GetPlayer(playerId);
+        var result = TransactionService.GetPlayer(playerId);
         if (result.Code != 0)
             PrintResult(result.Message, result.Code);
         else
-            AnsiConsole.MarkupLine($"Game Id: {gameId}\nCurrent Time: {DateTime.Now}\nQuarter: {quarter}\nPlayer: {result.PayLoad.Name}");
+            AnsiConsole.MarkupLine($"Game Id: {gameId}\nCurrent Time: {DateTime.UtcNow}\nQuarter: {quarter}\nPlayer: {result.PayLoad.Name}");
     }
 
-    private static void ShowLastPlays(Participation participation, string gameId, string playerId, int quarter)
+    private static void ShowLastPlays(ParticipationVM participation, int quarter)
     {
         var plays = participation.Plays.Where(p => p.Quarter == quarter)
                                        .ToList();

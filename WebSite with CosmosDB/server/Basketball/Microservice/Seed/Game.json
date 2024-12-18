@@ -1,6 +1,6 @@
 [
   {
-    "id": "855af8fd",
+    "id": "a2d9d40e",
     "seasonId": "23-24",
     "homeTeamId": "LAL",
     "homeTeamName": "Los Angeles Lakers",
@@ -11,6 +11,121 @@
       "4",
       "5"
     ],
+    "visitorTeamId": "BOS",
+    "visitorTeamName": "Boston Celtics",
+    "visitorPlayerIds": [
+      "11",
+      "12",
+      "13",
+      "14",
+      "15"
+    ],
+    "at": "2024-10-03T19:30:00"
+  },
+  {
+    "id": "f1b8399d",
+    "seasonId": "23-24",
+    "homeTeamId": "LAL",
+    "homeTeamName": "Los Angeles Lakers",
+    "homePlayerIds": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "visitorTeamId": "MIA",
+    "visitorTeamName": "Miami Heat",
+    "visitorPlayerIds": [
+      "16",
+      "17",
+      "18",
+      "19",
+      "20"
+    ],
+    "at": "2024-10-04T20:00:00"
+  },
+  {
+    "id": "9b57eec2",
+    "seasonId": "23-24",
+    "homeTeamId": "GSW",
+    "homeTeamName": "Golden State Warriors",
+    "homePlayerIds": [
+      "6",
+      "7",
+      "8",
+      "9",
+      "10"
+    ],
+    "visitorTeamId": "LAL",
+    "visitorTeamName": "Los Angeles Lakers",
+    "visitorPlayerIds": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "at": "2024-10-06T16:00:00"
+  },
+  {
+    "id": "384ba0fc",
+    "seasonId": "23-24",
+    "homeTeamId": "GSW",
+    "homeTeamName": "Golden State Warriors",
+    "homePlayerIds": [
+      "6",
+      "7",
+      "8",
+      "9",
+      "10"
+    ],
+    "visitorTeamId": "MIA",
+    "visitorTeamName": "Miami Heat",
+    "visitorPlayerIds": [
+      "16",
+      "17",
+      "18",
+      "19",
+      "20"
+    ],
+    "at": "2024-10-08T20:00:00"
+  },
+  {
+    "id": "7b45d9cd",
+    "seasonId": "23-24",
+    "homeTeamId": "BOS",
+    "homeTeamName": "Boston Celtics",
+    "homePlayerIds": [
+      "11",
+      "12",
+      "13",
+      "14",
+      "15"
+    ],
+    "visitorTeamId": "LAL",
+    "visitorTeamName": "Los Angeles Lakers",
+    "visitorPlayerIds": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "at": "2024-10-10T19:00:00"
+  },
+  {
+    "id": "890f13f3",
+    "seasonId": "23-24",
+    "homeTeamId": "BOS",
+    "homeTeamName": "Boston Celtics",
+    "homePlayerIds": [
+      "11",
+      "12",
+      "13",
+      "14",
+      "15"
+    ],
     "visitorTeamId": "GSW",
     "visitorTeamName": "Golden State Warriors",
     "visitorPlayerIds": [
@@ -20,6 +135,144 @@
       "9",
       "10"
     ],
-    "at": "2024-10-02T16:00:00"
+    "at": "2024-10-11T20:00:00"
+  },
+  {
+    "id": "b5d953ab",
+    "seasonId": "23-24",
+    "homeTeamId": "BOS",
+    "homeTeamName": "Boston Celtics",
+    "homePlayerIds": [
+      "11",
+      "12",
+      "13",
+      "14",
+      "15"
+    ],
+    "visitorTeamId": "MIL",
+    "visitorTeamName": "Milwaukee Bucks",
+    "visitorPlayerIds": [
+      "21",
+      "22",
+      "23",
+      "24",
+      "25"
+    ],
+    "at": "2024-10-13T22:30:00"
+  },
+  {
+    "id": "c96ad509",
+    "seasonId": "23-24",
+    "homeTeamId": "MIA",
+    "homeTeamName": "Miami Heat",
+    "homePlayerIds": [
+      "16",
+      "17",
+      "18",
+      "19",
+      "20"
+    ],
+    "visitorTeamId": "LAL",
+    "visitorTeamName": "Los Angeles Lakers",
+    "visitorPlayerIds": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "at": "2024-10-14T16:30:00"
+  },
+  {
+    "id": "073a66f0",
+    "seasonId": "23-24",
+    "homeTeamId": "MIA",
+    "homeTeamName": "Miami Heat",
+    "homePlayerIds": [
+      "16",
+      "17",
+      "18",
+      "19",
+      "20"
+    ],
+    "visitorTeamId": "GSW",
+    "visitorTeamName": "Golden State Warriors",
+    "visitorPlayerIds": [
+      "6",
+      "7",
+      "8",
+      "9",
+      "10"
+    ],
+    "at": "2024-10-15T18:00:00"
+  },
+  {
+    "id": "598b10e4",
+    "seasonId": "23-24",
+    "homeTeamId": "MIA",
+    "homeTeamName": "Miami Heat",
+    "homePlayerIds": [
+      "16",
+      "17",
+      "18",
+      "19",
+      "20"
+    ],
+    "visitorTeamId": "MIL",
+    "visitorTeamName": "Milwaukee Bucks",
+    "visitorPlayerIds": [
+      "21",
+      "22",
+      "23",
+      "24",
+      "25"
+    ],
+    "at": "2024-10-16T20:30:00"
+  },
+  {
+    "id": "e7fefba0",
+    "seasonId": "23-24",
+    "homeTeamId": "MIL",
+    "homeTeamName": "Milwaukee Bucks",
+    "homePlayerIds": [
+      "21",
+      "22",
+      "23",
+      "24",
+      "25"
+    ],
+    "visitorTeamId": "LAL",
+    "visitorTeamName": "Los Angeles Lakers",
+    "visitorPlayerIds": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "at": "2024-10-17T17:00:00"
+  },
+  {
+    "id": "db823a1a",
+    "seasonId": "23-24",
+    "homeTeamId": "MIL",
+    "homeTeamName": "Milwaukee Bucks",
+    "homePlayerIds": [
+      "21",
+      "22",
+      "23",
+      "24",
+      "25"
+    ],
+    "visitorTeamId": "MIA",
+    "visitorTeamName": "Miami Heat",
+    "visitorPlayerIds": [
+      "16",
+      "17",
+      "18",
+      "19",
+      "20"
+    ],
+    "at": "2024-10-19T18:30:00"
   }
 ]

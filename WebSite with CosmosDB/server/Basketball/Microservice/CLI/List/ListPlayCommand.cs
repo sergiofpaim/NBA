@@ -1,5 +1,6 @@
 ﻿using NBA.Models;
 using NBA.Services;
+using NBA.ViewModels;
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
@@ -10,6 +11,8 @@ namespace NBA.CLI;
 
 public class ListPlayCommand : NBACommand<ListPlayCommand.GameParms>
 {
+    const int PLAYS_TO_TAKE = 5;
+
     public sealed class GameParms : CommandSettings
     {
         [CommandOption("-g|--game <GAMEID>")]
@@ -25,23 +28,22 @@ public class ListPlayCommand : NBACommand<ListPlayCommand.GameParms>
     }
     public override int Execute(CommandContext context, GameParms settings)
     {
-        var participationResult = NBAService.GetParticipation(settings.GameId, settings.PlayerId);
+        var participationResult = TransactionService.GetParticipation(settings.GameId, settings.PlayerId, PLAYS_TO_TAKE);
         if (participationResult.Code != 0)
             return PrintResult(participationResult.Message, participationResult.Code);
 
-        var game = NBAService.GetGame(settings.GameId);
+        var game = TransactionService.GetGame(settings.GameId);
 
         return ShowAllPlays(participationResult.PayLoad, game.PayLoad);
     }
 
-    private static int ShowAllPlays(Participation participation, Game game)
+    private static int ShowAllPlays(ParticipationVM participation, Game game)
     {
         Table tableOptions = new()
         {
-            Title = new TableTitle($"\n\n{participation.PlayerName}'s plays in the" +
-                                            $" '{game.HomeTeamName} vs" +
-                                            $" {game.VisitorTeamName}' game" +
-                                            $" on: {game.At}")
+            Title = new TableTitle($"\n\n {game.HomeTeamName} vs" +
+                                   $" {game.VisitorTeamName}' game" +
+                                   $" on: {game.At}")
         };
         tableOptions.AddColumn("Points");
         tableOptions.AddColumn("Type");
