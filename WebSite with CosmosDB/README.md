@@ -7,16 +7,12 @@
 This project focuses on managing the statistics of an NBA season, addressing two core functional requirements (use cases):
 
 1. **Game Analysts**: Registering plays for a given player participating in a game as they occur in real-time.
+
+<img src="resource/Record_Screen.png" alt="Record Screen" width="300"/>
     
 2. **Reporters**: Querying the statistics to provide live insights about teams, players, and the ongoing game for their audience.
 
 ![Statistics Screen](resource/Statistics_Screen.png)
-
-The Statistics Screen on Desktop
-
-![Record Screen](resource/Record_Screen.png)
-
-The Record Screen on Mobile
 
 ### **Technical Domain (Solution)**
 
