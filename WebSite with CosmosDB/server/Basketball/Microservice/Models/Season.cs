@@ -1,5 +1,4 @@
-﻿using Microsoft.Azure.Cosmos.Spatial;
-using NBA.Infrastructure;
+﻿using NBA.Infrastructure;
 
 namespace NBA.Models
 {

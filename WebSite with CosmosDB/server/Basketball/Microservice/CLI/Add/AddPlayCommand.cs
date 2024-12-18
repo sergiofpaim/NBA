@@ -1,5 +1,4 @@
-﻿using NBA.Infrastructure;
-using NBA.Models;
+﻿using NBA.Models;
 using NBA.Services;
 using NBA.ViewModels;
 using Spectre.Console;

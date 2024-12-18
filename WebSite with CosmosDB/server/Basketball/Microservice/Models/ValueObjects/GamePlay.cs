@@ -73,7 +73,7 @@ namespace NBA.Models
                 Quarter = quarter,
                 Type = type.ToString(),
                 Points = points,
-                At = TimeSpan.FromMinutes((DateTime.UtcNow - gameAt).TotalMinutes % 15)
+                At = TimeSpan.FromMinutes((DateTime.UtcNow - gameAt).TotalMinutes % 15) // Calculates the TimeSpan considering non-stopping quarters of 15 minutes
             };
         }
     }

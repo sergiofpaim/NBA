@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import globalTheme from '../styles/GlobalTheme';
 import { AppDispatch, RootState } from '../stores/Store';
 import Button from '../components/Button';
-import { addPlay, deletePlay, fetchPlayers, setParticipation } from '../stores/Transaction';
+import { addPlay, deletePlay, loadPlayers, setParticipation } from '../stores/Transaction';
 import { useParams } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Tooltip from '@mui/material/Tooltip';
@@ -68,7 +68,7 @@ const TrackingPage: React.FC = () => {
         dispatch(addPlay(payload));
 
         setTimeout(() => {
-            dispatch(fetchPlayers({ gameId }));
+            dispatch(loadPlayers({ gameId }));
         }, 500);
     };
 

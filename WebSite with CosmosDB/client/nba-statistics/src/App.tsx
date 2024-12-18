@@ -11,7 +11,7 @@ import Record from './pages/Record';
 import Participations from './pages/Participations';
 import Tracking from './pages/Tracking';
 import GlobalLayout from './styles/GlobalLayout';
-import { setCurrentGame, fetchGames, fetchTeams, fetchPlayers, setCurrentPlayerOfGame, fetchParticipation, setParticipation } from './stores/Transaction';
+import { setCurrentGame, loadGames, loadTeams, loadPlayers, setCurrentPlayerOfGame, fetchParticipation, setParticipation } from './stores/Transaction';
 import { RootState } from './stores/Store';
 import { useNavigate } from 'react-router-dom';
 import { Game } from './models/Game';
@@ -79,7 +79,6 @@ const BreadcrumbsController: React.FC = () => {
   const games = useSelector((state: RootState) => state.transactionGames.games);
   const teams = useSelector((state: RootState) => state.transactionTeams.teams);
   const currentGame = useSelector((state: RootState) => state.transactionGames.currentGame);
-
   const playersParticipating = useSelector((state: RootState) => state.transactionPlayers.players);
 
   const [playerName, setPlayerName] = useState<string>('');
@@ -88,24 +87,17 @@ const BreadcrumbsController: React.FC = () => {
   const prevGameRef = useRef<any>();
 
   useEffect(() => {
-    dispatch(fetchGames());
-    dispatch(fetchTeams());
-    setCurrentGame(null);
-    setCurrentPlayerOfGame(null);
+    dispatch(loadGames());
+    dispatch(loadTeams());
+
+    dispatch(setCurrentGame(null));
+    dispatch(setCurrentPlayerOfGame(null));
     dispatch(setParticipation(null))
   }, [dispatch]);
 
   useEffect(() => {
-    if (currentGame?.id && currentGame?.id !== prevGameRef.current?.id &&
-      (new Date(currentGame.at) <= new Date()) && !location.pathname.includes("tracking")) {
-      navigate(`/record/${currentGame.id}/participations`);
-      prevGameRef.current = currentGame;
-    }
-  }, [currentGame, location.pathname, navigate]);
-
-  useEffect(() => {
     if (gameId) {
-      dispatch(fetchPlayers({ gameId: gameId ?? "" }));
+      dispatch(loadPlayers({ gameId: gameId ?? "" }));
     }
   }, [dispatch, gameId]);
 
@@ -146,6 +138,14 @@ const BreadcrumbsController: React.FC = () => {
       }
     }
   }, [gameId, games, playerId, teams]);
+
+  useEffect(() => {
+    if (currentGame?.id && currentGame?.id !== prevGameRef.current?.id &&
+      (new Date(currentGame.at) <= new Date()) && !location.pathname.includes("tracking")) {
+      navigate(`/record/${currentGame.id}/participations`);
+      prevGameRef.current = currentGame;
+    }
+  }, [currentGame, location.pathname, navigate]);
 
   useEffect(() => {
     const newBreadcrumb = generateDynamicBreadcrumbs(location.pathname, currentGame, playerId, playerName);

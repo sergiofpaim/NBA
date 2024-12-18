@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import { Box, Container, CssBaseline, Toolbar, AppBar, Typography, useMediaQuery, Breadcrumbs, Link } from '@mui/material';
 import { useTheme, Theme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import './GlobalLayout.css'; // Import the CSS for the layout
+import './GlobalLayout.css';
 
 
 interface BreadcrumbItem {

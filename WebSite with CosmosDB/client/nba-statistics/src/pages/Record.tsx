@@ -26,13 +26,13 @@ const Record: React.FC = () => {
   const [openMessageDialog, setMessageDialog] = useState(false);
 
 
-  type GameDetails = {
+  type NewGame = {
     homeTeamId: string | null;
     visitorTeamId: string | null;
     at: Date | null;
   };
 
-  const [gameDetails, setGameDetails] = useState<GameDetails>({
+  const [newGameDetails, setNewGameDetails] = useState<NewGame>({
     homeTeamId: null,
     visitorTeamId: null,
     at: null,
@@ -60,7 +60,7 @@ const Record: React.FC = () => {
 
   const handleTeamSelect = (event: SelectChangeEvent<unknown>, teamType: 'home' | 'visitor') => {
     const { value } = event.target;
-    setGameDetails((prevDetails) => {
+    setNewGameDetails((prevDetails) => {
       const updatedDetails = {
         ...prevDetails,
         [`${teamType}TeamId`]: value as string,
@@ -77,7 +77,7 @@ const Record: React.FC = () => {
   const handleDateSelect = (newDate: Dayjs | null) => {
     if (newDate) {
       setGameDate(newDate);
-      setGameDetails((prevDetails) => ({
+      setNewGameDetails((prevDetails) => ({
         ...prevDetails,
         at: newDate.toDate(),
       }));
@@ -85,11 +85,11 @@ const Record: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    if (gameDetails.homeTeamId && gameDetails.visitorTeamId && gameDetails.at) {
+    if (newGameDetails.homeTeamId && newGameDetails.visitorTeamId && newGameDetails.at) {
       await dispatch(createGame({
-        homeTeamId: gameDetails.homeTeamId,
-        visitorTeamId: gameDetails.visitorTeamId,
-        at: gameDetails.at,
+        homeTeamId: newGameDetails.homeTeamId,
+        visitorTeamId: newGameDetails.visitorTeamId,
+        at: newGameDetails.at,
       }));
       setOpenCreateGameDialog(false);
     }
@@ -200,7 +200,7 @@ const Record: React.FC = () => {
             <InputLabel id="home-team-label" sx={{ color: globalTheme.palette.primary.main }}>
               Home Team
             </InputLabel>
-            <Select labelId="home-team-label" value={gameDetails.homeTeamId} onChange={(e) => handleTeamSelect(e, 'home')} label="Home Team" sx={{
+            <Select labelId="home-team-label" value={newGameDetails.homeTeamId} onChange={(e) => handleTeamSelect(e, 'home')} label="Home Team" sx={{
               color: globalTheme.palette.primary.main, borderColor: globalTheme.palette.secondary.main, height: '56px'
             }}>
               {teams.map((team) => (
@@ -212,7 +212,7 @@ const Record: React.FC = () => {
             <InputLabel id="visitor-team-label" sx={{ color: globalTheme.palette.primary.main }}>
               Visitor Team
             </InputLabel>
-            <Select labelId="visitor-team-label" value={gameDetails.visitorTeamId} onChange={(e) => handleTeamSelect(e, 'visitor')} label="Visitor Team" sx={{
+            <Select labelId="visitor-team-label" value={newGameDetails.visitorTeamId} onChange={(e) => handleTeamSelect(e, 'visitor')} label="Visitor Team" sx={{
               color: globalTheme.palette.primary.main, borderColor: globalTheme.palette.secondary.main, height: '56px'
             }}>
               {teams.map((team) => (
@@ -244,7 +244,7 @@ const Record: React.FC = () => {
             text="Create"
             textSize='15px'
             onClick={handleSubmit}
-            disabled={!gameDetails.homeTeamId || !gameDetails.visitorTeamId || !gameDetails.at}
+            disabled={!newGameDetails.homeTeamId || !newGameDetails.visitorTeamId || !newGameDetails.at}
             color={globalTheme.palette.primary.main} backgroundColor={globalTheme.palette.secondary.main} minWidth='25' height='40' icon=''
           />
         </DialogActions>

@@ -23,7 +23,9 @@ public class StartAPICommand : NBACommand<EmptyCommandSettings>
 
         builder.WebHost.ConfigureKestrel(options =>
         {
-            options.Listen(IPAddress.Parse(firstNetworkIp), 5000); 
+            if (firstNetworkIp is not null)
+                options.Listen(IPAddress.Parse(firstNetworkIp), 5000); 
+
             options.Listen(IPAddress.Loopback, 5000);
         });
 
@@ -58,6 +60,7 @@ public class StartAPICommand : NBACommand<EmptyCommandSettings>
         return 0;
 
     }
+
     string GetFirstNetworkIp()
     {
         var host = Dns.GetHostEntry(Dns.GetHostName());
@@ -68,6 +71,6 @@ public class StartAPICommand : NBACommand<EmptyCommandSettings>
                 return ip.ToString();
             }
         }
-        return "127.0.0.1";
+        return null;
     }
 }

@@ -10,11 +10,13 @@ interface GamesOfCurrentSeasonState {
     games: Game[];
     currentGame: Game | null;
     error: string | null;
+    loaded: boolean;
 }
 
 interface TeamsOfCurrentSeasonState {
     teams: TeamScalation[];
     error: string | null;
+    loaded: boolean;
 }
 
 interface PlayersOfGameState {
@@ -32,11 +34,13 @@ const initialGamesState: GamesOfCurrentSeasonState = {
     games: [],
     currentGame: null,
     error: null,
+    loaded: false
 };
 
 const initialTeamsState: TeamsOfCurrentSeasonState = {
     teams: [],
     error: null,
+    loaded: false
 };
 
 const initialPlayersOfGameState: PlayersOfGameState = {
@@ -59,6 +63,7 @@ const gamesSlice = createSlice({
         },
         fetchGamesSuccess(state, action: PayloadAction<Game[]>) {
             state.games = action.payload;
+            state.loaded = true;
         },
         fetchGamesFailure(state, action: PayloadAction<string>) {
             state.error = action.payload;
@@ -87,6 +92,7 @@ const teamSlice = createSlice({
         },
         fetchTeamsSuccess(state, action: PayloadAction<TeamScalation[]>) {
             state.teams = action.payload;
+            state.loaded = true;
         },
         fetchTeamsFailure(state, action: PayloadAction<string>) {
             state.error = action.payload;
@@ -186,15 +192,19 @@ export const {
     deletePlayFailure
 } = participationSlice.actions;
 
-export const fetchGames = (): ThunkAction<void, RootState, unknown, Action<string>> => {
-    return async (dispatch) => {
-        dispatch(fetchGamesRequest());
+export const loadGames = (): ThunkAction<void, RootState, unknown, Action<string>> => {
+    return async (dispatch, getState) => {
+        const state = getState();
+        if (!state.transactionGames.loaded) {
+            dispatch(fetchGamesRequest());
 
-        const response = await api.get<Game[]>(`/transaction/seasons/last/games`);
-        if (response.success)
-            dispatch(fetchGamesSuccess(response.payLoad));
-        else
-            dispatch(fetchGamesFailure(response.message));
+            const response = await api.get<Game[]>(`/transaction/seasons/last/games`);
+            if (response.success) {
+                dispatch(fetchGamesSuccess(response.payLoad));
+            } else {
+                dispatch(fetchGamesFailure(response.message));
+            }
+        }
     };
 };
 
@@ -212,19 +222,23 @@ export const createGame = (payload: { homeTeamId: string; visitorTeamId: string;
     };
 };
 
-export const fetchTeams = (): ThunkAction<void, RootState, unknown, Action<string>> => {
-    return async (dispatch) => {
-        dispatch(fetchTeamsRequest());
+export const loadTeams = (): ThunkAction<void, RootState, unknown, Action<string>> => {
+    return async (dispatch, getState) => {
+        const state = getState();
+        if (!state.transactionTeams.loaded) {
+            dispatch(fetchTeamsRequest());
 
-        const response = await api.get<TeamScalation[]>(`transaction/seasons/last/teams`);
-        if (response.success)
-            dispatch(fetchTeamsSuccess(response.payLoad));
-        else
-            dispatch(fetchTeamsFailure(response.message));
+            const response = await api.get<TeamScalation[]>(`transaction/seasons/last/teams`);
+            if (response.success) {
+                dispatch(fetchTeamsSuccess(response.payLoad));
+            } else {
+                dispatch(fetchTeamsFailure(response.message));
+            }
+        }
     };
 };
 
-export const fetchPlayers = (payload: { gameId: string }): ThunkAction<void, RootState, unknown, Action<string>> => {
+export const loadPlayers = (payload: { gameId: string }): ThunkAction<void, RootState, unknown, Action<string>> => {
     return async (dispatch) => {
         dispatch(fetchPlayersRequest());
 
