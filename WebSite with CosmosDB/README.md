@@ -28,11 +28,9 @@ The technical architecture diagram showcases the system’s organization. It det
 
 The business architecture diagram outlines how the business components are structured. It highlights the organization of pages, models, Redux stores, and reusable View Components created to ensure consistency across the application. 
 
-My next goal is to explore how to integrate **Next.js** into the web application.
-
 <img src="resource/Swagger_Screen.png" alt="Swagger Screen" width="600"/>
 
-The backend, besides the CLI exposes, an API with the following endpoints.
+The backend, besides the CLI, exposes an API with the following endpoints.
 
 ## Learnings
 
@@ -63,6 +61,9 @@ Through the development of my React project, I gained significant knowledge in *
 - I became familiar with the core concepts of Redux, such as **actions**, **reducers**, and **store**, and how they work together to manage state.
 - I understood the importance of **Redux Thunk** for handling asynchronous actions, allowing me to dispatch actions that involve side effects (like API calls) in a clean and manageable way.
 - I gained experience in using **Redux DevTools** for debugging and tracing state changes during development, significantly improving my workflow and debugging efficiency.
+  
+
+### **My next goal is to explore how to integrate **Next.js** into the web application.**
 
 # **Runtime Requirements for Azure Cosmos Emulator**
 
