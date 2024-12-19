@@ -37,7 +37,7 @@ The backend, besides the CLI exposes, an API with the following endpoints.
 ## Learnings
 
 #### **Database Languages and Operations**
-In this project, I dove deep into NoSQL database management, specifically working with Azure Cosmos DB. I learned how to effectively structure and manipulate data in a document-oriented environment, focusing on essential operations like creating, reading, updating, and deleting documents. Building a RESTful API allowed me to create smooth interactions with the Cosmos DB, making it easy to retrieve and manage data. I also enjoyed developing a CLI interface, which improved user interaction with the database. Throughout this experience, I became more comfortable using the Microsoft.Azure.Cosmos library, which helped me work with generics for flexible data handling. I gained valuable skills in deploying and managing Azure resources, deepening my understanding of cloud computing principles and best practices.
+In this project, I dove deep into NoSQL database management, specifically working with Azure Cosmos DB. I learned how to effectively structure and manipulate data in a document-oriented environment, focusing on essential operations like creating, reading, updating, and deleting documents. Building a RESTful API allowed me to create smooth interactions with the Cosmos DB, making it easy to retrieve and manage data. I also enjoyed developing a GUI interface, which improved user interaction with the database. Throughout this experience, I became more comfortable using the Microsoft.Azure.Cosmos library, which helped me work with generics for flexible data handling. I gained valuable skills in deploying and managing Azure resources, deepening my understanding of cloud computing principles and best practices.
 
 ### **Model-View-ViewModel (MVVM)**
 
@@ -81,6 +81,13 @@ Through the development of my React project, I gained significant knowledge in *
         ```bash
         dotnet add package Microsoft.Azure.Cosmos
         ```
+
+# **API Command Documentation**
+ - To start the API with Swagger integration, execute the command in the CLI
+   
+    ```bash
+    utils api
+    ```
 
 # **Runtime Requirements for React Redux**
 
