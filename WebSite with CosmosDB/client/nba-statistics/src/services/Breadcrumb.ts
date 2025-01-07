@@ -35,15 +35,7 @@ export class Breadcrumb {
             : `Game ${currentGame?.id || ''}`;
 
         const playerTitle = playerName || `Player ${playerId}`;
-
-        if (pathname.startsWith('/record/')) {
-            return [
-                { title: 'Home', route: '/' },
-                { title: 'Record', route: '/record' },
-                { title: gameTitle, route: `/record/${currentGame?.id || ''}/participations` },
-            ];
-        }
-
+        
         if (pathname.includes('/tracking')) {
             return [
                 { title: 'Home', route: '/' },
@@ -52,6 +44,16 @@ export class Breadcrumb {
                 { title: playerTitle, route: `/record/${currentGame?.id || ''}/participations/${playerId}/tracking` },
             ];
         }
+
+        if (pathname.startsWith('/record')) {
+            return [
+                { title: 'Home', route: '/' },
+                { title: 'Record', route: '/record' },
+                { title: gameTitle, route: `/record/${currentGame?.id || ''}/participations` },
+            ];
+        }
+
+
 
         return breadcrumbsMap[pathname as keyof typeof breadcrumbsMap] || breadcrumbsMap['/'];
     }
