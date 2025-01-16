@@ -4,7 +4,6 @@ import { useTheme, Theme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import './GlobalLayout.css';
 
-
 interface BreadcrumbItem {
   title: string;
   route: string;
