@@ -40,11 +40,7 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ params }) => {
     const participation = useSelector((state: RootState) => state.transactionParticipation.participation);
     const currentGame = useSelector((state: RootState) => state.transactionGames.currentGame);
 
-    if (!unwrappedParams) {
-        return <div>Loading...</div>;
-    }
-
-    const { playerId, gameId } = unwrappedParams;
+    const { playerId, gameId } = unwrappedParams || {};
     const [playerName, setPlayerName] = useState<string>('');
     const [quarter, setQuarter] = useState(1);
     const [currentPlay, setCurrentPlay] = useState<GamePlay | null>(null);

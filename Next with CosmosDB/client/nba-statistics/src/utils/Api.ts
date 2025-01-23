@@ -12,7 +12,7 @@ class Api {
     private apiClient;
 
     private constructor() {
-        const baseHost = window.location.hostname;
+        const baseHost = typeof window !== 'undefined' ? window.location.hostname : 'localhost';
         const basePort = 5000;
 
         this.apiClient = axios.create({
