@@ -1,4 +1,4 @@
-# WebSite with CosmosDB
+# Next with CosmosDB
 
 ## Scope
 
@@ -61,7 +61,12 @@ Through the development of my React project, I gained significant knowledge in *
 - I became familiar with the core concepts of Redux, such as **actions**, **reducers**, and **store**, and how they work together to manage state.
 - I understood the importance of **Redux Thunk** for handling asynchronous actions, allowing me to dispatch actions that involve side effects (like API calls) in a clean and manageable way.
 - I gained experience in using **Redux DevTools** for debugging and tracing state changes during development, significantly improving my workflow and debugging efficiency.
-  
+
+#### **Next.js**  
+- I learned how to use **Next.js** for building client-side rendered applications, taking advantage of its built-in optimizations and features.  
+- I became familiar with core concepts of Next.js, such as **pages**, **routing**, and how it simplifies navigation and structure in a React application.  
+- I understood the importance of **dynamic routing**, which allowed me to create flexible and scalable applications with clean URLs and reusable components.  
+- I gained experience in using **Next.js DevTools** (including live reload and error overlays) to enhance the development workflow, enabling faster debugging and iteration during development.    
 
 ### **My next goal is to explore how to integrate **Next.js** into the web application.**
 
@@ -124,3 +129,24 @@ Through the development of my React project, I gained significant knowledge in *
     - **Purpose**: Node.js is the runtime environment for executing JavaScript, and npm is the package manager for managing dependencies in JavaScript projects.
     - **Installation**: Ensure Node.js and npm are installed. Download and install the latest stable version from:
         [Download Node.js](https://nodejs.org/)
+
+6. **Next.js**
+    - **Purpose**: Next.js is a React framework that enables server-side rendering, static site generation, and routing. It helps build optimized, scalable React applications with minimal configuration.
+    - **Installation**: To install Next.js, run the following command:
+        ```bash
+        npx create-next-app@latest your-app-name
+        ```
+
+    - If you already have an existing React project and just want to add Next.js, you can install it via:
+        ```bash
+        npm install next react react-dom
+        ```
+
+    - After installation, you can add basic scripts to your `package.json` to start the Next.js development server:
+        ```json
+        "scripts": {
+            "dev": "next dev",
+            "build": "next build",
+            "start": "next start"
+        }
+        ```
