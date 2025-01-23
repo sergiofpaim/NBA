@@ -1,54 +1,58 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { AppDispatch } from '../stores/Store';
-import { loadGames, loadTeams, setCurrentGame, setParticipation, setCurrentPlayerOfGame, fetchParticipation, loadPlayers } from '../stores/Transaction';
-import { RootState } from '../stores/Store';
-import GlobalLayout from '../styles/GlobalLayout';
-import Home from '../pages/Home';
-import Statistics from '../pages/Statistics';
-import Record from '../pages/Record';
-import Participations from '../pages/Participations';
-import Tracking from '../pages/Tracking';
-import { Breadcrumb } from '../services/Breadcrumb';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/stores/Root';
+import { Breadcrumbs } from '@mui/material';
+import { Game } from '../models/Game';
+import Link from '@mui/material/Link';
 
-const Breadcrumbs: React.FC = () => {
-    const location = useLocation();
-    const dispatch: AppDispatch = useDispatch();
-    const navigate = useNavigate();
+const breadcrumbsMap = {
+    '/': [{ title: 'Home', route: '/' }],
+    '/statistics': [
+        { title: 'Home', route: '/' },
+        { title: 'Statistics', route: '/statistics' },
+    ],
+    '/record': [
+        { title: 'Home', route: '/' },
+        { title: 'Record', route: '/record' },
+    ],
+    '/record/:gameId/participations': [
+        { title: 'Home', route: '/' },
+        { title: 'Record', route: '/record' },
+        { title: 'Participations', route: '/record/:gameId/participations' },
+    ],
+    '/record/:gameId/participations/:playerId/tracking': [
+        { title: 'Home', route: '/' },
+        { title: 'Record', route: '/record' },
+        { title: 'Participations', route: '/record/:gameId/participations' },
+        { title: 'Tracking', route: '/record/:gameId/participations/:playerId/tracking' },
+    ],
+};
 
-    const splits = location.pathname.split('/');
-    const gameId = splits[2];
-    const playerId = splits[4];
+export class Breadcrumb {
+    static generateDynamicBreadcrumbs(pathname: string, currentGame: Game | null, playerId: string, playerName: string) {
+        const gameTitle = currentGame?.id ? `${currentGame.homeTeamId} vs ${currentGame.visitorTeamId}` : `Game ${currentGame?.id || ''}`;
+        const playerTitle = playerName || `Player ${playerId}`;
 
-    const games = useSelector((state: RootState) => state.transactionGames.games);
-    const teams = useSelector((state: RootState) => state.transactionTeams.teams);
-    const currentGame = useSelector((state: RootState) => state.transactionGames.currentGame);
-    const playersParticipating = useSelector((state: RootState) => state.transactionPlayers.players);
+        if (pathname.includes('/tracking')) {
+            return [
+                { title: 'Home', route: '/' },
+                { title: 'Record', route: '/record' },
+                { title: gameTitle, route: `/record/${currentGame?.id || ''}/participations` },
+                { title: playerTitle, route: `/record/${currentGame?.id || ''}/participations/${playerId}/tracking` },
+            ];
+        }
 
-    const [playerName, setPlayerName] = useState<string>('');
-    const [breadcrumb, setBreadcrumb] = useState<any[]>([]);
-
-    const prevGameRef = useRef<any>();
-
-    useEffect(() => {
-        dispatch(loadGames());
-        dispatch(loadTeams());
-        dispatch(setCurrentGame(null));
-        dispatch(setCurrentPlayerOfGame(null));
-        dispatch(setParticipation(null));
-    }, [dispatch]);
-
-    useEffect(() => {
-        if (gameId) {
-            dispatch(loadPlayers({ gameId: gameId ?? '' }));
+        if (pathname.startsWith('/record') && pathname.includes('participations')) {
+            return [
+                { title: 'Home', route: '/' },
+                { title: 'Record', route: '/record' },
+                { title: gameTitle, route: `/record/${currentGame?.id || ''}/participations` },
+            ];
         }
     }, [dispatch, gameId]);
 
-    useEffect(() => {
-        if (games.length && gameId) {
-            dispatch(setCurrentGame(games.find((game) => game.id === gameId) || null));
+        return breadcrumbsMap[pathname as keyof typeof breadcrumbsMap] || breadcrumbsMap['/'];
         }
     }, [dispatch, games, gameId]);
 
@@ -58,57 +62,42 @@ const Breadcrumbs: React.FC = () => {
         }
     }, [dispatch, playersParticipating, playerId]);
 
-    useEffect(() => {
-        if (gameId && playerId) {
-            dispatch(fetchParticipation({ gameId: gameId, playerId: playerId }));
-        }
-    }, [dispatch, playerId, gameId]);
+const BreadcrumbsManager: React.FC = () => {
+    const currentGame = useSelector((state: RootState) => state.transactionGames.currentGame);
+    const currentPlayer = useSelector((state: RootState) => state.transactionPlayers.currentPlayer);
+
+    const router = useRouter();
+    const pathname = usePathname();
+
+    const [breadcrumb, setBreadcrumb] = useState<any[]>([]);
 
     useEffect(() => {
-        if (gameId && games.length && playerId && teams.length > 0) {
-            const game = games.find((game) => game.id === gameId);
-            if (game) {
-                const homeTeam = teams.find((team) => team.teamId === game.homeTeamId);
-                const visitorTeam = teams.find((team) => team.teamId === game.visitorTeamId);
-                if (homeTeam && visitorTeam) {
-                    const playersOfTheCurrentGame = [...(homeTeam.players || []), ...(visitorTeam.players || [])];
-                    const player = playersOfTheCurrentGame.find((p) => p.playerId === playerId);
-                    if (player) {
-                        setPlayerName(player.playerName || '');
-                    }
-                }
-            }
-        }
-    }, [gameId, games, playerId, teams]);
-
-    useEffect(() => {
-        if (
-            currentGame?.id &&
-            currentGame?.id !== prevGameRef.current?.id &&
-            new Date(currentGame.at) <= new Date() &&
-            !location.pathname.includes('tracking')
-        ) {
-            navigate(`/record/${currentGame.id}/participations`);
-            prevGameRef.current = currentGame;
-        }
-    }, [currentGame, location.pathname, navigate]);
-
-    useEffect(() => {
-        const newBreadcrumb = Breadcrumb.generateDynamicBreadcrumbs(location.pathname, currentGame, playerId, playerName);
+        const newBreadcrumb = Breadcrumb.generateDynamicBreadcrumbs(
+            pathname,
+            currentGame,
+            currentPlayer?.playerId || '',
+            currentPlayer?.playerName || ''
+        );
         setBreadcrumb(newBreadcrumb);
-    }, [playerName, location.pathname, currentGame, playerId]);
+    }, [pathname, currentGame, currentPlayer]);
 
     return (
-        <GlobalLayout breadcrumb={breadcrumb}>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/statistics" element={<Statistics />} />
-                <Route path="/record" element={<Record />} />
-                <Route path="/record/:gameId/participations" element={<Participations />} />
-                <Route path="/record/:gameId/participations/:playerId/tracking" element={<Tracking />} />
-            </Routes>
-        </GlobalLayout>
+        <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 2, color: 'primary.main', }} separator="›">
+            {breadcrumb.map((item, index) => (
+                <Link
+                    key={index}
+                    color="inherit"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        router.push(item.route);
+                    }}
+                    sx={{ cursor: 'pointer', fontWeight: 'bold', color: 'primary.main' }}
+                >
+                    {item.title}
+                </Link>
+            ))}
+        </Breadcrumbs>
     );
 };
 
-export default Breadcrumbs;
+export default BreadcrumbsManager;

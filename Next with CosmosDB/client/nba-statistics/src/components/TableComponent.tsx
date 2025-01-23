@@ -18,6 +18,7 @@ interface TableProps<T> {
     handleItemClick: (item: T) => void;
     renderItem: (item: T) => React.ReactNode[];
     height?: string;
+    itemHeight?: string;
     isItemDisabled?: (item: T) => boolean;
     sx?: object;
 }
@@ -28,9 +29,15 @@ const TableComponent: React.FC<TableProps<any>> = ({
     renderItem,
     label,
     height,
-    isItemDisabled = () => false,
+    itemHeight,
     sx,
 }) => (
+    <Paper sx={{
+        padding: 0,
+        borderRadius: 0,
+        borderColor: 'rgba(0, 0, 0, 0.1)',
+        backgroundColor: globalTheme.palette.background.default
+    }}>
     <TableContainer
         component={Paper}
         sx={{
@@ -42,7 +49,7 @@ const TableComponent: React.FC<TableProps<any>> = ({
             ...sx,
         }}
     >
-        <Table stickyHeader>
+            <Table stickyHeader >
             <TableHead>
                 <TableRow>
                     <TableCell
@@ -70,8 +77,7 @@ const TableComponent: React.FC<TableProps<any>> = ({
                 </TableRow>
             </TableHead>
             <TableBody>
-                {items.map((item, index) => {
-                    return (
+                    {items.map((item, index) => (
                         <TableRow
                             key={index}
                             hover
@@ -85,19 +91,25 @@ const TableComponent: React.FC<TableProps<any>> = ({
                             }}
                         >
                             {renderItem(item).map((cellContent, cellIndex) => (
-                                <TableCell sx={{
-                                    borderBottomWidth: "10px",
+                                <TableCell
+                                    key={cellIndex}
+                                    sx={{
+                                        borderBottomWidth: "0px",
+                                        height: itemHeight,
                                     borderBottomColor: 'rgba(0, 0, 0, 0.1)',
-                                    align: "center",
-                                    padding: 0
-                                }} key={cellIndex}>{cellContent}</TableCell>
+                                        alignItems: 'center',
+                                        padding: 0,
+                                    }}
+                                >
+                                    {cellContent}
+                                </TableCell>
                             ))}
                         </TableRow>
-                    );
-                })}
+                    ))}
             </TableBody>
         </Table>
     </TableContainer>
+    </Paper>
 );
 
 export default TableComponent;
