@@ -1,4 +1,3 @@
-/* GlobalLayout.css */
 body,
 html {
     margin: 0;
@@ -10,11 +9,9 @@ html {
 .container {
     display: flex;
     flex-direction: column;
-    /* Ensure vertical layout */
     justify-content: flex-start;
     align-items: stretch;
     min-height: 100vh;
-    /* Take full viewport height */
 }
 
 .content {
@@ -26,17 +23,14 @@ html {
     box-sizing: border-box;
     padding: 20px;
     overflow: hidden;
-    /* Prevents overflow */
 }
 
 h1 {
     font-size: 5vw;
-    /* Adjust font size dynamically */
     margin: 0;
     text-align: center;
 }
 
-/* For smaller screens, adjust font size and padding */
 @media (max-width: 768px) {
     h1 {
         font-size: 7vw;

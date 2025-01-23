@@ -1,11 +1,13 @@
+"use client"
+
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Button, Container, Box, Typography, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import globalTheme from '../styles/GlobalTheme';
+import { useRouter } from 'next/navigation';
 
 const HomePage = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -48,7 +50,7 @@ const HomePage = () => {
             textTransform: 'none',
             marginLeft: isMobile ? 0 : '0',
           }}
-          onClick={() => navigate('/statistics')}
+          onClick={() => router.push('/statistics')}
         >
           <Typography variant="h6" gutterBottom sx={{ color: globalTheme.palette.background.default, fontWeight: "bold" }}>
             Statistics
@@ -74,7 +76,7 @@ const HomePage = () => {
             textTransform: 'none',
             marginRight: isMobile ? 0 : '0',
           }}
-          onClick={() => navigate('/record')}
+          onClick={() => router.push('/record')}
         >
           <Typography variant="h6" gutterBottom sx={{ color: globalTheme.palette.background.default, fontWeight: "bold" }}>
             Record

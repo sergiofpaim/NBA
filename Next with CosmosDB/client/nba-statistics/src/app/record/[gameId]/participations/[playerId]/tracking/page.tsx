@@ -1,12 +1,12 @@
+"use client"
 
 import React, { useEffect, useState } from 'react';
 import { Box, Dialog, DialogContent, DialogTitle, Divider, TableCell, Typography, useMediaQuery } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import globalTheme from '../styles/GlobalTheme';
-import { AppDispatch, RootState } from '../stores/Store';
-import Button from '../components/Button';
-import { addPlay, deletePlay, loadPlayers, setParticipation } from '../stores/Transaction';
-import { useParams } from 'react-router-dom';
+import globalTheme from '../../../../../../styles/GlobalTheme';
+import { AppDispatch, RootState } from '../../../../../../stores/Store';
+import Button from '../../../../../../components/Button';
+import { addPlay, deletePlay, loadPlayers, setParticipation } from '../../../../../../stores/Transaction';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Tooltip from '@mui/material/Tooltip';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -15,21 +15,36 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import BlockIcon from '@mui/icons-material/Block';
 import ErrorIcon from '@mui/icons-material/Error';
 import ReplayIcon from '@mui/icons-material/Replay';
-import { GamePlay } from '../models/GamePlay';
-import TableComponent from '../components/TableComponent';
+import { GamePlay } from '../../../../../../models/GamePlay';
+import TableComponent from '../../../../../../components/TableComponent';
 
 
-const TrackingPage: React.FC = () => {
+type TrackingPageProps = {
+    params: Promise<{ playerId: string; gameId: string }>;
+};
+
+const TrackingPage: React.FC<TrackingPageProps> = ({ params }) => {
     const dispatch: AppDispatch = useDispatch();
+    const [unwrappedParams, setUnwrappedParams] = useState<{ playerId: string; gameId: string } | null>(null);
 
-    const { gameId } = useParams<{ gameId: string }>();
-    const { playerId } = useParams<{ playerId: string }>();
+    useEffect(() => {
+        const unwrapParams = async () => {
+            const resolvedParams = await params;
+            setUnwrappedParams(resolvedParams);
+        };
+
+        unwrapParams();
+    }, [params]);
 
     const teams = useSelector((state: RootState) => state.transactionTeams.teams);
     const participation = useSelector((state: RootState) => state.transactionParticipation.participation);
-
     const currentGame = useSelector((state: RootState) => state.transactionGames.currentGame);
 
+    if (!unwrappedParams) {
+        return <div>Loading...</div>;
+    }
+
+    const { playerId, gameId } = unwrappedParams;
     const [playerName, setPlayerName] = useState<string>('');
     const [quarter, setQuarter] = useState(1);
     const [currentPlay, setCurrentPlay] = useState<GamePlay | null>(null);
@@ -61,14 +76,15 @@ const TrackingPage: React.FC = () => {
     const isMobile = useMediaQuery(globalTheme.breakpoints.down('sm'));
 
     const handleAddPlay = (type: string) => {
-        if (!gameId || !playerId) return;
-
-        const payload = { gameId, playerId, quarter: quarter, type };
-
-        dispatch(addPlay(payload));
+        if (gameId && playerId) {
+            const payload = { gameId, playerId, quarter: quarter, type };
+            dispatch(addPlay(payload));
+        }
 
         setTimeout(() => {
-            dispatch(loadPlayers({ gameId }));
+            if (gameId) {
+                dispatch(loadPlayers({ gameId }));
+            }
         }, 500);
     };
 
@@ -240,9 +256,10 @@ const TrackingPage: React.FC = () => {
                     label="Last Plays"
                     handleItemClick={(play) => console.log(play)}
                     height={isMobile ? 'auto' : 'calc(100vh - 100px)'}
+                    itemHeight={isMobile ? '30px' : '50px'}
                     isItemDisabled={() => false}
                     renderItem={(play) => [
-                        <TableCell
+                        <Box
                             key="Play-Type"
                             sx={{
                                 height: '40px',
@@ -278,14 +295,14 @@ const TrackingPage: React.FC = () => {
                             <Typography
                                 sx={{
                                     fontSize: isMobile ? '14px' : '20px',
-                                    padding: isMobile ? 1 : 2,
+                                    padding: 1,
                                     color: getPlayTextColor(play.type)
                                 }}
                             >
                                 {getPlayText(play.type)}
                             </Typography>
-                        </TableCell>,
-                        <TableCell
+                        </Box>,
+                        <Box
                             key="Play-Quarter"
                             sx={{
                                 borderBottomWidth: "10px",
@@ -304,8 +321,8 @@ const TrackingPage: React.FC = () => {
                             >
                                 Q{play.quarter}
                             </Typography>
-                        </TableCell>,
-                        <TableCell
+                        </Box>,
+                        <Box
                             key="Play-At"
                             sx={{
                                 borderBottomWidth: "10px",
@@ -324,8 +341,8 @@ const TrackingPage: React.FC = () => {
                             >
                                 {play.at.split('.')[0]}
                             </Typography>
-                        </TableCell>,
-                        <TableCell
+                        </Box>,
+                        <Box
                             key="Play-Quarter"
                             sx={{
                                 marginTop: 0,
@@ -343,11 +360,11 @@ const TrackingPage: React.FC = () => {
                                 backgroundColor={globalTheme.palette.secondary.main}
                                 sx={{
                                     minWidth: 0.2,
-                                    marginTop: isMobile ? 2 : 0
+                                    marginTop: 0
                                 }}
                                 height={isMobile ? '20px' : '35px'}
                             />
-                        </TableCell>
+                        </Box>
                     ]}
                 />
                 <Box sx={{
