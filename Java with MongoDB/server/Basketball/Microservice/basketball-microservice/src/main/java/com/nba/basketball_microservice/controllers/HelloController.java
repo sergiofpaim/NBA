@@ -1,4 +1,4 @@
-package com.nba.basketball_microservice;
+package com.nba.basketball_microservice.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
