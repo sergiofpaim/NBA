@@ -9,5 +9,6 @@ public class Basketball {
 
     public static void setRepo(IBasketballRepo repo) {
         Basketball.repo = repo;
+        System.out.println(String.format("Repository is set to %s", repo.getClass().getSimpleName()));
     }
 }

@@ -1,9 +1,9 @@
 package com.nba.basketball_microservice.infrastructure;
 
+import com.mongodb.MongoClientSettings;
 import com.mongodb.client.*;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
-import com.mongodb.client.result.UpdateResult;
 import com.nba.basketball_microservice.models.Game;
 import com.nba.basketball_microservice.models.Participation;
 import com.nba.basketball_microservice.models.Player;
@@ -11,6 +11,9 @@ import com.nba.basketball_microservice.models.Season;
 import com.nba.basketball_microservice.models.Team;
 
 import org.bson.Document;
+import org.bson.codecs.configuration.CodecRegistries;
+import org.bson.codecs.configuration.CodecRegistry;
+import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.types.ObjectId;
 import java.io.File;
 import java.io.IOException;
@@ -19,26 +22,52 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 public class MongoDBRepo implements IBasketballRepo {
 
     private static final String DATABASE_NAME = "NBA";
-    private static final MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
-    private static final MongoDatabase database = mongoClient.getDatabase(DATABASE_NAME);
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
-    private static final Map<Class<?>, MongoCollection<Document>> collections = new HashMap<>();
+    private static final CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(
+            MongoClientSettings.getDefaultCodecRegistry(),
+            CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build()));
+
+    private static final MongoClientSettings settings = MongoClientSettings.builder()
+            .codecRegistry(pojoCodecRegistry)
+            .build();
+
+    private static final MongoClient mongoClient = MongoClients.create(settings);
+
+    private static final MongoDatabase database = mongoClient.getDatabase(DATABASE_NAME)
+            .withCodecRegistry(pojoCodecRegistry);
+
+    private static final Map<Class<?>, MongoCollection<? extends BasketballModel>> collections = new HashMap<>();
 
     static {
-        collections.put(Participation.class, database.getCollection("Participation"));
-        collections.put(Game.class, database.getCollection("Game"));
-        collections.put(Player.class, database.getCollection("Player"));
-        collections.put(Season.class, database.getCollection("Season"));
-        collections.put(Team.class, database.getCollection("Team"));
+        collections.put(Participation.class, database.getCollection("Participation", Participation.class));
+        collections.put(Game.class, database.getCollection("Game", Game.class));
+        collections.put(Player.class, database.getCollection("Player", Player.class));
+        collections.put(Season.class, database.getCollection("Season", Season.class));
+        collections.put(Team.class, database.getCollection("Team", Team.class));
     }
 
-    private static <T> MongoCollection<Document> getCollection(Class<T> clazz) {
-        return collections.get(clazz);
+    private static <T extends BasketballModel> MongoCollection<T> getCollection(Class<T> clazz) {
+        MongoCollection<?> collection = collections.get(clazz);
+
+        if (collection == null) {
+            throw new IllegalArgumentException("No collection found for class: " + clazz.getSimpleName());
+        }
+
+        if (!clazz.isAssignableFrom(collection.getDocumentClass())) {
+            throw new IllegalArgumentException("Collection type mismatch for class: " + clazz.getSimpleName());
+        }
+
+        @SuppressWarnings("unchecked")
+        MongoCollection<T> safeCollection = (MongoCollection<T>) collection;
+
+        return safeCollection;
     }
 
     @SuppressWarnings("unchecked")
@@ -46,10 +75,13 @@ public class MongoDBRepo implements IBasketballRepo {
     public <T extends BasketballModel> CompletableFuture<T> createAsync(T entity) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                Document document = Document.parse(objectMapper.writeValueAsString(entity));
-                MongoCollection<Document> collection = getCollection((Class<T>) entity.getClass());
-                collection.insertOne(document);
-                return objectMapper.readValue(document.toJson(), (Class<T>) entity.getClass());
+                MongoCollection<T> collection = getCollection((Class<T>) entity.getClass());
+                var result = collection.insertOne(entity);
+
+                if (result.getInsertedId() != null)
+                    return getById(entity.getId(), (Class<T>) entity.getClass());
+                else
+                    throw new RuntimeException("Error inserting entity: " + entity);
             } catch (Exception e) {
                 throw new RuntimeException("Error inserting entity: " + e.getMessage(), e);
             }
@@ -61,12 +93,11 @@ public class MongoDBRepo implements IBasketballRepo {
     public <T extends BasketballModel> CompletableFuture<T> updateAsync(T entity) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                Document document = Document.parse(objectMapper.writeValueAsString(entity));
-                MongoCollection<Document> collection = getCollection((Class<T>) entity.getClass());
-                UpdateResult result = collection.replaceOne(Filters.eq("_id", entity.getId()), document);
-                if (result.getMatchedCount() > 0) {
-                    return objectMapper.readValue(document.toJson(), (Class<T>) entity.getClass());
-                } else {
+                MongoCollection<T> collection = getCollection((Class<T>) entity.getClass());
+                T result = collection.findOneAndReplace(Filters.eq("id", entity.getId()), entity);
+                if (result != null)
+                    return result;
+                else {
                     throw new RuntimeException("No matching document found for update.");
                 }
             } catch (Exception e) {
@@ -77,15 +108,11 @@ public class MongoDBRepo implements IBasketballRepo {
 
     @Override
     public <T extends BasketballModel> T getById(String id, Class<T> clazz) {
-        MongoCollection<Document> collection = getCollection(clazz);
-        Document doc = collection.find(Filters.eq("_id", new ObjectId(id))).first();
-        if (doc != null) {
-            try {
-                return objectMapper.readValue(doc.toJson(), clazz);
-            } catch (Exception e) {
-                throw new RuntimeException("Error deserializing entity: " + e.getMessage(), e);
-            }
-        }
+        MongoCollection<T> collection = getCollection(clazz);
+        T doc = collection.find(Filters.eq("id", new ObjectId(id))).first();
+        if (doc != null)
+            return doc;
+
         return null;
     }
 
@@ -93,21 +120,15 @@ public class MongoDBRepo implements IBasketballRepo {
     @Override
     public <T extends BasketballModel> List<T> get(Function<T, Boolean> where, Function<T, Object> order,
             boolean descending, Integer take) {
-        MongoCollection<Document> collection = getCollection((Class<T>) where.getClass());
-        FindIterable<Document> documents = collection.find(Filters.eq("someField", where))
-                .sort(descending ? Sorts.descending(order.apply(null).toString())
+
+        MongoCollection<T> collection = getCollection((Class<T>) where.getClass());
+        FindIterable<T> documents = collection.find(Filters.eq("someField", where))
+                .sort(descending
+                        ? Sorts.descending(order.apply(null).toString())
                         : Sorts.ascending(order.apply(null).toString()))
                 .limit(take != null ? take : 0);
 
-        List<T> results = new ArrayList<>();
-        for (Document document : documents) {
-            try {
-                results.add(objectMapper.readValue(document.toJson(), (Class<T>) where.getClass()));
-            } catch (Exception e) {
-                throw new RuntimeException("Error deserializing entity: " + e.getMessage(), e);
-            }
-        }
-        return results;
+        return documents.into(new ArrayList<>());
     }
 
     @Override
@@ -125,19 +146,49 @@ public class MongoDBRepo implements IBasketballRepo {
         });
     }
 
-    private <T extends BasketballModel> void reseedCollection(Class<T> clazz) throws IOException {
-        MongoCollection<Document> collection = getCollection(clazz);
-        collection.drop();
+    private <T extends BasketballModel> void reseedCollection(Class<T> modelClass) throws IOException {
+        MongoCollection<T> collection = getCollection(modelClass);
+        collection.deleteMany(new Document());
 
-        String filePath = "./Seed/" + clazz.getSimpleName() + ".json";
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        objectMapper.findAndRegisterModules(); // Ensure all modules are registered
+
+        String filePath = "./src/main/resources/seed/" + modelClass.getSimpleName() + ".json";
         String content = new String(Files.readAllBytes(new File(filePath).toPath()));
-        List<T> entities = objectMapper.readValue(content,
-                objectMapper.getTypeFactory().constructCollectionType(List.class, clazz));
-
-        for (T entity : entities) {
-            Document document = Document.parse(objectMapper.writeValueAsString(entity));
-            collection.insertOne(document);
+        System.out.println("JSON Content: " + content);
+        List<T> entities = null;
+        try {
+            entities = objectMapper.readValue(
+                    content,
+                    objectMapper.getTypeFactory().constructCollectionType(List.class, modelClass));
+            System.out.println("Deserialization successful for " + modelClass.getSimpleName());
+        } catch (InvalidFormatException e) {
+            System.err.println("InvalidFormatException: " + e.getMessage());
+            System.err.println("Location: " + e.getLocation());
+            System.err.println("Problematic content: " + e.getValue());
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Error deserializing JSON to " + modelClass.getSimpleName());
+            e.printStackTrace();
         }
-        System.out.println("Reseeded " + clazz.getSimpleName() + " collection.");
+
+        if (entities != null) {
+            for (T entity : entities) {
+                System.out.println("Deserialized entity: " + entity);
+                try {
+                    collection.insertOne(entity);
+                    System.out.println("Inserted entity: " + entity);
+                } catch (Exception e) {
+                    System.err.println("Error inserting entity: " + entity);
+                    e.printStackTrace();
+                }
+            }
+            System.out.println("Reseeded " + modelClass.getSimpleName() + " collection.");
+        } else {
+            System.err.println("No entities were deserialized for " + modelClass.getSimpleName());
+        }
     }
+
 }

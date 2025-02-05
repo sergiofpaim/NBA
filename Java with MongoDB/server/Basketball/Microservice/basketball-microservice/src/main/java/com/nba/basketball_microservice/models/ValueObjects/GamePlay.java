@@ -1,26 +1,27 @@
 package com.nba.basketball_microservice.models.ValueObjects;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nba.basketball_microservice.infrastructure.ValidationResult;
 import com.nba.basketball_microservice.models.Type.PlayType;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalTime;
 import java.util.Optional;
 
 public class GamePlay {
+    @JsonProperty("quarter")
     private int quarter;
+    @JsonProperty("type")
     private String type;
-
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Integer points;
+    @JsonProperty("points")
+    private Optional<Integer> points = Optional.empty(); // Change to Optional<Integer>
+    @JsonProperty("at")
+    private LocalTime at;
 
-    private Duration at;
-
-    public GamePlay() {
-    }
-
-    public GamePlay(int quarter, String type, Integer points, Duration at) {
+    public GamePlay(int quarter, String type, Optional<Integer> points, LocalTime at) {
         this.quarter = quarter;
         this.type = type;
         this.points = points;
@@ -44,18 +45,18 @@ public class GamePlay {
     }
 
     public Optional<Integer> getPoints() {
-        return Optional.ofNullable(points);
+        return points; // Return the Optional directly
     }
 
-    public void setPoints(Integer points) {
+    public void setPoints(Optional<Integer> points) {
         this.points = points;
     }
 
-    public Duration getAt() {
+    public LocalTime getAt() {
         return at;
     }
 
-    public void setAt(Duration at) {
+    public void setAt(LocalTime at) {
         this.at = at;
     }
 
@@ -73,52 +74,51 @@ public class GamePlay {
 
         switch (playType) {
             case FreeThrowHit:
-                if (points == null || points != 1) {
+                if (points.orElse(0) != 1) { // Check the value using orElse
                     return new ValidationResult(false, "points should be 1 for a FreeThrowHit");
                 }
                 break;
             case TwoPointerHit:
-                if (points == null || points != 2) {
+                if (points.orElse(0) != 2) {
                     return new ValidationResult(false, "points should be 2 for a TwoPointerHit");
                 }
                 break;
             case ThreePointerHit:
-                if (points == null || points != 3) {
+                if (points.orElse(0) != 3) {
                     return new ValidationResult(false, "points should be 3 for a ThreePointerHit");
                 }
                 break;
             default:
-                if (points != null) {
-                    return new ValidationResult(false, "points should be null");
-                }
                 break;
         }
 
-        if (at.isNegative() || at.compareTo(Duration.ofMinutes(15)) > 0) {
-            return new ValidationResult(false, "at should be between 0 and 15 minutes");
+        if (at.isBefore(LocalTime.MIDNIGHT) || at.isAfter(LocalTime.MIDNIGHT.plusMinutes(15))) {
+            return new ValidationResult(false, "at should be between 00:00 and 15:00 minutes");
         }
 
         return new ValidationResult(true, null);
     }
 
     public static GamePlay factoryFrom(int quarter, PlayType type, Instant gameAt) {
-        Integer points = null;
+        Optional<Integer> points = Optional.empty();
 
         switch (type) {
             case FreeThrowHit:
-                points = 1;
+                points = Optional.of(1);
                 break;
             case TwoPointerHit:
-                points = 2;
+                points = Optional.of(2);
                 break;
             case ThreePointerHit:
-                points = 3;
+                points = Optional.of(3);
                 break;
             default:
                 break;
         }
 
-        Duration at = Duration.ofMinutes((Instant.now().toEpochMilli() - gameAt.toEpochMilli()) / 60000 % 15);
+        // Duration at represents the difference in time from game start
+        Duration durationAt = Duration.ofMinutes((Instant.now().toEpochMilli() - gameAt.toEpochMilli()) / 60000 % 15);
+        LocalTime at = LocalTime.ofSecondOfDay(durationAt.getSeconds());
 
         return new GamePlay(quarter, type.toString(), points, at);
     }

@@ -1,7 +1,13 @@
 package com.nba.basketball_microservice.infrastructure;
 
+import org.bson.codecs.pojo.annotations.BsonId;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class BasketballModel {
 
+    @BsonId
     private String id;
 
     public String getId() {

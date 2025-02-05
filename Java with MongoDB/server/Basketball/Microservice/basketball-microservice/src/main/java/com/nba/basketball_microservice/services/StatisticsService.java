@@ -13,40 +13,49 @@ import java.util.stream.Collectors;
 
 public class StatisticsService extends BasketballService {
 
-    public static BasketballResponse<PlayerStatisticsInSeasonVM> getPlayerInSeason(String seasonId, String playerId) {
-        List<Participation> participations = Basketball.getRepo().get(
-                p -> p.getSeasonId().equals(seasonId) && p.getPlayerId().equals(playerId),
-                null, false, null);
+        public static BasketballResponse<PlayerStatisticsInSeasonVM> getPlayerInSeason(String seasonId,
+                        String playerId) {
+                List<Participation> participations = Basketball.getRepo().get(
+                                p -> p.getSeasonId().equals(seasonId) && p.getPlayerId().equals(playerId),
+                                null, false, null);
 
-        if (participations.isEmpty()) {
-            return notFound("Player does not participate in the season.");
+                if (participations.isEmpty()) {
+                        return notFound("Player does not participate in the season.");
+                }
+
+                List<GamePlay> plays = participations.stream()
+                                .flatMap(p -> p.getPlays().stream())
+                                .collect(Collectors.toList());
+
+                return success(PlayerStatisticsInSeasonVM.factorFrom(participations.size(), plays), null);
         }
 
-        List<GamePlay> plays = participations.stream()
-                .flatMap(p -> p.getPlays().stream())
-                .collect(Collectors.toList());
+        public static BasketballResponse<List<PlayerStatisticsInGameVM>> getPlayerInGame(String gameId,
+                        String playerId) {
+                Participation participation = (Participation) Basketball.getRepo().get(
+                                p -> ((Participation) p).getGameId().equals(gameId)
+                                                && ((Participation) p).getPlayerId().equals(playerId),
+                                null, false, 1).stream().findFirst().orElse(null);
 
-        return success(PlayerStatisticsInSeasonVM.factorFrom(participations.size(), plays), null);
-    }
+                if (participation == null) {
+                        return notFound("Player does not participate in the game.");
+                }
 
-    public static BasketballResponse<List<PlayerStatisticsInGameVM>> getPlayerInGame(String gameId, String playerId) {
-        Participation participation = (Participation) Basketball.getRepo().get(
-                p -> ((Participation) p).getGameId().equals(gameId)
-                        && ((Participation) p).getPlayerId().equals(playerId),
-                null, false, 1).stream().findFirst().orElse(null);
+                List<PlayerStatisticsInGameVM> stats = participation.getPlays().stream()
+                                .collect(Collectors.groupingBy(p -> p.getType()))
+                                .entrySet().stream()
+                                .map(entry -> PlayerStatisticsInGameVM.factorFrom(entry.getKey(),
+                                                entry.getValue().size(),
+                                                entry.getValue().stream().mapToInt(p -> p.getPoints().orElse(0)).sum()))
+                                .sorted((s1, s2) -> Integer.compare(Integer.parseInt(s1.getType()),
+                                                Integer.parseInt(s2.getType())))
+                                .collect(Collectors.toList());
 
-        if (participation == null) {
-            return notFound("Player does not participate in the game.");
+                return success(stats, null);
         }
 
-        List<PlayerStatisticsInGameVM> stats = participation.getPlays().stream()
-                .collect(Collectors.groupingBy(p -> p.getType()))
-                .entrySet().stream()
-                .map(entry -> PlayerStatisticsInGameVM.factorFrom(entry.getKey(), entry.getValue().size(),
-                        entry.getValue().stream().mapToInt(p -> p.getPoints().orElse(0)).sum()))
-                .sorted((s1, s2) -> Integer.compare(Integer.parseInt(s1.getType()), Integer.parseInt(s2.getType())))
-                .collect(Collectors.toList());
-
-        return success(stats, null);
-    }
+        public static BasketballResponse<Object> reseed() {
+                Basketball.getRepo().reseedAsync();
+                return success(null, "Reseed completed.");
+        }
 }

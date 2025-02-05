@@ -4,17 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nba.basketball_microservice.infrastructure.BasketballModel;
 import com.nba.basketball_microservice.infrastructure.ValidationResult;
 import com.nba.basketball_microservice.models.ValueObjects.GamePlay;
 
 public class Participation extends BasketballModel {
+    @JsonProperty("seasonId")
     private String seasonId;
+    @JsonProperty("gameId")
     private String gameId;
+    @JsonProperty("teamId")
     private String teamId;
+    @JsonProperty("teamName")
     private String teamName;
+    @JsonProperty("playerId")
     private String playerId;
+    @JsonProperty("playerName")
     private String playerName;
+    @JsonProperty("plays")
     private List<GamePlay> plays;
 
     public Participation() {
@@ -79,8 +87,6 @@ public class Participation extends BasketballModel {
 
     @Override
     public ValidationResult validate() {
-        // To be improved with a validation library like Hibernate Validator or custom
-        // validations
         if (getId() == null) {
             return new ValidationResult(false, "id cannot be null");
         }

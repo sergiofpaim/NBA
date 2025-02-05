@@ -1,5 +1,6 @@
 package com.nba.basketball_microservice.models.ValueObjects;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nba.basketball_microservice.infrastructure.ValidationResult;
 
 import java.util.List;
@@ -9,7 +10,9 @@ public class TeamScalation {
     private String teamName;
     private List<PlayerSelection> players;
 
-    public TeamScalation(String id, String teamName, List<PlayerSelection> players) {
+    public TeamScalation(@JsonProperty("id") String id,
+            @JsonProperty("teamName") String teamName,
+            @JsonProperty("players") List<PlayerSelection> players) {
         this.id = id;
         this.teamName = teamName;
         this.players = players;

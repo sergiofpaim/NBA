@@ -1,5 +1,7 @@
 package com.nba.basketball_microservice.models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nba.basketball_microservice.infrastructure.BasketballModel;
 import com.nba.basketball_microservice.infrastructure.ValidationResult;
 import com.nba.basketball_microservice.models.ValueObjects.PlayerSelection;
@@ -20,8 +22,20 @@ public class Game extends BasketballModel {
     private List<String> visitorPlayerIds;
     private LocalDateTime at;
 
-    public Game(String id, String seasonId, String homeTeamId, String homeTeamName, List<String> homePlayerIds,
-            String visitorTeamId, String visitorTeamName, List<String> visitorPlayerIds, LocalDateTime at) {
+    // Default constructor needed for Jackson
+    public Game() {
+    }
+
+    @JsonCreator
+    public Game(@JsonProperty("id") String id,
+            @JsonProperty("seasonId") String seasonId,
+            @JsonProperty("homeTeamId") String homeTeamId,
+            @JsonProperty("homeTeamName") String homeTeamName,
+            @JsonProperty("homePlayerIds") List<String> homePlayerIds,
+            @JsonProperty("visitorTeamId") String visitorTeamId,
+            @JsonProperty("visitorTeamName") String visitorTeamName,
+            @JsonProperty("visitorPlayerIds") List<String> visitorPlayerIds,
+            @JsonProperty("at") LocalDateTime at) {
         this.setId(id);
         this.seasonId = seasonId;
         this.homeTeamId = homeTeamId;
