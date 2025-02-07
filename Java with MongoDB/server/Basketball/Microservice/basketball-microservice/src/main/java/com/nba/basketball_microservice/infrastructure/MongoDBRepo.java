@@ -153,42 +153,16 @@ public class MongoDBRepo implements IBasketballRepo {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        objectMapper.findAndRegisterModules(); // Ensure all modules are registered
+        objectMapper.findAndRegisterModules();
 
         String filePath = "./src/main/resources/seed/" + modelClass.getSimpleName() + ".json";
         String content = new String(Files.readAllBytes(new File(filePath).toPath()));
-        System.out.println("JSON Content: " + content);
-        List<T> entities = null;
-        try {
-            entities = objectMapper.readValue(
-                    content,
-                    objectMapper.getTypeFactory().constructCollectionType(List.class, modelClass));
-            System.out.println("Deserialization successful for " + modelClass.getSimpleName());
-        } catch (InvalidFormatException e) {
-            System.err.println("InvalidFormatException: " + e.getMessage());
-            System.err.println("Location: " + e.getLocation());
-            System.err.println("Problematic content: " + e.getValue());
-            e.printStackTrace();
-        } catch (Exception e) {
-            System.err.println("Error deserializing JSON to " + modelClass.getSimpleName());
-            e.printStackTrace();
-        }
+        List<T> entities = objectMapper.readValue(content,
+                objectMapper.getTypeFactory().constructCollectionType(List.class, modelClass));
 
-        if (entities != null) {
-            for (T entity : entities) {
-                System.out.println("Deserialized entity: " + entity);
-                try {
-                    collection.insertOne(entity);
-                    System.out.println("Inserted entity: " + entity);
-                } catch (Exception e) {
-                    System.err.println("Error inserting entity: " + entity);
-                    e.printStackTrace();
-                }
-            }
-            System.out.println("Reseeded " + modelClass.getSimpleName() + " collection.");
-        } else {
-            System.err.println("No entities were deserialized for " + modelClass.getSimpleName());
+        for (T entity : entities) {
+            collection.insertOne(entity);
         }
+        System.out.println("Reseeded " + modelClass.getSimpleName() + " collection.");
     }
-
 }

@@ -17,7 +17,7 @@ public class GamePlay {
     private String type;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonProperty("points")
-    private Optional<Integer> points = Optional.empty(); // Change to Optional<Integer>
+    private Optional<Integer> points = Optional.empty();
     @JsonProperty("at")
     private LocalTime at;
 
@@ -45,7 +45,7 @@ public class GamePlay {
     }
 
     public Optional<Integer> getPoints() {
-        return points; // Return the Optional directly
+        return points;
     }
 
     public void setPoints(Optional<Integer> points) {
@@ -74,7 +74,7 @@ public class GamePlay {
 
         switch (playType) {
             case FreeThrowHit:
-                if (points.orElse(0) != 1) { // Check the value using orElse
+                if (points.orElse(0) != 1) {
                     return new ValidationResult(false, "points should be 1 for a FreeThrowHit");
                 }
                 break;
@@ -116,7 +116,6 @@ public class GamePlay {
                 break;
         }
 
-        // Duration at represents the difference in time from game start
         Duration durationAt = Duration.ofMinutes((Instant.now().toEpochMilli() - gameAt.toEpochMilli()) / 60000 % 15);
         LocalTime at = LocalTime.ofSecondOfDay(durationAt.getSeconds());
 
