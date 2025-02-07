@@ -26,7 +26,6 @@ public class Participation extends BasketballModel {
     private List<GamePlay> plays;
 
     public Participation() {
-        this.plays = new ArrayList<>();
     }
 
     public String getSeasonId() {

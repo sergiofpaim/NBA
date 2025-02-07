@@ -14,6 +14,7 @@ import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +24,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 public class MongoDBRepo implements IBasketballRepo {
@@ -45,7 +45,13 @@ public class MongoDBRepo implements IBasketballRepo {
 
     private static final Map<Class<?>, MongoCollection<? extends BasketballModel>> collections = new HashMap<>();
 
+    private static ObjectMapper objectMapper = new ObjectMapper();
+
     static {
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        objectMapper.findAndRegisterModules();
+
         collections.put(Participation.class, database.getCollection("Participation", Participation.class));
         collections.put(Game.class, database.getCollection("Game", Game.class));
         collections.put(Player.class, database.getCollection("Player", Player.class));
@@ -116,19 +122,23 @@ public class MongoDBRepo implements IBasketballRepo {
         return null;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public <T extends BasketballModel> List<T> get(Function<T, Boolean> where, Function<T, Object> order,
+    public <T extends BasketballModel> List<T> get(Class<T> clazz, Bson filter, Function<T, String> order,
             boolean descending, Integer take) {
 
-        MongoCollection<T> collection = getCollection((Class<T>) where.getClass());
-        FindIterable<T> documents = collection.find(Filters.eq("someField", where))
-                .sort(descending
-                        ? Sorts.descending(order.apply(null).toString())
-                        : Sorts.ascending(order.apply(null).toString()))
-                .limit(take != null ? take : 0);
+        MongoCollection<T> collection = getCollection(clazz);
 
-        return documents.into(new ArrayList<>());
+        if (order != null) {
+            FindIterable<T> documents = collection.find(filter)
+                    .sort(descending ? Sorts.descending(order.apply(null)) : Sorts.ascending(order.apply(null)))
+                    .limit(take != null ? take : 0);
+
+            return documents.into(new ArrayList<>());
+        } else {
+            FindIterable<T> documents = collection.find(filter)
+                    .limit(take != null ? take : 0);
+            return documents.into(new ArrayList<>());
+        }
     }
 
     @Override
@@ -140,7 +150,7 @@ public class MongoDBRepo implements IBasketballRepo {
                 reseedCollection(Season.class);
                 reseedCollection(Team.class);
                 reseedCollection(Participation.class);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 throw new RuntimeException("Error reseeding database: " + e.getMessage(), e);
             }
         });
@@ -149,11 +159,6 @@ public class MongoDBRepo implements IBasketballRepo {
     private <T extends BasketballModel> void reseedCollection(Class<T> modelClass) throws IOException {
         MongoCollection<T> collection = getCollection(modelClass);
         collection.deleteMany(new Document());
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
-        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        objectMapper.findAndRegisterModules();
 
         String filePath = "./src/main/resources/seed/" + modelClass.getSimpleName() + ".json";
         String content = new String(Files.readAllBytes(new File(filePath).toPath()));

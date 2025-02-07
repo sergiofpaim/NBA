@@ -1,6 +1,5 @@
 package com.nba.basketball_microservice.models.ValueObjects;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nba.basketball_microservice.infrastructure.ValidationResult;
 import com.nba.basketball_microservice.models.Type.PlayType;
@@ -8,20 +7,21 @@ import com.nba.basketball_microservice.models.Type.PlayType;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalTime;
-import java.util.Optional;
 
 public class GamePlay {
     @JsonProperty("quarter")
     private int quarter;
     @JsonProperty("type")
     private String type;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonProperty("points")
-    private Optional<Integer> points = Optional.empty();
+    private Integer points;
     @JsonProperty("at")
     private LocalTime at;
 
-    public GamePlay(int quarter, String type, Optional<Integer> points, LocalTime at) {
+    public GamePlay() {
+    }
+
+    public GamePlay(int quarter, String type, Integer points, LocalTime at) {
         this.quarter = quarter;
         this.type = type;
         this.points = points;
@@ -44,11 +44,11 @@ public class GamePlay {
         this.type = type;
     }
 
-    public Optional<Integer> getPoints() {
+    public Integer getPoints() {
         return points;
     }
 
-    public void setPoints(Optional<Integer> points) {
+    public void setPoints(Integer points) {
         this.points = points;
     }
 
@@ -74,17 +74,17 @@ public class GamePlay {
 
         switch (playType) {
             case FreeThrowHit:
-                if (points.orElse(0) != 1) {
+                if (points == null || points != 1) {
                     return new ValidationResult(false, "points should be 1 for a FreeThrowHit");
                 }
                 break;
             case TwoPointerHit:
-                if (points.orElse(0) != 2) {
+                if (points == null || points != 2) {
                     return new ValidationResult(false, "points should be 2 for a TwoPointerHit");
                 }
                 break;
             case ThreePointerHit:
-                if (points.orElse(0) != 3) {
+                if (points == null || points != 3) {
                     return new ValidationResult(false, "points should be 3 for a ThreePointerHit");
                 }
                 break;
@@ -100,17 +100,17 @@ public class GamePlay {
     }
 
     public static GamePlay factoryFrom(int quarter, PlayType type, Instant gameAt) {
-        Optional<Integer> points = Optional.empty();
+        Integer points = null;
 
         switch (type) {
             case FreeThrowHit:
-                points = Optional.of(1);
+                points = 1;
                 break;
             case TwoPointerHit:
-                points = Optional.of(2);
+                points = 2;
                 break;
             case ThreePointerHit:
-                points = Optional.of(3);
+                points = 3;
                 break;
             default:
                 break;

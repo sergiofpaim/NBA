@@ -2,6 +2,9 @@ package com.nba.basketball_microservice.infrastructure;
 
 import java.util.List;
 import java.util.function.Function;
+
+import org.bson.conversions.Bson;
+
 import java.util.concurrent.CompletableFuture;
 
 public interface IBasketballRepo {
@@ -12,11 +15,8 @@ public interface IBasketballRepo {
 
     <T extends BasketballModel> T getById(String id, Class<T> clazz);
 
-    <T extends BasketballModel> List<T> get(
-            Function<T, Boolean> where,
-            Function<T, Object> order,
-            boolean descending,
-            Integer take);
+    public <T extends BasketballModel> List<T> get(Class<T> clazz, Bson filter, Function<T, String> order,
+            boolean descending, Integer take);
 
     CompletableFuture<Void> reseedAsync();
 }

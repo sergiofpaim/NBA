@@ -5,6 +5,7 @@ import com.nba.basketball_microservice.models.Participation;
 import com.nba.basketball_microservice.models.ValueObjects.GamePlay;
 import com.nba.basketball_microservice.viewmodels.statistics.PlayerStatisticsInGameVM;
 import com.nba.basketball_microservice.viewmodels.statistics.PlayerStatisticsInSeasonVM;
+import com.mongodb.client.model.Filters;
 import com.nba.basketball_microservice.infrastructure.Basketball;
 import com.nba.basketball_microservice.infrastructure.BasketballResponse;
 
@@ -15,8 +16,8 @@ public class StatisticsService extends BasketballService {
 
         public static BasketballResponse<PlayerStatisticsInSeasonVM> getPlayerInSeason(String seasonId,
                         String playerId) {
-                List<Participation> participations = Basketball.getRepo().get(
-                                p -> p.getSeasonId().equals(seasonId) && p.getPlayerId().equals(playerId),
+                List<Participation> participations = Basketball.getRepo().get(Participation.class,
+                                Filters.and(Filters.eq("seasonId", seasonId), Filters.eq("playerId", playerId)),
                                 null, false, null);
 
                 if (participations.isEmpty()) {
@@ -30,32 +31,38 @@ public class StatisticsService extends BasketballService {
                 return success(PlayerStatisticsInSeasonVM.factorFrom(participations.size(), plays), null);
         }
 
-        public static BasketballResponse<List<PlayerStatisticsInGameVM>> getPlayerInGame(String gameId,
-                        String playerId) {
-                Participation participation = (Participation) Basketball.getRepo().get(
-                                p -> ((Participation) p).getGameId().equals(gameId)
-                                                && ((Participation) p).getPlayerId().equals(playerId),
-                                null, false, 1).stream().findFirst().orElse(null);
+        // public static BasketballResponse<List<PlayerStatisticsInGameVM>>
+        // getPlayerInGame(String gameId,
+        // String playerId) {
+        // Participation participation = (Participation) Basketball.getRepo().get(
+        // p -> ((Participation) p).getGameId().equals(gameId)
+        // && ((Participation) p).getPlayerId().equals(playerId),
+        // null, false, 1).stream().findFirst().orElse(null);
 
-                if (participation == null) {
-                        return notFound("Player does not participate in the game.");
-                }
+        // if (participation == null) {
+        // return notFound("Player does not participate in the game.");
+        // }
 
-                List<PlayerStatisticsInGameVM> stats = participation.getPlays().stream()
-                                .collect(Collectors.groupingBy(p -> p.getType()))
-                                .entrySet().stream()
-                                .map(entry -> PlayerStatisticsInGameVM.factorFrom(entry.getKey(),
-                                                entry.getValue().size(),
-                                                entry.getValue().stream().mapToInt(p -> p.getPoints().orElse(0)).sum()))
-                                .sorted((s1, s2) -> Integer.compare(Integer.parseInt(s1.getType()),
-                                                Integer.parseInt(s2.getType())))
-                                .collect(Collectors.toList());
+        // List<PlayerStatisticsInGameVM> stats = participation.getPlays().stream()
+        // .collect(Collectors.groupingBy(p -> p.getType()))
+        // .entrySet().stream()
+        // .map(entry -> PlayerStatisticsInGameVM.factorFrom(entry.getKey(),
+        // entry.getValue().size(),
+        // entry.getValue().stream().mapToInt(p -> p.getPoints().orElse(0)).sum()))
+        // .sorted((s1, s2) -> Integer.compare(Integer.parseInt(s1.getType()),
+        // Integer.parseInt(s2.getType())))
+        // .collect(Collectors.toList());
 
-                return success(stats, null);
-        }
+        // return success(stats, null);
+        // }
 
         public static BasketballResponse<Object> reseed() {
-                Basketball.getRepo().reseedAsync();
-                return success(null, "Reseed completed.");
+                try {
+                        Basketball.getRepo().reseedAsync();
+                        return success(null, "Reseed completed.");
+                } catch (Exception e) {
+                        System.err.println(e);
+                        throw e;
+                }
         }
 }

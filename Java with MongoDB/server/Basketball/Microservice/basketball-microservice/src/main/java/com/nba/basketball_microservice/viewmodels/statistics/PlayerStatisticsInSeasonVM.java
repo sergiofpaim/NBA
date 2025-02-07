@@ -79,7 +79,9 @@ public class PlayerStatisticsInSeasonVM extends BasketballViewModel {
     }
 
     public static PlayerStatisticsInSeasonVM factorFrom(int participations, List<GamePlay> plays) {
-        int points = plays.stream().mapToInt(play -> play.getPoints().orElse(0)).sum();
+        int points = plays.stream()
+                .mapToInt(play -> play.getPoints() != null ? play.getPoints() : 0)
+                .sum();
 
         PlayerStatisticsInSeasonVM stats = new PlayerStatisticsInSeasonVM();
         stats.setParticipations(participations);

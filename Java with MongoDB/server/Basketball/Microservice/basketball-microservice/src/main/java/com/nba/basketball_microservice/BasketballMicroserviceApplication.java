@@ -10,8 +10,6 @@ public class BasketballMicroserviceApplication {
 
 	public static void main(String[] args) {
 		Basketball.setRepo(new MongoDBRepo());
-		System.out.println("Repository is set to MongoDBRepo");
-
 		SpringApplication.run(BasketballMicroserviceApplication.class, args);
 	}
 }
