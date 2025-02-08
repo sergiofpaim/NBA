@@ -85,21 +85,29 @@ public class PlayerStatisticsInSeasonVM extends BasketballViewModel {
 
         PlayerStatisticsInSeasonVM stats = new PlayerStatisticsInSeasonVM();
         stats.setParticipations(participations);
-        stats.setPpg((double) points / participations);
-        stats.setApg((double) plays.stream().filter(p -> p.getType().equals(PlayType.Assist.name())).count()
-                / participations);
-        stats.setRpg((double) plays.stream().filter(p -> p.getType().equals(PlayType.Rebound.name())).count()
-                / participations);
-        stats.setBpg((double) plays.stream().filter(p -> p.getType().equals(PlayType.Block.name())).count()
-                / participations);
+        stats.setPpg(roundToTwoDecimals((double) points / participations));
+        stats.setApg(roundToTwoDecimals(
+                (double) plays.stream().filter(p -> p.getType().equals(PlayType.Assist.name())).count()
+                        / participations));
+        stats.setRpg(roundToTwoDecimals(
+                (double) plays.stream().filter(p -> p.getType().equals(PlayType.Rebound.name())).count()
+                        / participations));
+        stats.setBpg(roundToTwoDecimals(
+                (double) plays.stream().filter(p -> p.getType().equals(PlayType.Block.name())).count()
+                        / participations));
         stats.setTotalPoints(points);
 
         long fth = plays.stream().filter(p -> p.getType().equals(PlayType.FreeThrowHit.name())).count();
         long ftm = plays.stream().filter(p -> p.getType().equals(PlayType.FreeThrowMiss.name())).count();
         if (fth > 0 || ftm > 0) {
-            stats.setFtConversion((double) fth / (fth + ftm) * 100);
+            stats.setFtConversion(roundToTwoDecimals((double) fth / (fth + ftm) * 100));
         }
 
         return stats;
     }
+
+    private static double roundToTwoDecimals(double value) {
+        return Math.round(value * 100.0) / 100.0;
+    }
+
 }

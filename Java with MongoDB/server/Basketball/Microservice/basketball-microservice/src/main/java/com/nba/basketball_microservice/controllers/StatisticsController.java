@@ -24,17 +24,16 @@ public class StatisticsController {
         return ResponseEntity.ok(participationResult);
     }
 
-    // @GetMapping("/games/{gameId}/players/{playerId}")
-    // public ResponseEntity<BasketballResponse<List<PlayerStatisticsInGameVM>>>
-    // getPlayerInGame(
-    // @PathVariable String gameId,
-    // @PathVariable String playerId) {
+    @GetMapping("/games/{gameId}/players/{playerId}")
+    public ResponseEntity<BasketballResponse<List<PlayerStatisticsInGameVM>>> getPlayerInGame(
+            @PathVariable String gameId,
+            @PathVariable String playerId) {
 
-    // var participationResult = StatisticsService.getPlayerInGame(gameId,
-    // playerId);
+        var participationResult = StatisticsService.getPlayerInGame(gameId,
+                playerId);
 
-    // return ResponseEntity.ok(participationResult);
-    // }
+        return ResponseEntity.ok(participationResult);
+    }
 
     @PutMapping("/reseed")
     public ResponseEntity<BasketballResponse<Object>> reseed() {

@@ -9,6 +9,7 @@ import com.mongodb.client.model.Filters;
 import com.nba.basketball_microservice.infrastructure.Basketball;
 import com.nba.basketball_microservice.infrastructure.BasketballResponse;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,30 +32,36 @@ public class StatisticsService extends BasketballService {
                 return success(PlayerStatisticsInSeasonVM.factorFrom(participations.size(), plays), null);
         }
 
-        // public static BasketballResponse<List<PlayerStatisticsInGameVM>>
-        // getPlayerInGame(String gameId,
-        // String playerId) {
-        // Participation participation = (Participation) Basketball.getRepo().get(
-        // p -> ((Participation) p).getGameId().equals(gameId)
-        // && ((Participation) p).getPlayerId().equals(playerId),
-        // null, false, 1).stream().findFirst().orElse(null);
+        public static BasketballResponse<List<PlayerStatisticsInGameVM>> getPlayerInGame(String gameId,
+                        String playerId) {
+                List<Participation> participations = Basketball.getRepo().get(
+                                Participation.class,
+                                Filters.and(Filters.eq("gameId", gameId), Filters.eq("playerId", playerId)),
+                                null,
+                                false,
+                                null);
 
-        // if (participation == null) {
-        // return notFound("Player does not participate in the game.");
-        // }
+                var participation = participations.isEmpty() ? null : participations.get(0);
 
-        // List<PlayerStatisticsInGameVM> stats = participation.getPlays().stream()
-        // .collect(Collectors.groupingBy(p -> p.getType()))
-        // .entrySet().stream()
-        // .map(entry -> PlayerStatisticsInGameVM.factorFrom(entry.getKey(),
-        // entry.getValue().size(),
-        // entry.getValue().stream().mapToInt(p -> p.getPoints().orElse(0)).sum()))
-        // .sorted((s1, s2) -> Integer.compare(Integer.parseInt(s1.getType()),
-        // Integer.parseInt(s2.getType())))
-        // .collect(Collectors.toList());
+                if (participation == null) {
+                        return notFound("Player does not participate in the game.");
+                }
 
-        // return success(stats, null);
-        // }
+                List<PlayerStatisticsInGameVM> stats = participation.getPlays().stream()
+                                .collect(Collectors.groupingBy(GamePlay::getType))
+                                .entrySet().stream()
+                                .map(entry -> PlayerStatisticsInGameVM.factorFrom(
+                                                entry.getKey(),
+                                                entry.getValue().size(),
+                                                entry.getValue().stream()
+                                                                .mapToInt(p -> p.getPoints() != null ? p.getPoints()
+                                                                                : 0)
+                                                                .sum()))
+                                .sorted(Comparator.comparing(PlayerStatisticsInGameVM::getType))
+                                .collect(Collectors.toList());
+
+                return success(stats, null);
+        }
 
         public static BasketballResponse<Object> reseed() {
                 try {
