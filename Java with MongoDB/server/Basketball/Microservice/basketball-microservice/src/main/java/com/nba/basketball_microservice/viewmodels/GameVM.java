@@ -68,7 +68,7 @@ public class GameVM extends BasketballViewModel {
         return new ValidationResult(false, "this viewModel cannot be used for write operations");
     }
 
-    public static GameVM fromGame(Game model) {
+    public static GameVM factorFrom(Game model) {
         GameVM gameVM = new GameVM();
         gameVM.setId(model.getId());
         gameVM.setHomeTeamId(model.getHomeTeamId());

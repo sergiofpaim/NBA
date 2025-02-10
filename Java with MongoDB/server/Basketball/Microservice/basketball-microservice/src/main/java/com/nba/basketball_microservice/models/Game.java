@@ -6,6 +6,7 @@ import com.nba.basketball_microservice.infrastructure.BasketballModel;
 import com.nba.basketball_microservice.infrastructure.ValidationResult;
 import com.nba.basketball_microservice.models.ValueObjects.PlayerSelection;
 import com.nba.basketball_microservice.models.ValueObjects.TeamScalation;
+import org.bson.types.ObjectId;
 
 import java.util.List;
 import java.time.LocalDateTime;
@@ -22,7 +23,6 @@ public class Game extends BasketballModel {
     private List<String> visitorPlayerIds;
     private LocalDateTime at;
 
-    // Default constructor needed for Jackson
     public Game() {
     }
 
@@ -149,7 +149,7 @@ public class Game extends BasketballModel {
     public static Game factoryFrom(String seasonId, TeamScalation homeTeam, TeamScalation visitorTeam,
             LocalDateTime at) {
         return new Game(
-                UUID.randomUUID().toString().substring(0, 8),
+                new ObjectId().toHexString(),
                 seasonId,
                 homeTeam.getId(),
                 homeTeam.getTeamName(),

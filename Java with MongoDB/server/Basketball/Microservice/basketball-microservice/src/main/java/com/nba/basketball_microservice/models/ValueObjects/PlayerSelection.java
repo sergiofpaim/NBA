@@ -1,7 +1,8 @@
 package com.nba.basketball_microservice.models.ValueObjects;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import org.bson.codecs.pojo.annotations.BsonCreator;
+import org.bson.codecs.pojo.annotations.BsonProperty;
+
 import com.nba.basketball_microservice.infrastructure.ValidationResult;
 
 public class PlayerSelection {
@@ -9,10 +10,10 @@ public class PlayerSelection {
     private String playerName;
     private int jersey;
 
-    @JsonCreator
-    public PlayerSelection(@JsonProperty("playerId") String playerId,
-            @JsonProperty("playerName") String playerName,
-            @JsonProperty("jersey") int jersey) {
+    @BsonCreator
+    public PlayerSelection(@BsonProperty("playerId") String playerId,
+            @BsonProperty("playerName") String playerName,
+            @BsonProperty("jersey") int jersey) {
         this.playerId = playerId;
         this.playerName = playerName;
         this.jersey = jersey;
