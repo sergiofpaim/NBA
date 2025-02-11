@@ -21,7 +21,7 @@ public class SeasonVM extends BasketballViewModel {
         return new ValidationResult(false, "this viewModel cannot be used for write operations");
     }
 
-    public static SeasonVM fromSeason(Season model) {
+    public static SeasonVM factorFrom(Season model) {
         SeasonVM seasonVM = new SeasonVM();
         seasonVM.setId(model.getId());
         return seasonVM;

@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/statistics")
+@CrossOrigin(origins = "http://localhost:3000")
 public class StatisticsController {
 
     @GetMapping("/seasons/{seasonId}/players/{playerId}")

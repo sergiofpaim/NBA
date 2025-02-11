@@ -21,39 +21,35 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/transaction")
+@CrossOrigin(origins = "http://localhost:3000")
 public class TransactionController extends BasketballController {
 
     private static final int PLAYS_TO_TAKE = 5;
 
     @Autowired
-    private TransactionService transactionService;
+    @GetMapping("/seasons")
+    public ResponseEntity<BasketballResponse<List<SeasonVM>>> getSeasons() {
+        var seasonResult = TransactionService.getSeasons();
+        return ResponseEntity.ok(seasonResult);
+    }
 
-    // @GetMapping("/seasons")
-    // public ResponseEntity<BasketballResponse<List<SeasonVM>>> getSeasons() {
-    // var seasonResult = transactionService.getSeasons();
-    // return ResponseEntity.ok(seasonResult);
-    // }
+    @GetMapping("/seasons/last/games")
+    public ResponseEntity<BasketballResponse<List<GameVM>>> getLastSeasonGames() {
+        var seasonResult = TransactionService.getLastSeasonGames();
+        return ResponseEntity.ok(seasonResult);
+    }
 
-    // @GetMapping("/seasons/last/games")
-    // public ResponseEntity<BasketballResponse<List<GameVM>>> getLastSeasonGames()
-    // {
-    // var seasonResult = transactionService.getLastSeasonGames();
-    // return ResponseEntity.ok(seasonResult);
-    // }
+    @GetMapping("/seasons/{seasonId}/games")
+    public ResponseEntity<BasketballResponse<List<GameVM>>> getSeasonGames(@PathVariable String seasonId) {
+        var seasonResult = TransactionService.getSeasonGames(seasonId);
+        return ResponseEntity.ok(seasonResult);
+    }
 
-    // @GetMapping("/seasons/{seasonId}/games")
-    // public ResponseEntity<BasketballResponse<List<GameVM>>>
-    // getSeasonGames(@PathVariable String seasonId) {
-    // var seasonResult = transactionService.getSeasonGames(seasonId);
-    // return ResponseEntity.ok(seasonResult);
-    // }
-
-    // @GetMapping("/seasons/last/teams")
-    // public ResponseEntity<BasketballResponse<List<TeamScalationVM>>>
-    // getLastSeasonTeams() {
-    // var seasonResult = transactionService.getLastSeasonTeams();
-    // return ResponseEntity.ok(seasonResult);
-    // }
+    @GetMapping("/seasons/last/teams")
+    public ResponseEntity<BasketballResponse<List<TeamScalationVM>>> getLastSeasonTeams() {
+        var seasonResult = TransactionService.getLastSeasonTeams();
+        return ResponseEntity.ok(seasonResult);
+    }
 
     @PostMapping("/games")
     public CompletableFuture<ResponseEntity<Object>> addGameAsync(@RequestBody AddGameVM request) {
@@ -65,22 +61,20 @@ public class TransactionController extends BasketballController {
                 .thenApply(this::result);
     }
 
-    // @GetMapping("/games/{gameId}/players")
-    // public ResponseEntity<BasketballResponse<List<ParticipatingPlayerVM>>>
-    // getParticipatingPlayers(
-    // @PathVariable String gameId) {
-    // var seasonResult = transactionService.getParticipatingPlayers(gameId);
-    // return ResponseEntity.ok(seasonResult);
-    // }
+    @GetMapping("/games/{gameId}/players")
+    public ResponseEntity<BasketballResponse<List<ParticipatingPlayerVM>>> getParticipatingPlayers(
+            @PathVariable String gameId) {
+        var seasonResult = TransactionService.getParticipatingPlayers(gameId);
+        return ResponseEntity.ok(seasonResult);
+    }
 
-    // @GetMapping("/games/{gameId}/players/{playerId}/participation")
-    // public ResponseEntity<BasketballResponse<ParticipationVM>>
-    // getParticipation(@PathVariable String gameId,
-    // @PathVariable String playerId) {
-    // var participationResult = transactionService.getParticipation(gameId,
-    // playerId, PLAYS_TO_TAKE);
-    // return ResponseEntity.ok(participationResult);
-    // }
+    @GetMapping("/games/{gameId}/players/{playerId}/participation")
+    public ResponseEntity<BasketballResponse<ParticipationVM>> getParticipation(@PathVariable String gameId,
+            @PathVariable String playerId) {
+        var participationResult = TransactionService.getParticipation(gameId,
+                playerId, PLAYS_TO_TAKE);
+        return ResponseEntity.ok(participationResult);
+    }
 
     @PostMapping("/plays")
     public CompletableFuture<ResponseEntity<Object>> addPlayAsync(
@@ -100,19 +94,7 @@ public class TransactionController extends BasketballController {
     // deletePlay(
     // @PathVariable String participationId,
     // @PathVariable TimeSpan at) {
-    // return transactionService.deletePlay(participationId, at, PLAYS_TO_TAKE)
+    // return TransactionService.deletePlay(participationId, at, PLAYS_TO_TAKE)
     // .thenApply(ResponseEntity::ok);
-    // }
-
-    // @PutMapping("/reseed")
-    // public ResponseEntity<BasketballResponse<Void>> reseed() {
-    // var result = transactionService.reseed();
-    // return ResponseEntity.ok(result);
-    // }
-
-    // // Método de validação (caso necessário)
-    // private boolean isInvalid(Object request) {
-    // // Implemente a lógica de validação conforme necessário
-    // return false;
     // }
 }

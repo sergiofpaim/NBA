@@ -69,7 +69,7 @@ public class ParticipatingPlayerVM extends BasketballViewModel {
         return new ValidationResult(false, "this viewModel cannot be used for write operations");
     }
 
-    public static ParticipatingPlayerVM fromParticipation(Participation model) {
+    public static ParticipatingPlayerVM factorFrom(Participation model) {
         ParticipatingPlayerVM playerVM = new ParticipatingPlayerVM();
         playerVM.setPlayerId(model.getPlayerId());
         playerVM.setPlayerName(model.getPlayerName());

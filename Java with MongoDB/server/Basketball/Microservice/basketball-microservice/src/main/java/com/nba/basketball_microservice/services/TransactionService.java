@@ -1,10 +1,8 @@
 package com.nba.basketball_microservice.services;
 
 import java.time.LocalDateTime;
-import java.time.Duration;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -16,15 +14,14 @@ import com.nba.basketball_microservice.models.Game;
 import com.nba.basketball_microservice.models.Participation;
 import com.nba.basketball_microservice.models.Player;
 import com.nba.basketball_microservice.models.Season;
-import com.nba.basketball_microservice.models.Team;
 import com.nba.basketball_microservice.models.Type.PlayType;
 import com.nba.basketball_microservice.models.ValueObjects.GamePlay;
-import com.nba.basketball_microservice.models.ValueObjects.TeamScalation;
 import com.nba.basketball_microservice.viewmodels.GameVM;
 import com.nba.basketball_microservice.viewmodels.ParticipatingPlayerVM;
 import com.nba.basketball_microservice.viewmodels.ParticipationVM;
 import com.nba.basketball_microservice.viewmodels.SeasonVM;
 import com.nba.basketball_microservice.viewmodels.TeamScalationVM;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -124,6 +121,110 @@ public class TransactionService extends BasketballService {
                 return success(ParticipationVM.factoryFrom(participationHolder[0]), "Play added to the database.");
             }
         });
+    }
+
+    public static BasketballResponse<ParticipationVM> getParticipation(String gameId, String playerId,
+            int playsToTake) {
+        List<Participation> participations = Basketball.getRepo().get(Participation.class,
+                Filters.and(Filters.eq("gameId", gameId), Filters.eq("playerId", playerId)),
+                null, false, null);
+        Participation participation = participations.isEmpty() ? null : participations.get(0);
+        if (participation == null) {
+            return notFound("Player does not participate in the game.");
+        } else {
+            participation.trimPlays(playsToTake);
+            return success(ParticipationVM.factoryFrom(participation), null);
+        }
+    }
+
+    public static BasketballResponse<Player> getPlayer(String playerId) {
+        Player player = Basketball.getRepo().getById(playerId, Player.class);
+        if (player == null) {
+            return notFound("Player not found.");
+        } else {
+            return success(player, null);
+        }
+    }
+
+    public static BasketballResponse<Game> getGame(String gameId) {
+        Game game = Basketball.getRepo().getById(gameId, Game.class);
+        if (game == null) {
+            return notFound("Game not found.");
+        } else {
+            return success(game, null);
+        }
+    }
+
+    public static BasketballResponse<List<SeasonVM>> getSeasons() {
+        List<Season> seasons = Basketball.getRepo().get(Season.class, Filters.empty(), c -> "Id", false, null);
+
+        seasons.sort((s1, s2) -> s2.getId().compareTo(s1.getId()));
+
+        List<SeasonVM> seasonVMs = seasons.stream()
+                .map(SeasonVM::factorFrom)
+                .collect(Collectors.toList());
+
+        return success(seasonVMs, null);
+    }
+
+    public static BasketballResponse<List<GameVM>> getSeasonGames(String seasonId) {
+        List<Game> games = Basketball.getRepo().get(Game.class, Filters.eq("seasonId", seasonId), g -> "Id", false,
+                null);
+
+        List<GameVM> gameVMs = games.stream()
+                .sorted((g1, g2) -> g2.getAt().compareTo(g1.getAt()))
+                .map(GameVM::factorFrom)
+                .collect(Collectors.toList());
+
+        return success(gameVMs, null);
+    }
+
+    public static BasketballResponse<List<GameVM>> getLastSeasonGames() {
+        List<Season> seasons = Basketball.getRepo().get(Season.class, Filters.empty(), null, true,
+                1);
+
+        Season season = seasons.isEmpty() ? null : seasons.get(0);
+
+        if (season != null)
+            return getSeasonGames(season.getId());
+
+        return notFound("No season found.");
+    }
+
+    public static BasketballResponse<List<ParticipatingPlayerVM>> getParticipatingPlayers(String gameId) {
+        List<Participation> participations = Basketball.getRepo().get(Participation.class, Filters.eq("gameId", gameId),
+                null, false, null);
+
+        List<ParticipatingPlayerVM> players = participations.stream()
+                .sorted(Comparator.comparing(Participation::getPlayerName))
+                .map(ParticipatingPlayerVM::factorFrom)
+                .collect(Collectors.toList());
+
+        return success(players, null);
+    }
+
+    public static BasketballResponse<List<TeamScalationVM>> getSeasonTeams(String seasonId) {
+        Season season = Basketball.getRepo().getById(seasonId, Season.class);
+
+        if (season == null)
+            return notFound("Season not found.");
+
+        List<TeamScalationVM> teams = season.getTeams().stream()
+                .map(TeamScalationVM::factorFrom)
+                .collect(Collectors.toList());
+
+        return success(teams, null);
+    }
+
+    public static BasketballResponse<List<TeamScalationVM>> getLastSeasonTeams() {
+        List<Season> seasons = Basketball.getRepo().get(Season.class, Filters.empty(), null, true, 1);
+
+        Season season = seasons.isEmpty() ? null : seasons.get(0);
+
+        if (season != null)
+            return getSeasonTeams(season.getId());
+
+        return notFound("No season found.");
     }
 
     private static Boolean isPartOfHomeTeam(Game gameResult, String playerId) {
