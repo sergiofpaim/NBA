@@ -33,8 +33,10 @@ public class TransactionService extends BasketballService {
     public static CompletableFuture<BasketballResponse<GameVM>> addGameAsync(String homeTeamId, String visitorTeamId,
             LocalDateTime at) {
         return CompletableFuture
-                .supplyAsync(() -> Basketball.getRepo().get(Season.class, Filters.empty(), null, false, null))
-                .thenApply(seasons -> seasons.stream().findFirst())
+                .supplyAsync(() -> Basketball.getRepo()
+                        .get(Season.class, Filters.empty(), c -> "Id", false, null))
+                .thenApply(seasons -> seasons.stream()
+                        .max(Comparator.comparingInt(s -> Integer.parseInt(s.getId().substring(0, 2)))))
                 .thenCompose(lastSeason -> {
                     if (lastSeason.isEmpty())
                         return CompletableFuture.completedFuture(error("There is no season registered yet."));
@@ -71,173 +73,66 @@ public class TransactionService extends BasketballService {
                 });
     }
 
-    // public static BasketballResponse<ParticipationVM> addPlay(String playerId,
-    // String gameId, int quarter,
-    // PlayType type, int playsToTake) {
-    // Game game = Basketball.getRepo().getById(Game.class, gameId);
-    // if (game == null)
-    // return BasketballResponse.notFound("Game not found.");
+    public static CompletableFuture<BasketballResponse<ParticipationVM>> addPlayAsync(String playerId, String gameId,
+            int quarter, PlayType type, int playsToTake) {
+        Game game = Basketball.getRepo().getById(gameId, Game.class);
+        if (game == null) {
+            return CompletableFuture.completedFuture(notFound("Game not found."));
+        }
 
-    // Boolean isHomePlayer = isPartOfHomeTeam(game, playerId);
-    // if (isHomePlayer == null)
-    // return BasketballResponse.notFound("Player does not participate in the
-    // game.");
+        Boolean isHomePlayer = isPartOfHomeTeam(game, playerId);
+        if (isHomePlayer == null) {
+            return CompletableFuture.completedFuture(notFound("Player does not participate in the game."));
+        }
 
-    // Player player = Basketball.getRepo().getById(Player.class, playerId);
-    // if (player == null)
-    // return BasketballResponse.notFound("Player not found.");
+        Player player = Basketball.getRepo().getById(playerId, Player.class);
+        if (player == null) {
+            return CompletableFuture.completedFuture(notFound("Player not found."));
+        }
 
-    // Participation participation = Basketball.getRepo()
-    // .get(Participation.class, p -> p.getGameId().equals(game.getId()) &&
-    // p.getPlayerId().equals(playerId))
-    // .stream().findFirst().orElse(null);
+        var participations = Basketball.getRepo().get(Participation.class,
+                Filters.and(Filters.eq("gameId", gameId), Filters.eq("playerId", playerId)), null, false, null);
 
-    // GamePlay newPlay = GamePlay.factoryFrom(quarter, type, game.getAt());
+        var participation = participations.isEmpty() ? null : participations.get(0);
 
-    // Participation saved;
-    // if (participation == null) {
-    // participation = isHomePlayer
-    // ? Participation.factoryFrom(game, player, game.getHomeTeamName(),
-    // game.getHomeTeamId(), newPlay)
-    // : Participation.factoryFrom(game, player, game.getVisitorTeamName(),
-    // game.getVisitorTeamId(),
-    // newPlay);
+        var newPlay = GamePlay.factoryFrom(quarter, type, game.getAt());
 
-    // saved = Basketball.getRepo().create(participation);
-    // } else {
-    // participation.registerPlay(newPlay);
-    // saved = Basketball.getRepo().update(participation);
-    // }
+        CompletableFuture<Participation> futureSaved;
 
-    // participation.trimPlays(playsToTake);
+        final Participation[] participationHolder = new Participation[1];
+        if (participation == null) {
+            if (isHomePlayer) {
+                participationHolder[0] = Participation.factoryFrom(game, player, game.getHomeTeamName(),
+                        game.getHomeTeamId(),
+                        newPlay);
+            } else {
+                participationHolder[0] = Participation.factoryFrom(game, player, game.getVisitorTeamName(),
+                        game.getVisitorTeamId(), newPlay);
+            }
+            futureSaved = Basketball.getRepo().createAsync(participationHolder[0]);
+        } else {
+            participation.registerPlay(newPlay);
+            participationHolder[0] = participation;
+            futureSaved = Basketball.getRepo().updateAsync(participation);
+        }
 
-    // return saved == null
-    // ? BasketballResponse.error("Failed to add the play to the database.")
-    // : BasketballResponse.success(ParticipationVM.factorFrom(participation), "Play
-    // added to the database.");
-    // }
+        return futureSaved.thenApply(saved -> {
+            participationHolder[0].trimPlays(playsToTake);
+            if (saved == null) {
+                return error("Failed to add the play to the database.");
+            } else {
+                return success(ParticipationVM.factoryFrom(participationHolder[0]), "Play added to the database.");
+            }
+        });
+    }
 
-    // public static BasketballResponse<ParticipationVM> deletePlay(String
-    // participationId, Duration at, int playsToTake) {
-    // Participation toUpdate = Basketball.getRepo().getById(Participation.class,
-    // participationId);
+    private static Boolean isPartOfHomeTeam(Game gameResult, String playerId) {
+        if (gameResult.getHomePlayerIds().contains(playerId)) {
+            return true;
+        } else if (gameResult.getVisitorPlayerIds().contains(playerId)) {
+            return false;
+        }
+        return null;
+    }
 
-    // if (toUpdate == null)
-    // return BasketballResponse.notFound("Participation not found.");
-
-    // GamePlay toRemove = toUpdate.getPlays().stream().filter(p ->
-    // p.getAt().equals(at)).findFirst().orElse(null);
-
-    // if (toRemove == null)
-    // return BasketballResponse.notFound("Play not found.");
-
-    // toUpdate.getPlays().remove(toRemove);
-    // Participation saved = Basketball.getRepo().update(toUpdate);
-
-    // saved.trimPlays(playsToTake);
-
-    // return saved == null
-    // ? BasketballResponse.error("Failed to remove the play from the database.")
-    // : BasketballResponse.success(ParticipationVM.factorFrom(saved), "Play removed
-    // from the database.");
-    // }
-
-    // public static BasketballResponse<ParticipationVM> getParticipation(String
-    // gameId, String playerId,
-    // int playsToTake) {
-    // Participation participation = Basketball.getRepo()
-    // .get(Participation.class, p -> p.getGameId().equals(gameId) &&
-    // p.getPlayerId().equals(playerId))
-    // .stream().findFirst().orElse(null);
-
-    // if (participation == null)
-    // return BasketballResponse.notFound("Player does not participate in the
-    // game.");
-
-    // participation.trimPlays(playsToTake);
-    // return BasketballResponse.success(ParticipationVM.factorFrom(participation));
-    // }
-
-    // public static BasketballResponse<Player> getPlayer(String playerId) {
-    // Player player = Basketball.getRepo().getById(Player.class, playerId);
-    // return player == null ? BasketballResponse.notFound("Player not found.") :
-    // BasketballResponse.success(player);
-    // }
-
-    // public static BasketballResponse<Game> getGame(String gameId) {
-    // Game game = Basketball.getRepo().getById(Game.class, gameId);
-    // return game == null ? BasketballResponse.notFound("Game not found.") :
-    // BasketballResponse.success(game);
-    // }
-
-    // private static Boolean isPartOfHomeTeam(Game gameResult, String playerId) {
-    // if (gameResult.getHomePlayerIds().contains(playerId))
-    // return true;
-    // if (gameResult.getVisitorPlayerIds().contains(playerId))
-    // return false;
-    // return null;
-    // }
-
-    // public static BasketballResponse<Object> reseed() {
-    // Basketball.getRepo().reseedAsync();
-    // return BasketballResponse.success(null, "Reseed completed.");
-    // }
-
-    // public static BasketballResponse<List<SeasonVM>> getSeasons() {
-    // List<Season> seasons = Basketball.getRepo().get(Season.class, s -> true);
-    // return BasketballResponse.success(
-    // seasons.stream().sorted((a, b) ->
-    // b.getId().compareTo(a.getId())).map(SeasonVM::factorFrom)
-    // .collect(Collectors.toList()));
-    // }
-
-    // public static BasketballResponse<List<GameVM>> getSeasonGames(String
-    // seasonId) {
-    // List<Game> games = Basketball.getRepo().get(Game.class, g ->
-    // g.getSeasonId().equals(seasonId));
-    // return BasketballResponse.success(
-    // games.stream().sorted((a, b) ->
-    // b.getAt().compareTo(a.getAt())).map(GameVM::factorFrom)
-    // .collect(Collectors.toList()));
-    // }
-
-    // public static BasketballResponse<List<GameVM>> getLastSeasonGames() {
-    // Optional<Season> season = Basketball.getRepo().get(Season.class, s -> true,
-    // Season::getId, true, 1).stream()
-    // .findFirst();
-    // return season.map(value ->
-    // getSeasonGames(value.getId())).orElse(BasketballResponse.error("No season
-    // found."));
-    // }
-
-    // public static BasketballResponse<List<ParticipatingPlayerVM>>
-    // getParticipatingPlayers(String gameId) {
-    // List<Participation> participations =
-    // Basketball.getRepo().get(Participation.class,
-    // p -> p.getGameId().equals(gameId));
-    // return BasketballResponse.success(
-    // participations.stream().sorted((a, b) ->
-    // a.getPlayerName().compareTo(b.getPlayerName()))
-    // .map(ParticipatingPlayerVM::factorFrom)
-    // .collect(Collectors.toList()));
-    // }
-
-    // public static BasketballResponse<List<TeamScalationVM>> getSeasonTeams(String
-    // seasonId) {
-    // Season season = Basketball.getRepo().getById(Season.class, seasonId);
-    // return season == null
-    // ? BasketballResponse.error("Season not found.")
-    // : BasketballResponse.success(
-    // season.getTeams().stream().map(TeamScalationVM::factorFrom).collect(Collectors.toList()));
-    // }
-
-    // public static BasketballResponse<List<TeamScalationVM>> getLastSeasonTeams()
-    // {
-    // Optional<Season> season = Basketball.getRepo().get(Season.class, s -> true,
-    // Season::getId, true, 1).stream()
-    // .findFirst();
-    // return season.map(value ->
-    // getSeasonTeams(value.getId())).orElse(BasketballResponse.error("No season
-    // found."));
-    // }
 }

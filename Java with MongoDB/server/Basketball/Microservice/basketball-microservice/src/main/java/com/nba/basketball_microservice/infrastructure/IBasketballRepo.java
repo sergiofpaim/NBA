@@ -15,7 +15,7 @@ public interface IBasketballRepo {
 
     <T extends BasketballModel> T getById(String id, Class<T> clazz);
 
-    public <T extends BasketballModel> List<T> get(Class<T> clazz, Bson filter, Function<T, String> order,
+    public <T extends BasketballModel> List<T> get(Class<T> clazz, Bson filter, Function<Class<T>, String> order,
             boolean descending, Integer take);
 
     CompletableFuture<Void> reseedAsync();

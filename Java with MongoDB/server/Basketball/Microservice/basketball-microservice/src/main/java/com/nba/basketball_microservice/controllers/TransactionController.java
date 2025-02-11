@@ -82,21 +82,18 @@ public class TransactionController extends BasketballController {
     // return ResponseEntity.ok(participationResult);
     // }
 
-    // @PostMapping("/plays")
-    // public CompletableFuture<ResponseEntity<BasketballResponse<ParticipationVM>>>
-    // addPlay(
-    // @RequestBody AddPlayVM request) {
-    // if (isInvalid(request)) {
-    // return CompletableFuture
-    // .completedFuture(ResponseEntity.badRequest().body(new
-    // BasketballResponse<>(ValidationError)));
-    // }
-    // PlayType playType = PlayType.valueOf(request.getType());
-    // return transactionService
-    // .addPlay(request.getPlayerId(), request.getGameId(), request.getQuarter(),
-    // playType, PLAYS_TO_TAKE)
-    // .thenApply(ResponseEntity::ok);
-    // }
+    @PostMapping("/plays")
+    public CompletableFuture<ResponseEntity<Object>> addPlayAsync(
+            @RequestBody AddPlayVM request) {
+        if (isInvalid(request)) {
+            return CompletableFuture.completedFuture(ResponseEntity.badRequest().body(getValidationError()));
+        }
+        PlayType playType = PlayType.valueOf(request.getType());
+        return TransactionService
+                .addPlayAsync(request.getPlayerId(), request.getGameId(), request.getQuarter(), playType,
+                        PLAYS_TO_TAKE)
+                .thenApply(ResponseEntity::ok);
+    }
 
     // @DeleteMapping("/plays/participation/{participationId}/at/{at}")
     // public CompletableFuture<ResponseEntity<BasketballResponse<ParticipationVM>>>

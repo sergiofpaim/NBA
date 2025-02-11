@@ -51,7 +51,7 @@ public class ParticipationVM extends BasketballViewModel {
         return new ValidationResult(false, "this viewModel cannot be used for write operations");
     }
 
-    public static ParticipationVM fromParticipation(Participation model) {
+    public static ParticipationVM factoryFrom(Participation model) {
         ParticipationVM participationVM = new ParticipationVM();
         participationVM.setParticipationId(model.getId());
         participationVM.setPlayerId(model.getPlayerId());

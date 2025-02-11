@@ -6,6 +6,7 @@ import com.nba.basketball_microservice.models.Type.PlayType;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class GamePlay {
@@ -99,7 +100,7 @@ public class GamePlay {
         return new ValidationResult(true, null);
     }
 
-    public static GamePlay factoryFrom(int quarter, PlayType type, Instant gameAt) {
+    public static GamePlay factoryFrom(int quarter, PlayType type, LocalDateTime gameAt) {
         Integer points = null;
 
         switch (type) {
@@ -116,8 +117,10 @@ public class GamePlay {
                 break;
         }
 
-        Duration durationAt = Duration.ofMinutes((Instant.now().toEpochMilli() - gameAt.toEpochMilli()) / 60000 % 15);
-        LocalTime at = LocalTime.ofSecondOfDay(durationAt.getSeconds());
+        long elapsedMinutes = Duration.between(gameAt, LocalDateTime.now()).toMinutes();
+        long minutesInQuarter = elapsedMinutes % 15;
+
+        LocalTime at = LocalTime.of(0, (int) minutesInQuarter);
 
         return new GamePlay(quarter, type.toString(), points, at);
     }

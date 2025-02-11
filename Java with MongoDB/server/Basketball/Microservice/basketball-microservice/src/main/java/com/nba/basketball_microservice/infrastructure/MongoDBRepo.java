@@ -115,7 +115,7 @@ public class MongoDBRepo implements IBasketballRepo {
     @Override
     public <T extends BasketballModel> T getById(String id, Class<T> clazz) {
         MongoCollection<T> collection = getCollection(clazz);
-        T doc = collection.find(Filters.eq("id", new ObjectId(id))).first();
+        T doc = collection.find(Filters.eq("_id", id)).first();
         if (doc != null)
             return doc;
 
@@ -123,22 +123,30 @@ public class MongoDBRepo implements IBasketballRepo {
     }
 
     @Override
-    public <T extends BasketballModel> List<T> get(Class<T> clazz, Bson filter, Function<T, String> order,
+    public <T extends BasketballModel> List<T> get(Class<T> clazz, Bson filter, Function<Class<T>, String> order,
             boolean descending, Integer take) {
 
         MongoCollection<T> collection = getCollection(clazz);
 
-        if (order != null) {
-            FindIterable<T> documents = collection.find(filter)
-                    .sort(descending ? Sorts.descending(order.apply(null)) : Sorts.ascending(order.apply(null)))
-                    .limit(take != null ? take : 0);
+        FindIterable<T> documents = collection.find(filter);
 
-            return documents.into(new ArrayList<>());
-        } else {
-            FindIterable<T> documents = collection.find(filter)
-                    .limit(take != null ? take : 0);
-            return documents.into(new ArrayList<>());
+        if (order != null) {
+            String orderField = order.apply(clazz);
+            System.out.println(
+                    "Sorting by: " + orderField + " in " + (descending ? "descending" : "ascending") + " order");
+
+            if (orderField != null) {
+                documents = documents.sort(descending ? Sorts.descending(orderField) : Sorts.ascending(orderField));
+            }
         }
+
+        if (take != null && take > 0) {
+            documents = documents.limit(take);
+        }
+
+        documents.into(new ArrayList<>());
+
+        return documents.into(new ArrayList<>());
     }
 
     @Override
