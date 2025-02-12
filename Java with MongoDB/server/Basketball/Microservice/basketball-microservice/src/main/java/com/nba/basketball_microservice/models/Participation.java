@@ -3,7 +3,6 @@ package com.nba.basketball_microservice.models;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nba.basketball_microservice.infrastructure.BasketballModel;
 import com.nba.basketball_microservice.infrastructure.ValidationResult;

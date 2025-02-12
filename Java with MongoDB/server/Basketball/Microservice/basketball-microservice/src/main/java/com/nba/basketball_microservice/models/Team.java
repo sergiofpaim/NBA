@@ -1,14 +1,23 @@
 package com.nba.basketball_microservice.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nba.basketball_microservice.infrastructure.BasketballModel;
 import com.nba.basketball_microservice.infrastructure.ValidationResult;
 
 public class Team extends BasketballModel {
+    @JsonProperty("name")
     private String name;
+    @JsonProperty("state")
     private String state;
+    @JsonProperty("city")
     private String city;
+    @JsonProperty("stadium")
     private String stadium;
+    @JsonProperty("conference")
     private String conference;
+
+    public Team() {
+    }
 
     public String getName() {
         return name;

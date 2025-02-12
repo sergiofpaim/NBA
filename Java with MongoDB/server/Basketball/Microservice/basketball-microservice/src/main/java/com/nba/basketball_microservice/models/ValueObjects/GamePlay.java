@@ -3,7 +3,6 @@ package com.nba.basketball_microservice.models.ValueObjects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nba.basketball_microservice.infrastructure.ValidationResult;
 import com.nba.basketball_microservice.models.Type.PlayType;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;

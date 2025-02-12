@@ -1,17 +1,20 @@
 package com.nba.basketball_microservice.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nba.basketball_microservice.infrastructure.BasketballModel;
 import com.nba.basketball_microservice.infrastructure.ValidationResult;
-
 import java.time.LocalDate;
 
 public class Player extends BasketballModel {
-
+    @JsonProperty("teams")
     private String name;
-
+    @JsonProperty("bornOn")
     private LocalDate bornOn;
-
+    @JsonProperty("position")
     private String position;
+
+    public Player() {
+    }
 
     public String getName() {
         return name;

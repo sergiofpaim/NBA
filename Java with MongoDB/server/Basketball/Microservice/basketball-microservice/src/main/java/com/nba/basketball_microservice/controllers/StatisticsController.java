@@ -35,12 +35,4 @@ public class StatisticsController {
 
         return ResponseEntity.ok(participationResult);
     }
-
-    @PutMapping("/reseed")
-    public ResponseEntity<BasketballResponse<Object>> reseed() {
-
-        var result = StatisticsService.reseed();
-        return ResponseEntity.ok(result);
-
-    }
 }

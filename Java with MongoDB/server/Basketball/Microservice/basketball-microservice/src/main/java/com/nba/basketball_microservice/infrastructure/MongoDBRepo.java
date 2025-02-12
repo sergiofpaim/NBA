@@ -131,17 +131,13 @@ public class MongoDBRepo implements IBasketballRepo {
 
         if (order != null) {
             String orderField = order.apply(clazz);
-            System.out.println(
-                    "Sorting by: " + orderField + " in " + (descending ? "descending" : "ascending") + " order");
 
-            if (orderField != null) {
+            if (orderField != null)
                 documents = documents.sort(descending ? Sorts.descending(orderField) : Sorts.ascending(orderField));
-            }
         }
 
-        if (take != null && take > 0) {
+        if (take != null && take > 0)
             documents = documents.limit(take);
-        }
 
         documents.into(new ArrayList<>());
 

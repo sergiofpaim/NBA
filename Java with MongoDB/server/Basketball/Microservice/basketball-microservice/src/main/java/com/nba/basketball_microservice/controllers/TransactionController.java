@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import com.nba.basketball_microservice.infrastructure.BasketballController;
 import com.nba.basketball_microservice.infrastructure.BasketballResponse;
 import com.nba.basketball_microservice.models.Type.PlayType;
+import com.nba.basketball_microservice.services.StatisticsService;
 import com.nba.basketball_microservice.services.TransactionService;
 import com.nba.basketball_microservice.viewmodels.GameVM;
 import com.nba.basketball_microservice.viewmodels.ParticipatingPlayerVM;
@@ -16,6 +17,7 @@ import com.nba.basketball_microservice.viewmodels.TeamScalationVM;
 import com.nba.basketball_microservice.viewmodels.transactional.AddGameVM;
 import com.nba.basketball_microservice.viewmodels.transactional.AddPlayVM;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -89,12 +91,22 @@ public class TransactionController extends BasketballController {
                 .thenApply(ResponseEntity::ok);
     }
 
-    // @DeleteMapping("/plays/participation/{participationId}/at/{at}")
-    // public CompletableFuture<ResponseEntity<BasketballResponse<ParticipationVM>>>
-    // deletePlay(
-    // @PathVariable String participationId,
-    // @PathVariable TimeSpan at) {
-    // return TransactionService.deletePlay(participationId, at, PLAYS_TO_TAKE)
-    // .thenApply(ResponseEntity::ok);
-    // }
+    @DeleteMapping("/plays/participation/{participationId}/at/{at}")
+    public CompletableFuture<ResponseEntity<BasketballResponse<ParticipationVM>>> deletePlay(
+            @PathVariable String participationId,
+            @PathVariable LocalTime at) {
+
+        return null;
+
+        // TransactionService.deletePlayAsync(participationId, at, PLAYS_TO_TAKE)
+        // .thenApply(ResponseEntity::ok);
+    }
+
+    @PutMapping("/reseed")
+    public ResponseEntity<BasketballResponse<Object>> reseed() {
+
+        var result = StatisticsService.reseed();
+        return ResponseEntity.ok(result);
+
+    }
 }

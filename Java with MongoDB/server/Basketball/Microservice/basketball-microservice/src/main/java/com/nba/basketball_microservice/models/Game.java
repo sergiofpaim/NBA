@@ -1,40 +1,38 @@
 package com.nba.basketball_microservice.models;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nba.basketball_microservice.infrastructure.BasketballModel;
 import com.nba.basketball_microservice.infrastructure.ValidationResult;
 import com.nba.basketball_microservice.models.ValueObjects.PlayerSelection;
 import com.nba.basketball_microservice.models.ValueObjects.TeamScalation;
 import org.bson.types.ObjectId;
-
 import java.util.List;
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 public class Game extends BasketballModel {
+    @JsonProperty("seasonId")
     private String seasonId;
+    @JsonProperty("homeTeamId")
     private String homeTeamId;
+    @JsonProperty("homeTeamName")
     private String homeTeamName;
+    @JsonProperty("homePlayerIds")
     private List<String> homePlayerIds;
+    @JsonProperty("visitorTeamId")
     private String visitorTeamId;
+    @JsonProperty("visitorTeamName")
     private String visitorTeamName;
+    @JsonProperty("visitorPlayerIds")
     private List<String> visitorPlayerIds;
+    @JsonProperty("at")
     private LocalDateTime at;
 
     public Game() {
     }
 
-    @JsonCreator
-    public Game(@JsonProperty("id") String id,
-            @JsonProperty("seasonId") String seasonId,
-            @JsonProperty("homeTeamId") String homeTeamId,
-            @JsonProperty("homeTeamName") String homeTeamName,
-            @JsonProperty("homePlayerIds") List<String> homePlayerIds,
-            @JsonProperty("visitorTeamId") String visitorTeamId,
-            @JsonProperty("visitorTeamName") String visitorTeamName,
-            @JsonProperty("visitorPlayerIds") List<String> visitorPlayerIds,
-            @JsonProperty("at") LocalDateTime at) {
+    public Game(String id, String seasonId, String homeTeamId, String homeTeamName, List<String> homePlayerIds,
+            String visitorTeamId, String visitorTeamName, List<String> visitorPlayerIds, LocalDateTime at) {
         this.setId(id);
         this.seasonId = seasonId;
         this.homeTeamId = homeTeamId;

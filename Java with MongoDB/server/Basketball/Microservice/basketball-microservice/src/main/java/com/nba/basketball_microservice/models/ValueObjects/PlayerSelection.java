@@ -1,22 +1,17 @@
 package com.nba.basketball_microservice.models.ValueObjects;
 
-import org.bson.codecs.pojo.annotations.BsonCreator;
-import org.bson.codecs.pojo.annotations.BsonProperty;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nba.basketball_microservice.infrastructure.ValidationResult;
 
 public class PlayerSelection {
+    @JsonProperty("playerId")
     private String playerId;
+    @JsonProperty("playerName")
     private String playerName;
+    @JsonProperty("jersey")
     private int jersey;
 
-    @BsonCreator
-    public PlayerSelection(@BsonProperty("playerId") String playerId,
-            @BsonProperty("playerName") String playerName,
-            @BsonProperty("jersey") int jersey) {
-        this.playerId = playerId;
-        this.playerName = playerName;
-        this.jersey = jersey;
+    public PlayerSelection() {
     }
 
     public String getPlayerId() {
