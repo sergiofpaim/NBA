@@ -2,13 +2,13 @@ package com.nba.basketball_microservice.viewmodels.transactional;
 
 import com.nba.basketball_microservice.infrastructure.BasketballViewModel;
 import com.nba.basketball_microservice.infrastructure.ValidationResult;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public class AddGameVM extends BasketballViewModel {
 
     private String homeTeamId;
     private String visitorTeamId;
-    private LocalDateTime at;
+    private Date at;
 
     public String getHomeTeamId() {
         return homeTeamId;
@@ -26,11 +26,11 @@ public class AddGameVM extends BasketballViewModel {
         this.visitorTeamId = visitorTeamId;
     }
 
-    public LocalDateTime getAt() {
+    public Date getAt() {
         return at;
     }
 
-    public void setAt(LocalDateTime at) {
+    public void setAt(Date at) {
         this.at = at;
     }
 

@@ -6,8 +6,9 @@ import com.nba.basketball_microservice.infrastructure.ValidationResult;
 import com.nba.basketball_microservice.models.ValueObjects.PlayerSelection;
 import com.nba.basketball_microservice.models.ValueObjects.TeamScalation;
 import org.bson.types.ObjectId;
+
+import java.util.Date;
 import java.util.List;
-import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 public class Game extends BasketballModel {
@@ -26,13 +27,13 @@ public class Game extends BasketballModel {
     @JsonProperty("visitorPlayerIds")
     private List<String> visitorPlayerIds;
     @JsonProperty("at")
-    private LocalDateTime at;
+    private Date at;
 
     public Game() {
     }
 
     public Game(String id, String seasonId, String homeTeamId, String homeTeamName, List<String> homePlayerIds,
-            String visitorTeamId, String visitorTeamName, List<String> visitorPlayerIds, LocalDateTime at) {
+            String visitorTeamId, String visitorTeamName, List<String> visitorPlayerIds, Date at) {
         this.setId(id);
         this.seasonId = seasonId;
         this.homeTeamId = homeTeamId;
@@ -100,11 +101,11 @@ public class Game extends BasketballModel {
         this.visitorPlayerIds = visitorPlayerIds;
     }
 
-    public LocalDateTime getAt() {
+    public Date getAt() {
         return at;
     }
 
-    public void setAt(LocalDateTime at) {
+    public void setAt(Date at) {
         this.at = at;
     }
 
@@ -144,7 +145,7 @@ public class Game extends BasketballModel {
     }
 
     public static Game factoryFrom(String seasonId, TeamScalation homeTeam, TeamScalation visitorTeam,
-            LocalDateTime at) {
+            Date at) {
         return new Game(
                 new ObjectId().toHexString(),
                 seasonId,

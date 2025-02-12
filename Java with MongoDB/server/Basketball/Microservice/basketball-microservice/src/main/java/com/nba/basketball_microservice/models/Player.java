@@ -6,7 +6,7 @@ import com.nba.basketball_microservice.infrastructure.ValidationResult;
 import java.time.LocalDate;
 
 public class Player extends BasketballModel {
-    @JsonProperty("teams")
+    @JsonProperty("name")
     private String name;
     @JsonProperty("bornOn")
     private LocalDate bornOn;

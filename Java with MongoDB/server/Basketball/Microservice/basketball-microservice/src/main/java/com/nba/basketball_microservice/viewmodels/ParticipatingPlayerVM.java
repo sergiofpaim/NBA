@@ -5,6 +5,7 @@ import com.nba.basketball_microservice.models.ValueObjects.GamePlay;
 import com.nba.basketball_microservice.infrastructure.BasketballViewModel;
 import com.nba.basketball_microservice.infrastructure.ValidationResult;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ParticipatingPlayerVM extends BasketballViewModel {
@@ -14,7 +15,7 @@ public class ParticipatingPlayerVM extends BasketballViewModel {
     private String participationId;
     private String teamId;
     private String teamName;
-    private List<GamePlay> plays;
+    private List<GamePlayVM> plays;
 
     public String getPlayerId() {
         return playerId;
@@ -56,11 +57,11 @@ public class ParticipatingPlayerVM extends BasketballViewModel {
         this.teamName = teamName;
     }
 
-    public List<GamePlay> getPlays() {
+    public List<GamePlayVM> getPlays() {
         return plays;
     }
 
-    public void setPlays(List<GamePlay> plays) {
+    public void setPlays(List<GamePlayVM> plays) {
         this.plays = plays;
     }
 
@@ -76,7 +77,13 @@ public class ParticipatingPlayerVM extends BasketballViewModel {
         playerVM.setParticipationId(model.getId());
         playerVM.setTeamId(model.getTeamId());
         playerVM.setTeamName(model.getTeamName());
-        playerVM.setPlays(model.getPlays());
+
+        List<GamePlayVM> gamePlayVMs = new ArrayList<>();
+        for (GamePlay play : model.getPlays()) {
+            gamePlayVMs.add(GamePlayVM.factoryFrom(play));
+        }
+        playerVM.setPlays(gamePlayVMs);
+
         return playerVM;
     }
 }

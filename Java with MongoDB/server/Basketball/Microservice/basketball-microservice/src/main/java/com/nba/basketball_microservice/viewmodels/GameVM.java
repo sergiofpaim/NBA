@@ -4,7 +4,7 @@ import com.nba.basketball_microservice.models.Game;
 import com.nba.basketball_microservice.infrastructure.BasketballViewModel;
 import com.nba.basketball_microservice.infrastructure.ValidationResult;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public class GameVM extends BasketballViewModel {
 
@@ -13,7 +13,7 @@ public class GameVM extends BasketballViewModel {
     private String homeTeamName;
     private String visitorTeamId;
     private String visitorTeamName;
-    private LocalDateTime at;
+    private Date at;
 
     public String getId() {
         return id;
@@ -55,11 +55,11 @@ public class GameVM extends BasketballViewModel {
         this.visitorTeamName = visitorTeamName;
     }
 
-    public LocalDateTime getAt() {
+    public Date getAt() {
         return at;
     }
 
-    public void setAt(LocalDateTime at) {
+    public void setAt(Date at) {
         this.at = at;
     }
 

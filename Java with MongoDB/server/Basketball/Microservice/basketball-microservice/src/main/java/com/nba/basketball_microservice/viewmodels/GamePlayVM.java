@@ -1,14 +1,14 @@
-package com.nba.basketball_microservice.models.ValueObjects;
+package com.nba.basketball_microservice.viewmodels;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nba.basketball_microservice.infrastructure.ValidationResult;
 import com.nba.basketball_microservice.models.Type.PlayType;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.time.ZoneId;
+import com.nba.basketball_microservice.models.ValueObjects.GamePlay;
 
-public class GamePlay {
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
+public class GamePlayVM {
     @JsonProperty("quarter")
     private int quarter;
     @JsonProperty("type")
@@ -16,17 +16,7 @@ public class GamePlay {
     @JsonProperty("points")
     private Integer points;
     @JsonProperty("at")
-    private long at;
-
-    public GamePlay() {
-    }
-
-    public GamePlay(int quarter, String type, Integer points, long at) {
-        this.quarter = quarter;
-        this.type = type;
-        this.points = points;
-        this.at = at;
-    }
+    private String at;
 
     public int getQuarter() {
         return quarter;
@@ -52,11 +42,11 @@ public class GamePlay {
         this.points = points;
     }
 
-    public long getAt() {
+    public String getAt() {
         return at;
     }
 
-    public void setAt(long at) {
+    public void setAt(String at) {
         this.at = at;
     }
 
@@ -92,28 +82,33 @@ public class GamePlay {
                 break;
         }
 
-        long atMinutes = at / 60;
-        if (atMinutes < 0 || atMinutes > 15) {
-            return new ValidationResult(false, "at should be between 00:00 and 15:00 minutes");
+        if (at != null) {
+            try {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss.SSSSSSS");
+                LocalTime atTime = LocalTime.parse(at, formatter);
+                long atMinutes = atTime.getMinute();
+                if (atMinutes < 0 || atMinutes > 15) {
+                    return new ValidationResult(false, "at should be between 00:00 and 15:00 minutes");
+                }
+            } catch (Exception e) {
+                return new ValidationResult(false, "at is invalid or not in the expected format");
+            }
         }
 
         return new ValidationResult(true, null);
     }
 
-    public static GamePlay factoryFrom(int quarter, PlayType type, Date gameAt) {
-        Integer points = switch (type) {
-            case FreeThrowHit -> 1;
-            case TwoPointerHit -> 2;
-            case ThreePointerHit -> 3;
-            default -> null;
-        };
+    public static GamePlayVM factoryFrom(GamePlay model) {
+        GamePlayVM gamePlayVM = new GamePlayVM();
+        gamePlayVM.quarter = model.getQuarter();
+        gamePlayVM.type = model.getType();
+        gamePlayVM.points = model.getPoints();
 
-        LocalDateTime gameDateTime = gameAt.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
+        long milliseconds = model.getAt();
+        LocalTime time = LocalTime.ofNanoOfDay(milliseconds * 1_000_000);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss.SSSSSSS");
+        gamePlayVM.at = time.format(formatter);
 
-        long elapsedMillis = Duration.between(gameDateTime, LocalDateTime.now()).toMillis();
-
-        return new GamePlay(quarter, type.toString(), points, elapsedMillis);
+        return gamePlayVM;
     }
 }

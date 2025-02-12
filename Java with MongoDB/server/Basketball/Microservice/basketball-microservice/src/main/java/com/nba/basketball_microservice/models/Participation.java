@@ -148,6 +148,7 @@ public class Participation extends BasketballModel {
             plays.subList(playsToTake, plays.size()).clear();
         }
 
-        plays.sort((p1, p2) -> p1.getAt().compareTo(p2.getAt()));
+        plays.sort((p1, p2) -> Long.compare(p1.getAt(), p2.getAt()));
     }
+
 }

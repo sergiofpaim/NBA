@@ -1,7 +1,7 @@
 package com.nba.basketball_microservice.services;
 
-import java.time.LocalDateTime;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -28,7 +28,7 @@ import org.springframework.stereotype.Service;
 public class TransactionService extends BasketballService {
 
     public static CompletableFuture<BasketballResponse<GameVM>> addGameAsync(String homeTeamId, String visitorTeamId,
-            LocalDateTime at) {
+            Date at) {
         return CompletableFuture
                 .supplyAsync(() -> Basketball.getRepo()
                         .get(Season.class, Filters.empty(), c -> "Id", false, null))
@@ -180,10 +180,12 @@ public class TransactionService extends BasketballService {
     }
 
     public static BasketballResponse<List<GameVM>> getLastSeasonGames() {
-        List<Season> seasons = Basketball.getRepo().get(Season.class, Filters.empty(), null, true,
-                1);
 
-        Season season = seasons.isEmpty() ? null : seasons.get(0);
+        Season season = Basketball.getRepo()
+                .get(Season.class, Filters.empty(), c -> "Id", false, null)
+                .stream()
+                .max(Comparator.comparingInt(s -> Integer.parseInt(s.getId().substring(0, 2))))
+                .orElse(null);
 
         if (season != null)
             return getSeasonGames(season.getId());
@@ -217,9 +219,11 @@ public class TransactionService extends BasketballService {
     }
 
     public static BasketballResponse<List<TeamScalationVM>> getLastSeasonTeams() {
-        List<Season> seasons = Basketball.getRepo().get(Season.class, Filters.empty(), null, true, 1);
-
-        Season season = seasons.isEmpty() ? null : seasons.get(0);
+        Season season = Basketball.getRepo()
+                .get(Season.class, Filters.empty(), c -> "Id", false, null)
+                .stream()
+                .max(Comparator.comparingInt(s -> Integer.parseInt(s.getId().substring(0, 2))))
+                .orElse(null);
 
         if (season != null)
             return getSeasonTeams(season.getId());
