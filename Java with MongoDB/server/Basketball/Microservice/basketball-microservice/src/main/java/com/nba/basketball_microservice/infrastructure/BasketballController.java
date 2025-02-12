@@ -16,7 +16,9 @@ public class BasketballController {
     protected <T> ResponseEntity<Object> result(BasketballResponse<T> response) {
         if (response.getCode() == 0) {
             return ResponseEntity.ok().body(new Object() {
+                @SuppressWarnings("unused")
                 public final String message = response.getMessage();
+                @SuppressWarnings("unused")
                 public final T payLoad = response.getPayLoad();
             });
         } else if (response.getCode() == 128) {

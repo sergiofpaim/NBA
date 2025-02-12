@@ -99,7 +99,7 @@ public class MongoDBRepo implements IBasketballRepo {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 MongoCollection<T> collection = getCollection((Class<T>) entity.getClass());
-                T result = collection.findOneAndReplace(Filters.eq("id", entity.getId()), entity);
+                T result = collection.findOneAndReplace(Filters.eq("_id", entity.getId()), entity);
                 if (result != null)
                     return result;
                 else {
