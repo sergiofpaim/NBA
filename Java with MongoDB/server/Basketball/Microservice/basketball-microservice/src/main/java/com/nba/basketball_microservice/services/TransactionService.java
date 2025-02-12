@@ -123,6 +123,47 @@ public class TransactionService extends BasketballService {
         });
     }
 
+    public static CompletableFuture<BasketballResponse<ParticipationVM>> deletePlayAsync(String participationId,
+            String at,
+            int playsToTake) {
+        return CompletableFuture.supplyAsync(() -> {
+            List<Participation> participations = Basketball.getRepo().get(Participation.class,
+                    Filters.eq("_id", participationId), null, false, null);
+
+            Participation participation = participations.get(0);
+
+            String[] timeParts = at.split("[:.]");
+            long hours = Long.parseLong(timeParts[0]) * 3600000;
+            long minutes = Long.parseLong(timeParts[1]) * 60000;
+            long seconds = Long.parseLong(timeParts[2]) * 1000;
+            String millisecondsStr = timeParts.length > 3 ? timeParts[3] : "0";
+            millisecondsStr = millisecondsStr.length() > 3 ? millisecondsStr.substring(0, 3) : millisecondsStr;
+            long milliseconds = Long.parseLong(millisecondsStr);
+            long atMillis = hours + minutes + seconds + milliseconds;
+
+            var toRemove = participation.getPlays().stream()
+                    .filter(p -> p.getAt() == atMillis)
+                    .findFirst()
+                    .orElse(null);
+
+            if (toRemove == null) {
+                return error("Play not found.");
+            }
+
+            participation.getPlays().remove(toRemove);
+
+            Basketball.getRepo().updateAsync(participation);
+
+            if (participation.getPlays().contains(toRemove)) {
+                return error("Play was not successfully removed from the list.");
+            }
+
+            participation.trimPlays(playsToTake);
+
+            return success(ParticipationVM.factoryFrom(participation), null);
+        });
+    }
+
     public static BasketballResponse<ParticipationVM> getParticipation(String gameId, String playerId,
             int playsToTake) {
         List<Participation> participations = Basketball.getRepo().get(Participation.class,
@@ -239,5 +280,4 @@ public class TransactionService extends BasketballService {
         }
         return null;
     }
-
 }

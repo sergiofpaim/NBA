@@ -17,7 +17,6 @@ import com.nba.basketball_microservice.viewmodels.TeamScalationVM;
 import com.nba.basketball_microservice.viewmodels.transactional.AddGameVM;
 import com.nba.basketball_microservice.viewmodels.transactional.AddPlayVM;
 
-import java.time.LocalTime;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -94,12 +93,10 @@ public class TransactionController extends BasketballController {
     @DeleteMapping("/plays/participation/{participationId}/at/{at}")
     public CompletableFuture<ResponseEntity<BasketballResponse<ParticipationVM>>> deletePlay(
             @PathVariable String participationId,
-            @PathVariable LocalTime at) {
+            @PathVariable String at) {
 
-        return null;
-
-        // TransactionService.deletePlayAsync(participationId, at, PLAYS_TO_TAKE)
-        // .thenApply(ResponseEntity::ok);
+        return TransactionService.deletePlayAsync(participationId, at, PLAYS_TO_TAKE)
+                .thenApply(ResponseEntity::ok);
     }
 
     @PutMapping("/reseed")
