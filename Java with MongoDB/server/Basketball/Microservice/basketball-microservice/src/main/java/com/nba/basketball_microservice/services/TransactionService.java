@@ -3,13 +3,14 @@ package com.nba.basketball_microservice.services;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.mongodb.client.model.Filters;
 import com.nba.basketball_microservice.infrastructure.Basketball;
 import com.nba.basketball_microservice.infrastructure.BasketballResponse;
 import com.nba.basketball_microservice.infrastructure.BasketballService;
+import com.nba.basketball_microservice.infrastructure.MongoDBRepo;
 import com.nba.basketball_microservice.models.Game;
 import com.nba.basketball_microservice.models.Participation;
 import com.nba.basketball_microservice.models.Player;
@@ -27,64 +28,61 @@ import org.springframework.stereotype.Service;
 @Service
 public class TransactionService extends BasketballService {
 
-    public static CompletableFuture<BasketballResponse<GameVM>> addGameAsync(String homeTeamId, String visitorTeamId,
-            Date at) {
-        return CompletableFuture
-                .supplyAsync(() -> Basketball.getRepo()
-                        .get(Season.class, Filters.empty(), c -> "Id", false, null))
-                .thenApply(seasons -> seasons.stream()
-                        .max(Comparator.comparingInt(s -> Integer.parseInt(s.getId().substring(0, 2)))))
-                .thenCompose(lastSeason -> {
-                    if (lastSeason.isEmpty())
-                        return CompletableFuture.completedFuture(error("There is no season registered yet."));
+    public static BasketballResponse<GameVM> addGame(String homeTeamId, String visitorTeamId, Date at) {
+        List<Season> seasons = Basketball.getRepo().get(Season.class, Filters.empty(), c -> "Id", false, null);
+        Optional<Season> lastSeason = seasons.stream()
+                .max(Comparator.comparingInt(s -> Integer.parseInt(s.getId().substring(0, 2))));
 
-                    var homeTeam = lastSeason.get().getTeams().stream()
-                            .filter(t -> t.getId().equals(homeTeamId))
-                            .findFirst()
-                            .orElse(null);
+        if (lastSeason.isEmpty()) {
+            return error("There is no season registered yet.");
+        }
 
-                    if (homeTeam == null)
-                        return CompletableFuture.completedFuture(notFound("Home team not found."));
+        var homeTeam = lastSeason.get().getTeams().stream()
+                .filter(t -> t.getId().equals(homeTeamId))
+                .findFirst()
+                .orElse(null);
 
-                    var visitorTeam = lastSeason.get().getTeams().stream()
-                            .filter(t -> t.getId().equals(visitorTeamId))
-                            .findFirst()
-                            .orElse(null);
+        if (homeTeam == null) {
+            return notFound("Home team not found.");
+        }
 
-                    if (visitorTeam == null)
-                        return CompletableFuture.completedFuture(notFound("Visitor team not found."));
+        var visitorTeam = lastSeason.get().getTeams().stream()
+                .filter(t -> t.getId().equals(visitorTeamId))
+                .findFirst()
+                .orElse(null);
 
-                    var game = Game.factoryFrom(lastSeason.get().getId(), homeTeam, visitorTeam, at);
+        if (visitorTeam == null) {
+            return notFound("Visitor team not found.");
+        }
 
-                    System.out.println(game);
+        var game = Game.factoryFrom(lastSeason.get().getId(), homeTeam, visitorTeam, at);
 
-                    return Basketball.getRepo().createAsync(game)
-                            .thenApply(ignored -> {
-                                if (game.getId() == null)
-                                    return error("Failed to add the game to the database.");
+        System.out.println(game);
 
-                                return success(GameVM.factorFrom(game),
-                                        "Game added to the database with Id: " + game.getId());
-                            });
+        Basketball.getRepo().create(game);
 
-                });
+        if (game.getId() == null) {
+            return error("Failed to add the game to the database.");
+        }
+
+        return success(GameVM.factorFrom(game), "Game added to the database with Id: " + game.getId());
     }
 
-    public static CompletableFuture<BasketballResponse<ParticipationVM>> addPlayAsync(String playerId, String gameId,
+    public static BasketballResponse<ParticipationVM> addPlay(String playerId, String gameId,
             int quarter, PlayType type, int playsToTake) {
         Game game = Basketball.getRepo().getById(gameId, Game.class);
         if (game == null) {
-            return CompletableFuture.completedFuture(notFound("Game not found."));
+            return notFound("Game not found.");
         }
 
         Boolean isHomePlayer = isPartOfHomeTeam(game, playerId);
         if (isHomePlayer == null) {
-            return CompletableFuture.completedFuture(notFound("Player does not participate in the game."));
+            return notFound("Player does not participate in the game.");
         }
 
         Player player = Basketball.getRepo().getById(playerId, Player.class);
         if (player == null) {
-            return CompletableFuture.completedFuture(notFound("Player not found."));
+            return notFound("Player not found.");
         }
 
         var participations = Basketball.getRepo().get(Participation.class,
@@ -94,74 +92,59 @@ public class TransactionService extends BasketballService {
 
         var newPlay = GamePlay.factoryFrom(quarter, type, game.getAt());
 
-        CompletableFuture<Participation> futureSaved;
-
         final Participation[] participationHolder = new Participation[1];
         if (participation == null) {
             if (isHomePlayer) {
                 participationHolder[0] = Participation.factoryFrom(game, player, game.getHomeTeamName(),
-                        game.getHomeTeamId(),
-                        newPlay);
+                        game.getHomeTeamId(), newPlay);
             } else {
                 participationHolder[0] = Participation.factoryFrom(game, player, game.getVisitorTeamName(),
                         game.getVisitorTeamId(), newPlay);
             }
-            futureSaved = Basketball.getRepo().createAsync(participationHolder[0]);
+            Basketball.getRepo().create(participationHolder[0]);
         } else {
             participation.registerPlay(newPlay);
             participationHolder[0] = participation;
-            futureSaved = Basketball.getRepo().updateAsync(participation);
+            Basketball.getRepo().update(participation);
         }
 
-        return futureSaved.thenApply(saved -> {
-            participationHolder[0].trimPlays(playsToTake);
-            if (saved == null) {
-                return error("Failed to add the play to the database.");
-            } else {
-                return success(ParticipationVM.factoryFrom(participationHolder[0]), "Play added to the database.");
-            }
-        });
+        participationHolder[0].trimPlays(playsToTake);
+        if (participationHolder[0].getId() == null) {
+            return error("Failed to add the play to the database.");
+        } else {
+            return success(ParticipationVM.factoryFrom(participationHolder[0]), "Play added to the database.");
+        }
     }
 
-    public static CompletableFuture<BasketballResponse<ParticipationVM>> deletePlayAsync(String participationId,
-            String at,
-            int playsToTake) {
-        return CompletableFuture.supplyAsync(() -> {
-            List<Participation> participations = Basketball.getRepo().get(Participation.class,
-                    Filters.eq("_id", participationId), null, false, null);
+    public static BasketballResponse<ParticipationVM> deletePlay(String participationId,
+            String at, int playsToTake) {
+        List<Participation> participations = Basketball.getRepo().get(Participation.class,
+                Filters.eq("_id", participationId), null, false, null);
 
-            Participation participation = participations.get(0);
+        Participation participation = participations.get(0);
 
-            String[] timeParts = at.split("[:.]");
-            long hours = Long.parseLong(timeParts[0]) * 3600000;
-            long minutes = Long.parseLong(timeParts[1]) * 60000;
-            long seconds = Long.parseLong(timeParts[2]) * 1000;
-            String millisecondsStr = timeParts.length > 3 ? timeParts[3] : "0";
-            millisecondsStr = millisecondsStr.length() > 3 ? millisecondsStr.substring(0, 3) : millisecondsStr;
-            long milliseconds = Long.parseLong(millisecondsStr);
-            long atMillis = hours + minutes + seconds + milliseconds;
+        long atMillis = MongoDBRepo.getLongTimeSpanFromString(at);
 
-            var toRemove = participation.getPlays().stream()
-                    .filter(p -> p.getAt() == atMillis)
-                    .findFirst()
-                    .orElse(null);
+        var toRemove = participation.getPlays().stream()
+                .filter(p -> p.getAt() == atMillis)
+                .findFirst()
+                .orElse(null);
 
-            if (toRemove == null) {
-                return error("Play not found.");
-            }
+        if (toRemove == null) {
+            return notFound("Play not found.");
+        }
 
-            participation.getPlays().remove(toRemove);
+        participation.getPlays().remove(toRemove);
 
-            Basketball.getRepo().updateAsync(participation);
+        Basketball.getRepo().update(participation);
 
-            if (participation.getPlays().contains(toRemove)) {
-                return error("Play was not successfully removed from the list.");
-            }
+        if (participation.getPlays().contains(toRemove)) {
+            return error("Play was not successfully removed from the list.");
+        }
 
-            participation.trimPlays(playsToTake);
+        participation.trimPlays(playsToTake);
 
-            return success(ParticipationVM.factoryFrom(participation), null);
-        });
+        return success(ParticipationVM.factoryFrom(participation), null);
     }
 
     public static BasketballResponse<ParticipationVM> getParticipation(String gameId, String playerId,

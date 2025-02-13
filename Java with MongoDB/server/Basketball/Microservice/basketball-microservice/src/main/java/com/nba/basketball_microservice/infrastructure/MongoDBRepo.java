@@ -77,38 +77,36 @@ public class MongoDBRepo implements IBasketballRepo {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends BasketballModel> CompletableFuture<T> createAsync(T entity) {
-        return CompletableFuture.supplyAsync(() -> {
-            try {
-                MongoCollection<T> collection = getCollection((Class<T>) entity.getClass());
-                var result = collection.insertOne(entity);
+    public <T extends BasketballModel> T create(T entity) {
+        try {
+            MongoCollection<T> collection = getCollection((Class<T>) entity.getClass());
+            var result = collection.insertOne(entity);
 
-                if (result.getInsertedId() != null)
-                    return getById(entity.getId(), (Class<T>) entity.getClass());
-                else
-                    throw new RuntimeException("Error inserting entity: " + entity);
-            } catch (Exception e) {
-                throw new RuntimeException("Error inserting entity: " + e.getMessage(), e);
+            if (result.getInsertedId() != null) {
+                return getById(entity.getId(), (Class<T>) entity.getClass());
+            } else {
+                throw new RuntimeException("Error inserting entity: " + entity);
             }
-        });
+        } catch (Exception e) {
+            throw new RuntimeException("Error inserting entity: " + e.getMessage(), e);
+        }
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T extends BasketballModel> CompletableFuture<T> updateAsync(T entity) {
-        return CompletableFuture.supplyAsync(() -> {
-            try {
-                MongoCollection<T> collection = getCollection((Class<T>) entity.getClass());
-                T result = collection.findOneAndReplace(Filters.eq("_id", entity.getId()), entity);
-                if (result != null)
-                    return result;
-                else {
-                    throw new RuntimeException("No matching document found for update.");
-                }
-            } catch (Exception e) {
-                throw new RuntimeException("Error updating entity: " + e.getMessage(), e);
+    public <T extends BasketballModel> T update(T entity) {
+        try {
+            MongoCollection<T> collection = getCollection((Class<T>) entity.getClass());
+            T result = collection.findOneAndReplace(Filters.eq("_id", entity.getId()), entity);
+
+            if (result != null) {
+                return result;
+            } else {
+                throw new RuntimeException("No matching document found for update.");
             }
-        });
+        } catch (Exception e) {
+            throw new RuntimeException("Error updating entity: " + e.getMessage(), e);
+        }
     }
 
     @Override
@@ -145,18 +143,16 @@ public class MongoDBRepo implements IBasketballRepo {
     }
 
     @Override
-    public CompletableFuture<Void> reseedAsync() {
-        return CompletableFuture.runAsync(() -> {
-            try {
-                reseedCollection(Player.class);
-                reseedCollection(Game.class);
-                reseedCollection(Season.class);
-                reseedCollection(Team.class);
-                reseedCollection(Participation.class);
-            } catch (Exception e) {
-                throw new RuntimeException("Error reseeding database: " + e.getMessage(), e);
-            }
-        });
+    public void reseed() {
+        try {
+            reseedCollection(Player.class);
+            reseedCollection(Game.class);
+            reseedCollection(Season.class);
+            reseedCollection(Team.class);
+            reseedCollection(Participation.class);
+        } catch (Exception e) {
+            throw new RuntimeException("Error reseeding database: " + e.getMessage(), e);
+        }
     }
 
     private <T extends BasketballModel> void reseedCollection(Class<T> modelClass) throws IOException {
@@ -172,5 +168,26 @@ public class MongoDBRepo implements IBasketballRepo {
             collection.insertOne(entity);
         }
         System.out.println("Reseeded " + modelClass.getSimpleName() + " collection.");
+    }
+
+    public static long getLongTimeSpanFromString(String at) {
+        String[] timeParts = at.split("[:.]");
+        long hours = Long.parseLong(timeParts[0]) * 3600000;
+        long minutes = Long.parseLong(timeParts[1]) * 60000;
+        long seconds = Long.parseLong(timeParts[2]) * 1000;
+        String millisecondsStr = timeParts.length > 3 ? timeParts[3] : "0";
+        millisecondsStr = millisecondsStr.length() > 3 ? millisecondsStr.substring(0, 3) : millisecondsStr;
+        long milliseconds = Long.parseLong(millisecondsStr);
+        long atMillis = hours + minutes + seconds + milliseconds;
+        return atMillis;
+    }
+
+    public static boolean isTimeSpan(String at) {
+        try {
+            getLongTimeSpanFromString(at);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

@@ -65,7 +65,7 @@ public class StatisticsService extends BasketballService {
 
         public static BasketballResponse<Object> reseed() {
                 try {
-                        Basketball.getRepo().reseedAsync();
+                        Basketball.getRepo().reseed();
                         return success(null, "Reseed completed.");
                 } catch (Exception e) {
                         System.err.println(e);

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.nba.basketball_microservice.infrastructure.BasketballController;
 import com.nba.basketball_microservice.infrastructure.BasketballResponse;
+import com.nba.basketball_microservice.infrastructure.MongoDBRepo;
 import com.nba.basketball_microservice.models.Type.PlayType;
 import com.nba.basketball_microservice.services.StatisticsService;
 import com.nba.basketball_microservice.services.TransactionService;
@@ -16,9 +17,7 @@ import com.nba.basketball_microservice.viewmodels.SeasonVM;
 import com.nba.basketball_microservice.viewmodels.TeamScalationVM;
 import com.nba.basketball_microservice.viewmodels.transactional.AddGameVM;
 import com.nba.basketball_microservice.viewmodels.transactional.AddPlayVM;
-
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/transaction")
@@ -30,43 +29,43 @@ public class TransactionController extends BasketballController {
     @Autowired
     @GetMapping("/seasons")
     public ResponseEntity<BasketballResponse<List<SeasonVM>>> getSeasons() {
-        var seasonResult = TransactionService.getSeasons();
-        return ResponseEntity.ok(seasonResult);
+        var seasons = TransactionService.getSeasons();
+        return result(seasons);
     }
 
     @GetMapping("/seasons/last/games")
     public ResponseEntity<BasketballResponse<List<GameVM>>> getLastSeasonGames() {
-        var seasonResult = TransactionService.getLastSeasonGames();
-        return ResponseEntity.ok(seasonResult);
+        var games = TransactionService.getLastSeasonGames();
+        return result(games);
     }
 
     @GetMapping("/seasons/{seasonId}/games")
     public ResponseEntity<BasketballResponse<List<GameVM>>> getSeasonGames(@PathVariable String seasonId) {
-        var seasonResult = TransactionService.getSeasonGames(seasonId);
-        return ResponseEntity.ok(seasonResult);
+        var games = TransactionService.getSeasonGames(seasonId);
+        return result(games);
     }
 
     @GetMapping("/seasons/last/teams")
     public ResponseEntity<BasketballResponse<List<TeamScalationVM>>> getLastSeasonTeams() {
-        var seasonResult = TransactionService.getLastSeasonTeams();
-        return ResponseEntity.ok(seasonResult);
+        var teams = TransactionService.getLastSeasonTeams();
+        return result(teams);
     }
 
     @PostMapping("/games")
-    public CompletableFuture<ResponseEntity<Object>> addGameAsync(@RequestBody AddGameVM request) {
-        if (isInvalid(request)) {
-            return CompletableFuture.completedFuture(ResponseEntity.badRequest().body(getValidationError()));
-        }
+    public ResponseEntity<BasketballResponse<GameVM>> addGameAsync(@RequestBody AddGameVM request) {
+        if (isInvalid(request))
+            return badRequest();
 
-        return TransactionService.addGameAsync(request.getHomeTeamId(), request.getVisitorTeamId(), request.getAt())
-                .thenApply(this::result);
+        var game = TransactionService.addGame(request.getHomeTeamId(), request.getVisitorTeamId(), request.getAt());
+
+        return result(game);
     }
 
     @GetMapping("/games/{gameId}/players")
     public ResponseEntity<BasketballResponse<List<ParticipatingPlayerVM>>> getParticipatingPlayers(
             @PathVariable String gameId) {
         var seasonResult = TransactionService.getParticipatingPlayers(gameId);
-        return ResponseEntity.ok(seasonResult);
+        return result(seasonResult);
     }
 
     @GetMapping("/games/{gameId}/players/{playerId}/participation")
@@ -74,36 +73,40 @@ public class TransactionController extends BasketballController {
             @PathVariable String playerId) {
         var participationResult = TransactionService.getParticipation(gameId,
                 playerId, PLAYS_TO_TAKE);
-        return ResponseEntity.ok(participationResult);
+        return result(participationResult);
     }
 
     @PostMapping("/plays")
-    public CompletableFuture<ResponseEntity<Object>> addPlayAsync(
+    public ResponseEntity<BasketballResponse<ParticipationVM>> addPlay(
             @RequestBody AddPlayVM request) {
         if (isInvalid(request)) {
-            return CompletableFuture.completedFuture(ResponseEntity.badRequest().body(getValidationError()));
+            return badRequest();
         }
         PlayType playType = PlayType.valueOf(request.getType());
-        return TransactionService
-                .addPlayAsync(request.getPlayerId(), request.getGameId(), request.getQuarter(), playType,
-                        PLAYS_TO_TAKE)
-                .thenApply(ResponseEntity::ok);
+        var play = TransactionService.addPlay(request.getPlayerId(), request.getGameId(), request.getQuarter(),
+                playType, PLAYS_TO_TAKE);
+
+        return result(play);
     }
 
     @DeleteMapping("/plays/participation/{participationId}/at/{at}")
-    public CompletableFuture<ResponseEntity<BasketballResponse<ParticipationVM>>> deletePlay(
+    public ResponseEntity<BasketballResponse<ParticipationVM>> deletePlay(
             @PathVariable String participationId,
             @PathVariable String at) {
 
-        return TransactionService.deletePlayAsync(participationId, at, PLAYS_TO_TAKE)
-                .thenApply(ResponseEntity::ok);
+        if (!MongoDBRepo.isTimeSpan(at))
+            return badRequest("Invalid time span");
+
+        var participation = TransactionService.deletePlay(participationId, at, PLAYS_TO_TAKE);
+
+        return result(participation);
     }
 
     @PutMapping("/reseed")
     public ResponseEntity<BasketballResponse<Object>> reseed() {
 
         var result = StatisticsService.reseed();
-        return ResponseEntity.ok(result);
+        return result(result);
 
     }
 }

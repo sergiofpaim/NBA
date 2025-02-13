@@ -13,18 +13,13 @@ public class BasketballController {
         return validationError;
     }
 
-    protected <T> ResponseEntity<Object> result(BasketballResponse<T> response) {
+    protected <T> ResponseEntity<BasketballResponse<T>> result(BasketballResponse<T> response) {
         if (response.getCode() == 0) {
-            return ResponseEntity.ok().body(new Object() {
-                @SuppressWarnings("unused")
-                public final String message = response.getMessage();
-                @SuppressWarnings("unused")
-                public final T payLoad = response.getPayLoad();
-            });
+            return ResponseEntity.ok(response);
         } else if (response.getCode() == 128) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 
@@ -33,5 +28,16 @@ public class BasketballController {
         validationError = validationResult.getMessage();
 
         return !validationResult.isSuccess();
+    }
+
+    protected <T> ResponseEntity<BasketballResponse<T>> badRequest() {
+        return badRequest(validationError);
+    }
+
+    protected <T> ResponseEntity<BasketballResponse<T>> badRequest(String message) {
+        var response = new BasketballResponse<T>();
+        response.setMessage(message);
+
+        return ResponseEntity.badRequest().body(response);
     }
 }
