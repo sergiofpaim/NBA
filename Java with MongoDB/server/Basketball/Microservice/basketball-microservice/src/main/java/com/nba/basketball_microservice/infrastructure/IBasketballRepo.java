@@ -2,7 +2,6 @@ package com.nba.basketball_microservice.infrastructure;
 
 import java.util.List;
 import java.util.function.Function;
-
 import org.bson.conversions.Bson;
 
 public interface IBasketballRepo {

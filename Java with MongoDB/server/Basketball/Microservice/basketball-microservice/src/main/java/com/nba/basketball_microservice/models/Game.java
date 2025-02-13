@@ -6,7 +6,6 @@ import com.nba.basketball_microservice.infrastructure.ValidationResult;
 import com.nba.basketball_microservice.models.ValueObjects.PlayerSelection;
 import com.nba.basketball_microservice.models.ValueObjects.TeamScalation;
 import org.bson.types.ObjectId;
-
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;

@@ -11,8 +11,3774 @@
         "quarter": 3,
         "type": "Block",
         "at": 478295
+      },
+      {
+        "quarter": 1,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 765112
+      },
+      {
+        "quarter": 1,
+        "type": "ThreePointerMiss",
+        "at": 740946
+      },
+      {
+        "quarter": 3,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 767961
+      },
+      {
+        "quarter": 4,
+        "type": "ThreePointerMiss",
+        "at": 777495
       }
     ],
     "id": "1c2188cf"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "f1b8399d",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "2",
+    "playerName": "Anthony Davis",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 398012
+      },
+      {
+        "quarter": 3,
+        "type": "Rebound",
+        "at": 747441
+      },
+      {
+        "quarter": 4,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 3496
+      },
+      {
+        "quarter": 3,
+        "type": "ThreePointerMiss",
+        "at": 762962
+      },
+      {
+        "quarter": 2,
+        "type": "TwoPointerMiss",
+        "at": 354418
+      }
+    ],
+    "id": "5e62d915"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "f1b8399d",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "3",
+    "playerName": "D'Angelo Russell",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 492613
+      },
+      {
+        "quarter": 2,
+        "type": "Foul",
+        "at": 230760
+      },
+      {
+        "quarter": 2,
+        "type": "ThreePointerMiss",
+        "at": 253504
+      }
+    ],
+    "id": "2b4f1576"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "f1b8399d",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "4",
+    "playerName": "Rui Hachimura",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "Assist",
+        "at": 400532
+      },
+      {
+        "quarter": 4,
+        "type": "Turnover",
+        "at": 596599
+      },
+      {
+        "quarter": 2,
+        "type": "Assist",
+        "at": 879546
+      },
+      {
+        "quarter": 3,
+        "type": "ThreePointerMiss",
+        "at": 263543
+      }
+    ],
+    "id": "2fba4f91"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "f1b8399d",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "5",
+    "playerName": "Jarred Vanderbilt",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "Assist",
+        "at": 498103
+      },
+      {
+        "quarter": 3,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 869143
+      },
+      {
+        "quarter": 4,
+        "type": "TwoPointerMiss",
+        "at": 840617
+      },
+      {
+        "quarter": 2,
+        "type": "Rebound",
+        "at": 346823
+      }
+    ],
+    "id": "7ecdc508"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "f1b8399d",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "16",
+    "playerName": "Jimmy Butler",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "Block",
+        "at": 348596
+      },
+      {
+        "quarter": 1,
+        "type": "Block",
+        "at": 224461
+      },
+      {
+        "quarter": 1,
+        "type": "Block",
+        "at": 586409
+      },
+      {
+        "quarter": 3,
+        "type": "Rebound",
+        "at": 583088
+      }
+    ],
+    "id": "36d66d9a"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "f1b8399d",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "17",
+    "playerName": "Bam Adebayo",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "Foul",
+        "at": 340515
+      },
+      {
+        "quarter": 4,
+        "type": "Assist",
+        "at": 806621
+      },
+      {
+        "quarter": 4,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 178827
+      },
+      {
+        "quarter": 2,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 83377
+      }
+    ],
+    "id": "254ec4ea"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "f1b8399d",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "18",
+    "playerName": "Tyler Herro",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 537237
+      },
+      {
+        "quarter": 1,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 825219
+      },
+      {
+        "quarter": 1,
+        "type": "Block",
+        "at": 9483
+      }
+    ],
+    "id": "e30b3d92"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "f1b8399d",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "19",
+    "playerName": "Kyle Lowry",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "Foul",
+        "at": 576451
+      },
+      {
+        "quarter": 2,
+        "type": "Turnover",
+        "at": 162181
+      },
+      {
+        "quarter": 3,
+        "type": "FreeThrowMiss",
+        "at": 832420
+      }
+    ],
+    "id": "2824bc97"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "f1b8399d",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "20",
+    "playerName": "Victor Oladipo",
+    "plays": [
+      {
+        "quarter": 3,
+        "type": "Foul",
+        "at": 374847
+      },
+      {
+        "quarter": 2,
+        "type": "Rebound",
+        "at": 531031
+      },
+      {
+        "quarter": 1,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 194761
+      },
+      {
+        "quarter": 4,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 853927
+      }
+    ],
+    "id": "e4ea9cf6"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "9b57eec2",
+    "teamId": "GSW",
+    "teamName": "Golden State Warriors",
+    "playerId": "6",
+    "playerName": "Stephen Curry",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 614159
+      },
+      {
+        "quarter": 3,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 156504
+      },
+      {
+        "quarter": 1,
+        "type": "Block",
+        "at": 628356
+      }
+    ],
+    "id": "36b414ea"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "9b57eec2",
+    "teamId": "GSW",
+    "teamName": "Golden State Warriors",
+    "playerId": "7",
+    "playerName": "Klay Thompson",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 156884
+      },
+      {
+        "quarter": 3,
+        "type": "Turnover",
+        "at": 337723
+      },
+      {
+        "quarter": 4,
+        "type": "Rebound",
+        "at": 40951
+      }
+    ],
+    "id": "1838953c"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "9b57eec2",
+    "teamId": "GSW",
+    "teamName": "Golden State Warriors",
+    "playerId": "8",
+    "playerName": "Draymond Green",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "Foul",
+        "at": 290624
+      },
+      {
+        "quarter": 2,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 157042
+      },
+      {
+        "quarter": 1,
+        "type": "Turnover",
+        "at": 848249
+      }
+    ],
+    "id": "d30a4f6d"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "9b57eec2",
+    "teamId": "GSW",
+    "teamName": "Golden State Warriors",
+    "playerId": "9",
+    "playerName": "Andrew Wiggins",
+    "plays": [
+      {
+        "quarter": 3,
+        "type": "Rebound",
+        "at": 877112
+      },
+      {
+        "quarter": 1,
+        "type": "Turnover",
+        "at": 490460
+      },
+      {
+        "quarter": 4,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 672513
+      }
+    ],
+    "id": "b1055052"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "9b57eec2",
+    "teamId": "GSW",
+    "teamName": "Golden State Warriors",
+    "playerId": "10",
+    "playerName": "Kevon Looney",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "TwoPointerMiss",
+        "at": 208100
+      },
+      {
+        "quarter": 4,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 439207
+      },
+      {
+        "quarter": 3,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 863558
+      },
+      {
+        "quarter": 4,
+        "type": "FreeThrowMiss",
+        "at": 498802
+      }
+    ],
+    "id": "00b2cc4c"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "9b57eec2",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "1",
+    "playerName": "LeBron James",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "Block",
+        "at": 349921
+      },
+      {
+        "quarter": 2,
+        "type": "Assist",
+        "at": 612720
+      },
+      {
+        "quarter": 4,
+        "type": "Assist",
+        "at": 656097
+      },
+      {
+        "quarter": 2,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 679188
+      }
+    ],
+    "id": "fcef49a2"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "9b57eec2",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "2",
+    "playerName": "Anthony Davis",
+    "plays": [
+      {
+        "quarter": 3,
+        "type": "Block",
+        "at": 242594
+      },
+      {
+        "quarter": 4,
+        "type": "Turnover",
+        "at": 807154
+      },
+      {
+        "quarter": 1,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 804951
+      },
+      {
+        "quarter": 4,
+        "type": "Foul",
+        "at": 686118
+      }
+    ],
+    "id": "d4795dd9"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "9b57eec2",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "3",
+    "playerName": "D'Angelo Russell",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "Turnover",
+        "at": 316910
+      },
+      {
+        "quarter": 2,
+        "type": "TwoPointerMiss",
+        "at": 646271
+      },
+      {
+        "quarter": 3,
+        "type": "Assist",
+        "at": 375579
+      },
+      {
+        "quarter": 4,
+        "type": "Block",
+        "at": 667824
+      },
+      {
+        "quarter": 2,
+        "type": "Rebound",
+        "at": 644074
+      }
+    ],
+    "id": "c6c60e8a"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "9b57eec2",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "4",
+    "playerName": "Rui Hachimura",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "Turnover",
+        "at": 874695
+      },
+      {
+        "quarter": 2,
+        "type": "Assist",
+        "at": 874931
+      },
+      {
+        "quarter": 1,
+        "type": "Block",
+        "at": 850549
+      },
+      {
+        "quarter": 1,
+        "type": "ThreePointerMiss",
+        "at": 391909
+      }
+    ],
+    "id": "99a4baf3"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "9b57eec2",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "5",
+    "playerName": "Jarred Vanderbilt",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "Foul",
+        "at": 130687
+      },
+      {
+        "quarter": 1,
+        "type": "Rebound",
+        "at": 718537
+      },
+      {
+        "quarter": 3,
+        "type": "Turnover",
+        "at": 808721
+      },
+      {
+        "quarter": 1,
+        "type": "Rebound",
+        "at": 644508
+      },
+      {
+        "quarter": 2,
+        "type": "Assist",
+        "at": 683531
+      }
+    ],
+    "id": "a7f2854a"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "384ba0fc",
+    "teamId": "GSW",
+    "teamName": "Golden State Warriors",
+    "playerId": "6",
+    "playerName": "Stephen Curry",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 205713
+      },
+      {
+        "quarter": 3,
+        "type": "ThreePointerMiss",
+        "at": 264403
+      },
+      {
+        "quarter": 2,
+        "type": "TwoPointerMiss",
+        "at": 617947
+      },
+      {
+        "quarter": 4,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 727543
+      }
+    ],
+    "id": "31f7a0e0"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "384ba0fc",
+    "teamId": "GSW",
+    "teamName": "Golden State Warriors",
+    "playerId": "7",
+    "playerName": "Klay Thompson",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 73489
+      },
+      {
+        "quarter": 1,
+        "type": "Foul",
+        "at": 595768
+      },
+      {
+        "quarter": 4,
+        "type": "Foul",
+        "at": 866671
+      }
+    ],
+    "id": "58ddb771"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "384ba0fc",
+    "teamId": "GSW",
+    "teamName": "Golden State Warriors",
+    "playerId": "8",
+    "playerName": "Draymond Green",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 137342
+      },
+      {
+        "quarter": 1,
+        "type": "Rebound",
+        "at": 703296
+      },
+      {
+        "quarter": 4,
+        "type": "TwoPointerMiss",
+        "at": 97051
+      },
+      {
+        "quarter": 4,
+        "type": "Assist",
+        "at": 774632
+      },
+      {
+        "quarter": 4,
+        "type": "Assist",
+        "at": 372467
+      }
+    ],
+    "id": "c91f49f9"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "384ba0fc",
+    "teamId": "GSW",
+    "teamName": "Golden State Warriors",
+    "playerId": "9",
+    "playerName": "Andrew Wiggins",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 508107
+      },
+      {
+        "quarter": 1,
+        "type": "Foul",
+        "at": 825938
+      },
+      {
+        "quarter": 4,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 572325
+      }
+    ],
+    "id": "1b1577ab"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "384ba0fc",
+    "teamId": "GSW",
+    "teamName": "Golden State Warriors",
+    "playerId": "10",
+    "playerName": "Kevon Looney",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 572390
+      },
+      {
+        "quarter": 2,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 534930
+      },
+      {
+        "quarter": 1,
+        "type": "FreeThrowMiss",
+        "at": 348309
+      },
+      {
+        "quarter": 1,
+        "type": "Foul",
+        "at": 855657
+      }
+    ],
+    "id": "eab6ebee"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "384ba0fc",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "16",
+    "playerName": "Jimmy Butler",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "Foul",
+        "at": 637810
+      },
+      {
+        "quarter": 1,
+        "type": "Turnover",
+        "at": 680335
+      },
+      {
+        "quarter": 3,
+        "type": "Turnover",
+        "at": 470835
+      },
+      {
+        "quarter": 2,
+        "type": "TwoPointerMiss",
+        "at": 252958
+      }
+    ],
+    "id": "aaa022a0"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "384ba0fc",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "17",
+    "playerName": "Bam Adebayo",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "Block",
+        "at": 34740
+      },
+      {
+        "quarter": 3,
+        "type": "Turnover",
+        "at": 753632
+      },
+      {
+        "quarter": 4,
+        "type": "FreeThrowMiss",
+        "at": 880124
+      },
+      {
+        "quarter": 1,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 649258
+      }
+    ],
+    "id": "535c5669"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "384ba0fc",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "18",
+    "playerName": "Tyler Herro",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "Foul",
+        "at": 853443
+      },
+      {
+        "quarter": 3,
+        "type": "Rebound",
+        "at": 113754
+      },
+      {
+        "quarter": 3,
+        "type": "Assist",
+        "at": 243558
+      },
+      {
+        "quarter": 3,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 90554
+      }
+    ],
+    "id": "67fc131e"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "384ba0fc",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "19",
+    "playerName": "Kyle Lowry",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 644844
+      },
+      {
+        "quarter": 1,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 843868
+      },
+      {
+        "quarter": 1,
+        "type": "TwoPointerMiss",
+        "at": 616169
+      },
+      {
+        "quarter": 4,
+        "type": "TwoPointerMiss",
+        "at": 450379
+      }
+    ],
+    "id": "6b786937"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "384ba0fc",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "20",
+    "playerName": "Victor Oladipo",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "Assist",
+        "at": 822565
+      },
+      {
+        "quarter": 3,
+        "type": "TwoPointerMiss",
+        "at": 160645
+      },
+      {
+        "quarter": 2,
+        "type": "Block",
+        "at": 745165
+      },
+      {
+        "quarter": 3,
+        "type": "FreeThrowMiss",
+        "at": 172480
+      }
+    ],
+    "id": "c9bab83a"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "890f13f3",
+    "teamId": "BOS",
+    "teamName": "Boston Celtics",
+    "playerId": "11",
+    "playerName": "Jayson Tatum",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "Turnover",
+        "at": 681058
+      },
+      {
+        "quarter": 2,
+        "type": "FreeThrowMiss",
+        "at": 853821
+      },
+      {
+        "quarter": 1,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 895077
+      }
+    ],
+    "id": "933d4114"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "890f13f3",
+    "teamId": "BOS",
+    "teamName": "Boston Celtics",
+    "playerId": "12",
+    "playerName": "Jaylen Brown",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 384463
+      },
+      {
+        "quarter": 2,
+        "type": "Turnover",
+        "at": 427816
+      },
+      {
+        "quarter": 1,
+        "type": "Assist",
+        "at": 871833
+      },
+      {
+        "quarter": 2,
+        "type": "Foul",
+        "at": 81230
+      },
+      {
+        "quarter": 1,
+        "type": "Block",
+        "at": 576884
+      }
+    ],
+    "id": "55874bfd"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "890f13f3",
+    "teamId": "BOS",
+    "teamName": "Boston Celtics",
+    "playerId": "13",
+    "playerName": "Marcus Smart",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "ThreePointerMiss",
+        "at": 114053
+      },
+      {
+        "quarter": 4,
+        "type": "ThreePointerMiss",
+        "at": 411753
+      },
+      {
+        "quarter": 1,
+        "type": "Turnover",
+        "at": 588900
+      }
+    ],
+    "id": "0f395790"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "890f13f3",
+    "teamId": "BOS",
+    "teamName": "Boston Celtics",
+    "playerId": "14",
+    "playerName": "Al Horford",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "Foul",
+        "at": 115878
+      },
+      {
+        "quarter": 3,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 251742
+      },
+      {
+        "quarter": 2,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 132633
+      }
+    ],
+    "id": "6278f11a"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "890f13f3",
+    "teamId": "BOS",
+    "teamName": "Boston Celtics",
+    "playerId": "15",
+    "playerName": "Derrick White",
+    "plays": [
+      {
+        "quarter": 3,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 190880
+      },
+      {
+        "quarter": 3,
+        "type": "Foul",
+        "at": 761625
+      },
+      {
+        "quarter": 3,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 438314
+      }
+    ],
+    "id": "8143b4aa"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "890f13f3",
+    "teamId": "GSW",
+    "teamName": "Golden State Warriors",
+    "playerId": "6",
+    "playerName": "Stephen Curry",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 243652
+      },
+      {
+        "quarter": 3,
+        "type": "Foul",
+        "at": 283312
+      },
+      {
+        "quarter": 2,
+        "type": "ThreePointerMiss",
+        "at": 337461
+      },
+      {
+        "quarter": 1,
+        "type": "Turnover",
+        "at": 245495
+      }
+    ],
+    "id": "56c9aaa5"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "890f13f3",
+    "teamId": "GSW",
+    "teamName": "Golden State Warriors",
+    "playerId": "7",
+    "playerName": "Klay Thompson",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "Block",
+        "at": 835282
+      },
+      {
+        "quarter": 2,
+        "type": "Rebound",
+        "at": 630754
+      },
+      {
+        "quarter": 4,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 691555
+      },
+      {
+        "quarter": 1,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 890890
+      },
+      {
+        "quarter": 1,
+        "type": "Block",
+        "at": 825734
+      }
+    ],
+    "id": "83ffac39"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "890f13f3",
+    "teamId": "GSW",
+    "teamName": "Golden State Warriors",
+    "playerId": "8",
+    "playerName": "Draymond Green",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 597595
+      },
+      {
+        "quarter": 1,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 756696
+      },
+      {
+        "quarter": 2,
+        "type": "ThreePointerMiss",
+        "at": 490730
+      },
+      {
+        "quarter": 4,
+        "type": "Turnover",
+        "at": 709286
+      }
+    ],
+    "id": "5b366040"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "890f13f3",
+    "teamId": "GSW",
+    "teamName": "Golden State Warriors",
+    "playerId": "9",
+    "playerName": "Andrew Wiggins",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "Rebound",
+        "at": 875513
+      },
+      {
+        "quarter": 2,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 71134
+      },
+      {
+        "quarter": 2,
+        "type": "Rebound",
+        "at": 122333
+      },
+      {
+        "quarter": 4,
+        "type": "TwoPointerMiss",
+        "at": 557593
+      },
+      {
+        "quarter": 3,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 363854
+      }
+    ],
+    "id": "2fcc2e24"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "890f13f3",
+    "teamId": "GSW",
+    "teamName": "Golden State Warriors",
+    "playerId": "10",
+    "playerName": "Kevon Looney",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "FreeThrowMiss",
+        "at": 108015
+      },
+      {
+        "quarter": 3,
+        "type": "FreeThrowMiss",
+        "at": 600863
+      },
+      {
+        "quarter": 2,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 899613
+      }
+    ],
+    "id": "cee26902"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "b5d953ab",
+    "teamId": "BOS",
+    "teamName": "Boston Celtics",
+    "playerId": "11",
+    "playerName": "Jayson Tatum",
+    "plays": [
+      {
+        "quarter": 3,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 442020
+      },
+      {
+        "quarter": 3,
+        "type": "Foul",
+        "at": 100424
+      },
+      {
+        "quarter": 4,
+        "type": "Rebound",
+        "at": 123431
+      },
+      {
+        "quarter": 3,
+        "type": "Assist",
+        "at": 531140
+      }
+    ],
+    "id": "477b3d6a"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "b5d953ab",
+    "teamId": "BOS",
+    "teamName": "Boston Celtics",
+    "playerId": "12",
+    "playerName": "Jaylen Brown",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "Assist",
+        "at": 468875
+      },
+      {
+        "quarter": 2,
+        "type": "Foul",
+        "at": 884111
+      },
+      {
+        "quarter": 2,
+        "type": "Assist",
+        "at": 113874
+      },
+      {
+        "quarter": 2,
+        "type": "Turnover",
+        "at": 342623
+      }
+    ],
+    "id": "c64dc60b"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "b5d953ab",
+    "teamId": "BOS",
+    "teamName": "Boston Celtics",
+    "playerId": "13",
+    "playerName": "Marcus Smart",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "FreeThrowMiss",
+        "at": 527296
+      },
+      {
+        "quarter": 1,
+        "type": "FreeThrowMiss",
+        "at": 156413
+      },
+      {
+        "quarter": 2,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 30469
+      }
+    ],
+    "id": "7a136667"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "b5d953ab",
+    "teamId": "BOS",
+    "teamName": "Boston Celtics",
+    "playerId": "14",
+    "playerName": "Al Horford",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 10527
+      },
+      {
+        "quarter": 4,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 135940
+      },
+      {
+        "quarter": 2,
+        "type": "Block",
+        "at": 235925
+      }
+    ],
+    "id": "a787a50d"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "b5d953ab",
+    "teamId": "BOS",
+    "teamName": "Boston Celtics",
+    "playerId": "15",
+    "playerName": "Derrick White",
+    "plays": [
+      {
+        "quarter": 3,
+        "type": "Foul",
+        "at": 607385
+      },
+      {
+        "quarter": 2,
+        "type": "FreeThrowMiss",
+        "at": 884602
+      },
+      {
+        "quarter": 1,
+        "type": "ThreePointerMiss",
+        "at": 679836
+      },
+      {
+        "quarter": 1,
+        "type": "Turnover",
+        "at": 487908
+      }
+    ],
+    "id": "d93581c7"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "b5d953ab",
+    "teamId": "MIL",
+    "teamName": "Milwaukee Bucks",
+    "playerId": "21",
+    "playerName": "Giannis Antetokounmpo",
+    "plays": [
+      {
+        "quarter": 3,
+        "type": "Foul",
+        "at": 600393
+      },
+      {
+        "quarter": 4,
+        "type": "FreeThrowMiss",
+        "at": 871463
+      },
+      {
+        "quarter": 1,
+        "type": "Turnover",
+        "at": 310990
+      }
+    ],
+    "id": "ff88598a"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "b5d953ab",
+    "teamId": "MIL",
+    "teamName": "Milwaukee Bucks",
+    "playerId": "22",
+    "playerName": "Jrue Holiday",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "ThreePointerMiss",
+        "at": 588223
+      },
+      {
+        "quarter": 1,
+        "type": "FreeThrowMiss",
+        "at": 729136
+      },
+      {
+        "quarter": 4,
+        "type": "Foul",
+        "at": 159866
+      },
+      {
+        "quarter": 4,
+        "type": "Turnover",
+        "at": 796182
+      }
+    ],
+    "id": "ddc009c1"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "b5d953ab",
+    "teamId": "MIL",
+    "teamName": "Milwaukee Bucks",
+    "playerId": "23",
+    "playerName": "Brook Lopez",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "Turnover",
+        "at": 766225
+      },
+      {
+        "quarter": 2,
+        "type": "Foul",
+        "at": 891463
+      },
+      {
+        "quarter": 4,
+        "type": "Assist",
+        "at": 287781
+      },
+      {
+        "quarter": 4,
+        "type": "Block",
+        "at": 663015
+      }
+    ],
+    "id": "c97e8619"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "b5d953ab",
+    "teamId": "MIL",
+    "teamName": "Milwaukee Bucks",
+    "playerId": "24",
+    "playerName": "Khris Middleton",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 743989
+      },
+      {
+        "quarter": 4,
+        "type": "Assist",
+        "at": 4154
+      },
+      {
+        "quarter": 3,
+        "type": "Assist",
+        "at": 92215
+      },
+      {
+        "quarter": 4,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 447882
+      },
+      {
+        "quarter": 1,
+        "type": "ThreePointerMiss",
+        "at": 130071
+      }
+    ],
+    "id": "8411d72a"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "b5d953ab",
+    "teamId": "MIL",
+    "teamName": "Milwaukee Bucks",
+    "playerId": "25",
+    "playerName": "Jevon Carter",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "Block",
+        "at": 413072
+      },
+      {
+        "quarter": 2,
+        "type": "Assist",
+        "at": 602194
+      },
+      {
+        "quarter": 1,
+        "type": "ThreePointerMiss",
+        "at": 9577
+      },
+      {
+        "quarter": 3,
+        "type": "Rebound",
+        "at": 279861
+      },
+      {
+        "quarter": 1,
+        "type": "Rebound",
+        "at": 168095
+      }
+    ],
+    "id": "c6325751"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "c96ad509",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "16",
+    "playerName": "Jimmy Butler",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "TwoPointerMiss",
+        "at": 389764
+      },
+      {
+        "quarter": 3,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 508109
+      },
+      {
+        "quarter": 3,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 51853
+      },
+      {
+        "quarter": 1,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 266614
+      }
+    ],
+    "id": "fac57422"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "c96ad509",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "17",
+    "playerName": "Bam Adebayo",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "FreeThrowMiss",
+        "at": 414533
+      },
+      {
+        "quarter": 1,
+        "type": "ThreePointerMiss",
+        "at": 711716
+      },
+      {
+        "quarter": 1,
+        "type": "ThreePointerMiss",
+        "at": 253976
+      },
+      {
+        "quarter": 2,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 893216
+      },
+      {
+        "quarter": 3,
+        "type": "Foul",
+        "at": 638724
+      }
+    ],
+    "id": "a81f3a33"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "c96ad509",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "18",
+    "playerName": "Tyler Herro",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "ThreePointerMiss",
+        "at": 119437
+      },
+      {
+        "quarter": 3,
+        "type": "Rebound",
+        "at": 560369
+      },
+      {
+        "quarter": 3,
+        "type": "Turnover",
+        "at": 649887
+      },
+      {
+        "quarter": 3,
+        "type": "Foul",
+        "at": 435638
+      }
+    ],
+    "id": "3a23e5be"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "c96ad509",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "19",
+    "playerName": "Kyle Lowry",
+    "plays": [
+      {
+        "quarter": 3,
+        "type": "Foul",
+        "at": 635392
+      },
+      {
+        "quarter": 1,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 585802
+      },
+      {
+        "quarter": 3,
+        "type": "Foul",
+        "at": 851292
+      },
+      {
+        "quarter": 3,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 702801
+      }
+    ],
+    "id": "99670626"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "c96ad509",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "20",
+    "playerName": "Victor Oladipo",
+    "plays": [
+      {
+        "quarter": 3,
+        "type": "Turnover",
+        "at": 628845
+      },
+      {
+        "quarter": 1,
+        "type": "Foul",
+        "at": 184756
+      },
+      {
+        "quarter": 1,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 269085
+      }
+    ],
+    "id": "cc7bb634"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "c96ad509",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "1",
+    "playerName": "LeBron James",
+    "plays": [
+      {
+        "quarter": 3,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 840392
+      },
+      {
+        "quarter": 2,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 256354
+      },
+      {
+        "quarter": 3,
+        "type": "Foul",
+        "at": 278545
+      },
+      {
+        "quarter": 4,
+        "type": "Turnover",
+        "at": 399005
+      }
+    ],
+    "id": "bb2f1fb8"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "c96ad509",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "2",
+    "playerName": "Anthony Davis",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "Turnover",
+        "at": 588647
+      },
+      {
+        "quarter": 3,
+        "type": "FreeThrowMiss",
+        "at": 623480
+      },
+      {
+        "quarter": 3,
+        "type": "Assist",
+        "at": 169745
+      }
+    ],
+    "id": "a5c1a702"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "c96ad509",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "3",
+    "playerName": "D'Angelo Russell",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 69279
+      },
+      {
+        "quarter": 2,
+        "type": "TwoPointerMiss",
+        "at": 562457
+      },
+      {
+        "quarter": 3,
+        "type": "Block",
+        "at": 743440
+      },
+      {
+        "quarter": 4,
+        "type": "Rebound",
+        "at": 820623
+      },
+      {
+        "quarter": 2,
+        "type": "FreeThrowMiss",
+        "at": 750351
+      }
+    ],
+    "id": "44bacee9"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "c96ad509",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "4",
+    "playerName": "Rui Hachimura",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "ThreePointerMiss",
+        "at": 321980
+      },
+      {
+        "quarter": 1,
+        "type": "Rebound",
+        "at": 822377
+      },
+      {
+        "quarter": 3,
+        "type": "Block",
+        "at": 37675
+      },
+      {
+        "quarter": 1,
+        "type": "Turnover",
+        "at": 64405
+      }
+    ],
+    "id": "9a13e7f5"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "c96ad509",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "5",
+    "playerName": "Jarred Vanderbilt",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "Block",
+        "at": 861566
+      },
+      {
+        "quarter": 2,
+        "type": "Foul",
+        "at": 267897
+      },
+      {
+        "quarter": 2,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 861162
+      },
+      {
+        "quarter": 1,
+        "type": "Rebound",
+        "at": 205634
+      },
+      {
+        "quarter": 3,
+        "type": "Block",
+        "at": 449769
+      }
+    ],
+    "id": "04cb90d8"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "073a66f0",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "16",
+    "playerName": "Jimmy Butler",
+    "plays": [
+      {
+        "quarter": 3,
+        "type": "Rebound",
+        "at": 327115
+      },
+      {
+        "quarter": 1,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 849414
+      },
+      {
+        "quarter": 4,
+        "type": "Rebound",
+        "at": 103261
+      }
+    ],
+    "id": "c9ef596c"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "073a66f0",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "17",
+    "playerName": "Bam Adebayo",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 889577
+      },
+      {
+        "quarter": 4,
+        "type": "Foul",
+        "at": 120516
+      },
+      {
+        "quarter": 3,
+        "type": "Block",
+        "at": 150256
+      }
+    ],
+    "id": "5c5fc302"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "073a66f0",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "18",
+    "playerName": "Tyler Herro",
+    "plays": [
+      {
+        "quarter": 3,
+        "type": "Assist",
+        "at": 607883
+      },
+      {
+        "quarter": 2,
+        "type": "Block",
+        "at": 546487
+      },
+      {
+        "quarter": 1,
+        "type": "Turnover",
+        "at": 502656
+      },
+      {
+        "quarter": 1,
+        "type": "Foul",
+        "at": 360576
+      }
+    ],
+    "id": "5c23dc24"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "073a66f0",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "19",
+    "playerName": "Kyle Lowry",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 56950
+      },
+      {
+        "quarter": 3,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 687980
+      },
+      {
+        "quarter": 2,
+        "type": "ThreePointerMiss",
+        "at": 556154
+      }
+    ],
+    "id": "b1d236b5"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "073a66f0",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "20",
+    "playerName": "Victor Oladipo",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 322905
+      },
+      {
+        "quarter": 1,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 856975
+      },
+      {
+        "quarter": 1,
+        "type": "Assist",
+        "at": 854935
+      },
+      {
+        "quarter": 1,
+        "type": "Rebound",
+        "at": 758855
+      }
+    ],
+    "id": "44590aee"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "073a66f0",
+    "teamId": "GSW",
+    "teamName": "Golden State Warriors",
+    "playerId": "6",
+    "playerName": "Stephen Curry",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "Foul",
+        "at": 894831
+      },
+      {
+        "quarter": 2,
+        "type": "ThreePointerMiss",
+        "at": 160149
+      },
+      {
+        "quarter": 1,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 310251
+      },
+      {
+        "quarter": 3,
+        "type": "Rebound",
+        "at": 296114
+      }
+    ],
+    "id": "a7904f47"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "073a66f0",
+    "teamId": "GSW",
+    "teamName": "Golden State Warriors",
+    "playerId": "7",
+    "playerName": "Klay Thompson",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 424975
+      },
+      {
+        "quarter": 3,
+        "type": "TwoPointerMiss",
+        "at": 307081
+      },
+      {
+        "quarter": 4,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 800844
+      },
+      {
+        "quarter": 2,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 601311
+      },
+      {
+        "quarter": 1,
+        "type": "Block",
+        "at": 827075
+      }
+    ],
+    "id": "9f24fab7"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "073a66f0",
+    "teamId": "GSW",
+    "teamName": "Golden State Warriors",
+    "playerId": "8",
+    "playerName": "Draymond Green",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "Rebound",
+        "at": 250563
+      },
+      {
+        "quarter": 4,
+        "type": "Foul",
+        "at": 77877
+      },
+      {
+        "quarter": 2,
+        "type": "Block",
+        "at": 710009
+      }
+    ],
+    "id": "a271e350"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "073a66f0",
+    "teamId": "GSW",
+    "teamName": "Golden State Warriors",
+    "playerId": "9",
+    "playerName": "Andrew Wiggins",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "Rebound",
+        "at": 29783
+      },
+      {
+        "quarter": 4,
+        "type": "ThreePointerMiss",
+        "at": 610579
+      },
+      {
+        "quarter": 2,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 196088
+      }
+    ],
+    "id": "62d550a5"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "073a66f0",
+    "teamId": "GSW",
+    "teamName": "Golden State Warriors",
+    "playerId": "10",
+    "playerName": "Kevon Looney",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "ThreePointerMiss",
+        "at": 886621
+      },
+      {
+        "quarter": 4,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 76768
+      },
+      {
+        "quarter": 3,
+        "type": "FreeThrowMiss",
+        "at": 593109
+      },
+      {
+        "quarter": 4,
+        "type": "Assist",
+        "at": 190334
+      }
+    ],
+    "id": "1b38b313"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "598b10e4",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "16",
+    "playerName": "Jimmy Butler",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 400740
+      },
+      {
+        "quarter": 3,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 887297
+      },
+      {
+        "quarter": 1,
+        "type": "Block",
+        "at": 82559
+      }
+    ],
+    "id": "773ed833"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "598b10e4",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "17",
+    "playerName": "Bam Adebayo",
+    "plays": [
+      {
+        "quarter": 3,
+        "type": "Foul",
+        "at": 643089
+      },
+      {
+        "quarter": 3,
+        "type": "Rebound",
+        "at": 116259
+      },
+      {
+        "quarter": 4,
+        "type": "Assist",
+        "at": 368882
+      },
+      {
+        "quarter": 2,
+        "type": "Assist",
+        "at": 890093
+      },
+      {
+        "quarter": 3,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 75506
+      }
+    ],
+    "id": "1408813d"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "598b10e4",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "18",
+    "playerName": "Tyler Herro",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 161468
+      },
+      {
+        "quarter": 1,
+        "type": "TwoPointerMiss",
+        "at": 223078
+      },
+      {
+        "quarter": 4,
+        "type": "Rebound",
+        "at": 426911
+      },
+      {
+        "quarter": 1,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 454345
+      }
+    ],
+    "id": "376e1ba2"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "598b10e4",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "19",
+    "playerName": "Kyle Lowry",
+    "plays": [
+      {
+        "quarter": 3,
+        "type": "Assist",
+        "at": 579811
+      },
+      {
+        "quarter": 4,
+        "type": "FreeThrowMiss",
+        "at": 42736
+      },
+      {
+        "quarter": 1,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 485484
+      }
+    ],
+    "id": "e415aa56"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "598b10e4",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "20",
+    "playerName": "Victor Oladipo",
+    "plays": [
+      {
+        "quarter": 3,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 676492
+      },
+      {
+        "quarter": 2,
+        "type": "Assist",
+        "at": 225751
+      },
+      {
+        "quarter": 4,
+        "type": "Block",
+        "at": 870354
+      }
+    ],
+    "id": "4b38f7ef"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "598b10e4",
+    "teamId": "MIL",
+    "teamName": "Milwaukee Bucks",
+    "playerId": "21",
+    "playerName": "Giannis Antetokounmpo",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "ThreePointerMiss",
+        "at": 678138
+      },
+      {
+        "quarter": 4,
+        "type": "TwoPointerMiss",
+        "at": 890845
+      },
+      {
+        "quarter": 4,
+        "type": "FreeThrowMiss",
+        "at": 313598
+      }
+    ],
+    "id": "34094a44"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "598b10e4",
+    "teamId": "MIL",
+    "teamName": "Milwaukee Bucks",
+    "playerId": "22",
+    "playerName": "Jrue Holiday",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 33810
+      },
+      {
+        "quarter": 4,
+        "type": "TwoPointerMiss",
+        "at": 899560
+      },
+      {
+        "quarter": 1,
+        "type": "Block",
+        "at": 885241
+      },
+      {
+        "quarter": 1,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 402422
+      },
+      {
+        "quarter": 1,
+        "type": "TwoPointerMiss",
+        "at": 170973
+      }
+    ],
+    "id": "6aad509a"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "598b10e4",
+    "teamId": "MIL",
+    "teamName": "Milwaukee Bucks",
+    "playerId": "23",
+    "playerName": "Brook Lopez",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 506078
+      },
+      {
+        "quarter": 3,
+        "type": "FreeThrowMiss",
+        "at": 355137
+      },
+      {
+        "quarter": 4,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 130567
+      },
+      {
+        "quarter": 1,
+        "type": "TwoPointerMiss",
+        "at": 878509
+      },
+      {
+        "quarter": 1,
+        "type": "Turnover",
+        "at": 262570
+      }
+    ],
+    "id": "a877fadb"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "598b10e4",
+    "teamId": "MIL",
+    "teamName": "Milwaukee Bucks",
+    "playerId": "24",
+    "playerName": "Khris Middleton",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 201798
+      },
+      {
+        "quarter": 3,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 785711
+      },
+      {
+        "quarter": 3,
+        "type": "FreeThrowMiss",
+        "at": 867938
+      },
+      {
+        "quarter": 4,
+        "type": "Foul",
+        "at": 483217
+      }
+    ],
+    "id": "d4a9c159"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "598b10e4",
+    "teamId": "MIL",
+    "teamName": "Milwaukee Bucks",
+    "playerId": "25",
+    "playerName": "Jevon Carter",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "Assist",
+        "at": 826284
+      },
+      {
+        "quarter": 4,
+        "type": "TwoPointerMiss",
+        "at": 178033
+      },
+      {
+        "quarter": 4,
+        "type": "Assist",
+        "at": 510491
+      },
+      {
+        "quarter": 3,
+        "type": "Assist",
+        "at": 236543
+      }
+    ],
+    "id": "bc88a7f9"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "db823a1a",
+    "teamId": "MIL",
+    "teamName": "Milwaukee Bucks",
+    "playerId": "21",
+    "playerName": "Giannis Antetokounmpo",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "Turnover",
+        "at": 536504
+      },
+      {
+        "quarter": 1,
+        "type": "Block",
+        "at": 862647
+      },
+      {
+        "quarter": 2,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 880372
+      }
+    ],
+    "id": "534d5c83"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "db823a1a",
+    "teamId": "MIL",
+    "teamName": "Milwaukee Bucks",
+    "playerId": "22",
+    "playerName": "Jrue Holiday",
+    "plays": [
+      {
+        "quarter": 3,
+        "type": "ThreePointerMiss",
+        "at": 169565
+      },
+      {
+        "quarter": 3,
+        "type": "Turnover",
+        "at": 29613
+      },
+      {
+        "quarter": 1,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 471120
+      },
+      {
+        "quarter": 1,
+        "type": "FreeThrowMiss",
+        "at": 856093
+      },
+      {
+        "quarter": 1,
+        "type": "Block",
+        "at": 43494
+      }
+    ],
+    "id": "dc07e210"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "db823a1a",
+    "teamId": "MIL",
+    "teamName": "Milwaukee Bucks",
+    "playerId": "23",
+    "playerName": "Brook Lopez",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "TwoPointerMiss",
+        "at": 405974
+      },
+      {
+        "quarter": 3,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 863276
+      },
+      {
+        "quarter": 3,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 708312
+      }
+    ],
+    "id": "2164e5ea"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "db823a1a",
+    "teamId": "MIL",
+    "teamName": "Milwaukee Bucks",
+    "playerId": "24",
+    "playerName": "Khris Middleton",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "FreeThrowMiss",
+        "at": 515193
+      },
+      {
+        "quarter": 1,
+        "type": "Rebound",
+        "at": 110235
+      },
+      {
+        "quarter": 4,
+        "type": "Rebound",
+        "at": 762667
+      },
+      {
+        "quarter": 4,
+        "type": "TwoPointerMiss",
+        "at": 219012
+      },
+      {
+        "quarter": 3,
+        "type": "ThreePointerMiss",
+        "at": 529515
+      }
+    ],
+    "id": "8dd4e9e8"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "db823a1a",
+    "teamId": "MIL",
+    "teamName": "Milwaukee Bucks",
+    "playerId": "25",
+    "playerName": "Jevon Carter",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 117599
+      },
+      {
+        "quarter": 1,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 481802
+      },
+      {
+        "quarter": 2,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 801713
+      }
+    ],
+    "id": "bd318119"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "db823a1a",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "16",
+    "playerName": "Jimmy Butler",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 44212
+      },
+      {
+        "quarter": 2,
+        "type": "TwoPointerMiss",
+        "at": 657179
+      },
+      {
+        "quarter": 2,
+        "type": "FreeThrowMiss",
+        "at": 167523
+      },
+      {
+        "quarter": 2,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 428038
+      }
+    ],
+    "id": "f4c75c1d"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "db823a1a",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "17",
+    "playerName": "Bam Adebayo",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "TwoPointerMiss",
+        "at": 764560
+      },
+      {
+        "quarter": 2,
+        "type": "Foul",
+        "at": 456097
+      },
+      {
+        "quarter": 3,
+        "type": "TwoPointerMiss",
+        "at": 771952
+      },
+      {
+        "quarter": 2,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 112631
+      },
+      {
+        "quarter": 1,
+        "type": "Foul",
+        "at": 373448
+      }
+    ],
+    "id": "a68f443e"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "db823a1a",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "18",
+    "playerName": "Tyler Herro",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "ThreePointerMiss",
+        "at": 165956
+      },
+      {
+        "quarter": 2,
+        "type": "FreeThrowMiss",
+        "at": 409601
+      },
+      {
+        "quarter": 3,
+        "type": "TwoPointerMiss",
+        "at": 598971
+      }
+    ],
+    "id": "9e7a4887"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "db823a1a",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "19",
+    "playerName": "Kyle Lowry",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 864286
+      },
+      {
+        "quarter": 3,
+        "type": "Foul",
+        "at": 105327
+      },
+      {
+        "quarter": 4,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 67670
+      }
+    ],
+    "id": "346921b9"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "db823a1a",
+    "teamId": "MIA",
+    "teamName": "Miami Heat",
+    "playerId": "20",
+    "playerName": "Victor Oladipo",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "Foul",
+        "at": 276630
+      },
+      {
+        "quarter": 3,
+        "type": "ThreePointerMiss",
+        "at": 827271
+      },
+      {
+        "quarter": 4,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 866424
+      },
+      {
+        "quarter": 1,
+        "type": "Foul",
+        "at": 893161
+      },
+      {
+        "quarter": 4,
+        "type": "Rebound",
+        "at": 154584
+      }
+    ],
+    "id": "8c3ad144"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "a2d9d40e",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "1",
+    "playerName": "LeBron James",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "FreeThrowMiss",
+        "at": 609794
+      },
+      {
+        "quarter": 2,
+        "type": "Rebound",
+        "at": 78408
+      },
+      {
+        "quarter": 1,
+        "type": "Rebound",
+        "at": 499993
+      }
+    ],
+    "id": "628f6711"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "a2d9d40e",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "2",
+    "playerName": "Anthony Davis",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 642714
+      },
+      {
+        "quarter": 1,
+        "type": "TwoPointerMiss",
+        "at": 51139
+      },
+      {
+        "quarter": 2,
+        "type": "Block",
+        "at": 650606
+      },
+      {
+        "quarter": 2,
+        "type": "Assist",
+        "at": 764042
+      }
+    ],
+    "id": "9ce6dd8b"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "a2d9d40e",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "3",
+    "playerName": "D'Angelo Russell",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "FreeThrowMiss",
+        "at": 752642
+      },
+      {
+        "quarter": 4,
+        "type": "TwoPointerMiss",
+        "at": 354482
+      },
+      {
+        "quarter": 2,
+        "type": "Turnover",
+        "at": 639875
+      }
+    ],
+    "id": "1bb8440e"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "a2d9d40e",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "4",
+    "playerName": "Rui Hachimura",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "TwoPointerMiss",
+        "at": 249404
+      },
+      {
+        "quarter": 1,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 744172
+      },
+      {
+        "quarter": 1,
+        "type": "Block",
+        "at": 357432
+      },
+      {
+        "quarter": 4,
+        "type": "Block",
+        "at": 712851
+      }
+    ],
+    "id": "83d878ee"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "a2d9d40e",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "5",
+    "playerName": "Jarred Vanderbilt",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "Block",
+        "at": 333252
+      },
+      {
+        "quarter": 3,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 524934
+      },
+      {
+        "quarter": 1,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 148577
+      }
+    ],
+    "id": "6f57c119"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "a2d9d40e",
+    "teamId": "BOS",
+    "teamName": "Boston Celtics",
+    "playerId": "11",
+    "playerName": "Jayson Tatum",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "ThreePointerMiss",
+        "at": 588553
+      },
+      {
+        "quarter": 1,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 896602
+      },
+      {
+        "quarter": 4,
+        "type": "Assist",
+        "at": 733200
+      },
+      {
+        "quarter": 1,
+        "type": "Turnover",
+        "at": 556025
+      },
+      {
+        "quarter": 3,
+        "type": "Rebound",
+        "at": 99394
+      }
+    ],
+    "id": "7dc06ec3"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "a2d9d40e",
+    "teamId": "BOS",
+    "teamName": "Boston Celtics",
+    "playerId": "12",
+    "playerName": "Jaylen Brown",
+    "plays": [
+      {
+        "quarter": 3,
+        "type": "Foul",
+        "at": 257201
+      },
+      {
+        "quarter": 3,
+        "type": "Turnover",
+        "at": 604346
+      },
+      {
+        "quarter": 3,
+        "type": "Turnover",
+        "at": 363831
+      },
+      {
+        "quarter": 4,
+        "type": "ThreePointerMiss",
+        "at": 131725
+      }
+    ],
+    "id": "38ee06d0"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "a2d9d40e",
+    "teamId": "BOS",
+    "teamName": "Boston Celtics",
+    "playerId": "13",
+    "playerName": "Marcus Smart",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "Turnover",
+        "at": 416636
+      },
+      {
+        "quarter": 1,
+        "type": "Block",
+        "at": 515267
+      },
+      {
+        "quarter": 1,
+        "type": "ThreePointerMiss",
+        "at": 843490
+      },
+      {
+        "quarter": 2,
+        "type": "Assist",
+        "at": 548553
+      }
+    ],
+    "id": "7b595931"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "a2d9d40e",
+    "teamId": "BOS",
+    "teamName": "Boston Celtics",
+    "playerId": "14",
+    "playerName": "Al Horford",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "Turnover",
+        "at": 737733
+      },
+      {
+        "quarter": 1,
+        "type": "Rebound",
+        "at": 813155
+      },
+      {
+        "quarter": 2,
+        "type": "Foul",
+        "at": 467875
+      },
+      {
+        "quarter": 3,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 519816
+      }
+    ],
+    "id": "72cc62c1"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "a2d9d40e",
+    "teamId": "BOS",
+    "teamName": "Boston Celtics",
+    "playerId": "15",
+    "playerName": "Derrick White",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "Rebound",
+        "at": 247180
+      },
+      {
+        "quarter": 2,
+        "type": "Foul",
+        "at": 849522
+      },
+      {
+        "quarter": 1,
+        "type": "Assist",
+        "at": 281379
+      }
+    ],
+    "id": "a7fb13e7"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "7b45d9cd",
+    "teamId": "BOS",
+    "teamName": "Boston Celtics",
+    "playerId": "11",
+    "playerName": "Jayson Tatum",
+    "plays": [
+      {
+        "quarter": 3,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 592743
+      },
+      {
+        "quarter": 4,
+        "type": "Turnover",
+        "at": 467181
+      },
+      {
+        "quarter": 3,
+        "type": "ThreePointerMiss",
+        "at": 211631
+      },
+      {
+        "quarter": 1,
+        "type": "Rebound",
+        "at": 227111
+      }
+    ],
+    "id": "46b532d8"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "7b45d9cd",
+    "teamId": "BOS",
+    "teamName": "Boston Celtics",
+    "playerId": "12",
+    "playerName": "Jaylen Brown",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 573221
+      },
+      {
+        "quarter": 4,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 869682
+      },
+      {
+        "quarter": 3,
+        "type": "Foul",
+        "at": 800689
+      },
+      {
+        "quarter": 4,
+        "type": "TwoPointerMiss",
+        "at": 352820
+      },
+      {
+        "quarter": 1,
+        "type": "Foul",
+        "at": 280991
+      }
+    ],
+    "id": "80e21cd5"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "7b45d9cd",
+    "teamId": "BOS",
+    "teamName": "Boston Celtics",
+    "playerId": "13",
+    "playerName": "Marcus Smart",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "Rebound",
+        "at": 603763
+      },
+      {
+        "quarter": 4,
+        "type": "Rebound",
+        "at": 315541
+      },
+      {
+        "quarter": 3,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 860548
+      },
+      {
+        "quarter": 4,
+        "type": "Block",
+        "at": 625953
+      },
+      {
+        "quarter": 2,
+        "type": "TwoPointerMiss",
+        "at": 863648
+      }
+    ],
+    "id": "bdc3f49b"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "7b45d9cd",
+    "teamId": "BOS",
+    "teamName": "Boston Celtics",
+    "playerId": "14",
+    "playerName": "Al Horford",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "ThreePointerMiss",
+        "at": 551410
+      },
+      {
+        "quarter": 4,
+        "type": "TwoPointerMiss",
+        "at": 420416
+      },
+      {
+        "quarter": 1,
+        "type": "FreeThrowMiss",
+        "at": 422948
+      },
+      {
+        "quarter": 3,
+        "type": "Turnover",
+        "at": 142738
+      }
+    ],
+    "id": "44b36ab9"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "7b45d9cd",
+    "teamId": "BOS",
+    "teamName": "Boston Celtics",
+    "playerId": "15",
+    "playerName": "Derrick White",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "Turnover",
+        "at": 214178
+      },
+      {
+        "quarter": 2,
+        "type": "ThreePointerMiss",
+        "at": 206675
+      },
+      {
+        "quarter": 1,
+        "type": "Turnover",
+        "at": 769198
+      }
+    ],
+    "id": "22e80b76"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "7b45d9cd",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "1",
+    "playerName": "LeBron James",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "TwoPointerMiss",
+        "at": 450968
+      },
+      {
+        "quarter": 2,
+        "type": "Foul",
+        "at": 6440
+      },
+      {
+        "quarter": 3,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 841061
+      }
+    ],
+    "id": "b5b840ae"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "7b45d9cd",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "2",
+    "playerName": "Anthony Davis",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "Rebound",
+        "at": 159006
+      },
+      {
+        "quarter": 1,
+        "type": "Turnover",
+        "at": 88691
+      },
+      {
+        "quarter": 1,
+        "type": "TwoPointerMiss",
+        "at": 329903
+      },
+      {
+        "quarter": 4,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 393034
+      }
+    ],
+    "id": "8c9563ee"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "7b45d9cd",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "3",
+    "playerName": "D'Angelo Russell",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "Foul",
+        "at": 187621
+      },
+      {
+        "quarter": 4,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 347908
+      },
+      {
+        "quarter": 3,
+        "type": "TwoPointerMiss",
+        "at": 697289
+      },
+      {
+        "quarter": 1,
+        "type": "Block",
+        "at": 406676
+      },
+      {
+        "quarter": 1,
+        "type": "FreeThrowMiss",
+        "at": 816867
+      }
+    ],
+    "id": "74894400"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "7b45d9cd",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "4",
+    "playerName": "Rui Hachimura",
+    "plays": [
+      {
+        "quarter": 3,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 91960
+      },
+      {
+        "quarter": 3,
+        "type": "Rebound",
+        "at": 34524
+      },
+      {
+        "quarter": 4,
+        "type": "FreeThrowMiss",
+        "at": 108066
+      }
+    ],
+    "id": "180fa560"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "7b45d9cd",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "5",
+    "playerName": "Jarred Vanderbilt",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "Turnover",
+        "at": 486241
+      },
+      {
+        "quarter": 3,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 293713
+      },
+      {
+        "quarter": 1,
+        "type": "Rebound",
+        "at": 683838
+      },
+      {
+        "quarter": 2,
+        "type": "TwoPointerMiss",
+        "at": 282155
+      },
+      {
+        "quarter": 1,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 371934
+      }
+    ],
+    "id": "bf395e9b"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "e7fefba0",
+    "teamId": "MIL",
+    "teamName": "Milwaukee Bucks",
+    "playerId": "21",
+    "playerName": "Giannis Antetokounmpo",
+    "plays": [
+      {
+        "quarter": 3,
+        "type": "Assist",
+        "at": 178628
+      },
+      {
+        "quarter": 3,
+        "type": "ThreePointerMiss",
+        "at": 887377
+      },
+      {
+        "quarter": 4,
+        "type": "Foul",
+        "at": 890173
+      },
+      {
+        "quarter": 1,
+        "type": "ThreePointerMiss",
+        "at": 755522
+      },
+      {
+        "quarter": 3,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 182289
+      }
+    ],
+    "id": "bac99f2b"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "e7fefba0",
+    "teamId": "MIL",
+    "teamName": "Milwaukee Bucks",
+    "playerId": "22",
+    "playerName": "Jrue Holiday",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 769455
+      },
+      {
+        "quarter": 2,
+        "type": "FreeThrowMiss",
+        "at": 45331
+      },
+      {
+        "quarter": 2,
+        "type": "Rebound",
+        "at": 333385
+      }
+    ],
+    "id": "d2cb017f"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "e7fefba0",
+    "teamId": "MIL",
+    "teamName": "Milwaukee Bucks",
+    "playerId": "23",
+    "playerName": "Brook Lopez",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "Assist",
+        "at": 768564
+      },
+      {
+        "quarter": 3,
+        "type": "FreeThrowMiss",
+        "at": 636391
+      },
+      {
+        "quarter": 1,
+        "type": "TwoPointerMiss",
+        "at": 625192
+      },
+      {
+        "quarter": 2,
+        "type": "Assist",
+        "at": 851871
+      }
+    ],
+    "id": "70cd51bb"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "e7fefba0",
+    "teamId": "MIL",
+    "teamName": "Milwaukee Bucks",
+    "playerId": "24",
+    "playerName": "Khris Middleton",
+    "plays": [
+      {
+        "quarter": 2,
+        "type": "Assist",
+        "at": 235729
+      },
+      {
+        "quarter": 3,
+        "type": "Turnover",
+        "at": 59575
+      },
+      {
+        "quarter": 4,
+        "type": "Rebound",
+        "at": 198524
+      },
+      {
+        "quarter": 3,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 304315
+      }
+    ],
+    "id": "270604fd"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "e7fefba0",
+    "teamId": "MIL",
+    "teamName": "Milwaukee Bucks",
+    "playerId": "25",
+    "playerName": "Jevon Carter",
+    "plays": [
+      {
+        "quarter": 3,
+        "type": "TwoPointerMiss",
+        "at": 855552
+      },
+      {
+        "quarter": 3,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 1355
+      },
+      {
+        "quarter": 3,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 624678
+      },
+      {
+        "quarter": 3,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 191639
+      }
+    ],
+    "id": "a0524443"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "e7fefba0",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "1",
+    "playerName": "LeBron James",
+    "plays": [
+      {
+        "quarter": 1,
+        "type": "Assist",
+        "at": 879111
+      },
+      {
+        "quarter": 2,
+        "type": "Rebound",
+        "at": 896449
+      },
+      {
+        "quarter": 2,
+        "type": "ThreePointerMiss",
+        "at": 826344
+      }
+    ],
+    "id": "8cd604a2"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "e7fefba0",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "2",
+    "playerName": "Anthony Davis",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "Assist",
+        "at": 62721
+      },
+      {
+        "quarter": 4,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 635424
+      },
+      {
+        "quarter": 4,
+        "type": "Assist",
+        "at": 21365
+      },
+      {
+        "quarter": 2,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 98573
+      },
+      {
+        "quarter": 4,
+        "type": "FreeThrowHit",
+        "points": 1,
+        "at": 627069
+      }
+    ],
+    "id": "9182b68b"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "e7fefba0",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "3",
+    "playerName": "D'Angelo Russell",
+    "plays": [
+      {
+        "quarter": 3,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 520080
+      },
+      {
+        "quarter": 4,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 780088
+      },
+      {
+        "quarter": 1,
+        "type": "FreeThrowMiss",
+        "at": 402394
+      },
+      {
+        "quarter": 2,
+        "type": "Rebound",
+        "at": 553783
+      },
+      {
+        "quarter": 2,
+        "type": "Assist",
+        "at": 45137
+      }
+    ],
+    "id": "bb02f251"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "e7fefba0",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "4",
+    "playerName": "Rui Hachimura",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "FreeThrowMiss",
+        "at": 73169
+      },
+      {
+        "quarter": 3,
+        "type": "FreeThrowMiss",
+        "at": 22097
+      },
+      {
+        "quarter": 2,
+        "type": "TwoPointerHit",
+        "points": 2,
+        "at": 831697
+      },
+      {
+        "quarter": 2,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 697538
+      }
+    ],
+    "id": "7e50b73c"
+  },
+  {
+    "seasonId": "23-24",
+    "gameId": "e7fefba0",
+    "teamId": "LAL",
+    "teamName": "Los Angeles Lakers",
+    "playerId": "5",
+    "playerName": "Jarred Vanderbilt",
+    "plays": [
+      {
+        "quarter": 4,
+        "type": "Foul",
+        "at": 332039
+      },
+      {
+        "quarter": 1,
+        "type": "ThreePointerHit",
+        "points": 3,
+        "at": 329962
+      },
+      {
+        "quarter": 2,
+        "type": "Rebound",
+        "at": 73273
+      }
+    ],
+    "id": "a7555f9b"
   }
 ]

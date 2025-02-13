@@ -2,7 +2,6 @@ package com.nba.basketball_microservice.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import com.nba.basketball_microservice.infrastructure.BasketballResponse;
 import com.nba.basketball_microservice.services.StatisticsService;
 import com.nba.basketball_microservice.viewmodels.statistics.PlayerStatisticsInGameVM;

@@ -9,7 +9,6 @@ import com.nba.basketball_microservice.models.Participation;
 import com.nba.basketball_microservice.models.Player;
 import com.nba.basketball_microservice.models.Season;
 import com.nba.basketball_microservice.models.Team;
-
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
@@ -18,8 +17,9 @@ import org.bson.conversions.Bson;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -179,7 +179,15 @@ public class MongoDBRepo implements IBasketballRepo {
         millisecondsStr = millisecondsStr.length() > 3 ? millisecondsStr.substring(0, 3) : millisecondsStr;
         long milliseconds = Long.parseLong(millisecondsStr);
         long atMillis = hours + minutes + seconds + milliseconds;
+
         return atMillis;
+    }
+
+    public static String getStringTimeSpanFromLong(long at) {
+        LocalTime time = LocalTime.ofNanoOfDay(at * 1_000_000);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss.SSSSSSS");
+
+        return time.format(formatter);
     }
 
     public static boolean isTimeSpan(String at) {

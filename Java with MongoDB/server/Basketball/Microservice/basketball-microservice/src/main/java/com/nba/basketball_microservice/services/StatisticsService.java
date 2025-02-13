@@ -8,7 +8,6 @@ import com.nba.basketball_microservice.viewmodels.statistics.PlayerStatisticsInS
 import com.mongodb.client.model.Filters;
 import com.nba.basketball_microservice.infrastructure.Basketball;
 import com.nba.basketball_microservice.infrastructure.BasketballResponse;
-
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;

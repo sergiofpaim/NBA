@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import com.mongodb.client.model.Filters;
 import com.nba.basketball_microservice.infrastructure.Basketball;
 import com.nba.basketball_microservice.infrastructure.BasketballResponse;
@@ -22,7 +21,6 @@ import com.nba.basketball_microservice.viewmodels.ParticipatingPlayerVM;
 import com.nba.basketball_microservice.viewmodels.ParticipationVM;
 import com.nba.basketball_microservice.viewmodels.SeasonVM;
 import com.nba.basketball_microservice.viewmodels.TeamScalationVM;
-
 import org.springframework.stereotype.Service;
 
 @Service

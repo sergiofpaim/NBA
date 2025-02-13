@@ -3,7 +3,6 @@ package com.nba.basketball_microservice.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import com.nba.basketball_microservice.infrastructure.BasketballController;
 import com.nba.basketball_microservice.infrastructure.BasketballResponse;
 import com.nba.basketball_microservice.infrastructure.MongoDBRepo;

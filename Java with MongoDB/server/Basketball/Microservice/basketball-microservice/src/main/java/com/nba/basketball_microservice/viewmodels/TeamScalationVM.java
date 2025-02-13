@@ -4,7 +4,6 @@ import com.nba.basketball_microservice.infrastructure.BasketballViewModel;
 import com.nba.basketball_microservice.infrastructure.ValidationResult;
 import com.nba.basketball_microservice.models.ValueObjects.PlayerSelection;
 import com.nba.basketball_microservice.models.ValueObjects.TeamScalation;
-
 import java.util.List;
 
 public class TeamScalationVM extends BasketballViewModel {

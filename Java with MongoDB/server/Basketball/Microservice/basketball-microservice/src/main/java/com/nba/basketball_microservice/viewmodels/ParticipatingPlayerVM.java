@@ -4,7 +4,6 @@ import com.nba.basketball_microservice.models.Participation;
 import com.nba.basketball_microservice.models.ValueObjects.GamePlay;
 import com.nba.basketball_microservice.infrastructure.BasketballViewModel;
 import com.nba.basketball_microservice.infrastructure.ValidationResult;
-
 import java.util.ArrayList;
 import java.util.List;
 

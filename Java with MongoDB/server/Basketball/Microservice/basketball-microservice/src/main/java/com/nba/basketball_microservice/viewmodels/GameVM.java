@@ -3,7 +3,6 @@ package com.nba.basketball_microservice.viewmodels;
 import com.nba.basketball_microservice.models.Game;
 import com.nba.basketball_microservice.infrastructure.BasketballViewModel;
 import com.nba.basketball_microservice.infrastructure.ValidationResult;
-
 import java.util.Date;
 
 public class GameVM extends BasketballViewModel {

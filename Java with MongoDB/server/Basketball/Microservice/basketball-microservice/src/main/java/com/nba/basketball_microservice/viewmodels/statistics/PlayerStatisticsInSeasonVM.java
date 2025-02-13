@@ -4,7 +4,6 @@ import com.nba.basketball_microservice.models.ValueObjects.GamePlay;
 import com.nba.basketball_microservice.infrastructure.BasketballViewModel;
 import com.nba.basketball_microservice.infrastructure.ValidationResult;
 import com.nba.basketball_microservice.models.Type.PlayType;
-
 import java.util.List;
 
 public class PlayerStatisticsInSeasonVM extends BasketballViewModel {

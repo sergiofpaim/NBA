@@ -1,10 +1,10 @@
 package com.nba.basketball_microservice.viewmodels;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.nba.basketball_microservice.infrastructure.MongoDBRepo;
 import com.nba.basketball_microservice.infrastructure.ValidationResult;
 import com.nba.basketball_microservice.models.Type.PlayType;
 import com.nba.basketball_microservice.models.ValueObjects.GamePlay;
-
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -103,11 +103,7 @@ public class GamePlayVM {
         gamePlayVM.quarter = model.getQuarter();
         gamePlayVM.type = model.getType();
         gamePlayVM.points = model.getPoints();
-
-        long milliseconds = model.getAt();
-        LocalTime time = LocalTime.ofNanoOfDay(milliseconds * 1_000_000);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss.SSSSSSS");
-        gamePlayVM.at = time.format(formatter);
+        gamePlayVM.at = MongoDBRepo.getStringTimeSpanFromLong(model.getAt());
 
         return gamePlayVM;
     }
