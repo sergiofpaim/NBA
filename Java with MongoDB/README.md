@@ -20,22 +20,22 @@ To provide an intuitive and seamless experience, a **Graphical User Interface (G
 
 ### **Architecture Overview**
 
-![Technical Architecture Diagram](resource/NBACosmos_Technical_Architecture.png)
+![Technical Architecture Diagram](resource/NBAMongo_Technical_Architecture.png)
 
 The technical architecture diagram showcases the system’s organization. It details the flow from view components to API calls made via Axios, passing through the backend and interacting with Cosmos DB containers.
 
-![Business Architecture Diagram](resource/NBACosmos_Business_Architecture.png)
+![Business Architecture Diagram](resource/NBAMongo_Business_Architecture.png)
 
 The business architecture diagram outlines how the business components are structured. It highlights the organization of pages, models, Redux stores, and reusable View Components created to ensure consistency across the application. 
 
 <img src="resource/Swagger_Screen.png" alt="Swagger Screen" width="600"/>
 
-The backend, besides the CLI, exposes an API with the following endpoints.
+The backend exposes an API with the following endpoints.
 
 ## Learnings
 
 #### **Database Languages and Operations**
-In this project, I dove deep into NoSQL database management, specifically working with Azure Cosmos DB. I learned how to effectively structure and manipulate data in a document-oriented environment, focusing on essential operations like creating, reading, updating, and deleting documents. Building a RESTful API allowed me to create smooth interactions with the Cosmos DB, making it easy to retrieve and manage data. I also enjoyed developing a GUI interface, which improved user interaction with the database. Throughout this experience, I became more comfortable using the Microsoft.Azure.Cosmos library, which helped me work with generics for flexible data handling. I gained valuable skills in deploying and managing Azure resources, deepening my understanding of cloud computing principles and best practices.
+In this project, I dove deep into NoSQL database management, specifically working with MongoDB. I learned how to effectively structure and manipulate data in a document-oriented environment, focusing on essential operations like creating, reading, updating, and deleting documents. Building a RESTful API allowed me to create smooth interactions with MongoDB, making it easy to retrieve and manage data. I also enjoyed developing a GUI interface, which improved user interaction with the database. Throughout this experience, I became more comfortable using the MongoDB driver for Java, which helped me work with flexible data handling. I gained valuable skills in deploying and managing database resources, deepening my understanding of cloud computing principles and best practices.
 
 ### **Model-View-ViewModel (MVVM)**
 
@@ -70,29 +70,32 @@ Through the development of my React project, I gained significant knowledge in *
 
 ### **My next goal is to explore how to integrate **Next.js** into the web application.**
 
-# **Runtime Requirements for Azure Cosmos Emulator**
+# **Runtime Requirements for MongoDB**
 
-1. **Azure Cosmos Emulator**
-    - **Purpose**: A local emulator for developing and testing Cosmos DB applications without requiring a live Azure subscription.
-    - **Installation**: Download and install the Azure Cosmos Emulator from the official Microsoft site:
-        [Download Cosmos Emulator](https://docs.microsoft.com/en-us/azure/cosmos-db/local-emulator)
+1. **MongoDB**
+    - **Purpose**: A NoSQL database for developing and testing applications without requiring a live subscription.
+    - **Installation**: Download and install MongoDB from the official site:
+        [Download MongoDB](https://www.mongodb.com/try/download/community)
 
-2. **Required .NET SDK**
-    - **Purpose**: Ensure that the correct version of the .NET SDK is installed for seamless interaction with the Cosmos Emulator.
-    - **Download Link**: [Download .NET SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+2. **Required Java Development Kit (JDK)**
+    - **Purpose**: Ensure that the correct version of the JDK is installed for seamless interaction with MongoDB.
+    - **Download Link**: [Download JDK](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
 
-3. **Cosmos DB SDK for .NET**
-    - **Purpose**: Facilitates interaction with the Cosmos Emulator, enabling operations like reading, writing, and deleting data.
-    - **Installation**: Install the Cosmos DB SDK via NuGet:
-        ```bash
-        dotnet add package Microsoft.Azure.Cosmos
+3. **MongoDB Java Driver**
+    - **Purpose**: Facilitates interaction with MongoDB, enabling operations like reading, writing, and deleting data.
+    - **Installation**: Add the MongoDB Java Driver dependency to your Maven project:
+        ```xml
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+        </dependency>
         ```
 
 # **API Command Documentation**
  - To start the API with Swagger integration, execute the command in the CLI
    
-    ```bash
-    utils api
+    ```shell
+    mvn spring-boot:run
     ```
 
 # **Runtime Requirements for React Redux**
