@@ -19,10 +19,10 @@ import { GamePlay } from '../../../../../../models/GamePlay';
 import TableComponent from '../../../../../../components/TableComponent';
 
 type TrackingPageProps = {
-    params: {
+    params: Promise<{
         playerId: string;
         gameId: string;
-    };
+    }>;
 };
 
 const TrackingPage: React.FC<TrackingPageProps> = ({ params }) => {
@@ -33,7 +33,7 @@ const TrackingPage: React.FC<TrackingPageProps> = ({ params }) => {
 
     useEffect(() => {
         (async () => {
-            const resolvedParams = await params;
+            const resolvedParams = await Promise.resolve(params);
             setGameId(resolvedParams.gameId);
             setPlayerId(resolvedParams.playerId);
         })();
