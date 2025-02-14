@@ -1,4 +1,4 @@
-# Next with CosmosDB
+# Java with MongoDB
 
 ## Scope
 
