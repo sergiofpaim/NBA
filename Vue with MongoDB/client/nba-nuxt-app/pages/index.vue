@@ -1,5 +1,5 @@
 <script setup>
-import { useStatisticsStore } from "@/stores/Statistics";
+import { useStatisticsStore } from "~/stores/statistics";
 import { ref } from "vue";
 
 // Store reference

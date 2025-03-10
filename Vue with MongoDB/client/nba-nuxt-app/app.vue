@@ -4,8 +4,12 @@
       <!-- Your header, navigation, logo, etc. -->
       <nav>
         <ul>
-          <li><NuxtLink to="/">Home</NuxtLink></li>
-          <li><NuxtLink to="/about">About</NuxtLink></li>
+          <li>
+            <NuxtLink to="/">Home</NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/about">About</NuxtLink>
+          </li>
         </ul>
       </nav>
     </header>
@@ -33,17 +37,20 @@
   flex-direction: column;
   height: 100vh;
 }
+
 header {
   background: #333;
   color: white;
   padding: 10px;
 }
+
 footer {
   background: #333;
   color: white;
   padding: 10px;
   margin-top: auto;
 }
+
 main {
   flex-grow: 1;
   padding: 20px;
