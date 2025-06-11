@@ -1,0 +1,5 @@
+{
+    "editor.fontFamily": "JetBrains Mono, Consolas, monospace",
+    "notebook.formatOnSave.enabled": false,
+    "editor.formatOnSave": true
+}

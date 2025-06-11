@@ -49,7 +49,7 @@ namespace NBA.Controllers
         }
 
         [HttpPost("games")]
-        [ProducesResponseType(typeof(BasketballResponse<Game>), 200)]
+        [ProducesResponseType(typeof(BasketballResponse<GameVM>), 200)]
         public async Task<IActionResult> AddGameAsync([FromBody] AddGameVM request)
         {
             if (IsInvalid(request))

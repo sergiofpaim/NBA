@@ -6,28 +6,28 @@ namespace NBA.Services
 {
     internal class TransactionService : BasketballService
     {
-        public static async Task<BasketballResponse<Game>> AddGameAsync(string homeTeamId, string visitorTeamId, DateTime at)
+        public static async Task<BasketballResponse<GameVM>> AddGameAsync(string homeTeamId, string visitorTeamId, DateTime at)
         {
             var lastSeason = Basketball.Repo.Get<Season>(season => true, season => season.Id, true, 1).FirstOrDefault();
             if (lastSeason is null)
-                return Error<Game>("There is no season registered yet.");
+                return Error<GameVM>("There is no season registered yet.");
 
             var homeTeam = lastSeason.Teams.FirstOrDefault(t => t.Id == homeTeamId);
             if (homeTeam is null)
-                return NotFound<Game>("Home team not found.");
+                return NotFound<GameVM>("Home team not found.");
 
             var visitorTeam = lastSeason.Teams.FirstOrDefault(t => t.Id == visitorTeamId);
             if (visitorTeam is null)
-                return NotFound<Game>("Visitor team not found.");
+                return NotFound<GameVM>("Visitor team not found.");
 
             var game = Game.FactoryFrom(lastSeason.Id, homeTeam, visitorTeam, at);
 
             var saved = await Basketball.Repo.CreateAsync(game);
 
             if (saved is null)
-                return Error<Game>("Failed to add the game to the database.");
+                return Error<GameVM>("Failed to add the game to the database.");
 
-            return Success(game, $"Game added to the database with Id: {game.Id}");
+            return Success(GameVM.FactorFrom(game), $"Game added to the database with Id: {GameVM.FactorFrom(game).Id}");
         }
 
         public static async Task<BasketballResponse<ParticipationVM>> AddPlayAsync(string playerId, string gameId, int quarter, PlayType type, int playsToTake)
