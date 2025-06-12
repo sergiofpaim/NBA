@@ -50,17 +50,10 @@ export class Breadcrumb {
                 { title: gameTitle, route: `/record/${currentGame?.id || ''}/participations` },
             ];
         }
-    }, [dispatch, gameId]);
 
         return breadcrumbsMap[pathname as keyof typeof breadcrumbsMap] || breadcrumbsMap['/'];
-        }
-    }, [dispatch, games, gameId]);
-
-    useEffect(() => {
-        if (playersParticipating) {
-            dispatch(setCurrentPlayerOfGame(playersParticipating.find((p) => p.playerId === playerId)));
-        }
-    }, [dispatch, playersParticipating, playerId]);
+    }
+}
 
 const BreadcrumbsManager: React.FC = () => {
     const currentGame = useSelector((state: RootState) => state.transactionGames.currentGame);
