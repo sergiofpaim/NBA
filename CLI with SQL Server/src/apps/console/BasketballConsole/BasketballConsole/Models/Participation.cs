@@ -1,4 +1,6 @@
-﻿namespace NBA.Repo.Tables;
+﻿using NBA.Models;
+
+namespace NBA.Repo.Tables;
 
 public partial class Participation
 {

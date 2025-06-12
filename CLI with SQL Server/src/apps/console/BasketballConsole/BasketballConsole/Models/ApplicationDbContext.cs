@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NBA.Models;
 
 namespace NBA.Repo.Tables;
 

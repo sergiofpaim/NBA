@@ -1,4 +1,6 @@
-﻿namespace NBA.Models;
+﻿using NBA.Repo.Tables;
+
+namespace NBA.Models;
 
 public partial class Selection
 {
