@@ -1,10 +1,16 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+import vuetifyPlugin from 'vite-plugin-vuetify'
+
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
-  css: ['vuetify/styles'],
+  css: ['~/assets/css/globalTheme.css'],
   modules: ['@pinia/nuxt'],
   build: {
     transpile: ['vuetify'],
   },
+  vite: {
+    plugins: [
+      vuetifyPlugin()
+    ]
+  }
 })

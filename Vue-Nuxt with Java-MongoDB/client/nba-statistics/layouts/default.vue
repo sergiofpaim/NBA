@@ -1,7 +1,7 @@
 <template>
     <div class="layout-wrapper">
       <!-- HEADER -->
-      <header class="header">
+      <div class="header">
         <div class="toolbar">
           <img src="/images/logo.png" alt="Logomark" class="logo" />
           <div class="title-area">
@@ -16,7 +16,7 @@
             </nav>
           </div>
         </div>
-      </header>
+      </div>
   
       <!-- BODY -->
       <main class="main-content">
@@ -24,9 +24,9 @@
       </main>
   
       <!-- FOOTER -->
-      <footer class="footer">
+      <div class="footer">
         <p>© {{ year }} By Sérgio F. Paim</p>
-      </footer>
+      </div>
     </div>
   </template>
   
@@ -50,27 +50,6 @@
   </script>
   
   <style scoped>
-  /* Font Family Global */
-  .layout-wrapper {
-    font-family: "Geomanist", "Helvetica", "Arial", sans-serif;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background-color: #00438C;
-    color: #ffffff;
-    overflow: hidden;
-  }
-  
-  /* HEADER */
-  .header {
-    background-color: #00438C;
-    height: 100px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
-    margin-top: 5px;
-  }
   
   .toolbar {
     display: flex;
@@ -81,6 +60,8 @@
   .logo {
     height: 100px;
     padding-right: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
   }
   
   .title-area {
@@ -116,23 +97,52 @@
     color: #ffffff;
   }
   
-  /* MAIN CONTENT */
-  .main-content {
-    flex: 1;
-    padding: 24px;
-    background-color: #00438C;
-  }
-  
-  /* FOOTER */
-  .footer {
-    background: #f2f2f2;
-    color: #00438C;
-    text-align: center;
-    padding: 12px;
-    border-top: 2px solid #595959;
-    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-  }
+  .layout-wrapper {
+  font-family: "Geomanist", "Helvetica", "Arial", sans-serif;
+  min-height: 100vh;
+  background-color: #00438C;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding-top: 100px; /* height of header */
+  padding-bottom: 50px; /* height of footer */
+  box-sizing: border-box;
+}
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  background-color: #00438C;
+}
+
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background-color: #00438C;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  margin-top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.733);
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px; 
+  background: #f2f2f2;
+  color: #00438C;
+  text-align: center;
+  padding: 12px;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
   </style>
