@@ -102,20 +102,12 @@
   min-height: 100vh;
   background-color: #00438C;
   color: #ffffff;
+  overflow: hidden;           /* evita scrollbar geral */
   display: flex;
   flex-direction: column;
-  padding-top: 100px; /* height of header */
-  padding-bottom: 50px; /* height of footer */
-  box-sizing: border-box;
 }
 
-.main-content {
-  flex: 1;
-  overflow-y: auto;
-  background-color: #00438C;
-}
-
-
+/* já existente, mantém header fixo */
 .header {
   position: fixed;
   top: 0;
@@ -127,22 +119,44 @@
   display: flex;
   align-items: center;
   padding: 0 20px;
-  margin-top: 0;
   z-index: 10;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.733);
 }
 
+/* já existente, mantém footer fixo */
 .footer {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 50px; 
+  height: 50px;
   background: #f2f2f2;
   color: #00438C;
   text-align: center;
-  padding: 12px;
+  line-height: 26px;         /* vertical centering do texto dentro de 50px */
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
   z-index: 10;
 }
+
+/* NOVO .main-content */
+.main-content {
+  /* afasta do header e footer */
+  margin-top: 100px;
+  margin-bottom: 50px;
+
+  /* faz exatamente 100vh menos header+footer = 100 + 50 = 150px */
+  height: calc(100vh - 150px);
+
+  /* centralização vertical e horizontal */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* evita scroll interno */
+  overflow: hidden;
+
+  /* mantém fundo igual */
+  background-color: #00438C;
+}
+
   </style>
