@@ -1,0 +1,42 @@
+[
+  {
+    "id": "LAL",
+    "name": "Los Angeles Lakers",
+    "state": "California",
+    "city": "Los Angeles",
+    "stadium": "Crypto.com Arena",
+    "conference": "Western"
+  },
+  {
+    "id": "GSW",
+    "name": "Golden State Warriors",
+    "state": "California",
+    "city": "San Francisco",
+    "stadium": "Chase Center",
+    "conference": "Western"
+  },
+  {
+    "id": "BOS",
+    "name": "Boston Celtics",
+    "state": "Massachusetts",
+    "city": "Boston",
+    "stadium": "TD Garden",
+    "conference": "Eastern"
+  },
+  {
+    "id": "MIA",
+    "name": "Miami Heat",
+    "state": "Florida",
+    "city": "Miami",
+    "stadium": "Kaseya Center",
+    "conference": "Eastern"
+  },
+  {
+    "id": "MIL",
+    "name": "Milwaukee Bucks",
+    "state": "Wisconsin",
+    "city": "Milwaukee",
+    "stadium": "Fiserv Forum",
+    "conference": "Eastern"
+  }
+]
