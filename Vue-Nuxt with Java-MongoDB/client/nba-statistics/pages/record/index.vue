@@ -60,6 +60,7 @@ import { useTransactionStore } from '@/stores/Transaction'
 import { Game } from '@/models/Game'
 
 const store = useTransactionStore()
+const router = useRouter();
 
 onMounted(async () => {
   await store.loadGames()
@@ -67,7 +68,7 @@ onMounted(async () => {
 
 function viewGame(game: Game) {
   store.setCurrentGame(game)
-  console.log('Selected Game:', game)
+  router.push(`/record/${game.id}`)
 }
 
 function openForm() {

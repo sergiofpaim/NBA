@@ -8,12 +8,7 @@
           <h1 class="title">NBA Analytics</h1>
 
           <!-- BREADCRUMBS -->
-          <nav v-if="breadcrumb?.length" class="breadcrumbs">
-            <template v-for="(item, index) in breadcrumb" :key="index">
-              <a @click.prevent="navigate(item.route)" class="breadcrumb-link">{{ item.title }}</a>
-              <span v-if="index < breadcrumb.length - 1" class="breadcrumb-separator">›</span>
-            </template>
-          </nav>
+          <StyledBreadcrumbs />
         </div>
       </div>
     </div>
@@ -33,16 +28,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const year = new Date().getFullYear()
-
-// Breadcrumbs (exemplo fixo por enquanto)
-const breadcrumb = ref([
-  { title: 'Home', route: '/' },
-  { title: 'Record', route: '/record' }
-])
 
 const router = useRouter()
 
@@ -109,28 +97,6 @@ function navigate(route) {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.breadcrumbs {
-  margin-top: 5px;
-  font-weight: 700;
-  color: #ffffff;
-  font-size: 0.9rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.breadcrumb-link {
-  cursor: pointer;
-  color: #ffffff;
-  text-decoration: none;
-  margin-right: 5px;
-}
-
-.breadcrumb-separator {
-  margin-right: 5px;
-  color: #ffffff;
 }
 
 /* Main Content Styles */

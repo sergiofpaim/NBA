@@ -5,6 +5,15 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/assets/css/globalTheme.css'],
   modules: ['@pinia/nuxt'],
+
+  components: [
+    {
+      path: '~/components',
+      pathPrefix: false,
+      global: true
+    },
+  ],
+
   build: {
     transpile: ['vuetify'],
   },
