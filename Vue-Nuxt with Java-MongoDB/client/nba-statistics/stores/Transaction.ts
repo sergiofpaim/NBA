@@ -109,7 +109,7 @@ export const useTransactionStore = defineStore('transaction', {
             }
         },
 
-        setCurrentPlayerOfGame(player: ParticipatingPlayer | null) {
+        setCurrentPlayer(player: ParticipatingPlayer | null) {
             this.playersState.currentPlayer = player;
         },
 

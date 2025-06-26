@@ -2,7 +2,7 @@
   <v-container class="pa-10" fluid>
     <v-row no-gutters>
       <v-col cols="2" class="text-center pa-10">
-        <h1 class="text-h4">Last Games</h1>
+        <h1 class="text-h4">Participations</h1>
       </v-col>
 
       <v-col cols="auto" class="pa-0 d-flex align-center">
@@ -22,11 +22,11 @@
           </v-card-text>
         </v-card>
         
-        <v-list class="games-list" bg-color="var(--theme-background)" style="max-height: 400px; overflow-y: auto;">
+        <v-list class="players-list" bg-color="var(--theme-background)" style="max-height: 400px; overflow-y: auto;">
           <v-list-item
-            v-for="game in store.gamesState.games"
-            :key="game.id"
-            @click="viewGame(game)"
+            v-for="player in store.playersState.players"
+            :key="player.playerId"
+            @click="viewPlayer(player)"
             class="game-item"
             :style="{ minHeight: '72px', height: '72px' }"
           >
@@ -35,18 +35,8 @@
             </template>
             
             <v-list-item-title>
-              <strong>{{ game.homeTeamName }}</strong> vs <strong>{{ game.visitorTeamName }}</strong>
+              {{ player.playerName }}
             </v-list-item-title>
-            
-            <v-list-item-subtitle>
-              {{ formatDate(game.at) }}
-            </v-list-item-subtitle>
-            
-            <template v-slot:append>
-              <v-chip color="primary" variant="outlined">
-                Game ID: {{ game.id }}
-              </v-chip>
-            </template>
           </v-list-item>
         </v-list>
       </v-col>
@@ -58,58 +48,73 @@
 import { onMounted } from 'vue'
 import { useTransactionStore } from '@/stores/Transaction'
 import { Game } from '@/models/Game'
+import type { ParticipatingPlayer } from '~/models/ParticipatingPlayer';
 
 const store = useTransactionStore()
 const router = useRouter();
+const route = useRoute();
 
 onMounted(async () => {
-  await store.loadGames()
+  await store.loadPlayers({gameId: route.params.gameId as string})
+
+  const currentGame = store.gamesState.games.find(game => game.id === route.params.gameId)
+  if (currentGame) {
+    store.setCurrentGame(currentGame);
+  } else {
+    console.error('Game not found for id:', route.params.gameId);
+  }
 })
 
-function viewGame(game: Game) {
-  store.setCurrentGame(game)
-  router.push(`/record/${game.id}/participations`)
+function viewPlayer(player: any) {
+  const playsWithMethod = player.plays.map((play: any) => ({
+    ...play,
+    convertToTimeOnly: play.convertToTimeOnly || (() => {
+      return play.at instanceof Date
+        ? play.at.toTimeString().slice(0, 8)
+        : '';
+    })
+  }));
+  const playerWithFixedPlays = {
+    ...player,
+    plays: playsWithMethod
+  };
+  store.setCurrentPlayer(playerWithFixedPlays)
+  if (store.gamesState.currentGame) {
+    router.push(`/record/${store.gamesState.currentGame.id}/participations/${player.playerId}/tracking`)
+  } else {
+    console.error('Current game is null');
+  }
 }
 
 function openForm() {
   console.log('Selected Game:', null)
 }
 
-function formatDate(dateValue: string | Date) {
-  const date = typeof dateValue === 'string' ? new Date(dateValue) : dateValue
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
-  })
-}
 </script>
 
 <style scoped>
-.games-list {
+.players-list {
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
 }
 
 /* Custom scrollbar styling */
-.games-list::-webkit-scrollbar {
+.players-list::-webkit-scrollbar {
   width: 8px;
 }
 
-.games-list::-webkit-scrollbar-track {
+.players-list::-webkit-scrollbar-track {
   background: #f1f1f1;
   border-radius: 4px;
 }
 
-.games-list::-webkit-scrollbar-thumb {
+.players-list::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 4px;
 }
 
-.games-list::-webkit-scrollbar-thumb:hover {
+.players-list::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
 

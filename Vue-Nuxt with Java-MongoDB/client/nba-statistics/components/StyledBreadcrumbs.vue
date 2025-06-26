@@ -22,8 +22,14 @@ const route = useRoute();
 const store = useTransactionStore();
 
 const navigate = (path) => {
+  // Reset current game when navigating to /record
   if (path === '/record') {
     store.gamesState.currentGame = null;
+  }
+
+  // Reset current player if URL has no player tracking segment
+  if (!path.includes('/tracking')) {
+    store.currentPlayer = null;
   }
   router.push(path);
 };
@@ -41,9 +47,19 @@ const breadcrumbItems = computed(() => {
       if (store.gamesState.currentGame?.id) {
           items.push({ 
               title: store.gamesState.currentGame.homeTeamId + ' vs ' + store.gamesState.currentGame.visitorTeamId, 
-              route: `/record/${store.gamesState.currentGame.id}`
+              route: `/record/${store.gamesState.currentGame.id}/participations`
           });
       }
+      if (store.playersState.currentPlayer?.id) {
+          items.push({ 
+              title: store.playersState.currentPlayer.playerName, 
+              route: ``
+          });
+      }
+  }
+
+  if (currentRoute.startsWith('/statistics')) {
+      items.push({ title: 'Statistics', route: '' });
   }
   
   return items;
