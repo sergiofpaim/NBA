@@ -44,13 +44,13 @@ const breadcrumbItems = computed(() => {
   if (currentRoute.startsWith('/record')) {
       items.push({ title: 'Record', route: '/record' });
       
-      if (store.gamesState.currentGame?.id) {
+      if (store.gamesState.currentGame) {
           items.push({ 
               title: store.gamesState.currentGame.homeTeamId + ' vs ' + store.gamesState.currentGame.visitorTeamId, 
               route: `/record/${store.gamesState.currentGame.id}/participations`
           });
       }
-      if (store.playersState.currentPlayer?.id) {
+      if (store.playersState.currentPlayer) {
           items.push({ 
               title: store.playersState.currentPlayer.playerName, 
               route: ``

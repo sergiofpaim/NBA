@@ -12,7 +12,7 @@
       <v-col class="pa-10">
         <div class="d-flex justify-end mb-4">
           <v-btn color="var(--theme-secondary)" @click="openForm" style="min-width: 200px; display: flex; justify-content: center; align-items: center">
-            <span style="flex: 1; text-align: center">Create</span>
+            <span style="flex: 1; text-align: center">New Player</span>
           </v-btn>
         </div>
         
@@ -47,8 +47,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useTransactionStore } from '@/stores/Transaction'
-import { Game } from '@/models/Game'
-import type { ParticipatingPlayer } from '~/models/ParticipatingPlayer';
 
 const store = useTransactionStore()
 const router = useRouter();
@@ -78,6 +76,7 @@ function viewPlayer(player: any) {
     ...player,
     plays: playsWithMethod
   };
+  
   store.setCurrentPlayer(playerWithFixedPlays)
   if (store.gamesState.currentGame) {
     router.push(`/record/${store.gamesState.currentGame.id}/participations/${player.playerId}/tracking`)
