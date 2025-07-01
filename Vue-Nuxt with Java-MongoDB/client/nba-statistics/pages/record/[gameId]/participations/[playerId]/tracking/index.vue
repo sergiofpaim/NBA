@@ -20,19 +20,28 @@
   
     const currentGame = store.gamesState.games.find(game => game.id === route.params.gameId)
     const currentPlayer = store.playersState.players.find(player => player.playerId === route.params.playerId)
-  
+
     if (currentGame) {
       store.setCurrentGame(currentGame);
-    } else {
-      console.error('Game not found for id:', route.params.gameId);
     }
-  
+
+    function addConvertToTimeOnly(play: any) {
+      return {
+        ...play,
+        convertToTimeOnly: play.convertToTimeOnly || (() => {}),
+      };
+    }
+
+    //TODO: Fix this to use the correct type for plays
+
     if (currentPlayer) {
-    //   store.setCurrentPlayer(currentPlayer);
       playerExists.value = true;
-    } else {
-      console.error('No players found for game:', route.params.gameId);
-      playerExists.value = false;
+      const fixedPlayer = {
+        ...currentPlayer,
+        plays: currentPlayer.plays.map(addConvertToTimeOnly),
+      };
+      store.setCurrentPlayer(fixedPlayer);
     }
   })
+  
   </script>

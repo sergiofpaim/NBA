@@ -26,7 +26,7 @@
           <v-list-item
             v-for="player in store.playersState.players"
             :key="player.playerId"
-            @click="viewPlayer(player)"
+            @click="trackPlayer(player)"
             class="game-item"
             :style="{ minHeight: '72px', height: '72px' }"
           >
@@ -53,31 +53,17 @@ const router = useRouter();
 const route = useRoute();
 
 onMounted(async () => {
+  await store.loadGames();
   await store.loadPlayers({gameId: route.params.gameId as string})
 
   const currentGame = store.gamesState.games.find(game => game.id === route.params.gameId)
   if (currentGame) {
     store.setCurrentGame(currentGame);
-  } else {
-    console.error('Game not found for id:', route.params.gameId);
   }
 })
 
-function viewPlayer(player: any) {
-  const playsWithMethod = player.plays.map((play: any) => ({
-    ...play,
-    convertToTimeOnly: play.convertToTimeOnly || (() => {
-      return play.at instanceof Date
-        ? play.at.toTimeString().slice(0, 8)
-        : '';
-    })
-  }));
-  const playerWithFixedPlays = {
-    ...player,
-    plays: playsWithMethod
-  };
-  
-  store.setCurrentPlayer(playerWithFixedPlays)
+function trackPlayer(player: any) {  
+  store.setCurrentPlayer(player)
   if (store.gamesState.currentGame) {
     router.push(`/record/${store.gamesState.currentGame.id}/participations/${player.playerId}/tracking`)
   } else {

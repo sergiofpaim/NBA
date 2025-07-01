@@ -28,15 +28,7 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
-
 const year = new Date().getFullYear()
-
-const router = useRouter()
-
-function navigate(route) {
-  router.push(route)
-}
 </script>
 
 <style scoped>

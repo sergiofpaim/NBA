@@ -22,14 +22,15 @@ const route = useRoute();
 const store = useTransactionStore();
 
 const navigate = (path) => {
-  // Reset current game when navigating to /record
-  if (path === '/record') {
-    store.gamesState.currentGame = null;
+  //Reset current game and player when navigating to specific paths
+
+  if (path === '/' || path === '/record') {
+    store.setCurrentGame(null);
+    store.setCurrentPlayer(null);
   }
 
-  // Reset current player if URL has no player tracking segment
-  if (!path.includes('/tracking')) {
-    store.currentPlayer = null;
+  if (path.includes('/participations') && !path.includes('/tracking/')) {
+    store.setCurrentPlayer(null);
   }
   router.push(path);
 };
@@ -58,9 +59,9 @@ const breadcrumbItems = computed(() => {
       }
   }
 
-  if (currentRoute.startsWith('/statistics')) {
+  if (currentRoute.startsWith('/statistics')) 
       items.push({ title: 'Statistics', route: '' });
-  }
+  
   
   return items;
 });

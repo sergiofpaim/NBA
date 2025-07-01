@@ -11,10 +11,53 @@
       
       <v-col class="pa-10">
         <div class="d-flex justify-end mb-4">
-          <v-btn color="var(--theme-secondary)" @click="openForm" style="min-width: 200px; display: flex; justify-content: center; align-items: center">
-            <span style="flex: 1; text-align: center">Create</span>
+          <v-btn color="var(--theme-secondary)" @click="createGame" style="min-width: 200px; display: flex; justify-content: center; align-items: center">
+            <span style="flex: 1; text-align: center; color:var(--theme-primary)">Create</span>
           </v-btn>
         </div>
+
+        <!-- Dialog -->
+
+        <v-dialog v-model="createGameDialog" max-width="600">
+          <v-card color="var(--theme-background)">
+            <v-card-title class="text-center" style="color:var(--theme-primary)">Create New Game</v-card-title>
+            <v-card-text>
+              <v-select
+                v-model="newGame.homeTeamId"
+                :items="teamsFromStore"
+                item-title="teamName"
+                item-value="teamId"
+                label="Home Team"
+                outlined
+                class="mb-4"
+              ></v-select>
+              
+              <v-select
+                v-model="newGame.visitorTeamId"
+                :items="teamsFromStore"
+                item-title="teamName"
+                item-value="teamId"
+                label="Visitor Team"
+                outlined
+                class="mb-4"
+              ></v-select>
+              
+              <v-text-field
+                v-model="newGame.at"
+                type="datetime-local"
+                label="Game Date & Time"
+                outlined
+              ></v-text-field>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn @click="createGameDialog = false">Cancel</v-btn>
+              <v-btn color="var(--theme-background)" @click="submitNewGame">Create</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
+        <!-- End of dialog -->
         
         <v-card class="mb-0" variant="outlined">
           <v-card-text class="text-center">
@@ -26,7 +69,7 @@
           <v-list-item
             v-for="game in store.gamesState.games"
             :key="game.id"
-            @click="viewGame(game)"
+            @click="viewGameParticipations(game)"
             class="game-item"
             :style="{ minHeight: '72px', height: '72px' }"
           >
@@ -34,11 +77,11 @@
               <v-icon icon="mdi-basketball"></v-icon>
             </template>
             
-            <v-list-item-title>
-              <strong>{{ game.homeTeamName }}</strong> vs <strong>{{ game.visitorTeamName }}</strong>
+            <v-list-item-title style="color:var(--theme-primary)">
+              {{ game.homeTeamName }} <strong> vs </strong>{{ game.visitorTeamName }}
             </v-list-item-title>
             
-            <v-list-item-subtitle>
+            <v-list-item-subtitle style="color:var(--theme-primary)">
               {{ formatDate(game.at) }}
             </v-list-item-subtitle>
             
@@ -62,17 +105,38 @@ import { Game } from '@/models/Game'
 const store = useTransactionStore()
 const router = useRouter();
 
+const teamsFromStore = computed(() => store.teamsState.teams)
+
+const createGameDialog = ref(false)
+
+
 onMounted(async () => {
   await store.loadGames()
+  await store.loadTeams()
 })
 
-function viewGame(game: Game) {
-  store.setCurrentGame(game)
-  router.push(`/record/${game.id}/participations`)
+function createGame() {
+  createGameDialog.value = true
 }
 
-function openForm() {
-  console.log('Selected Game:', null)
+const newGame = ref({
+  homeTeamId: '',
+  visitorTeamId: '',
+  at: new Date(),
+})
+
+function submitNewGame() {
+  createGameDialog.value = false
+  store.createGame({
+    homeTeamId: newGame.value.homeTeamId,
+    visitorTeamId: newGame.value.visitorTeamId,
+    at: new Date(newGame.value.at),
+  })
+}
+
+function viewGameParticipations(game: Game) {
+  store.setCurrentGame(game)
+  router.push(`/record/${game.id}/participations`)
 }
 
 function formatDate(dateValue: string | Date) {
@@ -94,7 +158,6 @@ function formatDate(dateValue: string | Date) {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
 }
 
-/* Custom scrollbar styling */
 .games-list::-webkit-scrollbar {
   width: 8px;
 }
