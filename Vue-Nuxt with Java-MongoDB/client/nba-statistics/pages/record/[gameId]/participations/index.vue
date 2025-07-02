@@ -23,7 +23,7 @@
         </v-card>
         <StyledList
         :items="store.playersState.players"
-        parameter1="playerName"
+        desktopTitle="playerName"
         :function1="trackPlayer"
         :singleParameterMode="true"
       />

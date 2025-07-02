@@ -6,14 +6,14 @@
       @click="function1(item)"
       class="list-item"
       :style="{ minHeight: isMobile ? '56px' : '72px', height: isMobile ? '56px' : '72px' }"
-      :disabled="!singleParameterMode && !function2(item[parameter3])"
+      :disabled="!singleParameterMode && !function2(item[parameter2])"
     >
       <template v-if="singleParameterMode">
         <v-list-item-title
           style="color:var(--theme-primary)"
           :class="isMobile ? 'mobile-title' : 'desktop-title'"
         >
-          {{ item[parameter1] }}
+          {{ item[desktopTitle] }}
         </v-list-item-title>
       </template>
 
@@ -29,7 +29,7 @@
           style="color:var(--theme-primary)"
           :class="isMobile ? 'mobile-subtitle' : 'desktop-subtitle'"
         >
-        {{ formatDate(item[parameter3]) }}
+        {{ formatDate(item[parameter2]) }}
         </v-list-item-subtitle>
       </template>
 
@@ -39,7 +39,7 @@
           variant="outlined"
           class="text-center"
           size="small"
-          v-if="function2(item[parameter3])"
+          v-if="function2(item[parameter2])"
         >
           Running
         </v-chip>
@@ -65,22 +65,23 @@ const props = defineProps({
     type: Array,
     required: true
   },
-  parameter1: {
+  desktopTitle: {
     type: String,
     required: true
+  },
+  mobileTitle: {
+    type: String,
+    required: false
+  },
+  parameter1: {
+    type: String,
+    required: false
   },
   parameter2: {
     type: String,
     required: false
   },
-  parameter3: {
-    type: String,
-    required: false
-  },
-  parameter4: {
-    type: String,
-    required: false
-  },
+
   function1: {
     type: Function,
     required: true
@@ -97,10 +98,10 @@ const props = defineProps({
 
 const getTitleText = (item) => {
   if (!isMobile.value) {
-    return `${item[props.parameter1]} vs ${item[props.parameter1]}`;
+    return `${item[props.desktopTitle]} vs ${item[props.desktopTitle]}`;
   }
   if (isMobile.value) {
-    return `${item[props.parameter4]} vs ${item[props.parameter4]}`;
+    return `${item[props.mobileTitle]} vs ${item[props.mobileTitle]}`;
   }
   return '';
 };

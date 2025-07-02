@@ -1,19 +1,29 @@
 <template>
   <v-container class="pa-10" fluid>
     <v-row no-gutters>
-      <v-col cols="2" class="text-center pa-10">
-        <h1 class="text-h4">Last Games</h1>
+      <v-col cols="2" class="d-none d-md-flex text-center pa-10">
+        <h1 class="text-h4">Games</h1>
       </v-col>
 
-      <v-col cols="auto" class="pa-0 d-flex align-center">
-        <v-divider :thickness="5" color="var(--theme-primary)" vertical class="my-4 border-opacity-100" style="height: 100%;"></v-divider>
+      <v-col cols="auto" class="d-none d-md-flex pa-0 align-center">
+        <v-divider :thickness="5" color="var(--theme-primary)" vertical class="my-1 border-opacity-100" style="height: 100%;"></v-divider>
       </v-col>
       
       <v-col class="pa-10">
-        <div class="d-flex justify-end mb-4">
+        <div class="d-md-none text-center mb-6">
+          <h1 class="text-h4 mb-4">Games</h1>
           <StyledButton
-          parameter="Create"
-          @click="createGame"/>
+            parameter="Create"
+            @click="createGame"
+            class="mx-auto"
+          />
+        </div>
+
+        <div class="d-none d-md-flex justify-end mb-4">
+          <StyledButton
+            parameter="Create"
+            @click="createGame"
+          />
         </div>
 
         <!-- Dialog -->
@@ -56,7 +66,6 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-        <!-- /Dialog -->
         
         <v-card class="mb-0" variant="outlined">
           <v-card-text class="text-center">
@@ -64,19 +73,20 @@
           </v-card-text>
         </v-card>
         <StyledList
-        :items="store.gamesState.games"
-        parameter1="homeTeamName"
-        parameter2="visitorTeamName"
-        parameter3="at"
-        parameter4="homeTeamId"
-        parameter5="visitorTeamId"
-        :function1="viewGameParticipations"
-        :function2="isGameRunning"
-        />
+          :items="store.gamesState.games"
+          desktopTitle="homeTeamName"
+          parameter1="visitorTeamName"
+          parameter2="at"
+          mobileTitle="homeTeamId"
+          parameter5="visitorTeamId"
+          :function1="viewGameParticipations"
+          :function2="isGameRunning"
+        ></StyledList>
       </v-col>
     </v-row>
   </v-container>
 </template>
+
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
