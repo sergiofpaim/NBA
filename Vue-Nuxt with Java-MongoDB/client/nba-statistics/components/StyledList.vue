@@ -3,9 +3,10 @@
     <v-list-item
       v-for="item in items"
       :key="item.id"
-      @click="onClick(item)"
+      @click="function1(item)"
       class="list-item"
       :style="{ minHeight: '72px', height: '72px' }"
+      :disabled="!singleParameterMode && !function2(item[parameter3])"
     >
       <template v-if="singleParameterMode">
       <v-list-item-title style="color:var(--theme-primary)" class="text-h6">
@@ -23,7 +24,7 @@
       </template>
 
       <template v-slot:append v-if="!singleParameterMode">
-        <v-chip color="green" variant="outlined" class="text-center" v-if="isGameRunning(item[parameter3])">
+        <v-chip color="green" variant="outlined" class="text-center" v-if="function2(item[parameter3])">
         Running
         </v-chip>
         <v-chip color="red" variant="outlined" class="text-center" v-else>
@@ -43,7 +44,7 @@ export default {
     },
     parameter1: {
       type: String,
-      required: false
+      required: true
     },
     parameter2: {
       type: String,
@@ -53,9 +54,13 @@ export default {
       type: String,
       required: false
     },
-    onClick: {
+    function1: {
       type: Function,
       required: true
+    },
+    function2: {
+      type: Function,
+      required: false
     },
     singleParameterMode: { 
       type: Boolean,
@@ -65,15 +70,6 @@ export default {
   methods: {
     formatDate(date) {
       return new Date(date).toLocaleString()
-    },
-    isGameRunning(gameTime) {
-    const now = new Date();
-    const gameDate = new Date(gameTime);
-    const twoHoursLater = new Date(now.getTime() + 2 * 60 * 60 * 1000);
-    
-    const result = gameDate >= now || gameDate <= twoHoursLater;
-
-    return result; 
     }
 }}
 </script>

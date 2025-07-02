@@ -24,8 +24,8 @@
         <StyledList
         :items="store.playersState.players"
         parameter1="playerName"
+        :function1="trackPlayer"
         :singleParameterMode="true"
-        :onClick="trackPlayer"
       />
       </v-col>
     </v-row>

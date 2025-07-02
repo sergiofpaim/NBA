@@ -68,7 +68,8 @@
         parameter1="homeTeamName"
         parameter2="visitorTeamName"
         parameter3="at"
-        :onClick="viewGameParticipations"
+        :function1="viewGameParticipations"
+        :function2="isGameRunning"
         />
       </v-col>
     </v-row>
@@ -115,6 +116,14 @@ function viewGameParticipations(game: Game) {
   store.setCurrentGame(game)
   router.push(`/record/${game.id}/participations`)
 }
+
+function isGameRunning(gameTime: Date) {
+    const now = new Date();
+    const gameDate = new Date(gameTime);
+    const twoHoursLater = new Date(gameDate.getTime() + 2 * 60 * 60 * 1000);
+    
+    return now >= gameDate && now <= twoHoursLater;
+    }
 </script>
 
 <style scoped>
@@ -128,7 +137,16 @@ function viewGameParticipations(game: Game) {
   border-radius: 24px !important;
 }
 
-::v-deep(.white-label .v-label) {
-  color: white !important;
+:deep(.white-label) {
+  .v-label,
+  .v-field__input,
+  input,
+  .v-select__selection-text {
+    color: white !important;
+  }
+  
+  .v-field__outline {
+    color: rgba(255, 255, 255, 0.24) !important;
+  }
 }
 </style>
