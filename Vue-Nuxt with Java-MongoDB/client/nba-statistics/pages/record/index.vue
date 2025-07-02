@@ -148,5 +148,10 @@ function isGameRunning(gameTime: Date) {
   .v-field__outline {
     color: rgba(255, 255, 255, 0.24) !important;
   }
+
+  input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  filter: invert(1); 
+  opacity: 1;
+  }
 }
 </style>
