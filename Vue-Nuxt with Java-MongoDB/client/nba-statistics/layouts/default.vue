@@ -1,6 +1,5 @@
 <template>
   <div class="layout-wrapper">
-    <!-- HEADER -->
     <div class="header">
       <div class="toolbar">
         <img src="/images/logo.png" alt="Logomark" class="logo" />
@@ -13,14 +12,12 @@
       </div>
     </div>
 
-    <!-- BODY -->
     <main class="main-content">
       <div class="content-container">
         <slot />
       </div>
     </main>
 
-    <!-- FOOTER -->
     <div class="footer">
       <p>© {{ year }} By Sérgio F. Paim</p>
     </div>
@@ -39,10 +36,9 @@ const year = new Date().getFullYear()
   color: #ffffff;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* Prevent entire page scrolling */
+  overflow: hidden;
 }
 
-/* Header Styles */
 .header {
   position: fixed;
   top: 0;
@@ -77,7 +73,7 @@ const year = new Date().getFullYear()
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  min-width: 0; /* Allows text truncation */
+  min-width: 0; 
 }
 
 .title {
@@ -91,14 +87,13 @@ const year = new Date().getFullYear()
   text-overflow: ellipsis;
 }
 
-/* Main Content Styles */
 .main-content {
   position: fixed;
   top: 70px;
   bottom: 40px;
   left: 0;
   right: 0;
-  overflow: hidden; /* Disable scrolling */
+  overflow: hidden; 
   background-color: #00438C;
   width: 100%;
 }
@@ -112,7 +107,6 @@ const year = new Date().getFullYear()
   justify-content: center;
 }
 
-/* Footer Styles */
 .footer {
   position: fixed;
   bottom: 0;
@@ -137,7 +131,6 @@ const year = new Date().getFullYear()
   text-overflow: ellipsis;
 }
 
-/* Media Queries for Responsive Adjustments */
 @media (max-width: 480px) {
   .header {
     padding: 8px 10px;

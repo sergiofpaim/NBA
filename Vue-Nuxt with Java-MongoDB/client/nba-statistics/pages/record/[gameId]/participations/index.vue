@@ -11,9 +11,9 @@
       
       <v-col class="pa-10">
         <div class="d-flex justify-end mb-4">
-          <v-btn color="var(--theme-secondary)" @click="openForm" style="min-width: 200px; display: flex; justify-content: center; align-items: center">
-            <span style="flex: 1; text-align: center">New Player</span>
-          </v-btn>
+          <StyledButton
+           parameter="Add Player"
+           @click="addPlayer"/>
         </div>
         
         <v-card class="mb-0" variant="outlined">
@@ -21,24 +21,12 @@
             <h2 class="text-h5">Details</h2>
           </v-card-text>
         </v-card>
-        
-        <v-list class="players-list" bg-color="var(--theme-background)" style="max-height: 400px; overflow-y: auto;">
-          <v-list-item
-            v-for="player in store.playersState.players"
-            :key="player.playerId"
-            @click="trackPlayer(player)"
-            class="game-item"
-            :style="{ minHeight: '72px', height: '72px' }"
-          >
-            <template v-slot:prepend>
-              <v-icon icon="mdi-basketball"></v-icon>
-            </template>
-            
-            <v-list-item-title>
-              {{ player.playerName }}
-            </v-list-item-title>
-          </v-list-item>
-        </v-list>
+        <StyledList
+        :items="store.playersState.players"
+        parameter1="playerName"
+        :singleParameterMode="true"
+        :onClick="trackPlayer"
+      />
       </v-col>
     </v-row>
   </v-container>
@@ -71,7 +59,7 @@ function trackPlayer(player: any) {
   }
 }
 
-function openForm() {
+function addPlayer() {
   console.log('Selected Game:', null)
 }
 

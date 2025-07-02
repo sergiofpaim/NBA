@@ -22,8 +22,6 @@ const route = useRoute();
 const store = useTransactionStore();
 
 const navigate = (path) => {
-  //Reset current game and player when navigating to specific paths
-
   if (path === '/' || path === '/record') {
     store.setCurrentGame(null);
     store.setCurrentPlayer(null);
