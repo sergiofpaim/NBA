@@ -68,6 +68,8 @@
         parameter1="homeTeamName"
         parameter2="visitorTeamName"
         parameter3="at"
+        parameter4="homeTeamId"
+        parameter5="visitorTeamId"
         :function1="viewGameParticipations"
         :function2="isGameRunning"
         />
