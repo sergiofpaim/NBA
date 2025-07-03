@@ -26,46 +26,16 @@
           />
         </div>
 
-        <!-- Dialog -->
-        <v-dialog v-model="createGameDialog" max-width="600">
-          <v-card color="var(--theme-background)" class="card-dialog">
-            <v-card-title class="text-center pt-5" style="color:var(--theme-primary)">New Game</v-card-title>
-            <v-card-text>
-              <v-select
-                v-model="newGame.homeTeamId"
-                :items="teamsFromStore"
-                item-title="teamName"
-                item-value="teamId"
-                label="Home Team"
-                outlined
-                class="mb-4 white-label"
-              ></v-select>
-              
-              <v-select
-                v-model="newGame.visitorTeamId"
-                :items="teamsFromStore"
-                item-title="teamName"
-                item-value="teamId"
-                label="Visitor Team"
-                outlined
-                class="mb-4 white-label"
-              ></v-select>
-              
-              <v-text-field
-                v-model="newGame.at"
-                type="datetime-local"
-                label="Date & Time"
-                class="mb-4 white-label"
-                outlined
-              ></v-text-field>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn @click="createGameDialog = false" color="var(--theme-secondary)">Cancel</v-btn>
-              <v-btn color="var(--theme-primary)" @click="submitNewGame" >Create</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+        <StyledDialog
+            v-model="createGameDialog"
+            :items="teamsFromStore"
+            :form-data="newGame"
+            title="teamName"
+            value="teamId"
+            label1="Home Team"
+            label2="Visitor Team"
+            @submit="submitNewGame"
+        />
         
         <v-card class="mb-0" variant="outlined">
           <v-card-text class="text-center">
