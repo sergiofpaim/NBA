@@ -41,7 +41,7 @@ public class TeamScalationVM extends BasketballViewModel {
         return new ValidationResult(false, "this viewModel cannot be used for write operations");
     }
 
-    public static TeamScalationVM factorFrom(TeamScalation model) {
+    public static TeamScalationVM factoryFrom(TeamScalation model) {
         TeamScalationVM teamScalationVM = new TeamScalationVM();
         teamScalationVM.setTeamId(model.getId());
         teamScalationVM.setTeamName(model.getTeamName());
