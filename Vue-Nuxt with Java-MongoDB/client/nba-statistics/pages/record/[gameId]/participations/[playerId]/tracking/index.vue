@@ -16,10 +16,10 @@
   
   onMounted(async () => {
     await store.loadGames()
-    await store.loadPlayers({ gameId: route.params.gameId as string })
+    await store.loadParticipations({ gameId: route.params.gameId as string })
   
     const currentGame = store.gamesState.games.find(game => game.id === route.params.gameId)
-    const currentPlayer = store.playersState.players.find(player => player.playerId === route.params.playerId)
+    const currentPlayer = store.playersState.participations.find(player => player.playerId === route.params.playerId)
 
     if (currentGame) {
       store.setCurrentGame(currentGame);

@@ -12,9 +12,21 @@
       <v-col class="pa-10">
         <div class="d-flex justify-end mb-4">
           <StyledButton
-           parameter="Add Player"
-           @click="addPlayer"/>
+            parameter="Add Player"
+            @click="addPlayer"/>
         </div>
+
+        <StyledDialog
+            v-model="addPlayerDialog"
+            :items="store.playersState.players"
+            :form-data="newPlayer"
+            dialogTitle="New Participation"
+            title="playerName"
+            value="playerId"
+            value2="playerId"
+            label1="Players"
+            @submit="trackNewPlayer"
+        />
         
         <v-card class="mb-0" variant="outlined">
           <v-card-text class="text-center">
@@ -22,7 +34,7 @@
           </v-card-text>
         </v-card>
         <StyledList
-        :items="store.playersState.players"
+        :items="store.playersState.participations"
         desktopTitle="playerName"
         :function1="trackPlayer"
         :singleParameterMode="true"
@@ -40,15 +52,21 @@ const store = useTransactionStore()
 const router = useRouter();
 const route = useRoute();
 
+const addPlayerDialog = ref(false)
+
 onMounted(async () => {
-  await store.loadGames();
-  await store.loadPlayers({gameId: route.params.gameId as string})
+  await store.loadParticipations({gameId: route.params.gameId as string})
+  await store.loadPlayers({ gameId: route.params.gameId as string })
 
   const currentGame = store.gamesState.games.find(game => game.id === route.params.gameId)
   if (currentGame) {
     store.setCurrentGame(currentGame);
   }
 })
+
+  const newPlayer = ref({
+    playerId: ''
+  })
 
 function trackPlayer(player: any) {  
   store.setCurrentPlayer(player)
@@ -59,51 +77,21 @@ function trackPlayer(player: any) {
   }
 }
 
-function addPlayer() {
-  console.log('Selected Game:', null)
+function trackNewPlayer() {
+  addPlayerDialog.value = false
+  if (store.gamesState.currentGame) {
+    router.push(`/record/${store.gamesState.currentGame.id}/participations/${newPlayer}/tracking`)
+  } else {
+    console.error('Current game is null');
+  }
 }
 
+function addPlayer() {
+  addPlayerDialog.value = true
+}
 </script>
 
 <style scoped>
-.players-list {
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
-}
-
-/* Custom scrollbar styling */
-.players-list::-webkit-scrollbar {
-  width: 8px;
-}
-
-.players-list::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 4px;
-}
-
-.players-list::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
-}
-
-.players-list::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
-.game-item {
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.game-item:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-  transform: translateX(4px);
-}
-
-.game-item:active {
-  transform: scale(0.98);
-}
 
 .v-divider--vertical {
   height: 90%;

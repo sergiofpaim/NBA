@@ -3,6 +3,7 @@ import { Game } from '@/models/Game';
 import { TeamScalation } from '@/models/TeamScalation';
 import { ParticipatingPlayer } from '@/models/ParticipatingPlayer';
 import { Participation } from '@/models/Participation';
+import type { PlayerSelection } from '~/models/PlayerSelection';
 
 interface GamesOfCurrentSeasonState {
     games: Game[];
@@ -18,7 +19,8 @@ interface TeamsOfCurrentSeasonState {
 }
 
 interface PlayersOfGameState {
-    players: ParticipatingPlayer[];
+    players: PlayerSelection[];
+    participations: ParticipatingPlayer[];
     currentPlayer: ParticipatingPlayer | null;
     error: string | null;
 }
@@ -43,6 +45,7 @@ export const useTransactionStore = defineStore('transaction', {
         },
         playersState: <PlayersOfGameState>{
             players: [],
+            participations: [],
             currentPlayer: null,
             error: null,
         },
@@ -83,7 +86,6 @@ export const useTransactionStore = defineStore('transaction', {
             this.gamesState.currentGame = game;
         },
 
-        // Teams
         async loadTeams() {
             if (this.teamsState.loaded) return;
             this.teamsState.error = null;
@@ -97,7 +99,6 @@ export const useTransactionStore = defineStore('transaction', {
             }
         },
 
-        // Players
         async loadPlayers(payload: { gameId: string }) {
             this.playersState.error = null;
             const { $api } = useNuxtApp();
@@ -109,11 +110,21 @@ export const useTransactionStore = defineStore('transaction', {
             }
         },
 
+        async loadParticipations(payload: { gameId: string }) {
+            this.playersState.error = null;
+            const { $api } = useNuxtApp();
+            const response = await $api.get<ParticipatingPlayer[]>(`/transaction/games/${payload.gameId}/participations`);
+            if (response.success) {
+                this.playersState.participations = response.payLoad;
+            } else {
+                this.playersState.error = response.message;
+            }
+        },
+
         setCurrentPlayer(player: ParticipatingPlayer | null) {
             this.playersState.currentPlayer = player;
         },
 
-        // Participation
         async fetchParticipation(payload: { gameId: string; playerId: string }) {
             this.participationState.error = null;
             const { $api } = useNuxtApp();
