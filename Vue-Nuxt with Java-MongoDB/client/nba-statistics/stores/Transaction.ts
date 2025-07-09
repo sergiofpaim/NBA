@@ -10,12 +10,14 @@ interface GamesOfCurrentSeasonState {
     currentGame: Game | null;
     error: string | null;
     loaded: boolean;
+    loading: boolean;
 }
 
 interface TeamsOfCurrentSeasonState {
     teams: TeamScalation[];
     error: string | null;
     loaded: boolean;
+    loading: boolean;
 }
 
 interface PlayersOfGameState {
@@ -24,11 +26,13 @@ interface PlayersOfGameState {
     participations: ParticipatingPlayer[];
     currentParticipation: ParticipatingPlayer | null;
     error: string | null;
+    loading: boolean;
 }
 
 interface ParticipationOfGameState {
     participation: Participation | null;
     error: string | null;
+    loading: boolean;
 }
 
 export const useTransactionStore = defineStore('transaction', {
@@ -38,11 +42,13 @@ export const useTransactionStore = defineStore('transaction', {
             currentGame: null,
             error: null,
             loaded: false,
+            loading: false,
         },
         teamsState: <TeamsOfCurrentSeasonState>{
             teams: [],
             error: null,
             loaded: false,
+            loading: false,
         },
         playersState: <PlayersOfGameState>{
             players: [],
@@ -50,12 +56,33 @@ export const useTransactionStore = defineStore('transaction', {
             participations: [],
             currentParticipation: null,
             error: null,
+            loading: false,
         },
         participationState: <ParticipationOfGameState>{
             participation: null,
             error: null,
+            loading: false,
         },
     }),
+
+    getters: {
+        isLoading: (state) => {
+            return (
+                state.gamesState.loading ||
+                state.teamsState.loading ||
+                state.playersState.loading ||
+                state.participationState.loading
+            );
+        },
+        hasError: (state) => {
+            return (
+                state.gamesState.error ||
+                state.teamsState.error ||
+                state.playersState.error ||
+                state.participationState.error
+            );
+        },
+    },
 
     actions: {
         async loadGames() {
@@ -166,6 +193,55 @@ export const useTransactionStore = defineStore('transaction', {
             } else {
                 this.participationState.error = response.message;
             }
-        }
+        },
+
+        async hydrateFromRoute(params: Record<string, string>) {
+            this.resetLoadingStates();
+
+            try {
+                await Promise.all([
+                    this.loadGames(),
+                    this.loadTeams(),
+                ]);
+
+                if (params.gameId) {
+                    await this.hydrateGameData(params.gameId);
+
+                    if (params.playerId) {
+                        await this.hydratePlayerData(params.gameId, params.playerId);
+                    }
+                }
+            } catch (error) {
+                console.error('Hydration error:', error);
+            }
+        },
+
+        async hydrateGameData(gameId: string) {
+            const existingGame = this.gamesState.games.find(g => g.id === gameId);
+            if (existingGame) {
+                this.setCurrentGame(existingGame);
+            }
+
+            await Promise.all([
+                this.loadPlayers({ gameId }),
+                this.loadParticipations({ gameId }),
+            ]);
+        },
+
+        async hydratePlayerData(gameId: string, playerId: string) {
+            const existingPlayer = this.playersState.players.find(p => p.playerId === playerId);
+            if (existingPlayer) {
+                this.setCurrentPlayer(existingPlayer);
+            }
+
+            await this.fetchParticipation({ gameId, playerId });
+        },
+
+        resetLoadingStates() {
+            this.gamesState.loading = false;
+            this.teamsState.loading = false;
+            this.playersState.loading = false;
+            this.participationState.loading = false;
+        },
     }
 });

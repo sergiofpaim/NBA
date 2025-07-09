@@ -51,24 +51,10 @@ import { PlayerSelection } from '~/models/PlayerSelection';
 
 const store = useTransactionStore()
 const router = useRouter();
-const route = useRoute();
 
 const addPlayerDialog = ref(false)
 
-onMounted(async () => {
-  await store.loadParticipations({gameId: route.params.gameId as string})
-  await store.loadPlayers({ gameId: route.params.gameId as string })
-  await store.loadGames();
-
-  const currentGame = store.gamesState.games.find(game => game.id === route.params.gameId)
-
-  if (currentGame) {
-    store.setCurrentGame(currentGame);
-  }
-})
-
 const newPlayer = ref<PlayerSelection>(new PlayerSelection('', ''));
-
 
 function trackPlayer(player: any) {  
   store.setCurrentParticipation(player)

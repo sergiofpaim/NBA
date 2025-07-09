@@ -21,27 +21,6 @@
     const currentGame = store.gamesState.games.find(game => game.id === route.params.gameId)
     const currentPlayer = store.playersState.participations.find(player => player.playerId === route.params.playerId)
 
-    if (currentGame) {
-      store.setCurrentGame(currentGame);
-    }
-
-    function addConvertToTimeOnly(play: any) {
-      return {
-        ...play,
-        convertToTimeOnly: play.convertToTimeOnly || (() => {}),
-      };
-    }
-
-    //TODO: Fix this to use the correct type for plays
-
-    if (currentPlayer) {
-      playerExists.value = true;
-      const fixedPlayer = {
-        ...currentPlayer,
-        plays: currentPlayer.plays.map(addConvertToTimeOnly),
-      };
-      store.setCurrentParticipation(fixedPlayer);
-    }
   })
   
   </script>

@@ -35,7 +35,6 @@ const navigate = (path) => {
   router.push(path);
 };
 
-
 const breadcrumbItems = computed(() => {
   const items = [];
   const currentRoute = route.path;
@@ -43,26 +42,27 @@ const breadcrumbItems = computed(() => {
   items.push({ title: 'Home', route: '/' });
   
   if (currentRoute.startsWith('/record')) {
-      items.push({ title: 'Record', route: '/record' });
+    items.push({ title: 'Record', route: '/record' });
+    
+    if (store.gamesState.currentGame?.homeTeamId && store.gamesState.currentGame?.visitorTeamId) {
+      items.push({ 
+        title: `${store.gamesState.currentGame.homeTeamId} vs ${store.gamesState.currentGame.visitorTeamId}`, 
+        route: `/record/${store.gamesState.currentGame.id}/participations`
+      });
       
-      if (store.gamesState.currentGame) {
-          items.push({ 
-              title: store.gamesState.currentGame.homeTeamId + ' vs ' + store.gamesState.currentGame.visitorTeamId, 
-              route: `/record/${store.gamesState.currentGame.id}/participations`
-          });
+      if (store.playersState.currentPlayer?.playerName) {
+        items.push({ 
+          title: store.playersState.currentPlayer.playerName, 
+          route: ''
+        });
       }
-      debugger;
-      if (store.playersState.currentPlayer) {
-          items.push({ 
-              title: store.playersState.currentPlayer.playerName, 
-              route: ``
-          });
-      }
+    }
+  else if (currentRoute.includes('/record/')) return [];
   }
-
-  if (currentRoute.startsWith('/statistics')) 
-      items.push({ title: 'Statistics', route: '' });
   
+  if (currentRoute.startsWith('/statistics')) {
+    items.push({ title: 'Statistics', route: '' });
+  }
   
   return items;
 });
