@@ -179,18 +179,20 @@ public class TransactionService extends BasketballService {
                 .max(Comparator.comparingInt(s -> Integer.parseInt(s.getId().substring(0, 2))))
                 .orElse(null);
 
-        if (season == null)
-            return notFound("Season not found.");
-
         Game game = Basketball.getRepo().getById(gameId, Game.class);
 
-        List<TeamScalation> teams = season.getTeams().stream()
-                .collect(Collectors.toList());
+        if (game == null)
+            return notFound("Game not found.");
+
+        List<TeamScalation> teams = season.getTeams();
 
         List<TeamScalation> participatingTeams = teams.stream()
                 .filter(team -> team.getId().equals(game.getHomeTeamId())
                         || team.getId().equals(game.getVisitorTeamId()))
                 .collect(Collectors.toList());
+
+        if (participatingTeams.isEmpty())
+            return notFound("No participating teams found for the game.");
 
         List<Participation> participatingPlayerIds = Basketball.getRepo().get(Participation.class,
                 Filters.eq("gameId", gameId),
@@ -206,11 +208,7 @@ public class TransactionService extends BasketballService {
                 .map(PlayerSelectionVM::factoryFrom)
                 .collect(Collectors.toList());
 
-        if (nonParticipatingPlayerVMs == null) {
-            return notFound("Every player participates in the game.");
-        } else {
-            return success(nonParticipatingPlayerVMs, null);
-        }
+        return success(nonParticipatingPlayerVMs, null);
     }
 
     public static BasketballResponse<Player> getPlayer(String playerId) {
@@ -256,7 +254,6 @@ public class TransactionService extends BasketballService {
     }
 
     public static BasketballResponse<List<GameVM>> getLastSeasonGames() {
-
         Season season = Basketball.getRepo()
                 .get(Season.class, Filters.empty(), c -> "Id", false, null)
                 .stream()
