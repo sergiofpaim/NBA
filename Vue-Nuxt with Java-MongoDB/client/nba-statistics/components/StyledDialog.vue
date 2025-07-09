@@ -4,29 +4,29 @@
       <v-card-title class="text-center pt-5" style="color:var(--theme-primary)">{{dialogTitle}}</v-card-title>
       <v-card-text>
         <v-select
-          v-model="formData[value2]"
+          v-model="formData[fieldValue1]"
           :items="items"
           :item-title="title"
-          :item-value="value"
+          :item-value="property"
           :label="label1"
           outlined
           class="mb-4 white-label"
         ></v-select>
         
         <v-select
-          v-if="label2 && value3"
-          v-model="formData[value3]"
+          v-if="label2 && fieldValue2"
+          v-model="formData[fieldValue2]"
           :items="items"
           :item-title="title"
-          :item-value="value"
+          :item-value="property"
           :label="label2"
           outlined
           class="mb-4 white-label"
         ></v-select>
         
         <v-text-field
-          v-if="label2 && value4"
-          v-model="formData[value4]"
+          v-if="label2 && fieldValue3"
+          v-model="formData[fieldValue3]"
           type="datetime-local"
           label="Date & Time"
           class="mb-4 white-label"
@@ -36,7 +36,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn @click="$emit('update:modelValue', false)" color="var(--theme-secondary)">Cancel</v-btn>
-        <v-btn color="var(--theme-primary)" @click="$emit('submit', formData)">Create</v-btn>
+        <v-btn color="var(--theme-primary)" :disabled="!isFilled" @click="$emit('submit', formData)">Create</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -60,19 +60,19 @@ const props = defineProps({
     type: String,
     required: true
   },
-  value: {
+  property: {
     type: String,
     required: true
   },
-  value2: {
+  fieldValue1: {
     type: String,
     required: true
   },
-  value3: {
+  fieldValue2: {
     type: String,
     required: false
   },
-  value4: {
+  fieldValue3: {
     type: String,
     required: false
   },
@@ -91,6 +91,33 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:modelValue', 'submit'])
+
+const isFilled = computed(() => {
+  // Checks if field items are filled
+
+  if (!props.formData[props.fieldValue1]) return false
+  if (props.fieldValue2 && !props.formData[props.fieldValue2]) return false
+  if (props.fieldValue3 && !props.formData[props.fieldValue3]?.trim()) return false
+
+  return true
+})
+
+  // Prevents the same team from being selected for both fields
+
+watch(() => props.formData[props.fieldValue1],
+            (newVal) => { if (props.fieldValue2
+                              && newVal
+                              && props.formData[props.fieldValue2] === newVal)
+              { props.formData[props.fieldValue1] = null}
+})
+
+watch(() => (props.fieldValue2 ? props.formData[props.fieldValue2] : undefined),
+            (newVal) => { if (props.fieldValue2 
+                              && newVal
+                              && props.formData[props.fieldValue1] === newVal)
+              { props.formData[props.fieldValue1] = null }
+  }
+)
 
 </script>
 

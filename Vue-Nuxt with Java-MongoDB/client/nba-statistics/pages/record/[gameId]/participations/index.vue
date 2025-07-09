@@ -22,8 +22,8 @@
             :form-data="newPlayer"
             dialogTitle="New Participation"
             title="playerName"
-            value="playerId"
-            value2="playerId"
+            property="playerId"
+            fieldValue1="playerId"
             label1="Players"
             @submit="trackNewPlayer"
         />
@@ -35,7 +35,7 @@
         </v-card>
         <StyledList
         :items="store.playersState.participations"
-        desktopTitle="playerName"
+        desktopTitle1="playerName"
         :function1="trackPlayer"
         :singleParameterMode="true"
       />
@@ -57,8 +57,10 @@ const addPlayerDialog = ref(false)
 onMounted(async () => {
   await store.loadParticipations({gameId: route.params.gameId as string})
   await store.loadPlayers({ gameId: route.params.gameId as string })
+  await store.loadGames();
 
   const currentGame = store.gamesState.games.find(game => game.id === route.params.gameId)
+
   if (currentGame) {
     store.setCurrentGame(currentGame);
   }
@@ -80,7 +82,7 @@ function trackPlayer(player: any) {
 function trackNewPlayer() {
   addPlayerDialog.value = false
   if (store.gamesState.currentGame) {
-    router.push(`/record/${store.gamesState.currentGame.id}/participations/${newPlayer}/tracking`)
+    router.push(`/record/${store.gamesState.currentGame.id}/participations/${newPlayer.value.playerId}/tracking`)
   } else {
     console.error('Current game is null');
   }

@@ -6,14 +6,14 @@
       @click="function1(item)"
       class="list-item"
       :style="{ minHeight: isMobile ? '56px' : '72px', height: isMobile ? '56px' : '72px' }"
-      :disabled="!singleParameterMode && !function2(item[parameter2])"
+      :disabled="!singleParameterMode && !function2(item[parameter1])"
     >
       <template v-if="singleParameterMode">
         <v-list-item-title
           style="color:var(--theme-primary)"
           :class="isMobile ? 'mobile-title' : 'desktop-title'"
         >
-          {{ item[desktopTitle] }}
+          {{ item[desktopTitle1] }}
         </v-list-item-title>
       </template>
 
@@ -29,7 +29,7 @@
           style="color:var(--theme-primary)"
           :class="isMobile ? 'mobile-subtitle' : 'desktop-subtitle'"
         >
-        {{ formatDate(item[parameter2]) }}
+        {{ formatDate(item[parameter1]) }}
         </v-list-item-subtitle>
       </template>
 
@@ -39,9 +39,9 @@
           variant="outlined"
           class="text-center"
           size="small"
-          v-if="function2(item[parameter2])"
+          v-if="function2(item[parameter1])"
         >
-          Running
+          {{ parameter2 }}
         </v-chip>
         <v-chip
           color="red"
@@ -50,7 +50,7 @@
           size="small"
           v-else
         >
-          Not Running
+          {{ parameter3 }}
         </v-chip>
       </template>
     </v-list-item>
@@ -65,11 +65,19 @@ const props = defineProps({
     type: Array,
     required: true
   },
-  desktopTitle: {
+  desktopTitle1: {
     type: String,
     required: true
   },
-  mobileTitle: {
+  desktopTitle2: {
+    type: String,
+    required: false
+  },
+  mobileTitle1: {
+    type: String,
+    required: true
+  },
+  mobileTitle2: {
     type: String,
     required: false
   },
@@ -81,10 +89,13 @@ const props = defineProps({
     type: String,
     required: false
   },
-
+  parameter3: {
+    type: String,
+    required: false
+  },
   function1: {
     type: Function,
-    required: true
+    required: false
   },
   function2: {
     type: Function,
@@ -98,10 +109,10 @@ const props = defineProps({
 
 const getTitleText = (item) => {
   if (!isMobile.value) {
-    return `${item[props.desktopTitle]} vs ${item[props.desktopTitle]}`;
+    return `${item[props.desktopTitle1]} vs ${item[props.desktopTitle2]}`;
   }
   if (isMobile.value) {
-    return `${item[props.mobileTitle]} vs ${item[props.mobileTitle]}`;
+    return `${item[props.mobileTitle1]} vs ${item[props.mobileTitle2]}`;
   }
   return '';
 };
