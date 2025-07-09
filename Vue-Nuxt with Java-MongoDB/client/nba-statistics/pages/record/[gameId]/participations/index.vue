@@ -47,6 +47,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useTransactionStore } from '@/stores/Transaction'
+import { PlayerSelection } from '~/models/PlayerSelection';
 
 const store = useTransactionStore()
 const router = useRouter();
@@ -66,12 +67,11 @@ onMounted(async () => {
   }
 })
 
-  const newPlayer = ref({
-    playerId: ''
-  })
+const newPlayer = ref<PlayerSelection>(new PlayerSelection('', ''));
+
 
 function trackPlayer(player: any) {  
-  store.setCurrentPlayer(player)
+  store.setCurrentParticipation(player)
   if (store.gamesState.currentGame) {
     router.push(`/record/${store.gamesState.currentGame.id}/participations/${player.playerId}/tracking`)
   } else {
@@ -79,10 +79,18 @@ function trackPlayer(player: any) {
   }
 }
 
-function trackNewPlayer() {
+function trackNewPlayer(playerSelection: PlayerSelection) {
   addPlayerDialog.value = false
+
+  const selectedPlayer = store.playersState.players.find( p => p.playerId === playerSelection.playerId);
+        if (selectedPlayer) {
+          playerSelection.playerName = selectedPlayer.playerName;
+  }
+
+  store.setCurrentPlayer(newPlayer.value)
+
   if (store.gamesState.currentGame) {
-    router.push(`/record/${store.gamesState.currentGame.id}/participations/${newPlayer.value.playerId}/tracking`)
+    router.push(`/record/${store.gamesState.currentGame.id}/participations/${store.playersState.currentPlayer?.playerId}/tracking`)
   } else {
     console.error('Current game is null');
   }

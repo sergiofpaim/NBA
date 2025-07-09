@@ -24,10 +24,12 @@ const store = useTransactionStore();
 const navigate = (path) => {
   if (path === '/' || path === '/record') {
     store.setCurrentGame(null);
+    store.setCurrentParticipation(null);
     store.setCurrentPlayer(null);
   }
 
   if (path.includes('/participations') && !path.includes('/tracking/')) {
+    store.setCurrentParticipation(null);
     store.setCurrentPlayer(null);
   }
   router.push(path);
@@ -49,6 +51,7 @@ const breadcrumbItems = computed(() => {
               route: `/record/${store.gamesState.currentGame.id}/participations`
           });
       }
+      debugger;
       if (store.playersState.currentPlayer) {
           items.push({ 
               title: store.playersState.currentPlayer.playerName, 

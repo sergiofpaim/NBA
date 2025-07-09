@@ -20,8 +20,9 @@ interface TeamsOfCurrentSeasonState {
 
 interface PlayersOfGameState {
     players: PlayerSelection[];
+    currentPlayer: PlayerSelection | null;
     participations: ParticipatingPlayer[];
-    currentPlayer: ParticipatingPlayer | null;
+    currentParticipation: ParticipatingPlayer | null;
     error: string | null;
 }
 
@@ -45,8 +46,9 @@ export const useTransactionStore = defineStore('transaction', {
         },
         playersState: <PlayersOfGameState>{
             players: [],
-            participations: [],
             currentPlayer: null,
+            participations: [],
+            currentParticipation: null,
             error: null,
         },
         participationState: <ParticipationOfGameState>{
@@ -99,6 +101,10 @@ export const useTransactionStore = defineStore('transaction', {
             }
         },
 
+        setCurrentPlayer(player: PlayerSelection | null) {
+            this.playersState.currentPlayer = player;
+        },
+
         async loadPlayers(payload: { gameId: string }) {
             this.playersState.error = null;
             const { $api } = useNuxtApp();
@@ -121,8 +127,8 @@ export const useTransactionStore = defineStore('transaction', {
             }
         },
 
-        setCurrentPlayer(player: ParticipatingPlayer | null) {
-            this.playersState.currentPlayer = player;
+        setCurrentParticipation(player: ParticipatingPlayer | null) {
+            this.playersState.currentParticipation = player;
         },
 
         async fetchParticipation(payload: { gameId: string; playerId: string }) {

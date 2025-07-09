@@ -40,7 +40,7 @@
         ...currentPlayer,
         plays: currentPlayer.plays.map(addConvertToTimeOnly),
       };
-      store.setCurrentPlayer(fixedPlayer);
+      store.setCurrentParticipation(fixedPlayer);
     }
   })
   
