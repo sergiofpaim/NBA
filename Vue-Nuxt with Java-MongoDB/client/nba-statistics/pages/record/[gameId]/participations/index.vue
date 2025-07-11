@@ -52,7 +52,6 @@ const store = useTransactionStore()
 const router = useRouter();
 
 const addPlayerDialog = ref(false)
-
 const newPlayer = ref<PlayerSelection>(new PlayerSelection('', ''));
 
 function trackPlayer(player: any) {  
@@ -64,13 +63,8 @@ function trackPlayer(player: any) {
   }
 }
 
-function trackNewPlayer(playerSelection: PlayerSelection) {
+function trackNewPlayer() {
   addPlayerDialog.value = false
-
-  const selectedPlayer = store.playersState.players.find( p => p.playerId === playerSelection.playerId);
-        if (selectedPlayer) {
-          playerSelection.playerName = selectedPlayer.playerName;
-  }
 
   store.setCurrentPlayer(newPlayer.value)
 

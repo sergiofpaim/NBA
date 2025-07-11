@@ -72,9 +72,9 @@ import { Game } from '@/models/Game'
 const store = useTransactionStore()
 const router = useRouter();
 
-const createGameDialog = ref(false)
-
 const teamsFromStore = computed(() => store.teamsState.teams)
+
+const createGameDialog = ref(false)
 
 function createGame() {
   createGameDialog.value = true

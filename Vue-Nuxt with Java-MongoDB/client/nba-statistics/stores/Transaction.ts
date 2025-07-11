@@ -229,10 +229,12 @@ export const useTransactionStore = defineStore('transaction', {
         },
 
         async hydratePlayerData(gameId: string, playerId: string) {
-            const existingPlayer = this.playersState.players.find(p => p.playerId === playerId);
-            if (existingPlayer) {
-                this.setCurrentPlayer(existingPlayer);
-            }
+            const nonParticipatingPlayer = this.playersState.players.find(p => p.playerId === playerId);
+            const currentParticipation = this.playersState.participations.find(p => p.playerId === playerId);
+            if (currentParticipation)
+                this.setCurrentParticipation(currentParticipation);
+            else if (nonParticipatingPlayer)
+                this.setCurrentPlayer(nonParticipatingPlayer);
 
             await this.fetchParticipation({ gameId, playerId });
         },

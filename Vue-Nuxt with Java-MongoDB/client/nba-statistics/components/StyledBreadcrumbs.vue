@@ -31,6 +31,7 @@ const navigate = (path) => {
   if (path.includes('/participations') && !path.includes('/tracking/')) {
     store.setCurrentParticipation(null);
     store.setCurrentPlayer(null);
+    store.setParticipation(null);
   }
   router.push(path);
 };
@@ -53,6 +54,12 @@ const breadcrumbItems = computed(() => {
       if (store.playersState.currentPlayer?.playerName) {
         items.push({ 
           title: store.playersState.currentPlayer.playerName, 
+          route: ''
+        });
+      }
+      if (store.playersState.currentParticipation?.playerName) {
+        items.push({ 
+          title: store.playersState.currentParticipation.playerName, 
           route: ''
         });
       }
