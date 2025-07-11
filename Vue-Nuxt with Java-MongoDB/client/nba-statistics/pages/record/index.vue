@@ -66,7 +66,6 @@
 
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
 import { useTransactionStore } from '@/stores/Transaction'
 import { Game } from '@/models/Game'
 
@@ -76,11 +75,6 @@ const router = useRouter();
 const createGameDialog = ref(false)
 
 const teamsFromStore = computed(() => store.teamsState.teams)
-
-onMounted(async () => {
-  await store.loadGames()
-  await store.loadTeams()
-})
 
 function createGame() {
   createGameDialog.value = true

@@ -195,7 +195,7 @@ export const useTransactionStore = defineStore('transaction', {
             }
         },
 
-        async hydrateFromRoute(params: Record<string, string>) {
+        async hydrateFromRoute(params?: Record<string, string>) {
             this.resetLoadingStates();
 
             try {
@@ -204,7 +204,7 @@ export const useTransactionStore = defineStore('transaction', {
                     this.loadTeams(),
                 ]);
 
-                if (params.gameId) {
+                if (params && params.gameId) {
                     await this.hydrateGameData(params.gameId);
 
                     if (params.playerId) {

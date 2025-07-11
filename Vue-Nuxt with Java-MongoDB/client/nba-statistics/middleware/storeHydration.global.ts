@@ -10,4 +10,6 @@ export default defineNuxtRouteMiddleware(async (to) => {
         );
         await store.hydrateFromRoute(params);
     }
+    else
+        await store.hydrateFromRoute();
 });

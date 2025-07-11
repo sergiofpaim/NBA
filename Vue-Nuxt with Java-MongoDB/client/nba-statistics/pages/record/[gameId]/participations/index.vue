@@ -45,7 +45,6 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
 import { useTransactionStore } from '@/stores/Transaction'
 import { PlayerSelection } from '~/models/PlayerSelection';
 
