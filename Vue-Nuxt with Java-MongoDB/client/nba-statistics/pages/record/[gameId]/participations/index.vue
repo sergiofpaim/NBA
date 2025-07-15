@@ -54,8 +54,10 @@ const router = useRouter();
 const addPlayerDialog = ref(false)
 const newPlayer = ref<PlayerSelection>(new PlayerSelection('', ''));
 
-function trackPlayer(player: any) {  
+function trackPlayer(player: any) {
+
   store.setCurrentParticipation(player)
+
   if (store.gamesState.currentGame) {
     router.push(`/record/${store.gamesState.currentGame.id}/participations/${player.playerId}/tracking`)
   } else {

@@ -12,11 +12,6 @@
       <v-col class="pa-10">
         <div class="d-md-none text-center mb-6">
           <h1 class="text-h4 mb-4">Games</h1>
-          <StyledButton
-            parameter="Create"
-            @click="createGame"
-            class="mx-auto"
-          />
         </div>
 
         <div class="d-none d-md-flex justify-end mb-4">

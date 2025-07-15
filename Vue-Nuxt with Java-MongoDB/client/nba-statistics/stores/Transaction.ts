@@ -173,10 +173,20 @@ export const useTransactionStore = defineStore('transaction', {
             this.participationState.participation = participation;
         },
 
-        async addPlay(payload: { gameId: string; playerId: string; quarter: number; type: string }) {
+        async addPlay(data: { quarter: number; type: string }) {
+            const payload = {
+                gameId: this.gamesState.currentGame?.id,
+                playerId: this.playersState.currentPlayer?.playerId ? this.playersState.currentPlayer.playerId : this.participationState.participation?.playerId,
+                quarter: data.quarter,
+                type: data.type,
+            };
+
             this.participationState.error = null;
+
             const { $api } = useNuxtApp();
+
             const response = await $api.post(`/transaction/plays`, payload);
+
             if (response.success) {
                 this.participationState.participation = response.payLoad as Participation;
             } else {
@@ -184,10 +194,11 @@ export const useTransactionStore = defineStore('transaction', {
             }
         },
 
-        async deletePlay(payload: { participationId: string; at: Date }) {
+        async deletePlay(at: Date) {
+            debugger;
             this.participationState.error = null;
             const { $api } = useNuxtApp();
-            const response = await $api.delete(`/transaction/plays/participation/${payload.participationId}/at/${payload.at}`);
+            const response = await $api.delete(`/transaction/plays/participation/${this.participationState.participation?.participationId}/at/${at}`);
             if (response.success) {
                 this.participationState.participation = response.payLoad as Participation;
             } else {
