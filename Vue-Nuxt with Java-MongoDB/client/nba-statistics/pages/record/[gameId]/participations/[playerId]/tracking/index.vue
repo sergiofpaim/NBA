@@ -27,8 +27,8 @@
               v-for="play in store.participationState.participation?.plays"
               class="list-item"
               :style="{ 
-                minHeight: isMobile ? '56px' : '72px', 
-                height: isMobile ? '56px' : '72px',
+                minHeight: isMobile ? '35' : '72px', 
+                height: isMobile ? '35' : '72px',
                 paddingLeft: '16px',
                 paddingRight: '16px'
               }"
@@ -57,23 +57,48 @@
           </v-list>
         </div>
 
-        <v-card class="mt-4" variant="outlined" style="width: 100%;" color="var(--theme-primary)">
-          <v-card-text>
-              <v-row align-content="center" justify="center" class="pa-4">
-                <v-btn @click="addPlay('FreeThrowHit')" class="mx-2 black-text-btn" style="background-color: greenyellow;">FT</v-btn>
-                <v-btn @click="addPlay('TwoPointerHit')" class="mx-2 black-text-btn" style="background-color: greenyellow;">2PT</v-btn>
-                <v-btn @click="addPlay('ThreePointerHit')" class="mx-2 black-text-btn" style="background-color: greenyellow;">3PT</v-btn>
-                <v-btn @click="addPlay('FreeThrowMiss')" class="mx-2 black-text-btn" style="background-color:var(--theme-secondary);">FT</v-btn>
-                <v-btn @click="addPlay('TwoPointerMiss')" class="mx-2 black-text-btn" style="background-color:var(--theme-secondary);">2PT</v-btn>
-                <v-btn @click="addPlay('ThreePointerMiss')" class="mx-2 black-text-btn" style="background-color:var(--theme-secondary);">3PT</v-btn>
-                <v-btn @click="addPlay('Rebound')" class="mx-2 black-text-btn">REB</v-btn>
-                <v-btn @click="addPlay('Assist')" class="mx-2 black-text-btn">AST</v-btn>
-                <v-btn @click="addPlay('Block')" class="mx-2 black-text-btn">BLK</v-btn>
-                <v-btn @click="addPlay('Foul')" class="mx-2 black-text-btn">FL</v-btn>
-                <v-btn @click="addPlay('Turnover')" class="mx-2 black-text-btn">TNV</v-btn>
-            </v-row>
-          </v-card-text>
-        </v-card>
+          <!-- Desktop buttons -->
+          <v-row align-content="center" justify="center" class="pa-4 d-none d-sm-flex">
+            <v-card variant="outlined" class="pa-2" style="border-radius: 8px;">
+              <div class="d-flex flex-wrap justify-center" style="gap: 8px;">
+                <v-btn @click="addPlay('FreeThrowHit')" class="black-text-btn" style="background-color: greenyellow;">FT</v-btn>
+                <v-btn @click="addPlay('TwoPointerHit')" class="black-text-btn" style="background-color: greenyellow;">2PT</v-btn>
+                <v-btn @click="addPlay('ThreePointerHit')" class="black-text-btn" style="background-color: greenyellow;">3PT</v-btn>
+                <v-btn @click="addPlay('FreeThrowMiss')" class="black-text-btn" style="background-color:var(--theme-secondary);">FT</v-btn>
+                <v-btn @click="addPlay('TwoPointerMiss')" class="black-text-btn" style="background-color:var(--theme-secondary);">2PT</v-btn>
+                <v-btn @click="addPlay('ThreePointerMiss')" class="black-text-btn" style="background-color:var(--theme-secondary);">3PT</v-btn>
+                <v-btn @click="addPlay('Rebound')" class="black-text-btn">REB</v-btn>
+                <v-btn @click="addPlay('Assist')" class="black-text-btn">AST</v-btn>
+                <v-btn @click="addPlay('Block')" class="black-text-btn">BLK</v-btn>
+                <v-btn @click="addPlay('Foul')" class="black-text-btn">FL</v-btn>
+                <v-btn @click="addPlay('Turnover')" class="black-text-btn">TNV</v-btn>
+              </div>
+            </v-card>
+          </v-row>
+
+          <!-- Mobile buttons   -->
+          <div class="d-flex d-sm-none flex-column align-center pa-0">
+            <v-card variant="outlined" class="pa-2" style="border-radius: 8px; width: 100%;">
+              <div class="d-flex justify-center my-1" style="gap: 4px;">
+                <v-btn @click="addPlay('FreeThrowHit')" size="x-small" class="black-text-btn" style="background-color: greenyellow; min-width: 32px; height: 28px; font-size: 12px;">FT</v-btn>
+                <v-btn @click="addPlay('TwoPointerHit')" size="x-small" class="black-text-btn" style="background-color: greenyellow; min-width: 32px; height: 28px; font-size: 12px;">2PT</v-btn>
+                <v-btn @click="addPlay('ThreePointerHit')" size="x-small" class="black-text-btn" style="background-color: greenyellow; min-width: 32px; height: 28px; font-size: 12px;">3PT</v-btn>
+                <v-btn @click="addPlay('FreeThrowMiss')" size="x-small" class="black-text-btn" style="background-color:var(--theme-secondary); min-width: 32px; height: 28px; font-size: 12px;">FT</v-btn>
+                <v-btn @click="addPlay('TwoPointerMiss')" size="x-small" class="black-text-btn" style="background-color:var(--theme-secondary); min-width: 32px; height: 28px; font-size: 12px;">2PT</v-btn>
+              </div>
+
+              <div class="d-flex justify-center my-1" style="gap: 4px;">
+                <v-btn @click="addPlay('ThreePointerMiss')" size="x-small" class="black-text-btn" style="background-color:var(--theme-secondary); min-width: 32px; height: 28px; font-size: 12px;">3PT</v-btn>
+                <v-btn @click="addPlay('Rebound')" size="x-small" class="black-text-btn" style="min-width: 32px; height: 28px; font-size: 12px;">REB</v-btn>
+                <v-btn @click="addPlay('Assist')" size="x-small" class="black-text-btn" style="min-width: 32px; height: 28px; font-size: 12px;">AST</v-btn>
+                <v-btn @click="addPlay('Block')" size="x-small" class="black-text-btn" style="min-width: 32px; height: 28px; font-size: 12px;">BLK</v-btn>
+                <v-btn @click="addPlay('Foul')" size="x-small" class="black-text-btn" style="min-width: 32px; height: 28px; font-size: 12px;">FL</v-btn>
+              </div>
+              <div class="d-flex justify-center my-1">
+                <v-btn @click="addPlay('Turnover')" size="x-small" class="black-text-btn" style="min-width: 32px; height: 28px; font-size: 12px;">TNV</v-btn>
+              </div>
+            </v-card>
+        </div>
       </v-col>
     </v-row>
   </v-container>
@@ -134,7 +159,7 @@ onMounted(() => {
     isMobile.value = window.innerWidth <= 600
   })
 
-  quarter.value = store.participationState.participation?.plays.findLast(play => play.quarter)?.quarter || '';
+  quarter.value = store.participationState.participation?.plays.findLast(play => play.quarter)?.quarter || 1;
 })
 
 function addPlay(playType: string) {

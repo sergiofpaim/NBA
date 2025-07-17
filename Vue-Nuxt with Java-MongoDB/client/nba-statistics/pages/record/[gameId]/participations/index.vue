@@ -1,16 +1,20 @@
 <template>
   <v-container class="pa-10" fluid>
     <v-row no-gutters>
-      <v-col cols="2" class="text-center pa-10">
+       <v-col cols="2" class="d-none d-md-flex text-center pa-10">
         <h1 class="text-h4">Participations</h1>
       </v-col>
 
-      <v-col cols="auto" class="pa-0 d-flex align-center">
-        <v-divider :thickness="5" color="var(--theme-primary)" vertical class="my-4 border-opacity-100" style="height: 100%;"></v-divider>
+      <v-col cols="auto" class="d-none d-md-flex pa-0 align-center">
+        <v-divider :thickness="5" color="var(--theme-primary)" vertical class="my-1 border-opacity-100" style="height: 100%;"></v-divider>
       </v-col>
       
-      <v-col class="pa-10">
-        <div class="d-flex justify-end mb-4">
+        <v-col class="pa-10">
+        <div class="d-md-none text-center mb-3">
+          <h1 class="text-h5">Participations</h1>
+        </div>
+
+        <div class="d-flex justify-center justify-lg-end mb-4">
           <StyledButton
             parameter="Add Player"
             @click="addPlayer"/>

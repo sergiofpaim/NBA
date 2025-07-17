@@ -10,15 +10,15 @@
       </v-col>
       
       <v-col class="pa-10">
-        <div class="d-md-none text-center mb-6">
-          <h1 class="text-h4 mb-4">Games</h1>
+        <div class="d-md-none text-center mb-3">
+          <h1 class="text-h5">Games</h1>
         </div>
 
-        <div class="d-none d-md-flex justify-end mb-4">
+        <div class="d-flex justify-center justify-lg-end mb-4">
           <StyledButton
-            parameter="Create"
-            @click="createGame"
-          />
+              parameter="Create"
+              @click="createGame"
+            />
         </div>
 
         <StyledDialog
