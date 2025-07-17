@@ -3,8 +3,14 @@ import vuetifyPlugin from 'vite-plugin-vuetify'
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
-  css: ['~/assets/css/globalTheme.css'],
-  modules: ['@pinia/nuxt'],
+  css: [
+    '~/assets/css/globalTheme.css',
+    '@mdi/font/css/materialdesignicons.min.css'
+  ],
+  modules: [
+    '@pinia/nuxt',
+    'nuxt-vuetify'
+  ],
 
   components: [
     {
@@ -22,4 +28,20 @@ export default defineNuxtConfig({
       vuetifyPlugin()
     ]
   },
+
+  vuetify: {
+    moduleOptions: {
+      styles: { configFile: '~/assets/css/settings.scss' }
+    },
+    vuetifyOptions: {
+      icons: {
+        defaultSet: 'mdi',
+        sets: {
+          mdi: {
+            component: 'VIcon'
+          }
+        }
+      }
+    }
+  }
 })

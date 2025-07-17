@@ -195,7 +195,6 @@ export const useTransactionStore = defineStore('transaction', {
         },
 
         async deletePlay(at: Date) {
-            debugger;
             this.participationState.error = null;
             const { $api } = useNuxtApp();
             const response = await $api.delete(`/transaction/plays/participation/${this.participationState.participation?.participationId}/at/${at}`);
