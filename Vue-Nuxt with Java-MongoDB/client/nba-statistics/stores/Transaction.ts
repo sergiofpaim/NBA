@@ -205,27 +205,6 @@ export const useTransactionStore = defineStore('transaction', {
             }
         },
 
-        async hydrateFromRoute(params?: Record<string, string>) {
-            this.resetLoadingStates();
-
-            try {
-                await Promise.all([
-                    this.loadGames(),
-                    this.loadTeams(),
-                ]);
-
-                if (params && params.gameId) {
-                    await this.hydrateGameData(params.gameId);
-
-                    if (params.playerId) {
-                        await this.hydratePlayerData(params.gameId, params.playerId);
-                    }
-                }
-            } catch (error) {
-                console.error('Hydration error:', error);
-            }
-        },
-
         async hydrateGameData(gameId: string) {
             const existingGame = this.gamesState.games.find(g => g.id === gameId);
             if (existingGame) {

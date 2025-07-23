@@ -1,60 +1,85 @@
 <template>
-<v-container fluid class="pa-0" style="height: 100vh;">
-    <v-row class="fill-height" no-gutters>
-      <v-divider :thickness="10" vertical></v-divider>
-      <StatBox value ="hi" label ="hi"/>
+  <v-container class="pa-10" fluid>
+    <v-row no-gutters>
+      <v-col cols="2" class="text-center pa-10">
+        <h1 class="text-h4">Details</h1>
+
+        <!-- Select Season -->
+        <v-select
+          class="mt-10"
+          label="Season"
+          :items="selectionStore.seasons"
+          item-title="id"
+          item-value="id"
+          v-model="selectedSeason"
+          @update:modelValue="onSeasonSelect"
+        ></v-select>
+
+        <!-- Select Game -->
+        <v-select
+          class="mt-10"
+          label="Game"
+          :items="selectionStore.games"
+          :item-title="gameTitle"
+          item-value="id"
+          v-model="selectedGame"
+          @update:modelValue="onGameSelect"
+        ></v-select>
+
+        <!-- Select Player -->
+        <v-select
+          class="mt-10"
+          label="Player Name"
+          :items="selectionStore.players"
+          item-title="playerName"
+          item-value="id"
+          v-model="selectedPlayer"
+          @update:modelValue="onPlayerSelect"
+        ></v-select>
+      </v-col>
+
+      <v-col cols="auto" class="d-none d-md-flex pa-0 align-center">
+        <v-divider
+          :thickness="5"
+          color="var(--theme-primary)"
+          vertical
+          class="my-1 border-opacity-100"
+          style="height: 100%;"
+        ></v-divider>
+      </v-col>
     </v-row>
   </v-container>
-  </template>
+</template>
 
-<style scoped>
+<script setup lang="ts">
+import { ref } from 'vue'
 
-.fancy-button {
-  height: 120px;
-  width: 240px;
-  padding: 0 24px;
-  overflow: hidden;
-  border-width: 2px;
-  color: var(--v-theme-secondary);
-  transition: all 0.3s ease;
+const selectionStore = useSelectionStore()
+const statisticsStore = useStatisticsStore()
+
+const selectedSeason = ref<string | null>(null)
+const selectedGame = ref<string | null>(null)
+const selectedPlayer = ref<string | null>(null)
+
+function onSeasonSelect(seasonId: string) {
+  selectionStore.fetchSelectionGames(seasonId)
 }
 
-.button-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: all 0.3s ease;
-  position: relative;
+function onGameSelect(gameId: string) {
+  selectionStore.fetchPlayers(gameId)
 }
 
-.main-text {
-  font-size: 1.5rem;
-  transition: transform 0.3s ease;
+function onPlayerSelect() {
+  if (selectedSeason.value && selectedGame.value && selectedPlayer.value) {
+    statisticsStore.fetchStatistics({
+      seasonId: selectedSeason.value,
+      gameId: selectedGame.value,
+      playerId: selectedPlayer.value
+    })
+  }
 }
 
-.description {
-  font-size: 0.6rem;
-  opacity: 0;
-  transform: translateY(-4px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  line-height: 1;
-  max-width: 100%;
-  overflow-wrap: break-word;
-  word-break: break-word;
-  white-space: normal;
-  padding-top: 4px;
-  height: 0;
-  text-align: center;
+function gameTitle(game: any): string {
+  return `${game.homeTeamId} vs ${game.visitorTeamId}`
 }
-
-.fancy-button:hover .main-text {
-  transform: translateY(-6px);
-  color: var(--theme-secondary);
-}
-
-.fancy-button:hover .description {
-  opacity: 1;
-  height: auto;
-  transform: translateY(0);
-}
-</style>
+</script>

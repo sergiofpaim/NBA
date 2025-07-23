@@ -182,16 +182,8 @@ function confirmQuarterChange() {
 
 <style scoped>
 
-.content-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; 
-  align-items: stretch;
-  padding: 0; 
-  margin: 0;
-}
-
 .black-text-btn {
   color: black !important;
 }
+
 </style>
