@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-10" fluid>
+  <v-container fluid>
     <v-row no-gutters>
       <v-col cols="2" class="text-center pa-10">
         <h1 class="text-h4">Details</h1>
@@ -32,7 +32,7 @@
           label="Player Name"
           :items="selectionStore.players"
           item-title="playerName"
-          item-value="id"
+          item-value="playerId"
           v-model="selectedPlayer"
           @update:modelValue="onPlayerSelect"
         ></v-select>
@@ -47,12 +47,64 @@
           style="height: 100%;"
         ></v-divider>
       </v-col>
+
+      <v-row justify="center">
+        <v-col cols="10" class="pa-4">
+          <template v-if="statisticsStore.ofGame && statisticsStore.ofSeason">
+            <v-card class="mb-3 mt-8" variant="outlined" style="width: 100%">
+              <v-card-text class="text-center">
+                <h2 class="text-h5">Season Stats</h2>
+              </v-card-text>
+
+              <v-row no-gutters class="align-center">
+                <v-col v-for="(stat, index) in seasonStats" :key="index" class="pa-2">
+                  <StatBox 
+                    :label="stat.label" 
+                    :value="stat.value" 
+                    boxWidth="100%"
+                  />
+                </v-col>
+              </v-row>
+            </v-card>
+
+            <v-card class="mb-3 mt-8" variant="outlined" style="width: 100%">
+              <v-card-text class="text-center">
+                <h2 class="text-h5">Game Stats</h2>
+              </v-card-text>
+
+              <v-row no-gutters class="align-center">
+                <template v-for="(stat, index) in gameStats.filter(s => s.label !== 'Total Points')" :key="'game-'+index">
+                  <v-col cols="4" sm="4" md="3" class="pa-2">
+                    <StatBox :label="stat.label" :value="stat.value" boxWidth="100%" />
+                  </v-col>
+                </template>
+                <v-col cols="12" class="pa-2">
+                  <StatBox 
+                    :label="'Total Points'" 
+                    :value="gameStats.find(s => s.label === 'Total Points')?.value || 0" 
+                    boxWidth="100%"
+                    position="center"
+                  />
+                </v-col>
+              </v-row>
+            </v-card>
+          </template>
+          <v-alert
+            v-else
+            type="info"
+            variant="tonal"
+            class="ma-4"
+          >
+            Select a season, game, and player to view statistics
+          </v-alert>
+        </v-col>
+      </v-row>
     </v-row>
   </v-container>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 const selectionStore = useSelectionStore()
 const statisticsStore = useStatisticsStore()
@@ -61,12 +113,58 @@ const selectedSeason = ref<string | null>(null)
 const selectedGame = ref<string | null>(null)
 const selectedPlayer = ref<string | null>(null)
 
+const seasonStats = computed(() => [
+  { label: 'PPG', value: statisticsStore.ofSeason?.ppg?.toFixed(1) || '' },
+  { label: 'APG', value: statisticsStore.ofSeason?.apg?.toFixed(1) || '' },
+  { label: 'RPG', value: statisticsStore.ofSeason?.rpg?.toFixed(1) || '' },
+  { label: 'BPG', value: statisticsStore.ofSeason?.bpg?.toFixed(1) || '' },
+  { label: 'FT%', value: statisticsStore.ofSeason?.ftConversion?.toFixed(1) || '--' },
+  { label: 'Total Points', value: statisticsStore.ofSeason?.totalPoints || '' }
+])
+
+const gameStats = computed(() => {
+  const stats = statisticsStore.ofGame || []
+  
+  const ftHit = stats.find(t => t.type === 'FreeThrowHit')?.count ?? 0
+  const ftTotal = stats.filter(t => t.type === 'FreeThrowMiss' || t.type === 'FreeThrowHit')
+                      .reduce((sum, t) => sum + t.count, 0) ?? 0
+                      
+  const twoHit = stats.find(t => t.type === 'TwoPointerHit')?.count ?? 0
+  const twoTotal = stats.filter(t => t.type === 'TwoPointerMiss' || t.type === 'TwoPointerHit')
+                       .reduce((sum, t) => sum + t.count, 0) ?? 0
+                       
+  const threeHit = stats.find(t => t.type === 'ThreePointerHit')?.count ?? 0
+  const threeTotal = stats.filter(t => t.type === 'ThreePointerMiss' || t.type === 'ThreePointerHit')
+                         .reduce((sum, t) => sum + t.count, 0) ?? 0
+                         
+  const totalPoints = stats.reduce((total, t) => t.points ? total + t.points : total, 0) ?? 0
+
+  return [
+    { label: 'FT', value: `${ftHit}-${ftTotal}` },
+    { label: '2PT', value: `${twoHit}-${twoTotal}` },
+    { label: '3PT', value: `${threeHit}-${threeTotal}` },
+    { label: 'Assist', value: stats.find(t => t.type === "Assist")?.count ?? 0 },
+    { label: 'Rebound', value: stats.find(t => t.type === "Rebound")?.count ?? 0 },
+    { label: 'Turnover', value: stats.find(t => t.type === "Turnover")?.count ?? 0 },
+    { label: 'Block', value: stats.find(t => t.type === "Block")?.count ?? 0 },
+    { label: 'Foul', value: stats.find(t => t.type === "Foul")?.count ?? 0 },
+    { 
+      label: 'Total Points', 
+      value: totalPoints,
+      isWide: true
+    }
+  ]
+})
+
 function onSeasonSelect(seasonId: string) {
   selectionStore.fetchSelectionGames(seasonId)
+  selectedGame.value = null
+  selectedPlayer.value = null
 }
 
 function onGameSelect(gameId: string) {
   selectionStore.fetchPlayers(gameId)
+  selectedPlayer.value = null
 }
 
 function onPlayerSelect() {

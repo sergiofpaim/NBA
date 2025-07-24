@@ -59,7 +59,7 @@ export const useSelectionStore = defineStore('selection', {
                 this.error = null
                 const { $api } = useNuxtApp()
 
-                const response = await $api.get<ParticipatingPlayer[]>(`/transaction/games/${gameId}/players`)
+                const response = await $api.get<ParticipatingPlayer[]>(`/transaction/games/${gameId}/participations`)
                 if (response.success) {
                     this.players = response.payLoad
                 } else {
