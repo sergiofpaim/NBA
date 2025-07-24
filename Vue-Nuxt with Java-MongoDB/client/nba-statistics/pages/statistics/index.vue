@@ -1,8 +1,8 @@
 <template>
-  <v-container fluid>
-    <v-row no-gutters>
-      <v-col cols="2" class="text-center pa-10">
-        <h1 class="text-h4">Details</h1>
+  <v-container fluid class="main-container">
+    <v-row justify="center" class="justify-sm-start">
+      <v-col cols="10" sm="2" class="text-center pa-10" >
+        <h1 class="text-h4 mt-10">Details</h1>
 
         <!-- Select Season -->
         <v-select
@@ -34,8 +34,17 @@
           item-title="playerName"
           item-value="playerId"
           v-model="selectedPlayer"
-          @update:modelValue="onPlayerSelect"
         ></v-select>
+
+        <v-row justify="center">
+          <StyledButton 
+            class="mt-10"
+            parameter="Filter"
+            icon="mdi-filter"
+            :disabled="!selectedSeason || !selectedGame || !selectedPlayer"
+            @click="filter"
+            />
+        </v-row>
       </v-col>
 
       <v-col cols="auto" class="d-none d-md-flex pa-0 align-center">
@@ -49,7 +58,7 @@
       </v-col>
 
       <v-row justify="center">
-        <v-col cols="10" class="pa-4">
+         <v-col cols="12" sm="9" md="10" class="pa-4">
           <template v-if="statisticsStore.ofGame && statisticsStore.ofSeason">
             <v-card class="mb-3 mt-8" variant="outlined" style="width: 100%">
               <v-card-text class="text-center">
@@ -72,28 +81,28 @@
                 <h2 class="text-h5">Game Stats</h2>
               </v-card-text>
 
-              <v-row no-gutters class="align-center">
-                <template v-for="(stat, index) in gameStats.filter(s => s.label !== 'Total Points')" :key="'game-'+index">
-                  <v-col cols="4" sm="4" md="3" class="pa-2">
-                    <StatBox :label="stat.label" :value="stat.value" boxWidth="100%" />
-                  </v-col>
-                </template>
-                <v-col cols="12" class="pa-2">
-                  <StatBox 
-                    :label="'Total Points'" 
-                    :value="gameStats.find(s => s.label === 'Total Points')?.value || 0" 
-                    boxWidth="100%"
-                    position="center"
-                  />
-                </v-col>
-              </v-row>
+             <v-row no-gutters class="align-center">
+  <template v-for="(stat, index) in gameStats.filter(s => s.label !== 'Total Points')" :key="'game-'+index">
+    <v-col cols="4" sm="4" md="3" class="pa-2">
+      <StatBox :label="stat.label" :value="stat.value" boxWidth="100%" />
+    </v-col>
+  </template>
+  <v-col cols="4" sm="4" md="12" class="pa-2">
+    <StatBox 
+      :label="$vuetify.display.mobile ? 'TP' : 'Total Points'" 
+      :value="gameStats.find(s => s.label === 'Total Points')?.value || 0" 
+      boxWidth="100%"
+      position="center"
+    />
+  </v-col>
+</v-row>
             </v-card>
           </template>
           <v-alert
             v-else
             type="info"
             variant="tonal"
-            class="ma-4"
+            class="ma-4 text-center"
           >
             Select a season, game, and player to view statistics
           </v-alert>
@@ -167,7 +176,7 @@ function onGameSelect(gameId: string) {
   selectedPlayer.value = null
 }
 
-function onPlayerSelect() {
+function filter() {
   if (selectedSeason.value && selectedGame.value && selectedPlayer.value) {
     statisticsStore.fetchStatistics({
       seasonId: selectedSeason.value,
@@ -181,3 +190,19 @@ function gameTitle(game: any): string {
   return `${game.homeTeamId} vs ${game.visitorTeamId}`
 }
 </script>
+
+<style scoped>
+
+
+@media (max-width: 1279px) {
+  .main-container {
+    overflow-y: auto;
+  }
+}
+
+.v-menu__content {
+  position: absolute !important;
+  max-height: 400px !important;
+  overflow-y: auto !important;
+}
+</style>

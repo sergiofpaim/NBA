@@ -19,19 +19,21 @@ import { useTransactionStore } from '@/stores/Transaction';
 
 const router = useRouter();
 const route = useRoute();
-const store = useTransactionStore();
+const transactionStore = useTransactionStore();
+const statisticsStore = useStatisticsStore();
 
 const navigate = (path) => {
   if (path === '/' || path === '/record') {
-    store.setCurrentGame(null);
-    store.setCurrentParticipation(null);
-    store.setCurrentPlayer(null);
+    transactionStore.setCurrentGame(null);
+    transactionStore.setCurrentParticipation(null);
+    transactionStore.setCurrentPlayer(null);
+    statisticsStore.resetStatistics();
   }
 
   if (path.includes('/participations') && !path.includes('/tracking/')) {
-    store.setCurrentParticipation(null);
-    store.setCurrentPlayer(null);
-    store.setParticipation(null);
+    transactionStore.setCurrentParticipation(null);
+    transactionStore.setCurrentPlayer(null);
+    transactionStore.setParticipation(null);
   }
   router.push(path);
 };
@@ -45,21 +47,21 @@ const breadcrumbItems = computed(() => {
   if (currentRoute.startsWith('/record')) {
     items.push({ title: 'Record', route: '/record' });
     
-    if (store.gamesState.currentGame?.homeTeamId && store.gamesState.currentGame?.visitorTeamId) {
+    if (transactionStore.gamesState.currentGame?.homeTeamId && transactionStore.gamesState.currentGame?.visitorTeamId) {
       items.push({ 
-        title: `${store.gamesState.currentGame.homeTeamId} vs ${store.gamesState.currentGame.visitorTeamId}`, 
-        route: `/record/${store.gamesState.currentGame.id}/participations`
+        title: `${transactionStore.gamesState.currentGame.homeTeamId} vs ${transactionStore.gamesState.currentGame.visitorTeamId}`, 
+        route: `/record/${transactionStore.gamesState.currentGame.id}/participations`
       });
       
-      if (store.playersState.currentPlayer?.playerName) {
+      if (transactionStore.playersState.currentPlayer?.playerName) {
         items.push({ 
-          title: store.playersState.currentPlayer.playerName, 
+          title: transactionStore.playersState.currentPlayer.playerName, 
           route: ''
         });
       }
-      if (store.playersState.currentParticipation?.playerName) {
+      if (transactionStore.playersState.currentParticipation?.playerName) {
         items.push({ 
-          title: store.playersState.currentParticipation.playerName, 
+          title: transactionStore.playersState.currentParticipation.playerName, 
           route: ''
         });
       }
