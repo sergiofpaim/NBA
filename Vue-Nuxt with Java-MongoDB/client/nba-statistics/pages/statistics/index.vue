@@ -4,7 +4,6 @@
       <v-col cols="10" sm="2" class="text-center pa-10" >
         <h1 class="text-h4 mt-10">Details</h1>
 
-        <!-- Select Season -->
         <v-select
           class="mt-10"
           label="Season"
@@ -15,7 +14,6 @@
           @update:modelValue="onSeasonSelect"
         ></v-select>
 
-        <!-- Select Game -->
         <v-select
           class="mt-10"
           label="Game"
@@ -26,7 +24,6 @@
           @update:modelValue="onGameSelect"
         ></v-select>
 
-        <!-- Select Player -->
         <v-select
           class="mt-10"
           label="Player Name"
@@ -82,20 +79,20 @@
               </v-card-text>
 
              <v-row no-gutters class="align-center">
-  <template v-for="(stat, index) in gameStats.filter(s => s.label !== 'Total Points')" :key="'game-'+index">
-    <v-col cols="4" sm="4" md="3" class="pa-2">
-      <StatBox :label="stat.label" :value="stat.value" boxWidth="100%" />
-    </v-col>
-  </template>
-  <v-col cols="4" sm="4" md="12" class="pa-2">
-    <StatBox 
-      :label="$vuetify.display.mobile ? 'TP' : 'Total Points'" 
-      :value="gameStats.find(s => s.label === 'Total Points')?.value || 0" 
-      boxWidth="100%"
-      position="center"
-    />
-  </v-col>
-</v-row>
+                <template v-for="(stat, index) in gameStats.filter(s => s.label !== 'Total Points')" :key="'game-'+index">
+                  <v-col cols="4" sm="4" md="3" class="pa-2">
+                    <StatBox :label="stat.label" :value="stat.value" boxWidth="100%" />
+                  </v-col>
+                </template>
+                <v-col cols="4" sm="4" md="12" class="pa-2">
+                  <StatBox 
+                    :label="$vuetify.display.mobile ? 'TP' : 'Total Points'" 
+                    :value="gameStats.find(s => s.label === 'Total Points')?.value || 0" 
+                    boxWidth="100%"
+                    position="center"
+                  />
+                </v-col>
+              </v-row>
             </v-card>
           </template>
           <v-alert
@@ -192,11 +189,10 @@ function gameTitle(game: any): string {
 </script>
 
 <style scoped>
-
-
 @media (max-width: 1279px) {
   .main-container {
     overflow-y: auto;
+    overflow-x: hidden !important;
   }
 }
 
@@ -204,5 +200,6 @@ function gameTitle(game: any): string {
   position: absolute !important;
   max-height: 400px !important;
   overflow-y: auto !important;
+  overflow-x: hidden !important;
 }
 </style>

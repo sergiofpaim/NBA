@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-10" fluid>
+  <v-container fluid class="main-container">
     <v-row no-gutters>
       <v-col class="pa-10">
         <div class="d-flex justify-end mb-4">
@@ -186,4 +186,16 @@ function confirmQuarterChange() {
   color: black !important;
 }
 
+
+@media (max-width: 1279px) {
+  .main-container {
+    overflow-y: auto;
+  }
+}
+
+.v-menu__content {
+  position: absolute !important;
+  max-height: 400px !important;
+  overflow-y: auto !important;
+}
 </style>
