@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="main-container">
     <v-row justify="center" class="justify-sm-start">
-      <v-col cols="10" sm="2" class="text-center pa-10" >
+      <v-col cols="10" sm="2" class="text-center pa-10">
         <h1 class="text-h4 mt-10">Details</h1>
 
         <v-select
@@ -57,7 +57,17 @@
       <v-row justify="center">
          <v-col cols="12" sm="9" md="10" class="pa-4">
           <template v-if="statisticsStore.ofGame && statisticsStore.ofSeason">
-            <v-card class="mb-3 mt-8" variant="outlined" style="width: 100%">
+            <div class="text-right mt-8 mb-2">
+             <v-btn
+               fab
+               dark
+               color="var(--theme-secondary)"
+               @click="refresh" 
+             >
+               <v-icon dark>mdi-refresh</v-icon>
+             </v-btn>
+            </div>
+            <v-card class="mb-3" variant="outlined" style="width: 100%">
               <v-card-text class="text-center">
                 <h2 class="text-h5">Season Stats</h2>
               </v-card-text>
@@ -185,6 +195,10 @@ function filter() {
 
 function gameTitle(game: any): string {
   return `${game.homeTeamId} vs ${game.visitorTeamId}`
+}
+
+function refresh() {
+  filter()
 }
 </script>
 
