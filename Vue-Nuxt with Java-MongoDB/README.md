@@ -41,7 +41,7 @@ In this project, I dove deep into NoSQL database management, specifically workin
 
 Through the creation of this system, I developed a strong understanding of the **MVVM** architectural pattern. I learned how to use this pattern to enhance the separation of concerns, providing a clear distinction between the user interface (View), the logic for data binding (ViewModel), and the data model (Model). By utilizing MVVM, I was able to implement a maintainable, scalable, and testable system where the View and Model are loosely coupled. This approach not only improved the code’s readability but also allowed for better reusability and ease of modification in the long run.
 
-### **TypeScript, React, and Redux Learnings**
+### **TypeScript, Vue, Nuxt and Pinia Learnings**
 
 Through the development of my React project, I gained significant knowledge in **TypeScript**, **React**, and **Redux**. Here's a breakdown of my learnings:
 
@@ -51,24 +51,44 @@ Through the development of my React project, I gained significant knowledge in *
 - I gained a deeper understanding of **generics**, allowing me to write reusable, type-safe code across different parts of my application.
 - I embraced **TypeScript's strict mode**, which enforced better coding practices, making my codebase more robust and maintainable.
 
-#### **React**
-- I developed a strong understanding of **React's component-based architecture**, allowing me to break down my UI into small, reusable components.
-- I became comfortable with **hooks** such as `useState`, `useEffect`, and `useReducer`, which helped me manage state and side effects in a functional programming style.
-- I mastered **React Router** to manage navigation within the app and create a seamless user experience with dynamic page rendering.
+## Vue.js
 
-#### **Redux**
-- I learned how to use **Redux** for global state management, ensuring consistent and predictable application behavior.
-- I became familiar with the core concepts of Redux, such as **actions**, **reducers**, and **store**, and how they work together to manage state.
-- I understood the importance of **Redux Thunk** for handling asynchronous actions, allowing me to dispatch actions that involve side effects (like API calls) in a clean and manageable way.
-- I gained experience in using **Redux DevTools** for debugging and tracing state changes during development, significantly improving my workflow and debugging efficiency.
+- **Component-Based Architecture**  
+  Decomposed complex interfaces into small, self‑contained, and reusable components.
 
-#### **Next.js**  
-- I learned how to use **Next.js** for building client-side rendered applications, taking advantage of its built-in optimizations and features.  
-- I became familiar with core concepts of Next.js, such as **pages**, **routing**, and how it simplifies navigation and structure in a React application.  
-- I understood the importance of **dynamic routing**, which allowed me to create flexible and scalable applications with clean URLs and reusable components.  
-- I gained experience in using **Next.js DevTools** (including live reload and error overlays) to enhance the development workflow, enabling faster debugging and iteration during development.    
+- **Composition API**  
+  Utilized `ref`, `reactive`, and `computed` to manage local component state and side effects in a flexible, function‑centric style.
 
-### **My next goal is to explore how to integrate **Next.js** into the web application.**
+- **Vue Router**  
+  Implemented nested routes, dynamic route parameters, and navigation guards to build seamless, multi‑page SPAs.
+
+## Pinia
+
+- **Global State Management**  
+  Managed shared state across components in a predictable, type‑safe manner using Pinia stores.
+
+- **Core Concepts**  
+  Employed **stores**, **actions**, and **getters** to encapsulate business logic and state transformations.
+
+- **Asynchronous Actions**  
+  Handled API calls and side effects with promise‑based actions for clean, maintainable code.
+
+- **Pinia Devtools**  
+  Leveraged time‑travel debugging and action tracing to rapidly diagnose and fix state‑related issues.
+
+## Nuxt.js
+
+- **Server-Side Rendering & SSG**  
+  Built performant SSR and statically generated sites with zero‑config setup and built‑in optimizations.
+
+- **File-Based Conventions**  
+  Streamlined routing with the `pages` directory, global layouts, and middleware for request‑level logic.
+
+- **Dynamic Routing**  
+  Created SEO‑friendly, scalable URLs using file‑based dynamic `[param]` routes.
+
+- **Nuxt Devtools**  
+  Used hot module replacement, error overlays, and integrated profiling to accelerate development and catch issues early.
 
 # **Runtime Requirements for MongoDB**
 
@@ -98,58 +118,57 @@ Through the development of my React project, I gained significant knowledge in *
     mvn spring-boot:run
     ```
 
-# **Runtime Requirements for React Redux**
+# **Runtime Requirements for Vue, Pinia 3+ & Nuxt**
 
-1. **React**
-    - **Purpose**: React is a JavaScript library for building user interfaces, enabling the creation of dynamic single-page applications using a component-based architecture.
-    - **Installation**: To set up React, ensure you have Node.js and npm installed. Then, create a new React project:
-        ```bash
-        npx create-react-app my-app
-        ```
+1. **Vue 3+**  
+   - **Purpose**: Vue is a progressive JavaScript framework for building user interfaces with a reactive, component-based architecture.  
+   - **Installation**: Ensure you have Node.js and npm (or Yarn) installed. To scaffold a new Vue 3 project with Vite:  
+     ```bash
+     npm init vite@latest my-vue-app -- --template vue
+     cd my-vue-app
+     npm install
+     ```
 
-2. **Redux**
-    - **Purpose**: Redux is a state management library for JavaScript applications. It helps manage application state predictably, making debugging and testing easier.
-    - **Installation**: Install Redux and React-Redux to integrate Redux with React:
-        ```bash
-        npm install redux react-redux
-        ```
+2. **Pinia 3+**  
+   - **Purpose**: Pinia is the official state‑management library for Vue 3, designed to be modular, type‑safe, and lightweight.  
+   - **Installation**: Add Pinia to your Vue project and hook it into your app:  
+     ```bash
+     npm install pinia
+     ```  
+     In your `main.js`/`main.ts`:  
+     ```js
+     import { createApp } from 'vue'
+     import { createPinia } from 'pinia'
+     import App from './App.vue'
 
-3. **React-Redux**
-    - **Purpose**: React-Redux connects React components to the Redux store, enabling them to access and modify the application state.
-    - **Installation**: Install React-Redux using npm:
-        ```bash
-        npm install react-redux
-        ```
+     const app = createApp(App)
+     app.use(createPinia())
+     app.mount('#app')
+     ```
 
-4. **Redux Thunk**
-    - **Purpose**: Redux Thunk allows you to write action creators that return functions, enabling asynchronous operations such as API calls.
-    - **Installation**: Install Redux Thunk to handle asynchronous actions:
-        ```bash
-        npm install redux-thunk
-        ```
+3. **Nuxt 3**  
+   - **Purpose**: Nuxt is a higher‑level framework built on Vue 3 that provides server‑side rendering (SSR), static site generation (SSG), and opinionated conventions (file‑based routing, layouts, middleware).  
+   - **Installation**: Use the Nuxt CLI to create a new Nuxt 3 project:  
+     ```bash
+     npx nuxi init my-nuxt-app
+     cd my-nuxt-app
+     npm install
+     ```  
+   - **Scripts**: Add or verify the following in your `package.json`:  
+     ```json
+     "scripts": {
+       "dev": "nuxt dev",
+       "build": "nuxt build",
+       "preview": "nuxt preview",
+       "start": "nuxt start"
+     }
+     ```
 
-5. **Node.js and npm**
-    - **Purpose**: Node.js is the runtime environment for executing JavaScript, and npm is the package manager for managing dependencies in JavaScript projects.
-    - **Installation**: Ensure Node.js and npm are installed. Download and install the latest stable version from:
-        [Download Node.js](https://nodejs.org/)
-
-6. **Next.js**
-    - **Purpose**: Next.js is a React framework that enables server-side rendering, static site generation, and routing. It helps build optimized, scalable React applications with minimal configuration.
-    - **Installation**: To install Next.js, run the following command:
-        ```bash
-        npx create-next-app@latest your-app-name
-        ```
-
-    - If you already have an existing React project and just want to add Next.js, you can install it via:
-        ```bash
-        npm install next react react-dom
-        ```
-
-    - After installation, you can add basic scripts to your `package.json` to start the Next.js development server:
-        ```json
-        "scripts": {
-            "dev": "next dev",
-            "build": "next build",
-            "start": "next start"
-        }
-        ```
+4. **Node.js & npm (or Yarn)**  
+   - **Purpose**: Node.js provides the runtime for executing build tools and development servers; npm (or Yarn) manages project dependencies.  
+   - **Installation**: Download and install the latest LTS version of Node.js (which includes npm) from:  
+     [https://nodejs.org/](https://nodejs.org/)  
+     Or install Yarn globally:  
+     ```bash
+     npm install -g yarn
+     ```
