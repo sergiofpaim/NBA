@@ -1,0 +1,96 @@
+<template>
+  <v-container class="pa-10" fluid>
+    <v-row no-gutters>
+       <v-col cols="2" class="d-none d-md-flex text-center pa-10">
+        <h1 class="text-h4">Participations</h1>
+      </v-col>
+
+      <v-col cols="auto" class="d-none d-md-flex pa-0 align-center">
+        <v-divider :thickness="5" color="var(--theme-primary)" vertical class="my-1 border-opacity-100" style="height: 100%;"></v-divider>
+      </v-col>
+      
+        <v-col class="pa-10">
+        <div class="d-md-none text-center mb-3">
+          <h1 class="text-h5">Participations</h1>
+        </div>
+
+        <div class="d-flex justify-center justify-lg-end mb-4">
+          <StyledButton
+            parameter="Add Player"
+            @click="addPlayer"/>
+        </div>
+
+        <StyledDialog
+            v-model="addPlayerDialog"
+            :items="store.playersState.players"
+            :form-data="newPlayer"
+            dialogTitle="New Participation"
+            title="playerName"
+            property="playerId"
+            fieldValue1="playerId"
+            label1="Players"
+            @submit="trackNewPlayer"
+        />
+        
+        <v-card class="mb-0" variant="outlined">
+          <v-card-text class="text-center">
+            <h2 class="text-h5">Details</h2>
+          </v-card-text>
+        </v-card>
+        <StyledList
+        :items="store.playersState.participations"
+        desktopTitle1="playerName"
+        :function1="trackPlayer"
+        :singleParameterMode="true"
+      />
+      </v-col>
+    </v-row>
+  </v-container>
+</template>
+
+<script setup lang="ts">
+import { useTransactionStore } from '@/stores/Transaction'
+import { PlayerSelection } from '~/models/PlayerSelection';
+
+const store = useTransactionStore()
+const router = useRouter();
+
+const addPlayerDialog = ref(false)
+const newPlayer = ref<PlayerSelection>(new PlayerSelection('', ''));
+
+function trackPlayer(player: any) {
+
+  store.setCurrentParticipation(player)
+
+  if (store.gamesState.currentGame) {
+    router.push(`/record/${store.gamesState.currentGame.id}/participations/${player.playerId}/tracking`)
+  } else {
+    console.error('Current game is null');
+  }
+}
+
+function trackNewPlayer() {
+  addPlayerDialog.value = false
+
+  store.setCurrentPlayer(newPlayer.value)
+
+  if (store.gamesState.currentGame) {
+    router.push(`/record/${store.gamesState.currentGame.id}/participations/${store.playersState.currentPlayer?.playerId}/tracking`)
+  } else {
+    console.error('Current game is null');
+  }
+}
+
+function addPlayer() {
+  addPlayerDialog.value = true
+}
+</script>
+
+<style scoped>
+
+.v-divider--vertical {
+  height: 90%;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+</style>

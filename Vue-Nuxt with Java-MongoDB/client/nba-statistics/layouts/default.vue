@@ -1,0 +1,191 @@
+<template>
+  <div class="layout-wrapper">
+    <div class="header">
+      <div class="toolbar">
+        <img src="/images/logo.png" alt="Logomark" class="logo" />
+        <div class="title-area">
+          <h1 class="title">NBA Analytics</h1>
+
+          <!-- BREADCRUMBS -->
+          <StyledBreadcrumbs />
+        </div>
+      </div>
+    </div>
+
+    <main class="main-content">
+      <div class="content-container">
+        <slot />
+      </div>
+    </main>
+
+    <div class="footer">
+      <p>© {{ year }} By Sérgio F. Paim</p>
+    </div>
+  </div>
+</template>
+
+<script setup>
+const year = new Date().getFullYear()
+</script>
+
+<style scoped>
+.layout-wrapper {
+  font-family: "Geomanist", "Helvetica", "Arial", sans-serif;
+  min-height: 100vh;
+  background-color: #00438C;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: auto;
+  min-height: 70px;
+  background-color: #00438C;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.733);
+}
+
+.toolbar {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.logo {
+  height: 50px;
+  padding-right: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.title-area {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-width: 0; 
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  padding-top: 5px;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.main-content {
+  position: fixed;
+  top: 70px;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  overflow: hidden; 
+  background-color: #00438C;
+  width: 100%;
+}
+
+.content-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: #f2f2f2;
+  color: #00438C;
+  display: flex;             
+  align-items: center;      
+  justify-content: center; 
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  font-size: 0.9rem;
+}
+
+.footer p {
+  margin: 0;
+  padding: 0 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 8px 10px;
+    min-height: 60px;
+  }
+  
+  .logo {
+    height: 90px;
+    padding-right: 10px;
+  }
+  
+  .title {
+    font-size: 1.2rem;
+  }
+  
+  .breadcrumbs {
+    font-size: 0.8rem;
+  }
+  
+  .main-content {
+    top: 60px;
+    bottom: 35px;
+  }
+  
+  .footer {
+    height: 35px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .header {
+    height: 100px;
+    padding: 0 20px;
+  }
+  
+  .logo {
+    height: 80px;
+  }
+  
+  .title {
+    font-size: 2rem;
+  }
+  
+  .breadcrumbs {
+    font-size: 1rem;
+  }
+  
+  .main-content {
+    top: 100px;
+    bottom: 50px;
+  }
+  
+  .footer {
+    height: 50px;
+  }
+}
+</style>

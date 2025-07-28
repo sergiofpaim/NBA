@@ -274,7 +274,7 @@ export const addPlay = (payload: { gameId: string; playerId: string; quarter: nu
     };
 };
 
-export const deletePlay = (payload: { participationId: string; at: Date }): ThunkAction<void, RootState, unknown, Action<string>> => {
+export const deletePlay = (payload: { participationId: string; at: string }): ThunkAction<void, RootState, unknown, Action<string>> => {
     return async (dispatch) => {
         dispatch(deletePlayRequest());
         const response = await api.delete(`/transaction/plays/participation/${payload.participationId}/at/${payload.at}`);

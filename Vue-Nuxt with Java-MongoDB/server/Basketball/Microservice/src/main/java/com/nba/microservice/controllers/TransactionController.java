@@ -12,6 +12,7 @@ import com.nba.microservice.services.TransactionService;
 import com.nba.microservice.viewmodels.GameVM;
 import com.nba.microservice.viewmodels.ParticipatingPlayerVM;
 import com.nba.microservice.viewmodels.ParticipationVM;
+import com.nba.microservice.viewmodels.PlayerSelectionVM;
 import com.nba.microservice.viewmodels.SeasonVM;
 import com.nba.microservice.viewmodels.TeamScalationVM;
 import com.nba.microservice.viewmodels.transactional.AddGameVM;
@@ -61,10 +62,17 @@ public class TransactionController extends BasketballController {
     }
 
     @GetMapping("/games/{gameId}/players")
+    public ResponseEntity<BasketballResponse<List<PlayerSelectionVM>>> getNonParticipatingPlayers(
+            @PathVariable String gameId) {
+        var result = TransactionService.getNonParticipatingPlayers(gameId);
+        return result(result);
+    }
+
+    @GetMapping("/games/{gameId}/participations")
     public ResponseEntity<BasketballResponse<List<ParticipatingPlayerVM>>> getParticipatingPlayers(
             @PathVariable String gameId) {
-        var seasonResult = TransactionService.getParticipatingPlayers(gameId);
-        return result(seasonResult);
+        var result = TransactionService.getParticipatingPlayers(gameId);
+        return result(result);
     }
 
     @GetMapping("/games/{gameId}/players/{playerId}/participation")

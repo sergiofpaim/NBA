@@ -14,7 +14,6 @@ import globalTheme from '../styles/GlobalTheme';
 interface TableProps<T> {
     items: T[];
     label: string;
-    label2?: string;
     handleItemClick: (item: T) => void;
     renderItem: (item: T) => React.ReactNode[];
     height?: string;
@@ -38,49 +37,46 @@ const TableComponent: React.FC<TableProps<any>> = ({
         borderColor: 'rgba(0, 0, 0, 0.1)',
         backgroundColor: globalTheme.palette.background.default
     }}>
-    <TableContainer
-        component={Paper}
-        sx={{
-            maxHeight: height || '600px',
-            overflow: 'auto',
-            borderRadius: 0,
-            borderColor: 'rgba(0, 0, 0, 0.1)',
-            backgroundColor: 'rgba(0, 0, 0, 0.1)',
-            ...sx,
-        }}
-    >
+        <TableContainer
+            sx={{
+                maxHeight: height || '600px',
+                borderRadius: 0,
+                borderColor: 'rgba(0, 0, 0, 0.1)',
+                backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                ...sx,
+            }}
+        >
             <Table stickyHeader >
-            <TableHead>
-                <TableRow>
-                    <TableCell
-                        align="center"
-                        colSpan={items.length > 0 ? renderItem(items[0]).length : 1}
-                        sx={{
-                            backgroundColor: globalTheme.palette.background.default,
-                            borderBottomColor: 'rgba(0, 0, 0, 0.1)',
-                            borderBottomWidth: "10px",
-                        }}
-                    >
-                        <Typography
+                <TableHead>
+                    <TableRow>
+                        <TableCell
+                            align="center"
+                            colSpan={items.length > 0 ? renderItem(items[0]).length : 1}
                             sx={{
-                                fontSize: '1.5rem',
-                                justifyContent: 'center',
-                                textAlign: 'center',
-                                '@media (max-width: 400px)': {
-                                    fontSize: '1rem',
-                                },
+                                backgroundColor: globalTheme.palette.background.default,
+                                borderBottomColor: 'rgba(0, 0, 0, 0.1)',
+                                borderBottomWidth: "10px",
                             }}
                         >
-                            {label}
-                        </Typography>
-                    </TableCell>
-                </TableRow>
-            </TableHead>
-            <TableBody>
+                            <Typography
+                                sx={{
+                                    fontSize: '1.5rem',
+                                    justifyContent: 'center',
+                                    textAlign: 'center',
+                                    '@media (max-width: 400px)': {
+                                        fontSize: '1rem',
+                                    },
+                                }}
+                            >
+                                {label}
+                            </Typography>
+                        </TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
                     {items.map((item, index) => (
                         <TableRow
                             key={index}
-                            hover
                             onClick={() => handleItemClick(item)}
                             sx={{
                                 cursor: 'pointer',
@@ -96,7 +92,7 @@ const TableComponent: React.FC<TableProps<any>> = ({
                                     sx={{
                                         borderBottomWidth: "0px",
                                         height: itemHeight,
-                                    borderBottomColor: 'rgba(0, 0, 0, 0.1)',
+                                        borderBottomColor: 'rgba(0, 0, 0, 0.1)',
                                         alignItems: 'center',
                                         padding: 0,
                                     }}
@@ -106,9 +102,9 @@ const TableComponent: React.FC<TableProps<any>> = ({
                             ))}
                         </TableRow>
                     ))}
-            </TableBody>
-        </Table>
-    </TableContainer>
+                </TableBody>
+            </Table>
+        </TableContainer>
     </Paper>
 );
 

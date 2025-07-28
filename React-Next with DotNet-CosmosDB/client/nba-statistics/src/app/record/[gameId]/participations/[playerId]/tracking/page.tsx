@@ -18,29 +18,32 @@ import ReplayIcon from '@mui/icons-material/Replay';
 import { GamePlay } from '../../../../../../models/GamePlay';
 import TableComponent from '../../../../../../components/TableComponent';
 
-
 type TrackingPageProps = {
-    params: Promise<{ playerId: string; gameId: string }>;
+    params: Promise<{
+        playerId: string;
+        gameId: string;
+    }>;
 };
 
 const TrackingPage: React.FC<TrackingPageProps> = ({ params }) => {
     const dispatch: AppDispatch = useDispatch();
-    const [unwrappedParams, setUnwrappedParams] = useState<{ playerId: string; gameId: string } | null>(null);
+
+    const [gameId, setGameId] = useState<string | null>(null);
+    const [playerId, setPlayerId] = useState<string | null>(null);
 
     useEffect(() => {
-        const unwrapParams = async () => {
-            const resolvedParams = await params;
-            setUnwrappedParams(resolvedParams);
-        };
-
-        unwrapParams();
+        (async () => {
+            const resolvedParams = await Promise.resolve(params);
+            setGameId(resolvedParams.gameId);
+            setPlayerId(resolvedParams.playerId);
+        })();
     }, [params]);
 
     const teams = useSelector((state: RootState) => state.transactionTeams.teams);
     const participation = useSelector((state: RootState) => state.transactionParticipation.participation);
+
     const currentGame = useSelector((state: RootState) => state.transactionGames.currentGame);
 
-    const { playerId, gameId } = unwrappedParams || {};
     const [playerName, setPlayerName] = useState<string>('');
     const [quarter, setQuarter] = useState(1);
     const [currentPlay, setCurrentPlay] = useState<GamePlay | null>(null);
