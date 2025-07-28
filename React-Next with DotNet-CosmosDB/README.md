@@ -68,8 +68,6 @@ Through the development of my React project, I gained significant knowledge in *
 - I understood the importance of **dynamic routing**, which allowed me to create flexible and scalable applications with clean URLs and reusable components.  
 - I gained experience in using **Next.js DevTools** (including live reload and error overlays) to enhance the development workflow, enabling faster debugging and iteration during development.    
 
-### **My next goal is to explore how to integrate **Next.js** into the web application.**
-
 # **Runtime Requirements for Azure Cosmos Emulator**
 
 1. **Azure Cosmos Emulator**
@@ -97,47 +95,35 @@ Through the development of my React project, I gained significant knowledge in *
 
 # **Runtime Requirements for React Redux**
 
-1. **React**
-    - **Purpose**: React is a JavaScript library for building user interfaces, enabling the creation of dynamic single-page applications using a component-based architecture.
-    - **Installation**: To set up React, ensure you have Node.js and npm installed. Then, create a new React project:
-        ```bash
-        npx create-react-app my-app
-        ```
-
-2. **Redux**
+1. **Redux**
     - **Purpose**: Redux is a state management library for JavaScript applications. It helps manage application state predictably, making debugging and testing easier.
     - **Installation**: Install Redux and React-Redux to integrate Redux with React:
         ```bash
         npm install redux react-redux
         ```
 
-3. **React-Redux**
+2. **React-Redux**
     - **Purpose**: React-Redux connects React components to the Redux store, enabling them to access and modify the application state.
     - **Installation**: Install React-Redux using npm:
         ```bash
         npm install react-redux
         ```
 
-4. **Redux Thunk**
+3. **Redux Thunk**
     - **Purpose**: Redux Thunk allows you to write action creators that return functions, enabling asynchronous operations such as API calls.
     - **Installation**: Install Redux Thunk to handle asynchronous actions:
         ```bash
         npm install redux-thunk
         ```
 
-5. **Node.js and npm**
+4. **Node.js and npm**
     - **Purpose**: Node.js is the runtime environment for executing JavaScript, and npm is the package manager for managing dependencies in JavaScript projects.
     - **Installation**: Ensure Node.js and npm are installed. Download and install the latest stable version from:
         [Download Node.js](https://nodejs.org/)
 
 6. **Next.js**
-    - **Purpose**: Next.js is a React framework that enables server-side rendering, static site generation, and routing. It helps build optimized, scalable React applications with minimal configuration.
-    - **Installation**: To install Next.js, run the following command:
-        ```bash
-        npx create-next-app@latest your-app-name
-        ```
 
-    - If you already have an existing React project and just want to add Next.js, you can install it via:
+    - Install Next.js, you can install it via:
         ```bash
         npm install next react react-dom
         ```
